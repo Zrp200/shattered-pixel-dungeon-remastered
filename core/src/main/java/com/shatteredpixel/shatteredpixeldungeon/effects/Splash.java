@@ -92,7 +92,7 @@ public class Splash {
 		
 		@Override
 		public void emit( Emitter emitter, int index, float x, float y ) {
-			PixelParticle p = (PixelParticle)emitter.recycle( PixelParticle.Shrinking.class );
+			PixelParticle p = emitter.recycle( PixelParticle.Shrinking.class );
 			
 			p.reset( x, y, color, 4, Random.Float( 0.5f, 1.0f ) );
 			p.speed.polar( Random.Float( dir - cone / 2, dir + cone / 2 ), Random.Float( 40, 80 ) );

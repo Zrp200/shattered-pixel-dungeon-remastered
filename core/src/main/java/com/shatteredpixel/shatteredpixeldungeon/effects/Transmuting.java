@@ -131,24 +131,24 @@ public class Transmuting extends Component {
 
 	public static void show( Char ch, Item oldItem, Item newItem ) {
 
-		if (!ch.sprite.visible) {
+		if (!ch.sprite.getVisible()) {
 			return;
 		}
 
 		Transmuting sprite = new Transmuting( oldItem, newItem );
 		sprite.target = ch;
-		ch.sprite.parent.add( sprite );
+		ch.sprite.getParent().add( sprite );
 	}
 
 	public static void show( Char ch, Talent oldTalent, Talent newTalent ) {
 
-		if (!ch.sprite.visible) {
+		if (!ch.sprite.getVisible()) {
 			return;
 		}
 
 		Transmuting sprite = new Transmuting( oldTalent, newTalent );
 		sprite.target = ch;
-		ch.sprite.parent.add( sprite );
+		ch.sprite.getParent().add( sprite );
 	}
 
 }

@@ -199,7 +199,7 @@ public class YogDzewa extends Mob {
 				for (int i : targetedCells) {
 					Ballistica b = new Ballistica(pos, i, Ballistica.WONT_STOP);
 					//shoot beams
-					sprite.parent.add(new Beam.DeathRay(sprite.center(), DungeonTilemap.raisedTileCenterToWorld(b.collisionPos)));
+					sprite.getParent().add(new Beam.DeathRay(sprite.center(), DungeonTilemap.raisedTileCenterToWorld(b.collisionPos)));
 					for (int p : b.path) {
 						Char ch = Actor.findChar(p);
 						if (ch != null && (ch.alignment != alignment || ch instanceof Bee)) {
@@ -270,7 +270,7 @@ public class YogDzewa extends Mob {
 				for (int i : targetedCells){
 					Ballistica b = new Ballistica(pos, i, Ballistica.WONT_STOP);
 					for (int p : b.path){
-						sprite.parent.add(new TargetedCell(p, 0xFF0000));
+						sprite.getParent().add(new TargetedCell(p, 0xFF0000));
 						affectedCells.add(p);
 					}
 				}

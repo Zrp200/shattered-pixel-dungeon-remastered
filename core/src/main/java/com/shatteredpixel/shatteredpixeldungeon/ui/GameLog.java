@@ -55,7 +55,7 @@ public class GameLog extends Component implements Signal.Listener<String> {
 	public synchronized void update() {
 		int maxLines = SPDSettings.interfaceSize() > 0 ? 5 : 3;
 		for (String text : textsToAdd){
-			if (length != entries.size()){
+			if (getChildren().size() != entries.size()){
 				clear();
 				recreateLines();
 			}
@@ -102,16 +102,16 @@ public class GameLog extends Component implements Signal.Listener<String> {
 				
 			}
 			
-			if (length > 0) {
+			if (getChildren().size() > 0) {
 				int nLines;
 				do {
 					nLines = 0;
-					for (int i = 0; i < length-1; i++) {
-						nLines += ((RenderedTextBlock) members.get(i)).nLines;
+					for (int i = 0; i < getChildren().size()-1; i++) {
+						nLines += ((RenderedTextBlock) getChildren().get(i)).nLines;
 					}
 					
 					if (nLines > maxLines) {
-						RenderedTextBlock r = ((RenderedTextBlock) members.get(0));
+						RenderedTextBlock r = ((RenderedTextBlock) getChildren().get(0));
 						remove(r);
 						r.destroy();
 						
@@ -152,8 +152,8 @@ public class GameLog extends Component implements Signal.Listener<String> {
 	@Override
 	protected void layout() {
 		float pos = y;
-		for (int i=length-1; i >= 0; i--) {
-			RenderedTextBlock entry = (RenderedTextBlock)members.get( i );
+		for (int i = getChildren().size()-1; i >= 0; i--) {
+			RenderedTextBlock entry = (RenderedTextBlock) getChildren().get( i );
 			entry.maxWidth((int)width);
 			entry.setPos(x, pos-entry.height());
 			pos -= entry.height()+2;

@@ -74,12 +74,12 @@ public class SpawnerSprite extends MobSprite {
 	@Override
 	public void die() {
 		Splash.at( center(), blood(), 100 );
-		killAndErase();
+		remove();
 	}
 
 	@Override
 	public void bloodBurstA(PointF from, int damage) {
-		if (alive) {
+		if (getActive()) {
 			super.bloodBurstA(from, damage);
 		}
 	}

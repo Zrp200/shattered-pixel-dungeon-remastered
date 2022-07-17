@@ -22,7 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.effects;
 
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
-import com.watabou.glwrap.Blending;
+import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Halo;
 
@@ -44,7 +44,7 @@ public class TorchHalo extends Halo {
 		
 		if (phase < 0) {
 			if ((phase += Game.elapsed) >= 0) {
-				killAndErase();
+				remove();
 			} else {
 				scale.set( (2 + phase) * radius / RADIUS );
 				am = -phase * brightness;
@@ -62,9 +62,9 @@ public class TorchHalo extends Halo {
 	
 	@Override
 	public void draw() {
-		Blending.setLightMode();
+		BlendingKt.setLightMode();
 		super.draw();
-		Blending.setNormalMode();
+		BlendingKt.setNormalMode();
 	}
 	
 	public void putOut() {

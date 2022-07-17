@@ -515,7 +515,7 @@ public class Speck extends Image {
 			factory = new Emitter.Factory() {
 				@Override
 				public void emit ( Emitter emitter, int index, float x, float y ) {
-					Speck p = (Speck)emitter.recycle( Speck.class );
+					Speck p = emitter.recycle( Speck.class );
 					p.reset( index, x, y, type );
 				}
 				@Override

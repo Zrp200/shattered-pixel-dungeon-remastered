@@ -24,7 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.effects.particles.ShaftParticle;
-import com.watabou.glwrap.Blending;
+import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.TextureFilm;
 
 public class GhostSprite extends MobSprite {
@@ -53,9 +53,9 @@ public class GhostSprite extends MobSprite {
 	
 	@Override
 	public void draw() {
-		Blending.setLightMode();
+		BlendingKt.setLightMode();
 		super.draw();
-		Blending.setNormalMode();
+		BlendingKt.setNormalMode();
 	}
 	
 	@Override

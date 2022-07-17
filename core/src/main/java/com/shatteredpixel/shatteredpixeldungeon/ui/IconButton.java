@@ -62,7 +62,7 @@ public class IconButton extends Button {
 	}
 	
 	public void enable( boolean value ) {
-		active = value;
+		setActive(value);
 		if (icon != null) icon.alpha( value ? 1.0f : 0.3f );
 	}
 	

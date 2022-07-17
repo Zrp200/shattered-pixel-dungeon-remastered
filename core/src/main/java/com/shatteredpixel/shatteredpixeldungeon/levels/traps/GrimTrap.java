@@ -89,7 +89,7 @@ public class GrimTrap extends Trap {
 				@Override
 				protected boolean act() {
 					final Actor toRemove = this;
-					((MagicMissile)finalTarget.sprite.parent.recycle(MagicMissile.class)).reset(
+					finalTarget.sprite.getParent().recycle(MagicMissile.class).reset(
 							MagicMissile.SHADOW,
 							DungeonTilemap.tileCenterToWorld(pos),
 							finalTarget.sprite.center(),

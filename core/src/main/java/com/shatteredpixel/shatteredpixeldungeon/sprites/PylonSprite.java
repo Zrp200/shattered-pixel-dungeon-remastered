@@ -69,7 +69,7 @@ public class PylonSprite extends MobSprite {
 
 	@Override
 	public void place(int cell) {
-		if (parent != null) parent.bringToFront(this);
+		if (getParent() != null) getParent().bringToFront(this);
 		super.place(cell);
 	}
 

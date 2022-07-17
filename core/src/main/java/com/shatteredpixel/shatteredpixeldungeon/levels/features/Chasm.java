@@ -118,7 +118,7 @@ public class Chasm implements Hero.Doom {
 			}
 			Game.switchScene( InterlevelScene.class );
 		} else {
-			Dungeon.hero.sprite.visible = false;
+			Dungeon.hero.sprite.setVisible(false);
 		}
 	}
 

@@ -159,8 +159,8 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 		}
 		
 		PosTweener tweener = new PosTweener( this, to, d.length() / speed );
-		tweener.listener = this;
-		parent.add( tweener );
+		tweener.setListener(this);
+		getParent().add( tweener );
 	}
 
 	@Override

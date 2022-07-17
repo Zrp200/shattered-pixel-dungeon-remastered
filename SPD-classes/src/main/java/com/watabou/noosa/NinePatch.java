@@ -23,7 +23,7 @@ package com.watabou.noosa;
 
 import com.watabou.gltextures.SmartTexture;
 import com.watabou.gltextures.TextureCache;
-import com.watabou.glwrap.Quad;
+import com.watabou.glwrap.QuadKt;
 import com.watabou.glwrap.Vertexbuffer;
 import com.watabou.utils.RectF;
 
@@ -77,7 +77,7 @@ public class NinePatch extends Visual {
 		nHeight = height = h;
 		
 		vertices = new float[16];
-		quads = Quad.createSet( 9 );
+		quads = QuadKt.createSet( 9 );
 
 		marginLeft	= left;
 		marginRight	= right;
@@ -107,35 +107,15 @@ public class NinePatch extends Visual {
 		float intop     = flipVertical ? innerF.bottom : innerF.top;
 		float inbottom  = flipVertical ? innerF.top : innerF.bottom;
 
-		Quad.fill( vertices,
-				0, marginLeft, 0, marginTop, outleft, inleft, outtop, intop );
-		quads.put( vertices );
-		Quad.fill( vertices,
-				marginLeft, right, 0, marginTop, inleft, inright, outtop, intop );
-		quads.put( vertices );
-		Quad.fill( vertices,
-				right, width, 0, marginTop, inright, outright, outtop, intop );
-		quads.put( vertices );
-
-		Quad.fill( vertices,
-				0, marginLeft, marginTop, bottom, outleft, inleft, intop, inbottom );
-		quads.put( vertices );
-		Quad.fill( vertices,
-				marginLeft, right, marginTop, bottom, inleft, inright, intop, inbottom );
-		quads.put( vertices );
-		Quad.fill( vertices,
-				right, width, marginTop, bottom, inright, outright, intop, inbottom );
-		quads.put( vertices );
-
-		Quad.fill( vertices,
-				0, marginLeft, bottom, height, outleft, inleft, inbottom, outbottom );
-		quads.put( vertices );
-		Quad.fill( vertices,
-				marginLeft, right, bottom, height, inleft, inright, inbottom, outbottom );
-		quads.put( vertices );
-		Quad.fill( vertices,
-				right, width, bottom, height, inright, outright, inbottom, outbottom );
-		quads.put( vertices );
+		quads.put(QuadKt.fill(0, marginLeft, 0, marginTop, outleft, inleft, outtop, intop));
+		quads.put(QuadKt.fill(marginLeft, right, 0, marginTop, inleft, inright, outtop, intop));
+		quads.put(QuadKt.fill(right, width, 0, marginTop, inright, outright, outtop, intop));
+		quads.put(QuadKt.fill(0, marginLeft, marginTop, bottom, outleft, inleft, intop, inbottom));
+		quads.put(QuadKt.fill(marginLeft, right, marginTop, bottom, inleft, inright, intop, inbottom));
+		quads.put(QuadKt.fill(right, width, marginTop, bottom, inright, outright, intop, inbottom));
+		quads.put(QuadKt.fill(0, marginLeft, bottom, height, outleft, inleft, inbottom, outbottom));
+		quads.put(QuadKt.fill(marginLeft, right, bottom, height, inleft, inright, inbottom, outbottom));
+		quads.put(QuadKt.fill(right, width, bottom, height, inright, outright, inbottom, outbottom));
 
 		dirty = true;
 	}
@@ -217,7 +197,7 @@ public class NinePatch extends Visual {
 		
 		texture.bind();
 		
-		script.camera( camera() );
+		script.camera( getCamera() );
 		
 		script.uModel.valueM4( matrix );
 		script.lighting(

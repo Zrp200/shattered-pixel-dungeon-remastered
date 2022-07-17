@@ -32,8 +32,6 @@ import com.watabou.noosa.PointerArea;
 import com.watabou.noosa.ui.Component;
 import com.watabou.utils.Signal;
 
-import java.util.ArrayList;
-
 public class Button extends Component {
 
 	public static float longClick = 0.5f;
@@ -90,8 +88,8 @@ public class Button extends Component {
 						}
 					}
 					hoverTip = new Tooltip(Button.this, text, 80);
-					Button.this.parent.addToFront(hoverTip);
-					hoverTip.camera = camera();
+					Button.this.getParent().addToFront(hoverTip);
+					hoverTip.setCamera(getCamera());
 					alignTooltip(hoverTip);
 				}
 			}
@@ -106,7 +104,7 @@ public class Button extends Component {
 		KeyEvent.addKeyListener( keyListener = new Signal.Listener<KeyEvent>() {
 			@Override
 			public boolean onSignal ( KeyEvent event ) {
-				if ( active && KeyBindings.getActionForKey( event ) == keyAction()){
+				if ( getActive() && KeyBindings.getActionForKey( event ) == keyAction()){
 					if (event.pressed){
 						pressed = true;
 						pressTime = 0;
@@ -134,7 +132,7 @@ public class Button extends Component {
 	public void update() {
 		super.update();
 		
-		hotArea.active = visible;
+		hotArea.setActive(getVisible());
 		
 		if (pressed) {
 			if ((pressTime += Game.elapsed) >= longClick) {
@@ -167,7 +165,7 @@ public class Button extends Component {
 	//TODO might be nice for more flexibility here
 	private void alignTooltip( Tooltip tip ){
 		tip.setPos(x, y-tip.height()-1);
-		Camera cam = camera();
+		Camera cam = getCamera();
 		//shift left if there's no room on the right
 		if (tip.right() > (cam.width+cam.scroll.x)){
 			tip.setPos(tip.left() - (tip.right() - (cam.width+cam.scroll.x)), tip.top());
@@ -180,7 +178,7 @@ public class Button extends Component {
 
 	public void killTooltip(){
 		if (hoverTip != null){
-			hoverTip.killAndErase();
+			hoverTip.remove();
 			hoverTip = null;
 		}
 	}

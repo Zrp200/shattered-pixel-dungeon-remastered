@@ -128,7 +128,7 @@ public abstract class YogFist extends Mob {
 		} else {
 
 			incrementRangedCooldown();
-			if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
+			if (sprite != null && (sprite.getVisible() || enemy.sprite.getVisible())) {
 				sprite.zap( enemy.pos );
 				return false;
 			} else {

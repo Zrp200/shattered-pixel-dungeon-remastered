@@ -52,10 +52,10 @@ public class ShopkeeperSprite extends MobSprite {
 	public void onComplete( Animation anim ) {
 		super.onComplete( anim );
 		
-		if (visible && anim == idle) {
+		if (getVisible() && anim == idle) {
 			if (coin == null) {
 				coin = new PixelParticle();
-				parent.add( coin );
+				getParent().add( coin );
 			}
 			coin.reset( x + (flipHorizontal ? 0 : 13), y + 7, 0xFFFF00, 1, 0.5f );
 			coin.speed.y = -40;

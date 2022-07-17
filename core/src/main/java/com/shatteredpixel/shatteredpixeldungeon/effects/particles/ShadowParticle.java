@@ -33,21 +33,21 @@ public class ShadowParticle extends PixelParticle.Shrinking {
 	public static final Emitter.Factory MISSILE = new Factory() {
 		@Override
 		public void emit( Emitter emitter, int index, float x, float y ) {
-			((ShadowParticle)emitter.recycle( ShadowParticle.class )).reset( x, y );
+			emitter.recycle( ShadowParticle.class ).reset( x, y );
 		}
 	};
 	
 	public static final Emitter.Factory CURSE = new Factory() {
 		@Override
 		public void emit( Emitter emitter, int index, float x, float y ) {
-			((ShadowParticle)emitter.recycle( ShadowParticle.class )).resetCurse( x, y );
+			emitter.recycle( ShadowParticle.class ).resetCurse( x, y );
 		}
 	};
 	
 	public static final Emitter.Factory UP = new Factory() {
 		@Override
 		public void emit( Emitter emitter, int index, float x, float y ) {
-			((ShadowParticle)emitter.recycle( ShadowParticle.class )).resetUp( x, y );
+			emitter.recycle( ShadowParticle.class ).resetUp( x, y );
 		}
 	};
 	

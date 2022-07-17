@@ -72,9 +72,9 @@ public class DM100Sprite extends MobSprite {
 			origin.x += 1*scale.x;
 		}
 		if (enemy != null) {
-			parent.add(new Lightning(origin, enemy.sprite.destinationCenter(), (DM100) ch));
+			getParent().add(new Lightning(origin, enemy.sprite.destinationCenter(), (DM100) ch));
 		} else {
-			parent.add(new Lightning(origin, pos, (DM100) ch));
+			getParent().add(new Lightning(origin, pos, (DM100) ch));
 		}
 		Sample.INSTANCE.play( Assets.Sounds.LIGHTNING );
 		

@@ -480,7 +480,7 @@ public class MagesStaff extends MeleeWeapon {
 		@Override
 		//reimplementing this is needed as instance creation of new staff particles must be within this class.
 		public void emit( Emitter emitter, int index, float x, float y ) {
-			StaffParticle c = (StaffParticle)emitter.getFirstAvailable(StaffParticle.class);
+			StaffParticle c = emitter.firstAvailableOrNull(StaffParticle.class);
 			if (c == null) {
 				c = new StaffParticle();
 				emitter.add(c);

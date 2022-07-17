@@ -23,7 +23,7 @@ package com.watabou.noosa;
 
 import com.watabou.gltextures.SmartTexture;
 import com.watabou.gltextures.TextureCache;
-import com.watabou.glwrap.Quad;
+import com.watabou.glwrap.QuadKt;
 import com.watabou.glwrap.Vertexbuffer;
 import com.watabou.utils.Rect;
 import com.watabou.utils.RectF;
@@ -82,7 +82,7 @@ public class Tilemap extends Visual {
 		width = cellW * mapWidth;
 		height = cellH * mapHeight;
 
-		quads = Quad.createSet( size );
+		quads = QuadKt.createSet( size );
 
 		updateMap();
 	}
@@ -225,7 +225,7 @@ public class Tilemap extends Visual {
 				rm, gm, bm, am,
 				ra, ga, ba, aa );
 
-		script.camera( camera );
+		script.camera(getCamera());
 
 		script.drawQuadSet( buffer, size, 0 );
 

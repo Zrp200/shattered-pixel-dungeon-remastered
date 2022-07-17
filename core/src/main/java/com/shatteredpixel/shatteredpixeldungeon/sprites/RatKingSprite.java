@@ -50,7 +50,7 @@ public class RatKingSprite extends MobSprite {
 
 		if (Dungeon.hero != null && Dungeon.hero.armorAbility instanceof Ratmogrify){
 			c += 16;
-			if (parent != null) aura(0xFFFF00);
+			if (getParent() != null) aura(0xFFFF00);
 		}
 
 		texture( Assets.Sprites.RATKING );

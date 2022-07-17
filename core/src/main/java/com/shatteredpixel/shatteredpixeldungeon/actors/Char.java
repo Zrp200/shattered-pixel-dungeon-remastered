@@ -242,7 +242,7 @@ public abstract class Char extends Actor {
 	
 	protected boolean moveSprite( int from, int to ) {
 		
-		if (sprite.isVisible() && (Dungeon.level.heroFOV[from] || Dungeon.level.heroFOV[to])) {
+		if (sprite.getVisible() && (Dungeon.level.heroFOV[from] || Dungeon.level.heroFOV[to])) {
 			sprite.move( from, to );
 			return true;
 		} else {
@@ -837,7 +837,7 @@ public abstract class Char extends Actor {
 		pos = step;
 		
 		if (this != Dungeon.hero) {
-			sprite.visible = Dungeon.level.heroFOV[pos];
+			sprite.setVisible(Dungeon.level.heroFOV[pos]);
 		}
 		
 		Dungeon.level.occupyCell(this );

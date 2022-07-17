@@ -18,29 +18,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
+package com.watabou.noosa.tweeners
 
-package com.watabou.noosa.tweeners;
+/**
+ * [Tweener] that does nothing during its [lifespan][interval].
+ *
+ * Use for delayed execution by overriding [onComplete].
+ *
+ * @param interval lifespan of the tweener
+ */
+open class Delayer(
+    interval: Float
+) : Tweener(interval) {
 
-import com.watabou.noosa.Visual;
-import com.watabou.utils.PointF;
-
-public class PosTweener extends Tweener {
-
-	public Visual visual;
-	
-	public PointF start;
-	public PointF end;
-	
-	public PosTweener( Visual visual, PointF pos, float time ) {
-		super( visual, time );
-		
-		this.visual = visual;
-		start = visual.point();
-		end = pos;
-	}
-
-	@Override
-	protected void updateValues( float progress ) {
-		visual.point( PointF.inter( start, end, progress ) );
-	}
+    override fun updateValues(progress: Float) {}
 }

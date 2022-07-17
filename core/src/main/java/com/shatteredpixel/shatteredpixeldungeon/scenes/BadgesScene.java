@@ -45,7 +45,7 @@ public class BadgesScene extends PixelScene {
 				new float[]{1, 1},
 				false);
 
-		uiCamera.visible = false;
+		uiCamera.setVisible(false);
 
 		int w = Camera.main.width;
 		int h = Camera.main.height;

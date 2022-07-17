@@ -34,7 +34,7 @@ public class FlowParticle extends PixelParticle {
 	public static final Emitter.Factory FACTORY = new Factory() {
 		@Override
 		public void emit( Emitter emitter, int index, float x, float y ) {
-			((FlowParticle)emitter.recycle( FlowParticle.class )).reset( x, y );
+			emitter.recycle( FlowParticle.class ).reset( x, y );
 		}
 	};
 	
@@ -85,8 +85,8 @@ public class FlowParticle extends PixelParticle {
 		
 		@Override
 		public void update() {
-			
-			if (visible = (pos < Dungeon.level.heroFOV.length && Dungeon.level.heroFOV[pos])) {
+			setVisible((pos < Dungeon.level.heroFOV.length && Dungeon.level.heroFOV[pos]));
+			if (getVisible()) {
 				
 				super.update();
 

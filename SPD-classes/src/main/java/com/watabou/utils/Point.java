@@ -55,12 +55,6 @@ public class Point {
 		return new Point( this );
 	}
 	
-	public Point scale( float f ) {
-		this.x *= f;
-		this.y *= f;
-		return this;
-	}
-	
 	public Point offset( int dx, int dy ) {
 		x += dx;
 		y += dy;
@@ -75,11 +69,6 @@ public class Point {
 	
 	@Override
 	public boolean equals( Object obj ) {
-		if (obj instanceof Point) {
-			Point p = (Point)obj;
-			return p.x == x && p.y == y;
-		} else {
-			return false;
-		}
+		return (obj instanceof Point && ((Point) obj).x == x && ((Point) obj).y == y);
 	}
 }

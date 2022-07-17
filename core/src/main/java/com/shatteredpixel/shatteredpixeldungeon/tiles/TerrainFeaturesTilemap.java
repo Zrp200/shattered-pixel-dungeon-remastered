@@ -96,12 +96,12 @@ public class TerrainFeaturesTilemap extends DungeonTilemap {
 		plant.scale.set( 0 );
 		plant.point( DungeonTilemap.tileToWorld( pos ) );
 
-		parent.add( plant );
+		getParent().add( plant );
 
-		parent.add( new ScaleTweener( plant, new PointF(1, 1), 0.2f ) {
+		getParent().add(new ScaleTweener( plant, new PointF(1, 1), 0.2f ) {
 			protected void onComplete() {
-				plant.killAndErase();
-				killAndErase();
+				plant.remove();
+				remove();
 				updateMapCell(pos);
 			}
 		} );

@@ -54,9 +54,9 @@ public class IceBlock extends Gizmo {
 	public void melt() {
 
 		target.resetColor();
-		killAndErase();
+		remove();
 
-		if (visible) {
+		if (getVisible()) {
 			Splash.at( target.center(), 0xFFB2D6FF, 5 );
 			Sample.INSTANCE.play( Assets.Sounds.SHATTER );
 		}
@@ -65,8 +65,8 @@ public class IceBlock extends Gizmo {
 	public static IceBlock freeze( CharSprite sprite ) {
 		
 		IceBlock iceBlock = new IceBlock( sprite );
-		if (sprite.parent != null)
-			sprite.parent.add( iceBlock );
+		if (sprite.getParent() != null)
+			sprite.getParent().add( iceBlock );
 		
 		return iceBlock;
 	}

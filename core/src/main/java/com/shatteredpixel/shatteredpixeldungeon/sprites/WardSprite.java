@@ -66,9 +66,9 @@ public class WardSprite extends MobSprite {
 		flash();
 		emitter().burst(MagicMissile.WardParticle.UP, 2);
 		if (Actor.findChar(pos) != null){
-			parent.add(new Beam.DeathRay(center(), Actor.findChar(pos).sprite.center()));
+			getParent().add(new Beam.DeathRay(center(), Actor.findChar(pos).sprite.center()));
 		} else {
-			parent.add(new Beam.DeathRay(center(), DungeonTilemap.raisedTileCenterToWorld(pos)));
+			getParent().add(new Beam.DeathRay(center(), DungeonTilemap.raisedTileCenterToWorld(pos)));
 		}
 		((WandOfWarding.Ward)ch).onZapComplete();
 	}
@@ -84,11 +84,11 @@ public class WardSprite extends MobSprite {
 		//cancels die animation and fades out immediately
 		play(idle, true);
 		emitter().burst(MagicMissile.WardParticle.UP, 10);
-		parent.add( new AlphaTweener( this, 0, 2f ) {
+		getParent().add(new AlphaTweener( this, 0, 2f ) {
 			@Override
 			protected void onComplete() {
-				WardSprite.this.killAndErase();
-				parent.erase( this );
+				WardSprite.this.remove();
+				remove();
 			}
 		} );
 	}
@@ -120,8 +120,8 @@ public class WardSprite extends MobSprite {
 		die = idle.clone();
 
 		//always render first
-		if (parent != null) {
-			parent.sendToBack(this);
+		if (getParent() != null) {
+			getParent().sendToBack(this);
 		}
 
 		resetColor();

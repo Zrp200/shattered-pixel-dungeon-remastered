@@ -502,7 +502,7 @@ public class WndKeyBindings extends Window {
 		public boolean onSignal(KeyEvent event) {
 			//ignore left clicks if we are pressing a button
 			if (KeyBindings.getActionForKey(event) == GameAction.LEFT_CLICK){
-				PointF hoverPos = camera().screenToCamera((int)PointerEvent.currentHoverPos().x, (int)PointerEvent.currentHoverPos().y);
+				PointF hoverPos = getCamera().screenToCamera((int)PointerEvent.currentHoverPos().x, (int)PointerEvent.currentHoverPos().y);
 				if (btnUnbind.inside(hoverPos.x, hoverPos.y)) return true;
 				if (btnConfirm.inside(hoverPos.x, hoverPos.y)) return true;
 				if (btnCancel.inside(hoverPos.x, hoverPos.y)) return true;

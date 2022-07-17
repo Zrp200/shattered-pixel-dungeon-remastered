@@ -101,12 +101,12 @@ public class Enchanting extends ItemSprite {
 
 	public static void show( Char ch, Item item ) {
 
-		if (!ch.sprite.visible) {
+		if (!ch.sprite.getVisible()) {
 			return;
 		}
 
 		Enchanting sprite = new Enchanting( item );
 		sprite.target = ch;
-		ch.sprite.parent.add( sprite );
+		ch.sprite.getParent().add( sprite );
 	}
 }

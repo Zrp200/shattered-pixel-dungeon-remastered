@@ -113,7 +113,7 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndMessage;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndResurrect;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndStory;
-import com.watabou.glwrap.Blending;
+import com.watabou.glwrap.BlendingKt;
 import com.watabou.input.PointerEvent;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
@@ -124,7 +124,6 @@ import com.watabou.noosa.NoosaScript;
 import com.watabou.noosa.NoosaScriptNoLighting;
 import com.watabou.noosa.SkinnedBlock;
 import com.watabou.noosa.Visual;
-import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.DeviceCompat;
@@ -228,9 +227,9 @@ public class GameScene extends PixelScene {
 			@Override
 			public void draw() {
 				//water has no alpha component, this improves performance
-				Blending.disable();
+				BlendingKt.disableBlending();
 				super.draw();
-				Blending.enable();
+				BlendingKt.enableBlending();
 			}
 		};
 		water.autoAdjust = true;
@@ -338,38 +337,38 @@ public class GameScene extends PixelScene {
 		int uiSize = SPDSettings.interfaceSize();
 
 		menu = new MenuPane();
-		menu.camera = uiCamera;
+		menu.setCamera(uiCamera);
 		menu.setPos( uiCamera.width-MenuPane.WIDTH, uiSize > 0 ? 0 : 1);
 		add(menu);
 
 		status = new StatusPane( SPDSettings.interfaceSize() > 0 );
-		status.camera = uiCamera;
+		status.setCamera(uiCamera);
 		status.setRect(0, uiSize > 0 ? uiCamera.height-39 : 0, uiCamera.width, 0 );
 		add(status);
 
 		boss = new BossHealthBar();
-		boss.camera = uiCamera;
+		boss.setCamera(uiCamera);
 		boss.setPos( 6 + (uiCamera.width - boss.width())/2, 20);
 		add(boss);
 
 		attack = new AttackIndicator();
-		attack.camera = uiCamera;
+		attack.setCamera(uiCamera);
 		add( attack );
 
 		loot = new LootIndicator();
-		loot.camera = uiCamera;
+		loot.setCamera(uiCamera);
 		add( loot );
 
 		action = new ActionIndicator();
-		action.camera = uiCamera;
+		action.setCamera(uiCamera);
 		add( action );
 
 		resume = new ResumeIndicator();
-		resume.camera = uiCamera;
+		resume.setCamera(uiCamera);
 		add( resume );
 
 		log = new GameLog();
-		log.camera = uiCamera;
+		log.setCamera(uiCamera);
 		log.newLine();
 		add( log );
 
@@ -378,12 +377,12 @@ public class GameScene extends PixelScene {
 		}
 
 		toolbar = new Toolbar();
-		toolbar.camera = uiCamera;
+		toolbar.setCamera(uiCamera);
 		add( toolbar );
 
 		if (uiSize == 2) {
 			inventory = new InventoryPane();
-			inventory.camera = uiCamera;
+			inventory.setCamera(uiCamera);
 			inventory.setPos(uiCamera.width - inventory.width(), uiCamera.height - inventory.height());
 			add(inventory);
 
@@ -683,12 +682,7 @@ public class GameScene extends PixelScene {
 		if (!Actor.processing() && Dungeon.hero.isAlive()) {
 			if (actorThread == null || !actorThread.isAlive()) {
 				
-				actorThread = new Thread() {
-					@Override
-					public void run() {
-						Actor.process();
-					}
-				};
+				actorThread = new Thread(Actor::process);
 				
 				//if cpu cores are limited, game should prefer drawing the current frame
 				if (Runtime.getRuntime().availableProcessors() == 1) {
@@ -710,21 +704,21 @@ public class GameScene extends PixelScene {
 			log.newLine();
 		}
 
-		if (tagAttack != attack.active ||
-				tagLoot != loot.visible ||
-				tagAction != action.visible ||
-				tagResume != resume.visible) {
+		if (tagAttack != attack.getActive() ||
+				tagLoot != loot.getVisible() ||
+				tagAction != action.getVisible() ||
+				tagResume != resume.getVisible()) {
 
 			//we only want to change the layout when new tags pop in, not when existing ones leave.
-			boolean tagAppearing = (attack.active && !tagAttack) ||
-									(loot.visible && !tagLoot) ||
-									(action.visible && !tagAction) ||
-									(resume.visible && !tagResume);
+			boolean tagAppearing = (attack.getActive() && !tagAttack) ||
+									(loot.getVisible() && !tagLoot) ||
+									(action.getVisible() && !tagAction) ||
+									(resume.getVisible() && !tagResume);
 
-			tagAttack = attack.active;
-			tagLoot = loot.visible;
-			tagAction = action.visible;
-			tagResume = resume.visible;
+			tagAttack = attack.getActive();
+			tagLoot = loot.getVisible();
+			tagAction = action.getVisible();
+			tagResume = resume.getVisible();
 
 			if (tagAppearing) layoutTags();
 		}
@@ -740,8 +734,8 @@ public class GameScene extends PixelScene {
 	private static Point lastOffset = null;
 
 	@Override
-	public synchronized Gizmo erase (Gizmo g) {
-		Gizmo result = super.erase(g);
+	public synchronized Gizmo remove (Gizmo g) {
+		Gizmo result = super.remove(g);
 		if (result instanceof Window){
 			lastOffset = ((Window) result).getOffset();
 		}
@@ -758,7 +752,7 @@ public class GameScene extends PixelScene {
 		if (scene == null) return;
 
 		//move the camera center up a bit if we're on full UI and it is taking up lots of space
-		if (scene.inventory != null && scene.inventory.visible
+		if (scene.inventory != null && scene.inventory.getVisible()
 				&& (uiCamera.width < 460 && uiCamera.height < 300)){
 			Camera.main.setCenterOffset(0, Math.min(300-uiCamera.height, 460-uiCamera.width) / Camera.main.zoom);
 		} else {
@@ -775,7 +769,7 @@ public class GameScene extends PixelScene {
 		float tagWidth = Tag.SIZE + (tagsOnLeft ? insets.left : insets.right);
 		float tagLeft = tagsOnLeft ? 0 : uiCamera.width - tagWidth;
 
-		float invWidth = (scene.inventory != null && scene.inventory.visible) ? scene.inventory.width() : 0;
+		float invWidth = (scene.inventory != null && scene.inventory.getVisible()) ? scene.inventory.width() : 0;
 
 		float y = SPDSettings.interfaceSize() == 0 ? scene.toolbar.top()-2 : scene.status.top()-2;
 		if (tagsOnLeft) {
@@ -831,14 +825,14 @@ public class GameScene extends PixelScene {
 	}
 	
 	private void addHeapSprite( Heap heap ) {
-		ItemSprite sprite = heap.sprite = (ItemSprite)heaps.recycle( ItemSprite.class );
+		ItemSprite sprite = heap.sprite = heaps.recycle( ItemSprite.class );
 		sprite.revive();
 		sprite.link( heap );
 		heaps.add( sprite );
 	}
 	
 	private void addDiscardedSprite( Heap heap ) {
-		heap.sprite = (DiscardedItemSprite)heaps.recycle( DiscardedItemSprite.class );
+		heap.sprite = heaps.recycle( DiscardedItemSprite.class );
 		heap.sprite.revive();
 		heap.sprite.link( heap );
 		heaps.add( heap.sprite );
@@ -860,7 +854,7 @@ public class GameScene extends PixelScene {
 	
 	private void addMobSprite( Mob mob ) {
 		CharSprite sprite = mob.sprite();
-		sprite.visible = Dungeon.level.heroFOV[mob.pos];
+		sprite.setVisible(Dungeon.level.heroFOV[mob.pos]);
 		mobs.add( sprite );
 		sprite.link( mob );
 	}
@@ -868,7 +862,7 @@ public class GameScene extends PixelScene {
 	private synchronized void prompt( String text ) {
 		
 		if (prompt != null) {
-			prompt.killAndErase();
+			prompt.remove();
 			toDestroy.add(prompt);
 			prompt = null;
 		}
@@ -880,10 +874,10 @@ public class GameScene extends PixelScene {
 					cancel();
 				}
 			};
-			prompt.camera = uiCamera;
+			prompt.setCamera(uiCamera);
 			prompt.setPos( (uiCamera.width - prompt.width()) / 2, uiCamera.height - 60 );
 
-			if (inventory != null && inventory.visible && prompt.right() > inventory.left() - 10){
+			if (inventory != null && inventory.getVisible() && prompt.right() > inventory.left() - 10){
 				prompt.setPos(inventory.left() - prompt.width() - 10, prompt.top());
 			}
 
@@ -892,7 +886,7 @@ public class GameScene extends PixelScene {
 	}
 	
 	private void showBanner( Banner banner ) {
-		banner.camera = uiCamera;
+		banner.setCamera(uiCamera);
 
 		float offset = Camera.main.centerOffset.y;
 		banner.x = align( uiCamera, (uiCamera.width - banner.width) / 2 );
@@ -981,7 +975,7 @@ public class GameScene extends PixelScene {
 	
 	public static Ripple ripple( int pos ) {
 		if (scene != null) {
-			Ripple ripple = (Ripple) scene.ripples.recycle(Ripple.class);
+			Ripple ripple = scene.ripples.recycle(Ripple.class);
 			ripple.reset(pos);
 			return ripple;
 		} else {
@@ -990,12 +984,12 @@ public class GameScene extends PixelScene {
 	}
 	
 	public static SpellSprite spellSprite() {
-		return (SpellSprite)scene.spells.recycle( SpellSprite.class );
+		return scene.spells.recycle( SpellSprite.class );
 	}
 	
 	public static Emitter emitter() {
 		if (scene != null) {
-			Emitter emitter = (Emitter)scene.emitters.recycle( Emitter.class );
+			Emitter emitter = scene.emitters.recycle( Emitter.class );
 			emitter.revive();
 			return emitter;
 		} else {
@@ -1005,7 +999,7 @@ public class GameScene extends PixelScene {
 
 	public static Emitter floorEmitter() {
 		if (scene != null) {
-			Emitter emitter = (Emitter)scene.floorEmitters.recycle( Emitter.class );
+			Emitter emitter = scene.floorEmitters.recycle( Emitter.class );
 			emitter.revive();
 			return emitter;
 		} else {
@@ -1014,7 +1008,7 @@ public class GameScene extends PixelScene {
 	}
 	
 	public static FloatingText status() {
-		return scene != null ? (FloatingText)scene.statuses.recycle( FloatingText.class ) : null;
+		return scene != null ? scene.statuses.recycle( FloatingText.class ) : null;
 	}
 	
 	public static void pickUp( Item item, int pos ) {
@@ -1092,9 +1086,9 @@ public class GameScene extends PixelScene {
 
 			//If a window is already present (or was just present)
 			// then inherit the offset it had
-			if (scene.inventory != null && scene.inventory.visible){
+			if (scene.inventory != null && scene.inventory.getVisible()){
 				Point offsetToInherit = null;
-				for (Gizmo g : scene.members){
+				for (Gizmo g : scene.getChildren()){
 					if (g instanceof Window) offsetToInherit = ((Window) g).getOffset();
 				}
 				if (scene.lastOffset != null && offsetToInherit == null) {
@@ -1113,7 +1107,7 @@ public class GameScene extends PixelScene {
 	public static boolean showingWindow(){
 		if (scene == null) return false;
 
-		for (Gizmo g : scene.members){
+		for (Gizmo g : scene.getChildren()){
 			if (g instanceof Window) return true;
 		}
 
@@ -1134,11 +1128,13 @@ public class GameScene extends PixelScene {
 
 	public static void toggleInvPane(){
 		if (scene != null && scene.inventory != null){
-			if (scene.inventory.visible){
-				scene.inventory.visible = scene.inventory.active = invVisible = false;
+			if (scene.inventory.getVisible()){
+				scene.inventory.setActive(invVisible = false);
+				scene.inventory.setVisible(scene.inventory.getActive());
 				scene.toolbar.setPos(scene.toolbar.left(), uiCamera.height-scene.toolbar.height());
 			} else {
-				scene.inventory.visible = scene.inventory.active = invVisible = true;
+				scene.inventory.setActive(invVisible = true);
+				scene.inventory.setVisible(scene.inventory.getActive());
 				scene.toolbar.setPos(scene.toolbar.left(), scene.inventory.top()-scene.toolbar.height());
 			}
 			layoutTags();
@@ -1146,7 +1142,7 @@ public class GameScene extends PixelScene {
 	}
 
 	public static void centerNextWndOnInvPane(){
-		if (scene != null && scene.inventory != null && scene.inventory.visible){
+		if (scene != null && scene.inventory != null && scene.inventory.getVisible()){
 			lastOffset = new Point((int)scene.inventory.centerX() - uiCamera.width/2,
 					(int)scene.inventory.centerY() - uiCamera.height/2);
 		}
@@ -1176,7 +1172,7 @@ public class GameScene extends PixelScene {
 	public static void afterObserve() {
 		if (scene != null) {
 			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-				if (mob.sprite != null) mob.sprite.visible = Dungeon.level.heroFOV[mob.pos];
+				if (mob.sprite != null) mob.sprite.setVisible(Dungeon.level.heroFOV[mob.pos]);
 			}
 		}
 	}
@@ -1216,12 +1212,12 @@ public class GameScene extends PixelScene {
 		};
 		restart.icon(Icons.get(Icons.ENTER));
 		restart.alpha(0);
-		restart.camera = uiCamera;
+		restart.setCamera(uiCamera);
 		float offset = Camera.main.centerOffset.y;
 		restart.setSize(Math.max(80, restart.reqWidth()), 20);
 		restart.setPos(
-				align(uiCamera, (restart.camera.width - restart.width()) / 2),
-				align(uiCamera, (restart.camera.height - restart.height()) / 2 + restart.height()/2 + 16 - offset)
+				align(uiCamera, (restart.getCamera().width - restart.width()) / 2),
+				align(uiCamera, (restart.getCamera().height - restart.height()) / 2 + restart.height()/2 + 16 - offset)
 		);
 		scene.add(restart);
 
@@ -1239,10 +1235,10 @@ public class GameScene extends PixelScene {
 		};
 		menu.icon(Icons.get(Icons.PREFS));
 		menu.alpha(0);
-		menu.camera = uiCamera;
+		menu.setCamera(uiCamera);
 		menu.setSize(Math.max(80, menu.reqWidth()), 20);
 		menu.setPos(
-				align(uiCamera, (menu.camera.width - menu.width()) / 2),
+				align(uiCamera, (menu.getCamera().width - menu.width()) / 2),
 				restart.bottom() + 2
 		);
 		scene.add(menu);
@@ -1288,7 +1284,7 @@ public class GameScene extends PixelScene {
 
 		if (scene != null) {
 			//TODO can the inventory pane work in these cases? bad to fallback to mobile window
-			if (scene.inventory != null && scene.inventory.visible && !showingWindow()){
+			if (scene.inventory != null && scene.inventory.getVisible() && !showingWindow()){
 				scene.inventory.setSelector(listener);
 				return null;
 			} else {
@@ -1519,9 +1515,9 @@ public class GameScene extends PixelScene {
 				}
 			};
 			scene.addToFront(menu);
-			menu.camera = PixelScene.uiCamera;
+			menu.setCamera(PixelScene.uiCamera);
 			PointF mousePos = PointerEvent.currentHoverPos();
-			mousePos = menu.camera.screenToCamera((int)mousePos.x, (int)mousePos.y);
+			mousePos = menu.getCamera().screenToCamera((int)mousePos.x, (int)mousePos.y);
 			menu.setPos(mousePos.x-3, mousePos.y-3);
 
 		}

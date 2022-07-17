@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.buffs;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -66,7 +65,7 @@ public class Dread extends Buff {
 				((Mob) target).EXP /= 2;
 			}
 			target.destroy();
-			target.sprite.killAndErase();
+			target.sprite.remove();
 			Dungeon.level.mobs.remove(target);
 		} else {
 			left--;

@@ -137,7 +137,7 @@ public class Spinner extends Mob {
 	public void move(int step, boolean travelling) {
 		if (travelling && enemySeen && webCoolDown <= 0 && lastEnemyPos != -1){
 			if (webPos() != -1){
-				if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
+				if (sprite != null && (sprite.getVisible() || enemy.sprite.getVisible())) {
 					sprite.zap( webPos() );
 					shotWebVisually = true;
 				} else {

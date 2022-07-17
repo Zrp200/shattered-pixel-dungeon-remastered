@@ -82,7 +82,7 @@ public abstract class DungeonTilemap extends Tilemap {
 	// If the pressed tile is a wall tile, the tap can be 'bumped' down into a none-wall tile.
 	// currently this happens if the bottom 1/4 of the wall tile is pressed.
 	public int screenToTile(int x, int y, boolean wallAssist ) {
-		PointF p = camera().screenToCamera( x, y ).
+		PointF p = getCamera().screenToCamera( x, y ).
 			offset( this.point().negate() ).
 			invScale( SIZE );
 		
@@ -121,12 +121,12 @@ public abstract class DungeonTilemap extends Tilemap {
 		tile.frame( tileset.get( getTileVisual( pos, oldValue, false)));
 		tile.point( tileToWorld( pos ) );
 
-		parent.add( tile );
+		getParent().add( tile );
 		
-		parent.add( new AlphaTweener( tile, 0, 0.6f ) {
+		getParent().add(new AlphaTweener( tile, 0, 0.6f ) {
 			protected void onComplete() {
-				tile.killAndErase();
-				killAndErase();
+				tile.remove();
+				remove();
 			}
 		} );
 	}

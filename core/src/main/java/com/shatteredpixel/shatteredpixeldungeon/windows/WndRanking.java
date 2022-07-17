@@ -144,7 +144,8 @@ public class WndRanking extends WndTabbed {
 		protected void select( boolean value ) {
 			super.select( value );
 			if (page != null) {
-				page.visible = page.active = selected;
+				page.setActive(selected);
+				page.setVisible(selected);
 			}
 		}
 	}
@@ -266,7 +267,7 @@ public class WndRanking extends WndTabbed {
 		public TalentsTab(){
 			super();
 
-			camera = WndRanking.this.camera;
+			setCamera(WndRanking.this.getCamera());
 
 			int tiers = 1;
 			if (Dungeon.hero.lvl >= 6) tiers++;
@@ -350,7 +351,7 @@ public class WndRanking extends WndTabbed {
 		public BadgesTab() {
 			super();
 			
-			camera = WndRanking.this.camera;
+			setCamera(WndRanking.this.getCamera());
 
 			Component badges;
 			if (Badges.totalUnlocked(false) <= 7){
@@ -368,7 +369,7 @@ public class WndRanking extends WndTabbed {
 		public ChallengesTab(){
 			super();
 
-			camera = WndRanking.this.camera;
+			setCamera(WndRanking.this.getCamera());
 
 			float pos = 0;
 
@@ -378,7 +379,7 @@ public class WndRanking extends WndTabbed {
 
 				CheckBox cb = new CheckBox( Messages.titleCase(Messages.get(Challenges.class, challenge)) );
 				cb.checked( (Dungeon.challenges & Challenges.MASKS[i]) != 0 );
-				cb.active = false;
+				cb.setActive(false);
 
 				if (i > 0) {
 					pos += 1;

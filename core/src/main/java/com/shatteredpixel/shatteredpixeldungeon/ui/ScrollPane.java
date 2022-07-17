@@ -59,8 +59,8 @@ public class ScrollPane extends Component {
 		width = content.width();
 		height = content.height();
 
-		content.camera = new Camera( 0, 0, 1, 1, PixelScene.defaultZoom );
-		Camera.add( content.camera );
+		content.setCamera(new Camera(0, 0, 1, 1, PixelScene.defaultZoom));
+		Camera.add(content.getCamera());
 
 		KeyEvent.addKeyListener(keyListener = new Signal.Listener<KeyEvent>() {
 			@Override
@@ -91,12 +91,12 @@ public class ScrollPane extends Component {
 	@Override
 	public void destroy() {
 		super.destroy();
-		Camera.remove( content.camera );
+		Camera.remove(content.getCamera());
 		KeyEvent.removeKeyListener(keyListener);
 	}
 
 	public void scrollTo( float x, float y ) {
-		Camera c = content.camera;
+		Camera c = content.getCamera();
 		c.scroll.set( x, y );
 		if (c.scroll.x + width > content.width()) {
 			c.scroll.x = content.width() - width;
@@ -117,7 +117,7 @@ public class ScrollPane extends Component {
 	public synchronized void update() {
 		super.update();
 		if (keyScroll != 0){
-			scrollTo(content.camera.scroll.x, content.camera.scroll.y + (keyScroll * 150 * Game.elapsed));
+			scrollTo(content.getCamera().scroll.x, content.getCamera().scroll.y + (keyScroll * 150 * Game.elapsed));
 		}
 	}
 
@@ -140,17 +140,17 @@ public class ScrollPane extends Component {
 		controller.width = width;
 		controller.height = height;
 
-		Point p = camera().cameraToScreen( x, y );
-		Camera cs = content.camera;
+		Point p = getCamera().cameraToScreen( x, y );
+		Camera cs = content.getCamera();
 		cs.x = p.x;
 		cs.y = p.y;
 		cs.resize( (int)width, (int)height );
 
-		thumb.visible = height < content.height();
-		if (thumb.visible) {
+		thumb.setVisible(height < content.height());
+		if (thumb.getVisible()) {
 			thumb.scale.set( 2, height * height / content.height() );
 			thumb.x = right() - thumb.width();
-			thumb.y = y + height * content.camera.scroll.y / content.height();
+			thumb.y = y + height * content.getCamera().scroll.y / content.height();
 		}
 	}
 
@@ -173,7 +173,7 @@ public class ScrollPane extends Component {
 		@Override
 		protected void onScroll(ScrollEvent event) {
 			PointF newPt = new PointF(lastPos);
-			newPt.y -= event.amount * content.camera.zoom * 10;
+			newPt.y -= event.amount * content.getCamera().zoom * 10;
 			scroll(newPt);
 			dragging = false;
 		}
@@ -187,7 +187,7 @@ public class ScrollPane extends Component {
 
 			} else {
 
-				PointF p = content.camera.screenToCamera( (int) event.current.x, (int) event.current.y );
+				PointF p = content.getCamera().screenToCamera( (int) event.current.x, (int) event.current.y );
 				ScrollPane.this.onClick( p.x, p.y );
 
 			}
@@ -213,7 +213,7 @@ public class ScrollPane extends Component {
 		
 		private void scroll( PointF current ){
 			
-			Camera c = content.camera;
+			Camera c = content.getCamera();
 			
 			c.shift( PointF.diff( lastPos, current ).invScale( c.zoom ) );
 			if (c.scroll.x + width > content.width()) {

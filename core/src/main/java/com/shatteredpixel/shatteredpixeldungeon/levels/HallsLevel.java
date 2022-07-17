@@ -48,7 +48,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.traps.WarpingTrap;
 import com.shatteredpixel.shatteredpixeldungeon.levels.traps.WeakeningTrap;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
-import com.watabou.glwrap.Blending;
+import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.audio.Music;
@@ -205,11 +205,12 @@ public class HallsLevel extends RegularLevel {
 		public void update() {
 
 			if (!Dungeon.level.water[pos]){
-				killAndErase();
+				remove();
 				return;
 			}
-			
-			if (visible = (pos < Dungeon.level.heroFOV.length && Dungeon.level.heroFOV[pos])) {
+
+			setVisible((pos < Dungeon.level.heroFOV.length && Dungeon.level.heroFOV[pos]));
+			if (getVisible()) {
 				
 				super.update();
 				
@@ -218,7 +219,7 @@ public class HallsLevel extends RegularLevel {
 					delay = Random.Float( 2 );
 					
 					PointF p = DungeonTilemap.tileToWorld( pos );
-					((FireParticle)recycle( FireParticle.class )).reset(
+					recycle( FireParticle.class ).reset(
 						p.x + Random.Float( DungeonTilemap.SIZE ),
 						p.y + Random.Float( DungeonTilemap.SIZE ) );
 				}
@@ -227,9 +228,9 @@ public class HallsLevel extends RegularLevel {
 		
 		@Override
 		public void draw() {
-			Blending.setLightMode();
+			BlendingKt.setLightMode();
 			super.draw();
-			Blending.setNormalMode();
+			BlendingKt.setNormalMode();
 		}
 	}
 	

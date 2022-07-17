@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.effects;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Random;
@@ -47,8 +48,8 @@ public class EmoIcon extends Image {
 	@Override
 	public void update() {
 		super.update();
-		
-		if (visible) {
+
+		if (getVisible()) {
 			if (growing) {
 				scale.set( Math.min(scale.x + Game.elapsed * timeScale, maxSize ));
 				if (scale.x >= maxSize) {

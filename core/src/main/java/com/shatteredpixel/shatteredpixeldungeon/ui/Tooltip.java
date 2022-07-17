@@ -83,14 +83,14 @@ public class Tooltip extends Component {
 	@Override
 	public synchronized void update() {
 		//kill this tooltip if the parent is removed or moved in any way
-		if (!parent.exists ||
-				!parent.isActive() ||
-				!parent.isVisible() ||
+		if (!parent.getAlive() ||
+				!parent.getActive() ||
+				!parent.getVisible() ||
 				parentDims.left != parent.left() ||
 				parentDims.top != parent.top() ||
 				parentDims.right != parent.right() ||
 				parentDims.bottom != parent.bottom()){
-			killAndErase();
+			remove();
 			return;
 		}
 

@@ -99,28 +99,32 @@ public class WndJournal extends WndTabbed {
 				new IconTab( new ItemSprite(ItemSpriteSheet.GUIDE_PAGE, null) ) {
 					protected void select( boolean value ) {
 						super.select( value );
-						guideTab.active = guideTab.visible = value;
+						guideTab.setVisible(value);
+						guideTab.setActive(value);
 						if (value) last_index = 0;
 					}
 				},
 				new IconTab( new ItemSprite(ItemSpriteSheet.ALCH_PAGE, null) ) {
 					protected void select( boolean value ) {
 						super.select( value );
-						alchemyTab.active = alchemyTab.visible = value;
+						alchemyTab.setVisible(value);
+						alchemyTab.setActive(value);
 						if (value) last_index = 1;
 					}
 				},
 				new IconTab( Icons.get(Icons.STAIRS) ) {
 					protected void select( boolean value ) {
 						super.select( value );
-						notesTab.active = notesTab.visible = value;
+						notesTab.setVisible(value);
+						notesTab.setActive(value);
 						if (value) last_index = 2;
 					}
 				},
 				new IconTab( new ItemSprite(ItemSpriteSheet.WEAPON_HOLDER, null) ) {
 					protected void select( boolean value ) {
 						super.select( value );
-						catalogTab.active = catalogTab.visible = value;
+						catalogTab.setVisible(value);
+						catalogTab.setActive(value);
 						if (value) last_index = 3;
 					}
 				}
@@ -377,7 +381,7 @@ public class WndJournal extends WndTabbed {
 			
 			title = new IconTitle();
 			title.icon( new ItemSprite(ItemSpriteSheet.ALCH_PAGE));
-			title.visible = false;
+			title.setVisible(false);
 
 			body = PixelScene.renderTextBlock(6);
 			
@@ -434,7 +438,7 @@ public class WndJournal extends WndTabbed {
 			
 			for (QuickRecipe r : recipes){
 				if (r != null) {
-					r.killAndErase();
+					r.remove();
 					r.destroy();
 				}
 			}
@@ -444,7 +448,7 @@ public class WndJournal extends WndTabbed {
 			
 			content.clear();
 			
-			title.visible = true;
+			title.setVisible(true);
 			title.label(Document.ALCHEMY_GUIDE.pageTitle(currentPageIdx));
 			title.setRect(0, 0, width(), 10);
 			content.add(title);

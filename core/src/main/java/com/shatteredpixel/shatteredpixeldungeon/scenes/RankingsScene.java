@@ -66,7 +66,7 @@ public class RankingsScene extends PixelScene {
 				new float[]{1, 1},
 				false);
 
-		uiCamera.visible = false;
+		uiCamera.setVisible(false);
 		
 		int w = Camera.main.width;
 		int h = Camera.main.height;
@@ -325,9 +325,9 @@ public class RankingsScene extends PixelScene {
 		@Override
 		protected void onClick() {
 			if (rec.gameData != null) {
-				parent.add( new WndRanking( rec ) );
+				getParent().add( new WndRanking( rec ) );
 			} else {
-				parent.add( new WndError( Messages.get(RankingsScene.class, "no_info") ) );
+				getParent().add( new WndError( Messages.get(RankingsScene.class, "no_info") ) );
 			}
 		}
 	}

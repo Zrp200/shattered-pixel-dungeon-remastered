@@ -316,10 +316,10 @@ public class WndBag extends WndTabbed {
 							WndBag.this.hide();
 						}
 					};
-					parent.addToFront(r);
-					r.camera = camera();
+					getParent().addToFront(r);
+					r.setCamera(getCamera());
 					PointF mousePos = PointerEvent.currentHoverPos();
-					mousePos = camera.screenToCamera((int)mousePos.x, (int)mousePos.y);
+					mousePos = getCamera().screenToCamera((int)mousePos.x, (int)mousePos.y);
 					r.setPos(mousePos.x-3, mousePos.y-3);
 
 				}

@@ -128,7 +128,7 @@ public class Ghoul extends Mob {
 				GameScene.add( child );
 				Dungeon.level.occupyCell(child);
 				
-				if (sprite.visible) {
+				if (sprite.getVisible()) {
 					Actor.addDelayed( new Pushing( child, pos, child.pos ), -1 );
 				}
 
@@ -223,7 +223,7 @@ public class Ghoul extends Mob {
 
 		@Override
 		public boolean act() {
-			ghoul.sprite.visible = Dungeon.level.heroFOV[ghoul.pos];
+			ghoul.sprite.setVisible(Dungeon.level.heroFOV[ghoul.pos]);
 
 			if (target.alignment != ghoul.alignment){
 				detach();

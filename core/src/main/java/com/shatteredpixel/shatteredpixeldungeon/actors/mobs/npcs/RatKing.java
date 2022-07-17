@@ -86,14 +86,14 @@ public class RatKing extends NPC {
 		if (Dungeon.depth < 5){
 			if (pos == Dungeon.level.exit()){
 				destroy();
-				sprite.killAndErase();
+				sprite.remove();
 			} else {
 				target = Dungeon.level.exit();
 			}
 		} else if (Dungeon.depth > 5){
 			if (pos == Dungeon.level.entrance()){
 				destroy();
-				sprite.killAndErase();
+				sprite.remove();
 			} else {
 				target = Dungeon.level.entrance();
 			}

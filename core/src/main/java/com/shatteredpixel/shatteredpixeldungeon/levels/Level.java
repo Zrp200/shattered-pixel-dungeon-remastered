@@ -563,11 +563,11 @@ public abstract class Level implements Bundlable {
 	}
 
 	public Group addVisuals() {
-		if (visuals == null || visuals.parent == null){
+		if (visuals == null || visuals.getParent() == null){
 			visuals = new Group();
 		} else {
 			visuals.clear();
-			visuals.camera = null;
+			visuals.setCamera(null);
 		}
 		for (int i=0; i < length(); i++) {
 			if (pit[i]) {

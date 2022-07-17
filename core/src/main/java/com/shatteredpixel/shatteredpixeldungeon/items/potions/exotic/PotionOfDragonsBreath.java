@@ -136,7 +136,7 @@ public class PotionOfDragonsBreath extends ExoticPotion {
 
 						//cast to cells at the tip, rather than all cells, better performance.
 						for (Ballistica ray : cone.outerRays){
-							((MagicMissile)curUser.sprite.parent.recycle( MagicMissile.class )).reset(
+							curUser.sprite.getParent().recycle( MagicMissile.class ).reset(
 									MagicMissile.FIRE_CONE,
 									curUser.sprite,
 									ray.path.get(ray.dist),
@@ -144,7 +144,7 @@ public class PotionOfDragonsBreath extends ExoticPotion {
 							);
 						}
 						
-						MagicMissile.boltFromChar(curUser.sprite.parent,
+						MagicMissile.boltFromChar(curUser.sprite.getParent(),
 								MagicMissile.FIRE_CONE,
 								curUser.sprite,
 								bolt.path.get(dist / 2),

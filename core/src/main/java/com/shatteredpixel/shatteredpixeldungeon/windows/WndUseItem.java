@@ -50,7 +50,7 @@ public class WndUseItem extends WndInfoItem {
 					@Override
 					protected void onClick() {
 						hide();
-						if (owner != null && owner.parent != null) owner.hide();
+						if (owner != null && owner.getParent() != null) owner.hide();
 						if (Dungeon.hero.isAlive() && Dungeon.hero.belongings.contains(item)){
 							item.execute( Dungeon.hero, action );
 						}

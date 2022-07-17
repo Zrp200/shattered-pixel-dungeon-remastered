@@ -41,7 +41,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.watabou.gltextures.SmartTexture;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.glwrap.Matrix;
-import com.watabou.glwrap.Quad;
+import com.watabou.glwrap.QuadKt;
 import com.watabou.input.PointerEvent;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.ColorBlock;
@@ -90,7 +90,7 @@ public class SurfaceScene extends PixelScene {
 				new float[]{1, 1},
 				false);
 		
-		uiCamera.visible = false;
+		uiCamera.setVisible(false);
 		
 		int w = Camera.main.width;
 		int h = Camera.main.height;
@@ -108,7 +108,7 @@ public class SurfaceScene extends PixelScene {
 		Camera.add( viewport );
 		
 		Group window = new Group();
-		window.camera = viewport;
+		window.setCamera(viewport);
 		add( window );
 		
 		boolean dayTime = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) >= 7;
@@ -300,7 +300,7 @@ public class SurfaceScene extends PixelScene {
 			texture = TextureCache.createGradient( dayTime ? day : night );
 			
 			float[] vertices = new float[16];
-			verticesBuffer = Quad.create();
+			verticesBuffer = QuadKt.create();
 			
 			vertices[2]		= 0.25f;
 			vertices[6]		= 0.25f;
@@ -338,7 +338,7 @@ public class SurfaceScene extends PixelScene {
 			
 			texture.bind();
 			
-			script.camera( camera() );
+			script.camera( getCamera() );
 			
 			script.uModel.valueM4( matrix );
 			script.lighting(

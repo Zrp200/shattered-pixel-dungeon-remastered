@@ -47,7 +47,7 @@ public class TelekineticGrab extends TargetedSpell {
 
 	@Override
 	protected void fx(Ballistica bolt, Callback callback) {
-		MagicMissile.boltFromChar( curUser.sprite.parent,
+		MagicMissile.boltFromChar(curUser.sprite.getParent(),
 				MagicMissile.BEACON,
 				curUser.sprite,
 				bolt.collisionPos,

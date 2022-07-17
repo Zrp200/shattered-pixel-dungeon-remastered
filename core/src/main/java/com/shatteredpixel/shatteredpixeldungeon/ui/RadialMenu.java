@@ -62,7 +62,7 @@ public class RadialMenu extends Window {
 		selectionArc.alpha(0.6f);
 		selectionArc.setSweep(1f/slots);
 		selectionArc.point(center);
-		selectionArc.visible = false;
+		selectionArc.setVisible(false);
 		add(selectionArc);
 
 		Image outerBG = getBGTexture(size, false);
@@ -181,7 +181,7 @@ public class RadialMenu extends Window {
 			targetAngle = PointF.angle(movement.x, movement.y) / PointF.G2R + 90;
 			if (targetAngle < 0) targetAngle += 360f;
 
-			selectionArc.visible = true;
+			selectionArc.setVisible(true);
 			selectionArc.angle = targetAngle + selectionArc.getSweep()*180;
 
 			int newSelect = (int) Math.round((targetAngle) / (360f/slots));

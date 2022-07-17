@@ -64,7 +64,7 @@ public class ImpSprite extends MobSprite {
 		if (anim == die) {
 			
 			emitter().burst( Speck.factory( Speck.WOOL ), 15 );
-			killAndErase();
+			remove();
 			
 		} else {
 			super.onComplete( anim );

@@ -140,7 +140,7 @@ public class InventoryPane extends Component {
 		keyBlocker = new Signal.Listener<KeyEvent>(){
 			@Override
 			public boolean onSignal(KeyEvent keyEvent) {
-				if (keyEvent.pressed && isSelecting() && InventoryPane.this.visible
+				if (keyEvent.pressed && isSelecting() && InventoryPane.this.getVisible()
 						&& KeyBindings.getActionForKey(keyEvent) != SPDAction.BAG_1
 						&& KeyBindings.getActionForKey(keyEvent) != SPDAction.BAG_2
 						&& KeyBindings.getActionForKey(keyEvent) != SPDAction.BAG_3
@@ -195,7 +195,7 @@ public class InventoryPane extends Component {
 		}
 
 		crossB = Icons.TARGET.get();
-		crossB.visible = false;
+		crossB.setVisible(false);
 		add( crossB );
 
 		crossM = new Image();
@@ -310,21 +310,25 @@ public class InventoryPane extends Component {
 		}
 
 		if (selector == null) {
-			promptTxt.visible = false;
+			promptTxt.setVisible(false);
 
 			goldTxt.text(Integer.toString(Dungeon.gold));
 			goldTxt.measure();
-			goldTxt.visible = gold.visible = true;
+			gold.setVisible(true);
+			goldTxt.setVisible(gold.getVisible());
 
 			energyTxt.text(Integer.toString(Dungeon.energy));
 			energyTxt.measure();
-			energyTxt.visible = energy.visible = Dungeon.energy > 0;
+			energy.setVisible(Dungeon.energy > 0);
+			energyTxt.setVisible(energy.getVisible());
 		} else {
 			promptTxt.text(selector.textPrompt());
-			promptTxt.visible = true;
+			promptTxt.setVisible(true);
 
-			goldTxt.visible = gold.visible = false;
-			energyTxt.visible = energy.visible = false;
+			gold.setVisible(false);
+			goldTxt.setVisible(gold.getVisible());
+			energy.setVisible(false);
+			energyTxt.setVisible(energy.getVisible());
 		}
 
 		ArrayList<Bag> inventBags = stuff.getBags();
@@ -378,7 +382,7 @@ public class InventoryPane extends Component {
 
 	public static void useTargeting(){
 		if (instance != null &&
-				instance.visible &&
+				instance.getVisible() &&
 				lastTarget != null &&
 				Actor.chars().contains( lastTarget ) &&
 				lastTarget.isAlive() &&
@@ -388,13 +392,13 @@ public class InventoryPane extends Component {
 			targeting = true;
 			CharSprite sprite = lastTarget.sprite;
 
-			if (sprite.parent != null) {
-				sprite.parent.addToFront(crossM);
+			if (sprite.getParent() != null) {
+				sprite.getParent().addToFront(crossM);
 				crossM.point(sprite.center(crossM));
 			}
 
 			crossB.point(targetingSlot.sprite.center(crossB));
-			crossB.visible = true;
+			crossB.setVisible(true);
 
 		} else {
 
@@ -406,7 +410,7 @@ public class InventoryPane extends Component {
 
 	public static void cancelTargeting(){
 		if (targeting){
-			crossB.visible = false;
+			crossB.setVisible(false);
 			crossM.remove();
 			targeting = false;
 		}
@@ -540,10 +544,10 @@ public class InventoryPane extends Component {
 			if (selector == null){
 				targetingSlot = this;
 				RightClickMenu r = new RightClickMenu(item);
-				parent.addToFront(r);
-				r.camera = camera();
+				getParent().addToFront(r);
+				r.setCamera(getCamera());
 				PointF mousePos = PointerEvent.currentHoverPos();
-				mousePos = camera.screenToCamera((int)mousePos.x, (int)mousePos.y);
+				mousePos = getCamera().screenToCamera((int)mousePos.x, (int)mousePos.y);
 				r.setPos(mousePos.x-3, mousePos.y-3);
 			} else {
 				//do nothing
@@ -566,13 +570,15 @@ public class InventoryPane extends Component {
 			super( bagIcon(bag) );
 			this.bag = bag;
 			this.index = index;
-			visible = active = bag != null;
+			setActive(bag != null);
+			setVisible(bag != null);
 		}
 
 		public void bag( Bag bag ){
 			this.bag = bag;
 			icon(bagIcon(bag));
-			visible = active = bag != null;
+			setActive(bag != null);
+			setVisible(bag != null);
 
 			if (lastBag == bag){
 				bgTop.texture(TextureCache.createSolid(ACTIVE));

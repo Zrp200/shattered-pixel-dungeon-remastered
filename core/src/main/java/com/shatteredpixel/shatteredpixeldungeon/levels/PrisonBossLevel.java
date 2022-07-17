@@ -350,7 +350,7 @@ public class PrisonBossLevel extends Level {
 			if (mob != tengu && (safeArea == null || !safeArea.inside(cellToPoint(mob.pos)))){
 				mob.destroy();
 				if (mob.sprite != null)
-					mob.sprite.killAndErase();
+					mob.sprite.remove();
 			}
 		}
 		for (Plant plant : plants.valueList()){
@@ -795,14 +795,14 @@ public class PrisonBossLevel extends Level {
 				protected boolean act() {
 					Actor.remove(this);
 					
-					if (vis != null && vis.parent != null) {
+					if (vis != null && vis.getParent() != null) {
 						Dungeon.level.customTiles.remove(FadingTraps.this);
-						vis.parent.add(new AlphaTweener(vis, 0f, fadeDuration) {
+						vis.getParent().add(new AlphaTweener(vis, 0f, fadeDuration) {
 							@Override
 							protected void onComplete() {
 								super.onComplete();
-								vis.killAndErase();
-								killAndErase();
+								vis.remove();
+								remove();
 							}
 						});
 					}
@@ -814,7 +814,7 @@ public class PrisonBossLevel extends Level {
 
 		private void remove(){
 			if (vis != null){
-				vis.killAndErase();
+				vis.remove();
 			}
 			Dungeon.level.customTiles.remove(this);
 		}

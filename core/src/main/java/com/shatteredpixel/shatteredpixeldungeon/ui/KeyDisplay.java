@@ -31,8 +31,9 @@ import com.shatteredpixel.shatteredpixeldungeon.items.keys.SkeletonKey;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.watabou.gltextures.SmartTexture;
 import com.watabou.gltextures.TextureCache;
-import com.watabou.glwrap.Quad;
+import com.watabou.glwrap.QuadKt;
 import com.watabou.glwrap.Vertexbuffer;
+import com.watabou.noosa.Camera;
 import com.watabou.noosa.NoosaScript;
 import com.watabou.noosa.Visual;
 import com.watabou.utils.RectF;
@@ -111,7 +112,7 @@ public class KeyDisplay extends Visual {
 		
 		tx.bind();
 		
-		script.camera( camera() );
+		script.camera( getCamera() );
 		
 		script.uModel.valueM4( matrix );
 		script.lighting(
@@ -153,7 +154,7 @@ public class KeyDisplay extends Visual {
 			left = (width + 1 - (totalKeys*4))/2;
 		}
 		float top = (height + 1 - (rows * (shortKeys ? 5 : 8)))/2;
-		quads = Quad.createSet(totalKeys);
+		quads = QuadKt.createSet(totalKeys);
 		for (int i = 0; i < totalKeys; i++){
 			int keyIdx = 0;
 			

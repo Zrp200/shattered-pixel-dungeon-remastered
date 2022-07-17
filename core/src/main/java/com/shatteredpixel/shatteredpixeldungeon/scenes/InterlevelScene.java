@@ -48,7 +48,7 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.BArray;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndError;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndStory;
 import com.watabou.gltextures.TextureCache;
-import com.watabou.glwrap.Blending;
+import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
@@ -183,9 +183,9 @@ public class InterlevelScene extends PixelScene {
 			
 			@Override
 			public void draw() {
-				Blending.disable();
+				BlendingKt.disableBlending();
 				super.draw();
-				Blending.enable();
+				BlendingKt.enableBlending();
 			}
 			
 			@Override

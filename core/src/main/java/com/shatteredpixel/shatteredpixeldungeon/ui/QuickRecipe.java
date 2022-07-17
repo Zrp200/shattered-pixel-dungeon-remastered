@@ -239,13 +239,13 @@ public class QuickRecipe extends Component {
 			super.onClick();
 			
 			//find the window this is inside of and close it
-			Group parent = this.parent;
+			Group parent = this.getParent();
 			while (parent != null){
 				if (parent instanceof Window){
 					((Window) parent).hide();
 					break;
 				} else {
-					parent = parent.parent;
+					parent = parent.getParent();
 				}
 			}
 			

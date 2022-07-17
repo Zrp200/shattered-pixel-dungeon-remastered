@@ -121,7 +121,7 @@ public class WndBlacksmith extends Window {
 
 		@Override
 		public void onSelect( Item item ) {
-			if (item != null && btnPressed.parent != null) {
+			if (item != null && btnPressed.getParent() != null) {
 				btnPressed.item( item );
 				
 				if (btnItem1.item != null && btnItem2.item != null) {

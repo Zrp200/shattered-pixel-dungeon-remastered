@@ -80,7 +80,7 @@ public class ScorpioSprite extends MobSprite {
 		if (anim == zap) {
 			idle();
 			
-			((MissileSprite)parent.recycle( MissileSprite.class )).
+			getParent().recycle( MissileSprite.class ).
 			reset( this, cellToAttack, new ScorpioShot(), new Callback() {
 				@Override
 				public void call() {

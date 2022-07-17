@@ -36,8 +36,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.watabou.glscripts.Script;
-import com.watabou.glwrap.Blending;
-import com.watabou.glwrap.Quad;
+import com.watabou.glwrap.BlendingKt;
+import com.watabou.glwrap.QuadKt;
 import com.watabou.glwrap.Texture;
 import com.watabou.noosa.ui.Component;
 import com.watabou.utils.FileUtils;
@@ -146,7 +146,7 @@ public class TextInput extends Component {
 		}
 
 		float zoom = Camera.main.zoom;
-		Camera c = camera();
+		Camera c = getCamera();
 		if (c != null){
 			zoom = c.zoom;
 			Point p = c.cameraToScreen(contX, contY);
@@ -168,12 +168,12 @@ public class TextInput extends Component {
 	@Override
 	public void draw() {
 		super.draw();
-		Quad.releaseIndices();
+		QuadKt.releaseIndices();
 		Script.unuse();
 		Texture.clear();
 		stage.draw();
-		Quad.bindIndices();
-		Blending.useDefault();
+		QuadKt.bindIndices();
+		BlendingKt.useDefault();
 	}
 
 	@Override

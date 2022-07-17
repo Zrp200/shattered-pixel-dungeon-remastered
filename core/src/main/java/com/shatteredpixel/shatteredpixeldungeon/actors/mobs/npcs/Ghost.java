@@ -159,7 +159,7 @@ public class Ghost extends NPC {
 						CellEmitter.get(pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
 						pos = newPos;
 						sprite.place(pos);
-						sprite.visible = Dungeon.level.heroFOV[pos];
+						sprite.setVisible(Dungeon.level.heroFOV[pos]);
 					}
 				}
 			}

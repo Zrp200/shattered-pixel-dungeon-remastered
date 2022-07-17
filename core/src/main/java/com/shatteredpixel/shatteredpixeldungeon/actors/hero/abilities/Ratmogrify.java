@@ -35,7 +35,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Rat;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.ClassArmor;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -131,7 +130,7 @@ public class Ratmogrify extends ArmorAbility {
 			rat.pos = ch.pos;
 
 			Actor.remove( ch );
-			ch.sprite.killAndErase();
+			ch.sprite.remove();
 			Dungeon.level.mobs.remove(ch);
 
 			GameScene.add(rat);
@@ -206,7 +205,7 @@ public class Ratmogrify extends ArmorAbility {
 
 				EXP = 0;
 				destroy();
-				sprite.killAndErase();
+				sprite.remove();
 				CellEmitter.get(original.pos).burst(Speck.factory(Speck.WOOL), 4);
 				Sample.INSTANCE.play(Assets.Sounds.PUFF);
 				return true;

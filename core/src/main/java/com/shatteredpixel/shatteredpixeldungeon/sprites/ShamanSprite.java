@@ -65,7 +65,7 @@ public abstract class ShamanSprite extends MobSprite {
 		turnTo( ch.pos , cell );
 		play( zap );
 		
-		MagicMissile.boltFromChar( parent,
+		MagicMissile.boltFromChar(getParent(),
 				boltType,
 				this,
 				cell,

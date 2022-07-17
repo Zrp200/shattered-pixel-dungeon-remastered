@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.Ratmogrify
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndInfoTalent;
 import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.ui.Component;
@@ -149,7 +148,7 @@ public class TalentsPane extends ScrollPane {
 		} else {
 			bottom = Math.max(height, top);
 
-			blocker.visible = false;
+			blocker.setVisible(false);
 		}
 
 		content.setSize(width, bottom);
@@ -181,7 +180,7 @@ public class TalentsPane extends ScrollPane {
 					@Override
 					public void upgradeTalent() {
 						super.upgradeTalent();
-						if (parent != null) {
+						if (getParent() != null) {
 							setupStars();
 							TalentTierPane.this.layout();
 						}
@@ -196,7 +195,7 @@ public class TalentsPane extends ScrollPane {
 		private void setupStars(){
 			if (!stars.isEmpty()){
 				for (Image im : stars){
-					im.killAndErase();
+					im.remove();
 				}
 				stars.clear();
 			}

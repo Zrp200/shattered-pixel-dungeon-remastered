@@ -142,7 +142,7 @@ public class GooSprite extends MobSprite {
 	public void update() {
 		super.update();
 		spray.pos(center());
-		spray.visible = visible;
+		spray.setVisible(getVisible());
 	}
 
 	public static class GooParticle extends PixelParticle.Shrinking {
@@ -150,7 +150,7 @@ public class GooSprite extends MobSprite {
 		public static final Emitter.Factory FACTORY = new Factory() {
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
-				((GooParticle)emitter.recycle( GooParticle.class )).reset( x, y );
+				emitter.recycle( GooParticle.class ).reset( x, y );
 			}
 		};
 
@@ -194,7 +194,7 @@ public class GooSprite extends MobSprite {
 			idle();
 			ch.onAttackComplete();
 		} else if (anim == die) {
-			spray.killAndErase();
+			spray.remove();
 		}
 	}
 }

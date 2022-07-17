@@ -25,17 +25,14 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.FlavourBuff;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndInfoBuff;
-import com.watabou.gltextures.SmartTexture;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Image;
-import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.noosa.ui.Component;
@@ -173,12 +170,12 @@ public class BuffIndicator extends Component {
 					@Override
 					protected void updateValues( float progress ) {
 						super.updateValues( progress );
-						image.scale.set( 1 + 5 * progress );
+						getVisual().scale.set( 1 + 5 * progress );
 					}
 					
 					@Override
 					protected void onComplete() {
-						image.killAndErase();
+						getVisual().remove();
 					}
 				} );
 				
@@ -241,16 +238,16 @@ public class BuffIndicator extends Component {
 			((BuffIcon)icon).refresh(buff);
 			//round up to the nearest pixel if <50% faded, otherwise round down
 			if (!large || buff.iconTextDisplay().isEmpty()) {
-				text.visible = false;
+				text.setVisible(false);
 				float fadeHeight = buff.iconFadePercent() * icon.height();
-				float zoom = (camera() != null) ? camera().zoom : 1;
+				float zoom = (getCamera() != null) ? getCamera().zoom : 1;
 				if (fadeHeight < icon.height() / 2f) {
 					grey.scale.set(icon.width(), (float) Math.ceil(zoom * fadeHeight) / zoom);
 				} else {
 					grey.scale.set(icon.width(), (float) Math.floor(zoom * fadeHeight) / zoom);
 				}
 			} else if (!buff.iconTextDisplay().isEmpty()) {
-				grey.visible = false;
+				grey.setVisible(false);
 				if (buff.type == Buff.buffType.POSITIVE)        text.hardlight(CharSprite.POSITIVE);
 				else if (buff.type == Buff.buffType.NEGATIVE)   text.hardlight(CharSprite.NEGATIVE);
 				text.alpha(0.7f);

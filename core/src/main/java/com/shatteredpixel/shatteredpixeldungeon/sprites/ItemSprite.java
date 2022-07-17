@@ -119,15 +119,15 @@ public class ItemSprite extends MovieClip {
 		
 		heap = null;
 		if (emitter != null) {
-			emitter.killAndErase();
+			emitter.remove();
 			emitter = null;
 		}
 	}
 
 	public void visible(boolean value){
-		this.visible = value;
-		if (emitter != null && !visible){
-			emitter.killAndErase();
+		this.setVisible(value);
+		if (emitter != null && !getVisible()){
+			emitter.remove();
 			emitter = null;
 		}
 	}
@@ -189,9 +189,9 @@ public class ItemSprite extends MovieClip {
 	public ItemSprite view( Item item ){
 		view(item.image(), item.glowing());
 		Emitter emitter = item.emitter();
-		if (emitter != null && parent != null) {
+		if (emitter != null && getParent() != null) {
 			emitter.pos( this );
-			parent.add( emitter );
+			getParent().add( emitter );
 			this.emitter = emitter;
 		}
 		return this;
@@ -223,7 +223,7 @@ public class ItemSprite extends MovieClip {
 	}
 	
 	public ItemSprite view( int image, Glowing glowing ) {
-		if (this.emitter != null) this.emitter.killAndErase();
+		if (this.emitter != null) this.emitter.remove();
 		emitter = null;
 		frame( image );
 		glow( glowing );
@@ -287,7 +287,7 @@ public class ItemSprite extends MovieClip {
 
 			texture.bind();
 
-			script.camera(camera());
+			script.camera(getCamera());
 
 			updateMatrix();
 
@@ -307,10 +307,10 @@ public class ItemSprite extends MovieClip {
 	public synchronized void update() {
 		super.update();
 
-		visible = (heap == null || heap.seen);
+		setVisible((heap == null || heap.seen));
 
 		if (emitter != null){
-			emitter.visible = visible;
+			emitter.setVisible(getVisible());
 		}
 
 		if (dropInterval > 0){
@@ -323,7 +323,7 @@ public class ItemSprite extends MovieClip {
 				shadowOffset = 0.25f;
 				place(heap.pos);
 
-				if (visible) {
+				if (getVisible()) {
 
 					if (Dungeon.level.water[heap.pos]) {
 						GameScene.ripple(heap.pos);
@@ -346,7 +346,7 @@ public class ItemSprite extends MovieClip {
 			}
 		}
 
-		if (visible && glowing != null) {
+		if (getVisible() && glowing != null) {
 			if (glowUp && (phase += Game.elapsed) > glowing.period) {
 				
 				glowUp = false;

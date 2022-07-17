@@ -80,7 +80,7 @@ public class Shopkeeper extends NPC {
 
 		Notes.remove(Notes.Landmark.SHOP);
 		
-		sprite.killAndErase();
+		sprite.remove();
 		CellEmitter.get( pos ).burst( ElmoParticle.FACTORY, 6 );
 	}
 	

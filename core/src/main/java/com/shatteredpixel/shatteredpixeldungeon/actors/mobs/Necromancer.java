@@ -156,18 +156,18 @@ public class Necromancer extends Mob {
 		//heal skeleton first
 		if (mySkeleton.HP < mySkeleton.HT){
 
-			if (sprite.visible || mySkeleton.sprite.visible) {
-				sprite.parent.add(new Beam.HealthRay(sprite.center(), mySkeleton.sprite.center()));
+			if (sprite.getVisible() || mySkeleton.sprite.getVisible()) {
+				sprite.getParent().add(new Beam.HealthRay(sprite.center(), mySkeleton.sprite.center()));
 			}
 			
 			mySkeleton.HP = Math.min(mySkeleton.HP + 5, mySkeleton.HT);
-			if (mySkeleton.sprite.visible) mySkeleton.sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
+			if (mySkeleton.sprite.getVisible()) mySkeleton.sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
 			
 		//otherwise give it adrenaline
 		} else if (mySkeleton.buff(Adrenaline.class) == null) {
 
-			if (sprite.visible || mySkeleton.sprite.visible) {
-				sprite.parent.add(new Beam.HealthRay(sprite.center(), mySkeleton.sprite.center()));
+			if (sprite.getVisible() || mySkeleton.sprite.getVisible()) {
+				sprite.getParent().add(new Beam.HealthRay(sprite.center(), mySkeleton.sprite.center()));
 			}
 			
 			Buff.affect(mySkeleton, Adrenaline.class, 3f);
@@ -301,7 +301,7 @@ public class Necromancer extends Mob {
 							ScrollOfTeleportation.appear(mySkeleton, telePos);
 							mySkeleton.teleportSpend();
 							
-							if (sprite != null && sprite.visible){
+							if (sprite != null && sprite.getVisible()){
 								sprite.zap(telePos);
 								return false;
 							} else {
@@ -316,7 +316,7 @@ public class Necromancer extends Mob {
 					
 					//zap skeleton
 					if (mySkeleton.HP < mySkeleton.HT || mySkeleton.buff(Adrenaline.class) == null) {
-						if (sprite != null && sprite.visible){
+						if (sprite != null && sprite.getVisible()){
 							sprite.zap(mySkeleton.pos);
 							return false;
 						} else {

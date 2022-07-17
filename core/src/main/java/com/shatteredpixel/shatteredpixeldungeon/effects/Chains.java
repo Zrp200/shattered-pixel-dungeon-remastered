@@ -82,7 +82,7 @@ public class Chains extends Group {
 	public void update() {
 		if ((spent += Game.elapsed) > duration) {
 
-			killAndErase();
+			remove();
 			if (callback != null) {
 				callback.call();
 			}

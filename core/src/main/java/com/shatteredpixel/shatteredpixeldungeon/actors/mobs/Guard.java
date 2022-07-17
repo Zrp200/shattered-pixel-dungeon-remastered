@@ -91,11 +91,11 @@ public class Guard extends Mob {
 				final int newPosFinal = newPos;
 				this.target = newPos;
 
-				if (sprite.visible || enemy.sprite.visible) {
+				if (sprite.getVisible() || enemy.sprite.getVisible()) {
 					yell(Messages.get(this, "scorpion"));
 					new Item().throwSound();
 					Sample.INSTANCE.play(Assets.Sounds.CHAINS);
-					sprite.parent.add(new Chains(sprite.center(), enemy.sprite.destinationCenter(), new Callback() {
+					sprite.getParent().add(new Chains(sprite.center(), enemy.sprite.destinationCenter(), new Callback() {
 						public void call() {
 							Actor.addDelayed(new Pushing(enemy, enemy.pos, newPosFinal, new Callback() {
 								public void call() {
@@ -176,7 +176,7 @@ public class Guard extends Mob {
 
 					
 					&& chain(enemy.pos)){
-				return !(sprite.visible || enemy.sprite.visible);
+				return !(sprite.getVisible() || enemy.sprite.getVisible());
 			} else {
 				return super.act( enemyInFOV, justAlerted );
 			}

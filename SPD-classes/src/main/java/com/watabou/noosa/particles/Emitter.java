@@ -21,7 +21,7 @@
 
 package com.watabou.noosa.particles;
 
-import com.watabou.glwrap.Blending;
+import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.Visual;
@@ -126,7 +126,7 @@ public class Emitter extends Group {
 					break;
 				}
 			}
-		} else if (started && autoKill && countLiving() == 0) {
+		} else if (started && autoKill && getChildren().isEmpty()) {
 			kill();
 		}
 		
@@ -166,9 +166,9 @@ public class Emitter extends Group {
 	@Override
 	public void draw() {
 		if (lightMode) {
-			Blending.setLightMode();
+			BlendingKt.setLightMode();
 			super.draw();
-			Blending.setNormalMode();
+			BlendingKt.setNormalMode();
 		} else {
 			super.draw();
 		}

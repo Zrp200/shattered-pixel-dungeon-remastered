@@ -108,13 +108,13 @@ public class WndStartGame extends Window {
 			
 			@Override
 			public void update() {
-				if( !visible && GamesInProgress.selectedClass != null){
-					visible = true;
+				if( !getVisible() && GamesInProgress.selectedClass != null){
+					setVisible(true);
 				}
 				super.update();
 			}
 		};
-		start.visible = false;
+		start.setVisible(false);
 		start.setRect(0, HEIGHT - 20, WIDTH, 20);
 		add(start);
 		
@@ -126,7 +126,7 @@ public class WndStartGame extends Window {
 					ShatteredPixelDungeon.scene().addToFront(new WndChallenges(SPDSettings.challenges(), true) {
 						public void onBackPressed() {
 							super.onBackPressed();
-							if (parent != null) {
+							if (getParent() != null) {
 								icon(Icons.get(SPDSettings.challenges() > 0 ?
 										Icons.CHALLENGE_ON : Icons.CHALLENGE_OFF));
 							}
@@ -136,14 +136,14 @@ public class WndStartGame extends Window {
 				
 				@Override
 				public void update() {
-					if( !visible && GamesInProgress.selectedClass != null){
-						visible = true;
+					if( !getVisible() && GamesInProgress.selectedClass != null){
+						setVisible(true);
 					}
 					super.update();
 				}
 			};
 			challengeButton.setRect(WIDTH - 20, HEIGHT - 20, 20, 20);
-			challengeButton.visible = false;
+			challengeButton.setVisible(false);
 			add(challengeButton);
 			
 		} else {
@@ -279,7 +279,7 @@ public class WndStartGame extends Window {
 			name = PixelScene.renderTextBlock(12);
 			add(name);
 			
-			visible = false;
+			setVisible(false);
 		}
 		
 		@Override
@@ -337,9 +337,9 @@ public class WndStartGame extends Window {
 					
 					layout();
 					
-					visible = true;
+					setVisible(true);
 				} else {
-					visible = false;
+					setVisible(false);
 				}
 			}
 		}

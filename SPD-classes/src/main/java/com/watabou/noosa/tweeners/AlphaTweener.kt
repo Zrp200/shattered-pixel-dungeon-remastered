@@ -18,28 +18,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
+package com.watabou.noosa.tweeners
 
-package com.watabou.noosa.tweeners;
+import com.watabou.noosa.Visual
 
-import com.watabou.noosa.Visual;
+/**
+ * [Tweener] that changes alpha value of a [visual][Visual].
+ *
+ * @param alpha desired alpha value
+ * @param interval lifespan of the tweener
+ * @property visual visual to work with
+ */
+open class AlphaTweener(
+    val visual: Visual,
+    alpha: Float,
+    interval: Float
+) : Tweener(interval) {
 
-public class AlphaTweener extends Tweener {
+    var start: Float = visual.alpha()
+    var delta: Float = alpha - start
 
-	public Visual image;
-	
-	public float start;
-	public float delta;
-	
-	public AlphaTweener( Visual image, float alpha, float time ) {
-		super( image, time );
-		
-		this.image = image;
-		start = image.alpha();
-		delta = alpha - start;
-	}
-
-	@Override
-	protected void updateValues( float progress ) {
-		image.alpha( start + delta * progress );
-	}
+    override fun updateValues(progress: Float) {
+        visual.alpha(start + delta * progress)
+    }
 }

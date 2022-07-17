@@ -167,7 +167,7 @@ public class ElementalBlast extends ArmorAbility {
 		ConeAOE aoe = new ConeAOE(aim, aoeSize, 360, projectileProps);
 
 		for (Ballistica ray : aoe.outerRays){
-			((MagicMissile)hero.sprite.parent.recycle( MagicMissile.class )).reset(
+			hero.sprite.getParent().recycle( MagicMissile.class ).reset(
 					effectTypes.get(wandCls),
 					hero.sprite,
 					ray.path.get(ray.dist),
@@ -179,7 +179,7 @@ public class ElementalBlast extends ArmorAbility {
 
 		//cast a ray 2/3 the way, and do effects
 		Class<? extends Wand> finalWandCls = wandCls;
-		((MagicMissile)hero.sprite.parent.recycle( MagicMissile.class )).reset(
+		hero.sprite.getParent().recycle( MagicMissile.class ).reset(
 				effectTypes.get(wandCls),
 				hero.sprite,
 				aim.path.get(aoeSize / 2),

@@ -314,7 +314,7 @@ public class CityBossLevel extends Level {
 		if (heroFOV[boss.pos]) {
 			boss.notice();
 			boss.sprite.alpha( 0 );
-			boss.sprite.parent.add( new AlphaTweener( boss.sprite, 1, 0.1f ) );
+			boss.sprite.getParent().add( new AlphaTweener( boss.sprite, 1, 0.1f ) );
 		}
 
 		set( bottomDoor, Terrain.LOCKED_DOOR );

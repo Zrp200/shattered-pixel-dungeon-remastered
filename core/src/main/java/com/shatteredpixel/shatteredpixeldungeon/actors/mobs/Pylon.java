@@ -104,7 +104,7 @@ public class Pylon extends Mob {
 
 		if (visible) {
 			for (int cell : shockCells){
-				sprite.parent.add(new Lightning(sprite.center(),
+				sprite.getParent().add(new Lightning(sprite.center(),
 						DungeonTilemap.raisedTileCenterToWorld(cell), null));
 				CellEmitter.get(cell).burst(SparkParticle.FACTORY, 3);
 			}

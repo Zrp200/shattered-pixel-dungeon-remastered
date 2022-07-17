@@ -47,7 +47,7 @@ public class TargetedCell extends Image {
 			alpha( alpha );
 			scale.set( alpha );
 		} else {
-			killAndErase();
+			remove();
 		}
 	}
 }

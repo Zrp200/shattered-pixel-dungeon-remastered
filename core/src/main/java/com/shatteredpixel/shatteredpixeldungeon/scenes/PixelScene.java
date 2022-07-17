@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
+import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
@@ -31,7 +32,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Tooltip;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.watabou.gltextures.TextureCache;
-import com.watabou.glwrap.Blending;
+import com.watabou.glwrap.BlendingKt;
 import com.watabou.input.ControllerHandler;
 import com.watabou.input.PointerEvent;
 import com.watabou.noosa.BitmapText;
@@ -206,7 +207,7 @@ public class PixelScene extends Scene {
 			PointF virtualCursorPos = ControllerHandler.getControllerPointerPos();
 			cursor.x = (virtualCursorPos.x / defaultZoom) - cursor.width()/2f;
 			cursor.y = (virtualCursorPos.y / defaultZoom) - cursor.height()/2f;
-			cursor.camera = uiCamera;
+			cursor.setCamera(uiCamera);
 			align(cursor);
 			cursor.draw();
 		}
@@ -217,11 +218,10 @@ public class PixelScene extends Scene {
 	private static Class<?extends PixelScene> savedClass = null;
 	
 	public synchronized void saveWindows(){
-		if (members == null) return;
 
 		savedWindows.clear();
 		savedClass = getClass();
-		for (Gizmo g : members.toArray(new Gizmo[0])){
+		for (Gizmo g : getChildren().toArray(new Gizmo[0])){
 			if (g instanceof Window){
 				savedWindows.add((Class<? extends Window>) g.getClass());
 			}
@@ -314,8 +314,8 @@ public class PixelScene extends Scene {
 					left -= (BadgeBanner.SIZE * BadgeBanner.DEFAULT_SCALE * (BadgeBanner.showing.size()-1))/2;
 					for (int i = 0; i < BadgeBanner.showing.size(); i++){
 						banner = BadgeBanner.showing.get(i);
-						banner.camera = uiCamera;
-						banner.x = align(banner.camera, left);
+						banner.setCamera(uiCamera);
+						banner.x = align(banner.getCamera(), left);
 						banner.y = align(uiCamera, (uiCamera.height - banner.height) / 2 - banner.height / 2 - 16 - offset);
 						left += BadgeBanner.SIZE * BadgeBanner.DEFAULT_SCALE;
 					}
@@ -340,13 +340,13 @@ public class PixelScene extends Scene {
 			
 			this.light = light;
 			
-			camera = uiCamera;
+			setCamera(uiCamera);
 			
 			alpha( 1f );
 			time = FADE_TIME;
 
 			if (INSTANCE != null){
-				INSTANCE.killAndErase();
+				INSTANCE.remove();
 			}
 			INSTANCE = this;
 		}
@@ -358,7 +358,7 @@ public class PixelScene extends Scene {
 			
 			if ((time -= Game.elapsed) <= 0) {
 				alpha( 0f );
-				parent.remove( this );
+				remove();
 				destroy();
 				if (INSTANCE == this) {
 					INSTANCE = null;
@@ -371,9 +371,9 @@ public class PixelScene extends Scene {
 		@Override
 		public void draw() {
 			if (light) {
-				Blending.setLightMode();
+				BlendingKt.setLightMode();
 				super.draw();
-				Blending.setNormalMode();
+				BlendingKt.setNormalMode();
 			} else {
 				super.draw();
 			}

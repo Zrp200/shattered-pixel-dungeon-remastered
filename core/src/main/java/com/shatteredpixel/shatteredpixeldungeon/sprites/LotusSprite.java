@@ -82,7 +82,7 @@ public class LotusSprite extends MobSprite {
 
 	@Override
 	public void place(int cell) {
-		if (parent != null) parent.sendToBack(this);
+		if (getParent() != null) getParent().sendToBack(this);
 		super.place(cell);
 	}
 
@@ -93,7 +93,7 @@ public class LotusSprite extends MobSprite {
 
 	@Override
 	public void update() {
-		visible = true;
+		setVisible(true);
 		super.update();
 	}
 

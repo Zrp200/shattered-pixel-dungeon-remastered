@@ -23,7 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.ui;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.watabou.gltextures.TextureCache;
-import com.watabou.glwrap.Blending;
+import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.NoosaScript;
@@ -55,9 +55,9 @@ public class Archs extends Component {
 			@Override
 			public void draw() {
 				//arch bg has no alpha component, this improves performance
-				Blending.disable();
+				BlendingKt.disableBlending();
 				super.draw();
-				Blending.enable();
+				BlendingKt.enableBlending();
 			}
 		};
 		arcsBg.autoAdjust = true;

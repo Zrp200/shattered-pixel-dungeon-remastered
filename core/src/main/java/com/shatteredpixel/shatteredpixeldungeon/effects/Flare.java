@@ -24,7 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.effects;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.watabou.gltextures.SmartTexture;
 import com.watabou.gltextures.TextureCache;
-import com.watabou.glwrap.Blending;
+import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.NoosaScript;
@@ -117,7 +117,7 @@ public class Flare extends Visual {
 		} else {
 			point(visual.center());
 		}
-		visual.parent.addToBack( this );
+		visual.getParent().addToBack( this );
 		
 		lifespan = this.duration = duration;
 		if (lifespan > 0) scale.set( 0 );
@@ -148,7 +148,7 @@ public class Flare extends Visual {
 				alpha( p );
 				
 			} else {
-				killAndErase();
+				remove();
 			}
 		}
 	}
@@ -159,9 +159,9 @@ public class Flare extends Visual {
 		super.draw();
 		
 		if (lightMode) {
-			Blending.setLightMode();
+			BlendingKt.setLightMode();
 			drawRays();
-			Blending.setNormalMode();
+			BlendingKt.setNormalMode();
 		} else {
 			drawRays();
 		}
@@ -178,7 +178,7 @@ public class Flare extends Visual {
 			rm, gm, bm, am,
 			ra, ga, ba, aa );
 		
-		script.camera( camera );
+		script.camera(getCamera());
 		script.drawElements( vertices, indices, nRays * 3 );
 	}
 }

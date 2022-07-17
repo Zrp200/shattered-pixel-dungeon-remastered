@@ -38,7 +38,7 @@ public class ResumeIndicator extends Tag {
 
 		setSize( SIZE, SIZE );
 
-		visible = false;
+		setVisible(false);
 
 	}
 	
@@ -80,10 +80,10 @@ public class ResumeIndicator extends Tag {
 	@Override
 	public void update() {
 		if (!Dungeon.hero.isAlive())
-			visible = false;
-		else if (visible != (Dungeon.hero.lastAction != null)){
-			visible = Dungeon.hero.lastAction != null;
-			if (visible)
+			setVisible(false);
+		else if (getVisible() != (Dungeon.hero.lastAction != null)){
+			setVisible(Dungeon.hero.lastAction != null);
+			if (getVisible())
 				flash();
 		}
 		super.update();

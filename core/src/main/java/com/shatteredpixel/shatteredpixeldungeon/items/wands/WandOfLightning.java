@@ -150,7 +150,7 @@ public class WandOfLightning extends DamageWand {
 		}
 
 		//don't want to wait for the effect before processing damage.
-		curUser.sprite.parent.addToFront( new Lightning( arcs, null ) );
+		curUser.sprite.getParent().addToFront( new Lightning( arcs, null ) );
 		Sample.INSTANCE.play( Assets.Sounds.LIGHTNING );
 		callback.call();
 	}

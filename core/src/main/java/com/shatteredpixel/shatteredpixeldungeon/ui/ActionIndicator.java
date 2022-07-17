@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDAction;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
-import com.shatteredpixel.shatteredpixeldungeon.windows.WndKeyBindings;
 import com.watabou.input.GameAction;
 import com.watabou.noosa.Image;
 
@@ -42,7 +41,7 @@ public class ActionIndicator extends Tag {
 		instance = this;
 
 		setSize( SIZE, SIZE );
-		visible = false;
+		setVisible(false);
 	}
 	
 	@Override
@@ -65,7 +64,7 @@ public class ActionIndicator extends Tag {
 			else            icon.x = x + width - (SIZE + icon.width()) / 2f - 1;
 			icon.y = y + (height - icon.height()) / 2f;
 			PixelScene.align(icon);
-			if (!members.contains(icon))
+			if (!getChildren().contains(icon))
 				add(icon);
 		}
 	}
@@ -82,12 +81,12 @@ public class ActionIndicator extends Tag {
 			if (icon != null) icon.alpha(1f);
 		}
 
-		if (!visible && action != null){
-			visible = true;
+		if (!getVisible() && action != null){
+			setVisible(true);
 			updateIcon();
 			flash();
 		} else {
-			visible = action != null;
+			setVisible(action != null);
 		}
 		
 		if (needsLayout){
@@ -127,7 +126,7 @@ public class ActionIndicator extends Tag {
 		if (instance != null){
 			synchronized (instance) {
 				if (instance.icon != null) {
-					instance.icon.killAndErase();
+					instance.icon.remove();
 					instance.icon = null;
 				}
 				if (action != null) {

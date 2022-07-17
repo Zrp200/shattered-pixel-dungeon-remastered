@@ -239,19 +239,19 @@ public class TalentButton extends Button {
 	}
 
 	public void enable(boolean value ) {
-		active = value;
+		setActive(value);
 		icon.alpha( value ? 1.0f : 0.3f );
 		bg.alpha( value ? 1.0f : 0.3f );
 	}
 
 	public void upgradeTalent(){
-		if (Dungeon.hero.talentPointsAvailable(tier) > 0 && parent != null) {
+		if (Dungeon.hero.talentPointsAvailable(tier) > 0 && getParent() != null) {
 			Dungeon.hero.upgradeTalent(talent);
 			float oldWidth = fill.width();
 			pointsInTalent++;
 			layout();
 			Sample.INSTANCE.play(Assets.Sounds.LEVELUP, 0.7f, 1.2f);
-			Emitter emitter = (Emitter) parent.recycle(Emitter.class);
+			Emitter emitter = getParent().recycle(Emitter.class);
 			emitter.revive();
 			emitter.pos(fill.x + (fill.width() + oldWidth) / 2f, fill.y + fill.height() / 2f);
 			emitter.burst(Speck.factory(Speck.STAR), 12);

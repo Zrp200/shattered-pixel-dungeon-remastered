@@ -578,7 +578,7 @@ public class Item implements Bundlable {
 		final float delay = castDelay(user, dst);
 
 		if (enemy != null) {
-			((MissileSprite) user.sprite.parent.recycle(MissileSprite.class)).
+			user.sprite.getParent().recycle(MissileSprite.class).
 					reset(user.sprite,
 							enemy.sprite,
 							this,
@@ -606,7 +606,7 @@ public class Item implements Bundlable {
 						}
 					});
 		} else {
-			((MissileSprite) user.sprite.parent.recycle(MissileSprite.class)).
+			user.sprite.getParent().recycle(MissileSprite.class).
 					reset(user.sprite,
 							cell,
 							this,

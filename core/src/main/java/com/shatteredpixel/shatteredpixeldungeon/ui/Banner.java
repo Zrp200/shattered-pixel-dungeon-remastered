@@ -98,7 +98,7 @@ public class Banner extends Image {
 				state = State.FADE_OUT;
 				break;
 			case FADE_OUT:
-				killAndErase();
+				remove();
 				break;
 			}
 				

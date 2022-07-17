@@ -82,7 +82,7 @@ public class EyeSprite extends MobSprite {
 		super.update();
 		if (chargeParticles != null){
 			chargeParticles.pos( center() );
-			chargeParticles.visible = visible;
+			chargeParticles.setVisible(getVisible());
 		}
 	}
 
@@ -98,14 +98,14 @@ public class EyeSprite extends MobSprite {
 	public void kill() {
 		super.kill();
 		if (chargeParticles != null){
-			chargeParticles.killAndErase();
+			chargeParticles.remove();
 		}
 	}
 
 	public void charge( int pos ){
 		turnTo(ch.pos, pos);
 		play(charging);
-		if (visible) Sample.INSTANCE.play( Assets.Sounds.CHARGEUP );
+		if (getVisible()) Sample.INSTANCE.play( Assets.Sounds.CHARGEUP );
 	}
 
 	@Override
@@ -127,14 +127,14 @@ public class EyeSprite extends MobSprite {
 		if (anim == zap) {
 			idle();
 			if (Actor.findChar(zapPos) != null){
-				parent.add(new Beam.DeathRay(center(), Actor.findChar(zapPos).sprite.center()));
+				getParent().add(new Beam.DeathRay(center(), Actor.findChar(zapPos).sprite.center()));
 			} else {
-				parent.add(new Beam.DeathRay(center(), DungeonTilemap.raisedTileCenterToWorld(zapPos)));
+				getParent().add(new Beam.DeathRay(center(), DungeonTilemap.raisedTileCenterToWorld(zapPos)));
 			}
 			((Eye)ch).deathGaze();
 			ch.next();
 		} else if (anim == die){
-			chargeParticles.killAndErase();
+			chargeParticles.remove();
 		}
 	}
 }

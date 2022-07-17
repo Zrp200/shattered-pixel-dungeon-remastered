@@ -30,7 +30,7 @@ public class DiscardedItemSprite extends ItemSprite {
 	public void drop() {
 		scale.set( 1 );
 		am = 1;
-		if (emitter != null) emitter.killAndErase();
+		if (emitter != null) emitter.remove();
 
 		origin.set( width/2, height - DungeonTilemap.SIZE/2);
 		angularSpeed = 720;

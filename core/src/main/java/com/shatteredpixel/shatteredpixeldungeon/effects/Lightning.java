@@ -22,7 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.effects;
 
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
-import com.watabou.glwrap.Blending;
+import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.Image;
@@ -78,7 +78,7 @@ public class Lightning extends Group {
 	public void update() {
 		if ((life -= Game.elapsed) < 0) {
 			
-			killAndErase();
+			remove();
 			if (callback != null) {
 				callback.call();
 			}
@@ -97,9 +97,9 @@ public class Lightning extends Group {
 	
 	@Override
 	public void draw() {
-		Blending.setLightMode();
+		BlendingKt.setLightMode();
 		super.draw();
-		Blending.setNormalMode();
+		BlendingKt.setNormalMode();
 	}
 
 	//A lightning object is meant to be loaded up with arcs.

@@ -65,7 +65,7 @@ public class WndHardNotification extends WndTitledMessage{
 		super.update();
 
 		incTime += Game.elapsed;
-		if (timeLeft <= 0 && !btnOkay.active){
+		if (timeLeft <= 0 && !btnOkay.getActive()){
 			btnOkay.enable(true);
 			btnOkay.text(btnMessage);
 		} else if (timeLeft > 0 && incTime >= 1) {

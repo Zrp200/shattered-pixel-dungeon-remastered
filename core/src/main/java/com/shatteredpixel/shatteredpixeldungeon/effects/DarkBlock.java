@@ -45,15 +45,15 @@ public class DarkBlock extends Gizmo{
 	public void lighten() {
 
 		target.resetColor();
-		killAndErase();
+		remove();
 
 	}
 
 	public static DarkBlock darken( CharSprite sprite ) {
 
 		DarkBlock darkBlock = new DarkBlock( sprite );
-		if (sprite.parent != null)
-			sprite.parent.add( darkBlock );
+		if (sprite.getParent() != null)
+			sprite.getParent().add( darkBlock );
 
 		return darkBlock;
 	}

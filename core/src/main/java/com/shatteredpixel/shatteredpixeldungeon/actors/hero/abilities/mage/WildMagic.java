@@ -140,7 +140,7 @@ public class WildMagic extends ArmorAbility {
 				public void call() {
 					cur.onZap(aim);
 					if (Game.timeTotal - startTime < 0.33f){
-						hero.sprite.parent.add(new Delayer(0.33f - (Game.timeTotal - startTime)) {
+						hero.sprite.getParent().add(new Delayer(0.33f - (Game.timeTotal - startTime)) {
 							@Override
 							protected void onComplete() {
 								afterZap(cur, wands, hero, cell);
@@ -159,7 +159,7 @@ public class WildMagic extends ArmorAbility {
 						@Override
 						public void call() {
 							if (Game.timeTotal - startTime < 0.33f){
-								hero.sprite.parent.add(new Delayer(0.33f - (Game.timeTotal - startTime)) {
+								hero.sprite.getParent().add(new Delayer(0.33f - (Game.timeTotal - startTime)) {
 									@Override
 									protected void onComplete() {
 										afterZap(cur, wands, hero, cell);

@@ -139,7 +139,7 @@ public class QuickSlotButton extends Button {
 		add( slot );
 		
 		crossB = Icons.TARGET.get();
-		crossB.visible = false;
+		crossB.setVisible(false);
 		add( crossB );
 		
 		crossM = new Image();
@@ -240,7 +240,7 @@ public class QuickSlotButton extends Button {
 	}
 
 	public void enable( boolean value ) {
-		active = value;
+		setActive(value);
 		if (value) {
 			enableSlot();
 		} else {
@@ -273,13 +273,13 @@ public class QuickSlotButton extends Button {
 			targetingSlot = slotNum;
 			CharSprite sprite = lastTarget.sprite;
 
-			if (sprite.parent != null) {
-				sprite.parent.addToFront(crossM);
+			if (sprite.getParent() != null) {
+				sprite.getParent().addToFront(crossM);
 				crossM.point(sprite.center(crossM));
 			}
 
 			crossB.point(slot.sprite.center(crossB));
-			crossB.visible = true;
+			crossB.setVisible(true);
 
 		} else {
 
@@ -319,7 +319,7 @@ public class QuickSlotButton extends Button {
 		for (int i = 0; i < instance.length; i++) {
 			if (instance[i] != null) {
 				instance[i].item(select(i));
-				instance[i].enable(instance[i].active);
+				instance[i].enable(instance[i].getActive());
 			}
 		}
 		if (Toolbar.SWAP_INSTANCE != null){
@@ -339,7 +339,7 @@ public class QuickSlotButton extends Button {
 	public static void cancel() {
 		if (targetingSlot != -1) {
 			for (QuickSlotButton btn : instance) {
-				btn.crossB.visible = false;
+				btn.crossB.setVisible(false);
 				btn.crossM.remove();
 				targetingSlot = -1;
 			}

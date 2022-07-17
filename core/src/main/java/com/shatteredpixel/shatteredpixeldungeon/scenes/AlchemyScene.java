@@ -34,7 +34,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.LiquidMetal;
 import com.shatteredpixel.shatteredpixeldungeon.items.Recipe;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AlchemistsToolkit;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.Dart;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Document;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Journal;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -52,9 +51,8 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndEnergizeItem;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndInfoItem;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndJournal;
 import com.watabou.gltextures.TextureCache;
-import com.watabou.glwrap.Blending;
+import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Camera;
-import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.NinePatch;
@@ -108,9 +106,9 @@ public class AlchemyScene extends PixelScene {
 			@Override
 			public void draw() {
 				//water has no alpha component, this improves performance
-				Blending.disable();
+				BlendingKt.disableBlending();
 				super.draw();
-				Blending.enable();
+				BlendingKt.enableBlending();
 			}
 		};
 		water.autoAdjust = true;
@@ -182,8 +180,8 @@ public class AlchemyScene extends PixelScene {
 				combines[i].setRect(left + (w-30)/2f, inputs[1].top()+5, 30, inputs[1].height()-10);
 				outputs[i].setRect(left + w - BTN_SIZE - 10, inputs[1].top(), BTN_SIZE, BTN_SIZE);
 			} else {
-				combines[i].visible = false;
-				outputs[i].visible = false;
+				combines[i].setVisible(false);
+				outputs[i].setVisible(false);
 			}
 
 			add(combines[i]);
@@ -351,8 +349,8 @@ public class AlchemyScene extends PixelScene {
 			outputs[i].item(null);
 
 			if (i != 0){
-				combines[i].visible = false;
-				outputs[i].visible = false;
+				combines[i].setVisible(false);
+				outputs[i].setVisible(false);
 			}
 		}
 
@@ -376,7 +374,7 @@ public class AlchemyScene extends PixelScene {
 
 			int cost = recipe.cost(ingredients);
 
-			outputs[i].visible = true;
+			outputs[i].setVisible(true);
 			outputs[i].setRect(outputs[0].left(), top, BTN_SIZE, BTN_SIZE);
 			outputs[i].item(recipe.sampleOutput(ingredients));
 			top += BTN_SIZE+gap;
@@ -386,7 +384,7 @@ public class AlchemyScene extends PixelScene {
 				availableEnergy += toolkit.availableEnergy();
 			}
 
-			combines[i].visible = true;
+			combines[i].setVisible(true);
 			combines[i].setRect(combines[0].left(), outputs[i].top()+5, 30, 20);
 			combines[i].enable(cost <= availableEnergy, cost);
 
@@ -691,9 +689,9 @@ public class AlchemyScene extends PixelScene {
 			}
 
 			if (cost == 0){
-				costText.visible = false;
+				costText.setVisible(false);
 			} else {
-				costText.visible = true;
+				costText.setVisible(true);
 				costText.text(Messages.get(AlchemyScene.class, "energy") + " " + cost);
 			}
 
@@ -717,7 +715,7 @@ public class AlchemyScene extends PixelScene {
 				@Override
 				protected void onClick() {
 					super.onClick();
-					if (visible && item != null && item.trueName() != null){
+					if (getVisible() && item != null && item.trueName() != null){
 						AlchemyScene.this.addToFront(new WndInfoItem(item));
 					}
 				}

@@ -90,15 +90,15 @@ public class AttackIndicator extends Tag {
 	public synchronized void update() {
 		super.update();
 
-		if (!bg.visible){
-			if (sprite != null) sprite.visible = false;
+		if (!bg.getVisible()){
+			if (sprite != null) sprite.setVisible(false);
 			enable(false);
 			if (delay > 0f) delay -= Game.elapsed;
-			if (delay <= 0f) active = false;
+			if (delay <= 0f) setActive(false);
 		} else {
 			delay = 0.75f;
-			active = true;
-			if (bg.width > 0 && sprite != null)sprite.visible = true;
+			setActive(true);
+			if (bg.width > 0 && sprite != null) sprite.setVisible(true);
 
 			if (Dungeon.hero.isAlive()) {
 
@@ -126,35 +126,35 @@ public class AttackIndicator extends Tag {
 			if (candidates.isEmpty()) {
 				lastTarget = null;
 			} else {
-				active = true;
+				setActive(true);
 				lastTarget = Random.element( candidates );
 				updateImage();
 				flash();
 			}
 		} else {
-			if (!bg.visible) {
-				active = true;
+			if (!bg.getVisible()) {
+				setActive(true);
 				flash();
 			}
 		}
 		
 		visible( lastTarget != null );
-		enable( bg.visible );
+		enable(bg.getVisible());
 	}
 	
 	private synchronized void updateImage() {
 		
 		if (sprite != null) {
-			sprite.killAndErase();
+			sprite.remove();
 			sprite = null;
 		}
 		
 		sprite = Reflection.newInstance(lastTarget.spriteClass);
-		active = true;
+		setActive(true);
 		sprite.linkVisuals(lastTarget);
 		sprite.idle();
 		sprite.paused = true;
-		sprite.visible = bg.visible;
+		sprite.setVisible(bg.getVisible());
 		add( sprite );
 
 		layout();
@@ -169,7 +169,7 @@ public class AttackIndicator extends Tag {
 	}
 	
 	private synchronized void visible( boolean value ) {
-		bg.visible = value;
+		bg.setVisible(value);
 	}
 	
 	@Override

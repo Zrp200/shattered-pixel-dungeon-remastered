@@ -83,7 +83,8 @@ public class WndHeroInfo extends WndTabbed {
 			@Override
 			protected void select(boolean value) {
 				super.select(value);
-				heroInfo.visible = heroInfo.active = value;
+				heroInfo.setActive(value);
+				heroInfo.setVisible(value);
 			}
 		});
 
@@ -96,7 +97,8 @@ public class WndHeroInfo extends WndTabbed {
 			@Override
 			protected void select(boolean value) {
 				super.select(value);
-				talentInfo.visible = talentInfo.active = value;
+				talentInfo.setActive(value);
+				talentInfo.setVisible(value);
 			}
 		});
 
@@ -110,7 +112,8 @@ public class WndHeroInfo extends WndTabbed {
 				@Override
 				protected void select(boolean value) {
 					super.select(value);
-					subclassInfo.visible = subclassInfo.active = value;
+					subclassInfo.setActive(value);
+					subclassInfo.setVisible(value);
 				}
 			});
 		}
@@ -125,7 +128,8 @@ public class WndHeroInfo extends WndTabbed {
 				@Override
 				protected void select(boolean value) {
 					super.select(value);
-					abilityInfo.visible = abilityInfo.active = value;
+					abilityInfo.setActive(value);
+					abilityInfo.setVisible(value);
 				}
 			});
 		}

@@ -83,11 +83,12 @@ public class WndHero extends WndTabbed {
 				super.select( value );
 				if (selected) {
 					lastIdx = 0;
-					if (!stats.visible) {
+					if (!stats.getVisible()) {
 						stats.initialize();
 					}
 				}
-				stats.visible = stats.active = selected;
+				stats.setActive(selected);
+				stats.setVisible(selected);
 			}
 		} );
 		add( new IconTab( Icons.get(Icons.TALENT) ) {
@@ -95,14 +96,16 @@ public class WndHero extends WndTabbed {
 				super.select( value );
 				if (selected) lastIdx = 1;
 				if (selected) StatusPane.talentBlink = 0;
-				talents.visible = talents.active = selected;
+				talents.setActive(selected);
+				talents.setVisible(selected);
 			}
 		} );
 		add( new IconTab( Icons.get(Icons.BUFFS) ) {
 			protected void select( boolean value ) {
 				super.select( value );
 				if (selected) lastIdx = 2;
-				buffs.visible = buffs.active = selected;
+				buffs.setActive(selected);
+				buffs.setVisible(selected);
 			}
 		} );
 
@@ -134,7 +137,7 @@ public class WndHero extends WndTabbed {
 
 		public void initialize(){
 
-			for (Gizmo g : members){
+			for (Gizmo g : getChildren()){
 				if (g != null) g.destroy();
 			}
 			clear();

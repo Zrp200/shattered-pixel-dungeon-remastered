@@ -24,7 +24,7 @@ package com.watabou.noosa;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.watabou.gltextures.SmartTexture;
 import com.watabou.glwrap.Matrix;
-import com.watabou.glwrap.Quad;
+import com.watabou.glwrap.QuadKt;
 import com.watabou.glwrap.Vertexbuffer;
 import com.watabou.utils.RectF;
 
@@ -86,7 +86,7 @@ public class BitmapText extends Visual {
 		
 		font.texture.bind();
 		
-		script.camera( camera() );
+		script.camera( getCamera() );
 		
 		script.uModel.valueM4( matrix );
 		script.lighting(
@@ -112,7 +112,7 @@ public class BitmapText extends Visual {
 			text = "";
 		}
 
-		quads = Quad.createSet( text.length() );
+		quads = QuadKt.createSet( text.length() );
 		realLength = 0;
 
 		int length = text.length();

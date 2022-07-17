@@ -74,7 +74,7 @@ public class NecromancerSprite extends MobSprite {
 	public void update() {
 		super.update();
 		if (summoningBones != null && ((Necromancer) ch).summoningPos != -1){
-			summoningBones.visible = Dungeon.level.heroFOV[((Necromancer) ch).summoningPos];
+			summoningBones.setVisible(Dungeon.level.heroFOV[((Necromancer) ch).summoningPos]);
 		}
 	}
 
@@ -90,7 +90,7 @@ public class NecromancerSprite extends MobSprite {
 	public void kill() {
 		super.kill();
 		if (summoningBones != null){
-			summoningBones.killAndErase();
+			summoningBones.remove();
 		}
 	}
 
@@ -101,7 +101,7 @@ public class NecromancerSprite extends MobSprite {
 	}
 
 	public void finishSummoning(){
-		if (summoningBones.visible) {
+		if (summoningBones.getVisible()) {
 			Sample.INSTANCE.play(Assets.Sounds.BONES);
 			summoningBones.burst(Speck.factory(Speck.RATTLE), 5);
 		} else {
@@ -123,8 +123,8 @@ public class NecromancerSprite extends MobSprite {
 			}
 			summoningBones = CellEmitter.get(((Necromancer) ch).summoningPos);
 			summoningBones.pour(Speck.factory(Speck.RATTLE), 0.2f);
-			summoningBones.visible = Dungeon.level.heroFOV[((Necromancer) ch).summoningPos];
-			if (visible || summoningBones.visible ) Sample.INSTANCE.play( Assets.Sounds.CHARGEUP, 1f, 0.8f );
+			summoningBones.setVisible(Dungeon.level.heroFOV[((Necromancer) ch).summoningPos]);
+			if (getVisible() || summoningBones.getVisible()) Sample.INSTANCE.play( Assets.Sounds.CHARGEUP, 1f, 0.8f );
 		}
 	}
 

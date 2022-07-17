@@ -96,7 +96,7 @@ public class HeroSelectScene extends PixelScene {
 
 		background.x = (Camera.main.width - background.width())/2f;
 		background.y = (Camera.main.height - background.height())/2f;
-		background.visible = false;
+		background.setVisible(false);
 		PixelScene.align(background);
 		add(background);
 
@@ -137,7 +137,7 @@ public class HeroSelectScene extends PixelScene {
 		startBtn.setSize(80, 21);
 		startBtn.setPos((Camera.main.width - startBtn.width())/2f, (Camera.main.height - HeroBtn.HEIGHT + 2 - startBtn.height()));
 		add(startBtn);
-		startBtn.visible = false;
+		startBtn.setVisible(false);
 
 		infoButton = new IconButton(Icons.get(Icons.INFO)){
 			@Override
@@ -151,7 +151,7 @@ public class HeroSelectScene extends PixelScene {
 				return Messages.titleCase(Messages.get(WndKeyBindings.class, "hero_info"));
 			}
 		};
-		infoButton.visible = false;
+		infoButton.setVisible(false);
 		infoButton.setSize(20, 21);
 		add(infoButton);
 
@@ -174,7 +174,8 @@ public class HeroSelectScene extends PixelScene {
 		}
 
 		optionsPane = new GameOptions();
-		optionsPane.visible = optionsPane.active = false;
+		optionsPane.setActive(false);
+		optionsPane.setVisible(false);
 		optionsPane.layout();
 		optionsPane.setPos(heroBtnleft, 0);
 		add(optionsPane);
@@ -183,8 +184,8 @@ public class HeroSelectScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				optionsPane.visible = !optionsPane.visible;
-				optionsPane.active = !optionsPane.active;
+				optionsPane.setVisible(!optionsPane.getVisible());
+				optionsPane.setActive(!optionsPane.getActive());
 			}
 
 			@Override
@@ -204,7 +205,7 @@ public class HeroSelectScene extends PixelScene {
 		};
 		btnOptions.setRect(heroBtnleft + 16, Camera.main.height-HeroBtn.HEIGHT-16, 20, 21);
 		updateOptionsColor();
-		btnOptions.visible = false;
+		btnOptions.setVisible(false);
 
 		if (DeviceCompat.isDebug() || Badges.isUnlocked(Badges.Badge.VICTORY)){
 			add(btnOptions);
@@ -217,7 +218,7 @@ public class HeroSelectScene extends PixelScene {
 		btnExit = new ExitButton();
 		btnExit.setPos( Camera.main.width - btnExit.width(), 0 );
 		add( btnExit );
-		btnExit.visible = !SPDSettings.intro() || Rankings.INSTANCE.totalNumber > 0;
+		btnExit.setVisible(!SPDSettings.intro() || Rankings.INSTANCE.totalNumber > 0);
 
 		prompt = PixelScene.renderTextBlock(Messages.get(this, "title"), 12);
 		prompt.hardlight(Window.TITLE_COLOR);
@@ -257,21 +258,21 @@ public class HeroSelectScene extends PixelScene {
 		GamesInProgress.selectedClass = cl;
 
 		background.texture( cl.splashArt() );
-		background.visible = true;
+		background.setVisible(true);
 		background.hardlight(1.5f,1.5f,1.5f);
 
-		prompt.visible = false;
-		startBtn.visible = true;
+		prompt.setVisible(false);
+		startBtn.setVisible(true);
 		startBtn.text(Messages.titleCase(cl.title()));
 		startBtn.textColor(Window.TITLE_COLOR);
 		startBtn.setSize(startBtn.reqWidth() + 8, 21);
 		startBtn.setPos((Camera.main.width - startBtn.width())/2f, startBtn.top());
 		PixelScene.align(startBtn);
 
-		infoButton.visible = true;
+		infoButton.setVisible(true);
 		infoButton.setPos(startBtn.right(), startBtn.top());
 
-		btnOptions.visible = true;
+		btnOptions.setVisible(true);
 		btnOptions.setPos(startBtn.left()-btnOptions.width(), startBtn.top());
 
 		optionsPane.setPos(optionsPane.left(), startBtn.top() - optionsPane.height() - 2);
@@ -283,9 +284,9 @@ public class HeroSelectScene extends PixelScene {
 	@Override
 	public void update() {
 		super.update();
-		btnExit.visible = !SPDSettings.intro() || Rankings.INSTANCE.totalNumber > 0;
+		btnExit.setVisible(!SPDSettings.intro() || Rankings.INSTANCE.totalNumber > 0);
 		//do not fade when a window is open
-		for (Object v : members){
+		for (Object v : getChildren()){
 			if (v instanceof Window) resetFade();
 		}
 		if (GamesInProgress.selectedClass != null) {
@@ -311,7 +312,7 @@ public class HeroSelectScene extends PixelScene {
 
 	@Override
 	protected void onBackPressed() {
-		if (btnExit.visible){
+		if (btnExit.getVisible()){
 			ShatteredPixelDungeon.switchScene(TitleScene.class);
 		} else {
 			super.onBackPressed();

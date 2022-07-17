@@ -22,7 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.effects;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.watabou.glwrap.Blending;
+import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
@@ -81,14 +81,14 @@ public class Beam extends Image {
 		scale.set( scale.x, p );
 		
 		if ((timeLeft -= Game.elapsed) <= 0) {
-			killAndErase();
+			remove();
 		}
 	}
 	
 	@Override
 	public void draw() {
-		Blending.setLightMode();
+		BlendingKt.setLightMode();
 		super.draw();
-		Blending.setNormalMode();
+		BlendingKt.setNormalMode();
 	}
 }

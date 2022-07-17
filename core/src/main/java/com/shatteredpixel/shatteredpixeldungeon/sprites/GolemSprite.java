@@ -74,7 +74,7 @@ public class GolemSprite extends MobSprite {
 		super.update();
 		if (teleParticles != null){
 			teleParticles.pos( this );
-			teleParticles.visible = visible;
+			teleParticles.setVisible(getVisible());
 		}
 	}
 
@@ -107,7 +107,7 @@ public class GolemSprite extends MobSprite {
 		turnTo( ch.pos , cell );
 		play( zap );
 
-		MagicMissile.boltFromChar( parent,
+		MagicMissile.boltFromChar(getParent(),
 				MagicMissile.ELMO,
 				this,
 				cell,

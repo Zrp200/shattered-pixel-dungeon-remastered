@@ -43,7 +43,7 @@ public class ScrollArea extends PointerArea {
 
 			boolean hit = event != null && target.overlapsScreenPoint( (int)event.pos.x, (int)event.pos.y );
 
-			if (!isActive()) {
+			if (!getActive()) {
 				return (hit && blockLevel == ALWAYS_BLOCK);
 			}
 

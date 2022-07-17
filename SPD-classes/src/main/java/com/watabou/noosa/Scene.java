@@ -57,14 +57,9 @@ public class Scene extends Group {
 	public void onResume(){
 	
 	}
-
-	@Override
-	public void update() {
-		super.update();
-	}
 	
 	@Override
-	public Camera camera() {
+	public Camera getCamera() {
 		return Camera.main;
 	}
 	

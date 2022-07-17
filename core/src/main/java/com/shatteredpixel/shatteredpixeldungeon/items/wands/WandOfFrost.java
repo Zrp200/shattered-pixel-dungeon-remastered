@@ -111,7 +111,7 @@ public class WandOfFrost extends DamageWand {
 
 	@Override
 	public void fx(Ballistica bolt, Callback callback) {
-		MagicMissile.boltFromChar(curUser.sprite.parent,
+		MagicMissile.boltFromChar(curUser.sprite.getParent(),
 				MagicMissile.FROST,
 				curUser.sprite,
 				bolt.collisionPos,

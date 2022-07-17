@@ -319,7 +319,7 @@ public class StatusPane extends Component {
 	}
 
 	public void showStarParticles(){
-		Emitter emitter = (Emitter)recycle( Emitter.class );
+		Emitter emitter = recycle( Emitter.class );
 		emitter.revive();
 		emitter.pos( avatar.center() );
 		emitter.burst( Speck.factory( Speck.STAR ), 12 );

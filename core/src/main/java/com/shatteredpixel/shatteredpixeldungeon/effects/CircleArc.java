@@ -23,7 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.effects;
 
 import com.watabou.gltextures.SmartTexture;
 import com.watabou.gltextures.TextureCache;
-import com.watabou.glwrap.Blending;
+import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.NoosaScript;
@@ -88,7 +88,7 @@ public class CircleArc extends Visual {
 	
 	public CircleArc show( Visual visual, float duration ) {
 		point( visual.center() );
-		visual.parent.addToBack( this );
+		visual.getParent().addToBack( this );
 		
 		lifespan = this.duration = duration;
 		
@@ -163,7 +163,7 @@ public class CircleArc extends Visual {
 				dirty = true;
 			
 			} else {
-				killAndErase();
+				remove();
 			}
 		}
 	}
@@ -177,7 +177,7 @@ public class CircleArc extends Visual {
 			updateTriangles();
 		}
 		
-		if (lightMode) Blending.setLightMode();
+		if (lightMode) BlendingKt.setLightMode();
 		
 		NoosaScript script = NoosaScript.get();
 		
@@ -187,10 +187,10 @@ public class CircleArc extends Visual {
 		script.lighting(
 				rm, gm, bm, am,
 				ra, ga, ba, aa );
-		
-		script.camera( camera );
+
+		script.camera(getCamera());
 		script.drawElements( vertices, indices, nTris * 3 );
 		
-		if (lightMode) Blending.setNormalMode();
+		if (lightMode) BlendingKt.setNormalMode();
 	}
 }

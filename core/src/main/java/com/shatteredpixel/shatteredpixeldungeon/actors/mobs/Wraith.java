@@ -110,7 +110,7 @@ public class Wraith extends Mob {
 			Dungeon.level.occupyCell(w);
 
 			w.sprite.alpha( 0 );
-			w.sprite.parent.add( new AlphaTweener( w.sprite, 1, 0.5f ) );
+			w.sprite.getParent().add( new AlphaTweener( w.sprite, 1, 0.5f ) );
 			
 			w.sprite.emitter().burst( ShadowParticle.CURSE, 5 );
 			

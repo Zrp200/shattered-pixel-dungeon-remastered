@@ -18,29 +18,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
+package com.watabou.noosa.tweeners
 
-package com.watabou.noosa.tweeners;
+import com.watabou.noosa.Visual
+import com.watabou.utils.PointF
 
-import com.watabou.noosa.Visual;
-import com.watabou.utils.PointF;
+/**
+ * [Tweener] that moves a [visual][Visual] from its current position to a specified one.
+ *
+ * @param pos desired position of the visual
+ * @param interval lifespan of the tweener
+ * @property visual visual to work with
+ */
+class PosTweener(
+    private var visual: Visual,
+    pos: PointF,
+    interval: Float
+) : Tweener(interval) {
 
-public class ScaleTweener extends Tweener {
+    var start: PointF = visual.point()
+	var end: PointF = pos
 
-	public Visual visual;
-	
-	public PointF start;
-	public PointF end;
-	
-	public ScaleTweener( Visual visual, PointF scale, float time ) {
-		super( visual, time );
-		
-		this.visual = visual;
-		start = visual.scale;
-		end = scale;
-	}
-
-	@Override
-	protected void updateValues( float progress ) {
-		visual.scale = PointF.inter( start, end, progress );
-	}
+    override fun updateValues(progress: Float) {
+        visual.point(PointF.inter(start, end, progress))
+    }
 }

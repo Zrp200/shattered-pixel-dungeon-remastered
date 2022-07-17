@@ -91,7 +91,7 @@ public abstract class FistSprite extends MobSprite {
 		super.update();
 
 		if (particles != null){
-			particles.visible = visible;
+			particles.setVisible(getVisible());
 		}
 	}
 
@@ -107,7 +107,7 @@ public abstract class FistSprite extends MobSprite {
 	public void kill() {
 		super.kill();
 		if (particles != null){
-			particles.killAndErase();
+			particles.remove();
 		}
 	}
 
@@ -123,7 +123,7 @@ public abstract class FistSprite extends MobSprite {
 		turnTo( ch.pos , cell );
 		play( zap );
 
-		MagicMissile.boltFromChar( parent,
+		MagicMissile.boltFromChar(getParent(),
 				boltType,
 				this,
 				cell,
@@ -270,7 +270,7 @@ public abstract class FistSprite extends MobSprite {
 			play( zap );
 
 			((YogFist)ch).onZapComplete();
-			parent.add( new Beam.LightRay(center(), DungeonTilemap.raisedTileCenterToWorld(cell)));
+			getParent().add( new Beam.LightRay(center(), DungeonTilemap.raisedTileCenterToWorld(cell)));
 		}
 		@Override
 		public int blood() {

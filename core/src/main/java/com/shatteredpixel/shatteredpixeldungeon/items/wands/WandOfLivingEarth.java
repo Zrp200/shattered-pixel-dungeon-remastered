@@ -178,7 +178,7 @@ public class WandOfLivingEarth extends DamageWand {
 	
 	@Override
 	public void fx(Ballistica bolt, Callback callback) {
-		MagicMissile.boltFromChar(curUser.sprite.parent,
+		MagicMissile.boltFromChar(curUser.sprite.getParent(),
 				MagicMissile.EARTH,
 				curUser.sprite,
 				bolt.collisionPos,

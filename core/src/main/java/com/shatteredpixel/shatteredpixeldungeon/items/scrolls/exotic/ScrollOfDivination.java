@@ -52,7 +52,7 @@ public class ScrollOfDivination extends ExoticScroll {
 	@Override
 	public void doRead() {
 		
-		curUser.sprite.parent.add( new Identification( curUser.sprite.center().offset( 0, -16 ) ) );
+		curUser.sprite.getParent().add( new Identification( curUser.sprite.center().offset( 0, -16 ) ) );
 		
 		Sample.INSTANCE.play( Assets.Sounds.READ );
 		

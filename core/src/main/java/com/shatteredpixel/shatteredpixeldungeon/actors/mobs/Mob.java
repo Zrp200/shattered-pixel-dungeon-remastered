@@ -566,7 +566,7 @@ public abstract class Mob extends Char {
 	
 	protected boolean doAttack( Char enemy ) {
 		
-		if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
+		if (sprite != null && (sprite.getVisible() || enemy.sprite.getVisible())) {
 			sprite.attack( enemy.pos );
 			return false;
 			

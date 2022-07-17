@@ -568,7 +568,7 @@ public class Tengu extends Mob {
 		throwingChar = thrower;
 		final BombAbility.BombItem item = new BombAbility.BombItem();
 		thrower.sprite.zap(finalTargetCell);
-		((MissileSprite) thrower.sprite.parent.recycle(MissileSprite.class)).
+		thrower.sprite.getParent().recycle(MissileSprite.class).
 				reset(thrower.sprite,
 						finalTargetCell,
 						item,
@@ -925,7 +925,7 @@ public class Tengu extends Mob {
 		throwingChar = thrower;
 		final ShockerAbility.ShockerItem item = new ShockerAbility.ShockerItem();
 		thrower.sprite.zap(finalTargetCell);
-		((MissileSprite) thrower.sprite.parent.recycle(MissileSprite.class)).
+		thrower.sprite.getParent().recycle(MissileSprite.class).
 				reset(thrower.sprite,
 						finalTargetCell,
 						item,
@@ -953,8 +953,8 @@ public class Tengu extends Mob {
 				spreadblob();
 			} else if (shockingOrdinals){
 				
-				target.sprite.parent.add(new Lightning(shockerPos - 1 - Dungeon.level.width(), shockerPos + 1 + Dungeon.level.width(), null));
-				target.sprite.parent.add(new Lightning(shockerPos - 1 + Dungeon.level.width(), shockerPos + 1 - Dungeon.level.width(), null));
+				target.sprite.getParent().add(new Lightning(shockerPos - 1 - Dungeon.level.width(), shockerPos + 1 + Dungeon.level.width(), null));
+				target.sprite.getParent().add(new Lightning(shockerPos - 1 + Dungeon.level.width(), shockerPos + 1 - Dungeon.level.width(), null));
 				
 				if (Dungeon.level.distance(Dungeon.hero.pos, shockerPos) <= 1){
 					Sample.INSTANCE.play( Assets.Sounds.LIGHTNING );
@@ -964,8 +964,8 @@ public class Tengu extends Mob {
 				spreadblob();
 			} else {
 				
-				target.sprite.parent.add(new Lightning(shockerPos - Dungeon.level.width(), shockerPos + Dungeon.level.width(), null));
-				target.sprite.parent.add(new Lightning(shockerPos - 1, shockerPos + 1, null));
+				target.sprite.getParent().add(new Lightning(shockerPos - Dungeon.level.width(), shockerPos + Dungeon.level.width(), null));
+				target.sprite.getParent().add(new Lightning(shockerPos - 1, shockerPos + 1, null));
 				
 				if (Dungeon.level.distance(Dungeon.hero.pos, shockerPos) <= 1){
 					Sample.INSTANCE.play( Assets.Sounds.LIGHTNING );

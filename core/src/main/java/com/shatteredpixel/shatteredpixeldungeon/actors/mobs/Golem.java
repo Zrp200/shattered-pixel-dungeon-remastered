@@ -219,7 +219,7 @@ public class Golem extends Mob {
 
 				if (distance(enemy) >= 1 && Random.Int(100/distance(enemy)) == 0
 						&& !Char.hasProp(enemy, Property.IMMOVABLE) && canTele(target)){
-					if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
+					if (sprite != null && (sprite.getVisible() || enemy.sprite.getVisible())) {
 						sprite.zap( enemy.pos );
 						return false;
 					} else {
@@ -232,7 +232,7 @@ public class Golem extends Mob {
 					return moveSprite( oldPos,  pos );
 
 				} else if (!Char.hasProp(enemy, Property.IMMOVABLE) && canTele(target)) {
-					if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
+					if (sprite != null && (sprite.getVisible() || enemy.sprite.getVisible())) {
 						sprite.zap( enemy.pos );
 						return false;
 					} else {

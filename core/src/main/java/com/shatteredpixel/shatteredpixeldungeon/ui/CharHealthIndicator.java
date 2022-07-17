@@ -46,15 +46,15 @@ public class CharHealthIndicator extends HealthBar {
 	public void update() {
 		super.update();
 		
-		if (target != null && target.isAlive() && target.sprite.visible) {
+		if (target != null && target.isAlive() && target.sprite.getVisible()) {
 			CharSprite sprite = target.sprite;
 			width = sprite.width()*(4/6f);
 			x = sprite.x + sprite.width()/6f;
 			y = sprite.y - 2;
 			level( target );
-			visible = target.HP < target.HT || target.shielding() > 0;
+			setVisible(target.HP < target.HT || target.shielding() > 0);
 		} else {
-			visible = false;
+			setVisible(false);
 		}
 	}
 	

@@ -32,14 +32,14 @@ public class SmokeParticle extends PixelParticle {
 	public static final Factory FACTORY = new Factory() {
 		@Override
 		public void emit( Emitter emitter, int index, float x, float y ) {
-			((SmokeParticle)emitter.recycle( SmokeParticle.class )).reset( x, y );
+			emitter.recycle( SmokeParticle.class ).reset( x, y );
 		}
 	};
 	
 	public static final Factory SPEW = new Factory() {
 		@Override
 		public void emit( Emitter emitter, int index, float x, float y ) {
-			((SmokeParticle)emitter.recycle( SmokeParticle.class )).resetSpew( x, y );
+			emitter.recycle( SmokeParticle.class ).resetSpew( x, y );
 		}
 	};
 	

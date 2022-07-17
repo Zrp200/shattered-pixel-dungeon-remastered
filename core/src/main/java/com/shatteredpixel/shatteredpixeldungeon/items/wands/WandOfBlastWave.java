@@ -184,7 +184,7 @@ public class WandOfBlastWave extends DamageWand {
 
 	@Override
 	public void fx(Ballistica bolt, Callback callback) {
-		MagicMissile.boltFromChar( curUser.sprite.parent,
+		MagicMissile.boltFromChar(curUser.sprite.getParent(),
 				MagicMissile.FORCE,
 				curUser.sprite,
 				bolt.collisionPos,
@@ -235,8 +235,8 @@ public class WandOfBlastWave extends DamageWand {
 		}
 
 		public static void blast(int pos) {
-			Group parent = Dungeon.hero.sprite.parent;
-			BlastWave b = (BlastWave) parent.recycle(BlastWave.class);
+			Group parent = Dungeon.hero.sprite.getParent();
+			BlastWave b = parent.recycle(BlastWave.class);
 			parent.bringToFront(b);
 			b.reset(pos);
 		}

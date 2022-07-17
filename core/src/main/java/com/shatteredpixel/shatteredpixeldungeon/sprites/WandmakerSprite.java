@@ -64,7 +64,7 @@ public class WandmakerSprite extends MobSprite {
 		remove(State.SHIELDED);
 		emitter().start( ElmoParticle.FACTORY, 0.03f, 60 );
 
-		if (visible) {
+		if (getVisible()) {
 			Sample.INSTANCE.play( Assets.Sounds.BURNING );
 		}
 	}

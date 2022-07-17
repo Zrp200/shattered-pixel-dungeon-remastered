@@ -38,7 +38,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.StyledButton;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndError;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndHardNotification;
-import com.watabou.glwrap.Blending;
+import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Game;
@@ -85,7 +85,7 @@ public class WelcomeScene extends PixelScene {
 				new float[]{1, 1},
 				false);
 
-		uiCamera.visible = false;
+		uiCamera.setVisible(false);
 
 		int w = Camera.main.width;
 		int h = Camera.main.height;
@@ -120,9 +120,9 @@ public class WelcomeScene extends PixelScene {
 			}
 			@Override
 			public void draw() {
-				Blending.setLightMode();
+				BlendingKt.setLightMode();
 				super.draw();
-				Blending.setNormalMode();
+				BlendingKt.setNormalMode();
 			}
 		};
 		signs.x = title.x + (title.width() - signs.width())/2f;

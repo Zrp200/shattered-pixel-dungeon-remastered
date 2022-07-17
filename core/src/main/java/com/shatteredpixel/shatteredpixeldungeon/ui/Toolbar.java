@@ -189,7 +189,7 @@ public class Toolbar extends Component {
 
 			@Override
 			public GameAction keyAction() {
-				if (btnWait.active) return SPDAction.QUICKSLOT_SELECTOR;
+				if (btnWait.getActive()) return SPDAction.QUICKSLOT_SELECTOR;
 				else				return null;
 			}
 		});
@@ -234,7 +234,7 @@ public class Toolbar extends Component {
 
 			@Override
 			public GameAction keyAction() {
-				if (btnWait.active) return SPDAction.REST;
+				if (btnWait.getActive()) return SPDAction.REST;
 				else				return null;
 			}
 		});
@@ -264,7 +264,7 @@ public class Toolbar extends Component {
 
 			@Override
 			public GameAction keyAction() {
-				if (btnWait.active) return SPDAction.WAIT_OR_PICKUP;
+				if (btnWait.getActive()) return SPDAction.WAIT_OR_PICKUP;
 				else				return null;
 			}
 		});
@@ -339,7 +339,7 @@ public class Toolbar extends Component {
 				super.createChildren();
 				arrow = Icons.get(Icons.COMPASS);
 				arrow.originToCenter();
-				arrow.visible = SPDSettings.interfaceSize() == 2;
+				arrow.setVisible(SPDSettings.interfaceSize() == 2);
 				arrow.tint(0x3D2E18, 1f);
 				add(arrow);
 
@@ -354,7 +354,7 @@ public class Toolbar extends Component {
 
 				arrow.x = left() + (width - arrow.width())/2;
 				arrow.y = bottom()-arrow.height-1;
-				arrow.angle = bottom() == camera().height ? 0 : 180;
+				arrow.angle = bottom() == getCamera().height ? 0 : 180;
 			}
 		});
 
@@ -445,7 +445,7 @@ public class Toolbar extends Component {
 
 			@Override
 			public GameAction keyAction() {
-				if (btnWait.active) return SPDAction.INVENTORY_SELECTOR;
+				if (btnWait.getActive()) return SPDAction.INVENTORY_SELECTOR;
 				else				return null;
 			}
 		});
@@ -466,18 +466,19 @@ public class Toolbar extends Component {
 		if (SPDSettings.quickSwapper() && quickslotsToShow < 6){
 			quickslotsToShow = 3;
 			startingSlot = swappedQuickslots ? 3 : 0;
-			btnSwap.visible = true;
-			btnSwap.active = lastEnabled;
+			btnSwap.setVisible(true);
+			btnSwap.setActive(lastEnabled);
 		} else {
 			startingSlot = 0;
-			btnSwap.visible = btnSwap.active = false;
+			btnSwap.setActive(false);
+			btnSwap.setVisible(false);
 			btnSwap.setPos(0, PixelScene.uiCamera.height);
 		}
 		int endingSlot = startingSlot+quickslotsToShow-1;
 
 		for (int i = 0; i < btnQuick.length; i++){
-			btnQuick[i].visible = i >= startingSlot && i <= endingSlot;
-			btnQuick[i].enable(btnQuick[i].visible && lastEnabled);
+			btnQuick[i].setVisible(i >= startingSlot && i <= endingSlot);
+			btnQuick[i].enable(btnQuick[i].getVisible() && lastEnabled);
 			if (i < startingSlot || i > endingSlot){
 				btnQuick[i].setPos(btnQuick[i].left(), PixelScene.uiCamera.height);
 			}
@@ -540,7 +541,7 @@ public class Toolbar extends Component {
 					shift = btnSearch.right() - btnQuick[i].left();
 				}
 
-				if (btnSwap.visible){
+				if (btnSwap.getVisible()){
 					btnSwap.setPos(btnQuick[endingSlot].left() - (btnSwap.width()-2), y+3);
 					shift = btnSearch.right() - btnSwap.left();
 				}
@@ -551,9 +552,9 @@ public class Toolbar extends Component {
 			case CENTER:
 				float toolbarWidth = btnWait.width() + btnSearch.width() + btnInventory.width();
 				for(Button slot : btnQuick){
-					if (slot.visible) toolbarWidth += slot.width();
+					if (slot.getVisible()) toolbarWidth += slot.width();
 				}
-				if (btnSwap.visible) toolbarWidth += btnSwap.width()-2;
+				if (btnSwap.getVisible()) toolbarWidth += btnSwap.width()-2;
 				right = (width + toolbarWidth)/2;
 
 			case GROUP:
@@ -567,7 +568,7 @@ public class Toolbar extends Component {
 					shift = -btnQuick[i].left();
 				}
 
-				if (btnSwap.visible){
+				if (btnSwap.getVisible()){
 					btnSwap.setPos(btnQuick[endingSlot].left() - (btnSwap.width()-2), y+3);
 					shift = -btnSwap.left();
 				}
@@ -580,7 +581,7 @@ public class Toolbar extends Component {
 			for (int i = startingSlot; i <= endingSlot; i++) {
 				btnQuick[i].setPos(btnQuick[i].left()+shift,  btnQuick[i].top());
 			}
-			if (btnSwap.visible){
+			if (btnSwap.getVisible()){
 				btnSwap.setPos(btnSwap.left()+shift, btnSwap.top());
 			}
 		}
@@ -597,7 +598,7 @@ public class Toolbar extends Component {
 				btnQuick[i].setPos( right - btnQuick[i].right(), y+2);
 			}
 
-			if (btnSwap.visible){
+			if (btnSwap.getVisible()){
 				btnSwap.setPos( right - btnSwap.right(), y+3);
 			}
 
@@ -616,7 +617,7 @@ public class Toolbar extends Component {
 		if (lastEnabled != (Dungeon.hero.ready && Dungeon.hero.isAlive())) {
 			lastEnabled = (Dungeon.hero.ready && Dungeon.hero.isAlive());
 			
-			for (Gizmo tool : members.toArray(new Gizmo[0])) {
+			for (Gizmo tool : getChildren().toArray(new Gizmo[0])) {
 				if (tool instanceof Tool) {
 					((Tool)tool).enable( lastEnabled );
 				}
@@ -692,7 +693,7 @@ public class Toolbar extends Component {
 		
 		@Override
 		protected void onPointerUp() {
-			if (active) {
+			if (getActive()) {
 				base.resetColor();
 			} else {
 				base.tint( BGCOLOR, 0.7f );
@@ -700,13 +701,13 @@ public class Toolbar extends Component {
 		}
 		
 		public void enable( boolean value ) {
-			if (value != active) {
+			if (value != getActive()) {
 				if (value) {
 					base.resetColor();
 				} else {
 					base.tint( BGCOLOR, 0.7f );
 				}
-				active = value;
+				setActive(value);
 			}
 		}
 	}
@@ -739,8 +740,8 @@ public class Toolbar extends Component {
 		
 		@Override
 		public void enable( boolean value ) {
-			super.enable( value && visible );
-			slot.enable( value && visible );
+			super.enable( value && getVisible());
+			slot.enable( value && getVisible());
 		}
 	}
 
@@ -797,7 +798,7 @@ public class Toolbar extends Component {
 					items[i] = Dungeon.quickslot.getItem(slot);
 				}
 				if (icons[i] != null){
-					icons[i].killAndErase();
+					icons[i].remove();
 					icons[i] = null;
 				}
 				if (items[i] != null){
@@ -865,22 +866,20 @@ public class Toolbar extends Component {
 			super();
 			
 			originToCenter();
-			
-			active =
-			visible =
-				false;
+
+			setVisible(false);
+			setActive(false);
 		}
 		
 		public void reset( Item item, int cell, float endX, float endY ) {
 			view( item );
-			
-			active =
-			visible =
-				true;
+
+			setVisible(true);
+			setActive(true);
 			
 			PointF tile = DungeonTerrainTilemap.raisedTileCenterToWorld(cell);
 			Point screen = Camera.main.cameraToScreen(tile.x, tile.y);
-			PointF start = camera().screenToCamera(screen.x, screen.y);
+			PointF start = getCamera().screenToCamera(screen.x, screen.y);
 			
 			x = this.startX = start.x - width() / 2;
 			y = this.startY = start.y - width() / 2;
@@ -889,7 +888,7 @@ public class Toolbar extends Component {
 			this.endY = endY - width() / 2;
 			left = DURATION;
 			
-			scale.set( startScale = Camera.main.zoom / camera().zoom );
+			scale.set( startScale = Camera.main.zoom / getCamera().zoom );
 			
 		}
 		
@@ -898,10 +897,10 @@ public class Toolbar extends Component {
 			super.update();
 			
 			if ((left -= Game.elapsed) <= 0) {
-				
-				visible =
-				active =
-					false;
+
+				setVisible(false);
+				setActive(false);
+
 				if (emitter != null) emitter.on = false;
 				
 			} else {

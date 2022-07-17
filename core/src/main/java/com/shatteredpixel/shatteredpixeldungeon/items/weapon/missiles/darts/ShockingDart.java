@@ -45,11 +45,11 @@ public class ShockingDart extends TippedDart {
 		defender.damage(Random.NormalIntRange(5 + Dungeon.scalingDepth()/4, 10 + Dungeon.scalingDepth()/4), this);
 		
 		CharSprite s = defender.sprite;
-		if (s != null && s.parent != null) {
+		if (s != null && s.getParent() != null) {
 			ArrayList<Lightning.Arc> arcs = new ArrayList<>();
 			arcs.add(new Lightning.Arc(new PointF(s.x, s.y + s.height / 2), new PointF(s.x + s.width, s.y + s.height / 2)));
 			arcs.add(new Lightning.Arc(new PointF(s.x + s.width / 2, s.y), new PointF(s.x + s.width / 2, s.y + s.height)));
-			s.parent.add(new Lightning(arcs, null));
+			s.getParent().add(new Lightning(arcs, null));
 			Sample.INSTANCE.play( Assets.Sounds.LIGHTNING );
 		}
 		

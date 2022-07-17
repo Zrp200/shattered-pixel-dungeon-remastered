@@ -38,7 +38,7 @@ public class ChangesWindow extends WndTitledMessage {
 				onBackPressed();
 			}
 		};
-		blocker.camera = PixelScene.uiCamera;
+		blocker.setCamera(PixelScene.uiCamera);
 		add(blocker);
 		
 	}

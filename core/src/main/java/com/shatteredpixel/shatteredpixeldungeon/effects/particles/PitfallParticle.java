@@ -30,14 +30,14 @@ public class PitfallParticle extends PixelParticle.Shrinking {
 	public static final Emitter.Factory FACTORY4 = new Emitter.Factory() {
 		@Override
 		public void emit( Emitter emitter, int index, float x, float y ) {
-			((PitfallParticle)emitter.recycle( PitfallParticle.class )).reset( x,  y, 4 );
+			emitter.recycle( PitfallParticle.class ).reset( x,  y, 4 );
 		}
 	};
 
 	public static final Emitter.Factory FACTORY8 = new Emitter.Factory() {
 		@Override
 		public void emit( Emitter emitter, int index, float x, float y ) {
-			((PitfallParticle)emitter.recycle( PitfallParticle.class )).reset( x,  y, 8 );
+			emitter.recycle( PitfallParticle.class ).reset( x,  y, 8 );
 		}
 	};
 

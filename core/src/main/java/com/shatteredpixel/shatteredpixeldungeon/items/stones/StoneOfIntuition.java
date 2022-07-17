@@ -106,7 +106,7 @@ public class StoneOfIntuition extends InventoryStone {
 							item.identify();
 						}
 						GLog.p( Messages.get(WndGuess.class, "correct") );
-						curUser.sprite.parent.add( new Identification( curUser.sprite.center().offset( 0, -16 ) ) );
+						curUser.sprite.getParent().add( new Identification( curUser.sprite.center().offset( 0, -16 ) ) );
 
 						if (curUser.buff(IntuitionUseTracker.class) == null){
 							GLog.h( Messages.get(WndGuess.class, "preserved") );
@@ -125,7 +125,7 @@ public class StoneOfIntuition extends InventoryStone {
 					hide();
 				}
 			};
-			guess.visible = false;
+			guess.setVisible(false);
 			guess.icon( new ItemSprite(item) );
 			guess.enable(false);
 			guess.setRect(0, 80, WIDTH, 20);
@@ -178,7 +178,7 @@ public class StoneOfIntuition extends InventoryStone {
 					@Override
 					protected void onClick() {
 						curGuess = i;
-						guess.visible = true;
+						guess.setVisible(true);
 						guess.text( Messages.titleCase(Messages.get(curGuess, "name")) );
 						guess.enable(true);
 						super.onClick();

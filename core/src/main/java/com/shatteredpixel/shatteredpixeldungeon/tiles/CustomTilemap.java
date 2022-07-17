@@ -82,7 +82,7 @@ public abstract class CustomTilemap implements Bundlable {
 	}
 	
 	public Tilemap create(){
-		if (vis != null && vis.alive) vis.killAndErase();
+		if (vis != null && vis.getAlive()) vis.remove();
 		vis = new Tilemap(texture, new TextureFilm( texture, SIZE, SIZE )){
 			@Override
 			protected NoosaScript script() {

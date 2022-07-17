@@ -66,7 +66,7 @@ public class Window extends Group implements Signal.Listener<KeyEvent> {
 		blocker = new PointerArea( 0, 0, PixelScene.uiCamera.width, PixelScene.uiCamera.height ) {
 			@Override
 			protected void onClick( PointerEvent event ) {
-				if (Window.this.parent != null && !Window.this.chrome.overlapsScreenPoint(
+				if (Window.this.getParent() != null && !Window.this.chrome.overlapsScreenPoint(
 					(int) event.current.x,
 					(int) event.current.y )) {
 					
@@ -74,7 +74,7 @@ public class Window extends Group implements Signal.Listener<KeyEvent> {
 				}
 			}
 		};
-		blocker.camera = PixelScene.uiCamera;
+		blocker.setCamera(PixelScene.uiCamera);
 		add( blocker );
 		
 		this.chrome = chrome;
@@ -84,8 +84,8 @@ public class Window extends Group implements Signal.Listener<KeyEvent> {
 
 		shadow = new ShadowBox();
 		shadow.am = 0.5f;
-		shadow.camera = PixelScene.uiCamera.visible ?
-				PixelScene.uiCamera : Camera.main;
+		shadow.setCamera(PixelScene.uiCamera.getVisible() ?
+				PixelScene.uiCamera : Camera.main);
 		add( shadow );
 
 		chrome.x = -chrome.marginLeft();
@@ -95,19 +95,19 @@ public class Window extends Group implements Signal.Listener<KeyEvent> {
 			height - chrome.y + chrome.marginBottom() );
 		add( chrome );
 		
-		camera = new Camera( 0, 0,
-			(int)chrome.width,
-			(int)chrome.height,
-			PixelScene.defaultZoom );
-		camera.x = (int)(Game.width - camera.width * camera.zoom) / 2;
-		camera.y = (int)(Game.height - camera.height * camera.zoom) / 2;
-		camera.y -= yOffset * camera.zoom;
-		camera.scroll.set( chrome.x, chrome.y );
-		Camera.add( camera );
+		setCamera(new Camera(0, 0,
+				(int) chrome.width,
+				(int) chrome.height,
+				PixelScene.defaultZoom));
+		getCamera().x = (int)(Game.width - getCamera().width * getCamera().zoom) / 2;
+		getCamera().y = (int)(Game.height - getCamera().height * getCamera().zoom) / 2;
+		getCamera().y -= yOffset * getCamera().zoom;
+		getCamera().scroll.set( chrome.x, chrome.y );
+		Camera.add(getCamera());
 
 		shadow.boxRect(
-				camera.x / camera.zoom,
-				camera.y / camera.zoom,
+				getCamera().x / getCamera().zoom,
+				getCamera().y / getCamera().zoom,
 				chrome.width(), chrome.height );
 
 		KeyEvent.addKeyListener( this );
@@ -121,15 +121,15 @@ public class Window extends Group implements Signal.Listener<KeyEvent> {
 			width + chrome.marginHor(),
 			height + chrome.marginVer() );
 		
-		camera.resize( (int)chrome.width, (int)chrome.height );
+		getCamera().resize( (int)chrome.width, (int)chrome.height );
 
-		camera.x = (int)(Game.width - camera.screenWidth()) / 2;
-		camera.x += xOffset * camera.zoom;
+		getCamera().x = (int)(Game.width - getCamera().screenWidth()) / 2;
+		getCamera().x += xOffset * getCamera().zoom;
 
-		camera.y = (int)(Game.height - camera.screenHeight()) / 2;
-		camera.y += yOffset * camera.zoom;
+		getCamera().y = (int)(Game.height - getCamera().screenHeight()) / 2;
+		getCamera().y += yOffset * getCamera().zoom;
 
-		shadow.boxRect( camera.x / camera.zoom, camera.y / camera.zoom, chrome.width(), chrome.height );
+		shadow.boxRect( getCamera().x / getCamera().zoom, getCamera().y / getCamera().zoom, chrome.width(), chrome.height );
 	}
 
 	public Point getOffset(){
@@ -142,45 +142,43 @@ public class Window extends Group implements Signal.Listener<KeyEvent> {
 
 	//windows with scroll panes will likely need to override this and refresh them when offset changes
 	public void offset( int xOffset, int yOffset ){
-		camera.x -= this.xOffset * camera.zoom;
+		getCamera().x -= this.xOffset * getCamera().zoom;
 		this.xOffset = xOffset;
-		camera.x += xOffset * camera.zoom;
+		getCamera().x += xOffset * getCamera().zoom;
 
-		camera.y -= this.yOffset * camera.zoom;
+		getCamera().y -= this.yOffset * getCamera().zoom;
 		this.yOffset = yOffset;
-		camera.y += yOffset * camera.zoom;
+		getCamera().y += yOffset * getCamera().zoom;
 
-		shadow.boxRect( camera.x / camera.zoom, camera.y / camera.zoom, chrome.width(), chrome.height );
+		shadow.boxRect( getCamera().x / getCamera().zoom, getCamera().y / getCamera().zoom, chrome.width(), chrome.height );
 	}
 
 	//ensures the window, with offset, does not go beyond a given margin
 	public void boundOffsetWithMargin( int margin ){
-		float x = camera.x / camera.zoom;
-		float y = camera.y / camera.zoom;
+		float x = getCamera().x / getCamera().zoom;
+		float y = getCamera().y / getCamera().zoom;
 
-		Camera sceneCam = PixelScene.uiCamera.visible ? PixelScene.uiCamera : Camera.main;
+		Camera sceneCam = PixelScene.uiCamera.getVisible() ? PixelScene.uiCamera : Camera.main;
 
 		int newXOfs = xOffset;
 		if (x < margin){
 			newXOfs += margin - x;
-		} else if (x + camera.width > sceneCam.width - margin){
-			newXOfs += (sceneCam.width - margin) - (x + camera.width);
+		} else if (x + getCamera().width > sceneCam.width - margin){
+			newXOfs += (sceneCam.width - margin) - (x + getCamera().width);
 		}
 
 		int newYOfs = yOffset;
 		if (y < margin){
 			newYOfs += margin - y;
-		} else if (y + camera.height > sceneCam.height - margin){
-			newYOfs += (sceneCam.height - margin) - (y + camera.height);
+		} else if (y + getCamera().height > sceneCam.height - margin){
+			newYOfs += (sceneCam.height - margin) - (y + getCamera().height);
 		}
 
 		offset(newXOfs, newYOfs);
 	}
 	
 	public void hide() {
-		if (parent != null) {
-			parent.erase(this);
-		}
+		remove();
 		destroy();
 	}
 	
@@ -188,7 +186,7 @@ public class Window extends Group implements Signal.Listener<KeyEvent> {
 	public void destroy() {
 		super.destroy();
 		
-		Camera.remove( camera );
+		Camera.remove(getCamera());
 		KeyEvent.removeKeyListener( this );
 	}
 

@@ -39,7 +39,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Recharging;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.hero.abilities.mage.WarpBeacon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.GoldenMimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mimic;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Sheep;
@@ -275,7 +274,7 @@ public class CursedWand {
 					sheep.lifespan = 10;
 					sheep.pos = ch.pos;
 					ch.destroy();
-					ch.sprite.killAndErase();
+					ch.sprite.remove();
 					Dungeon.level.mobs.remove(ch);
 					TargetHealthIndicator.instance.target(null);
 					GameScene.add(sheep);
@@ -443,7 +442,7 @@ public class CursedWand {
 	}
 
 	private static void cursedFX(final Char user, final Ballistica bolt, final Callback callback){
-		MagicMissile.boltFromChar( user.sprite.parent,
+		MagicMissile.boltFromChar(user.sprite.getParent(),
 				MagicMissile.RAINBOW,
 				user.sprite,
 				bolt.collisionPos,

@@ -354,9 +354,9 @@ public class SentryRoom extends SpecialRoom {
 			flash();
 			emitter().burst(MagicMissile.WardParticle.UP, 2);
 			if (Actor.findChar(pos) != null){
-				parent.add(new Beam.DeathRay(center(), Actor.findChar(pos).sprite.center()));
+				getParent().add(new Beam.DeathRay(center(), Actor.findChar(pos).sprite.center()));
 			} else {
-				parent.add(new Beam.DeathRay(center(), DungeonTilemap.raisedTileCenterToWorld(pos)));
+				getParent().add(new Beam.DeathRay(center(), DungeonTilemap.raisedTileCenterToWorld(pos)));
 			}
 			((Sentry)ch).onZapComplete();
 		}
@@ -387,13 +387,13 @@ public class SentryRoom extends SpecialRoom {
 		public void kill() {
 			super.kill();
 			if (chargeParticles != null){
-				chargeParticles.killAndErase();
+				chargeParticles.remove();
 			}
 		}
 
 		public void charge(){
 			play(charging);
-			if (visible) Sample.INSTANCE.play( Assets.Sounds.CHARGEUP );
+			if (getVisible()) Sample.INSTANCE.play( Assets.Sounds.CHARGEUP );
 		}
 
 		@Override
@@ -415,7 +415,7 @@ public class SentryRoom extends SpecialRoom {
 			super.update();
 			if (chargeParticles != null){
 				chargeParticles.pos( center() );
-				chargeParticles.visible = visible;
+				chargeParticles.setVisible(getVisible());
 			}
 
 			if (!paused){

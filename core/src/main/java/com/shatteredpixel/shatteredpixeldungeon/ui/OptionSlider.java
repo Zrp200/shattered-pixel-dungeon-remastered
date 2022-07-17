@@ -57,7 +57,7 @@ public abstract class OptionSlider extends Component {
 		//shouldn't function if this happens.
 		if (minVal > maxVal){
 			minVal = maxVal;
-			active = false;
+			setActive(false);
 		}
 
 		if (title.length() > 20){
@@ -112,7 +112,7 @@ public abstract class OptionSlider extends Component {
 			@Override
 			protected void onPointerDown( PointerEvent event ) {
 				pressed = true;
-				PointF p = camera().screenToCamera((int) event.current.x, (int) event.current.y);
+				PointF p = getCamera().screenToCamera((int) event.current.x, (int) event.current.y);
 				sliderNode.x = GameMath.gate(sliderBG.x-2, p.x - sliderNode.width()/2, sliderBG.x+sliderBG.width()-2);
 				sliderNode.brightness(1.5f);
 			}
@@ -120,7 +120,7 @@ public abstract class OptionSlider extends Component {
 			@Override
 			protected void onPointerUp( PointerEvent event ) {
 				if (pressed) {
-					PointF p = camera().screenToCamera((int) event.current.x, (int) event.current.y);
+					PointF p = getCamera().screenToCamera((int) event.current.x, (int) event.current.y);
 					sliderNode.x = GameMath.gate(sliderBG.x - 2, p.x - sliderNode.width()/2, sliderBG.x + sliderBG.width() - 2);
 					sliderNode.resetColor();
 					
@@ -136,7 +136,7 @@ public abstract class OptionSlider extends Component {
 			@Override
 			protected void onDrag( PointerEvent event ) {
 				if (pressed) {
-					PointF p = camera().screenToCamera((int) event.current.x, (int) event.current.y);
+					PointF p = getCamera().screenToCamera((int) event.current.x, (int) event.current.y);
 					sliderNode.x = GameMath.gate(sliderBG.x - 2, p.x - sliderNode.width()/2, sliderBG.x + sliderBG.width() - 2);
 				}
 			}

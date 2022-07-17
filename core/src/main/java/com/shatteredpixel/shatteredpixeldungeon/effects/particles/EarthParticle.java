@@ -32,14 +32,14 @@ public class EarthParticle extends PixelParticle {
 	public static final Emitter.Factory FACTORY = new Factory() {
 		@Override
 		public void emit( Emitter emitter, int index, float x, float y ) {
-			((EarthParticle)emitter.recycle( EarthParticle.class )).reset( x,  y );
+			emitter.recycle( EarthParticle.class ).reset( x,  y );
 		}
 	};
 
 	public static final Emitter.Factory FALLING = new Factory() {
 		@Override
 		public void emit( Emitter emitter, int index, float x, float y ) {
-			((EarthParticle)emitter.recycle( EarthParticle.class )).resetFalling( x,  y );
+			emitter.recycle( EarthParticle.class ).resetFalling( x,  y );
 		}
 	};
 

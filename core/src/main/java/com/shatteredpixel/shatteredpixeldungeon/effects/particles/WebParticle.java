@@ -32,7 +32,7 @@ public class WebParticle extends PixelParticle {
 		@Override
 		public void emit( Emitter emitter, int index, float x, float y ) {
 			for (int i=0; i < 3; i++) {
-				((WebParticle)emitter.recycle( WebParticle.class )).reset( x, y );
+				emitter.recycle( WebParticle.class ).reset( x, y );
 			}
 		}
 	};

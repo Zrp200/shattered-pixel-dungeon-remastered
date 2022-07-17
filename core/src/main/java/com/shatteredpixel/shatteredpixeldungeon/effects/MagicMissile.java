@@ -261,7 +261,7 @@ public class MagicMissile extends Emitter {
 
 	//convenience method for the common case of a bolt going from a character to a tile or enemy
 	public static MagicMissile boltFromChar(Group group, int type, Visual sprite, int to, Callback callback){
-		MagicMissile missile = ((MagicMissile)group.recycle( MagicMissile.class ));
+		MagicMissile missile = group.recycle( MagicMissile.class );
 		if (Actor.findChar(to) != null){
 			missile.reset(type, sprite.center(), Actor.findChar(to).sprite.destinationCenter(), callback);
 		} else {
@@ -294,7 +294,7 @@ public class MagicMissile extends Emitter {
 		public static final Emitter.Factory FACTORY = new Factory() {
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
-				((MagicParticle)emitter.recycle( MagicParticle.class )).reset( x, y );
+				emitter.recycle( MagicParticle.class ).reset( x, y );
 			}
 			@Override
 			public boolean lightMode() {
@@ -305,7 +305,7 @@ public class MagicMissile extends Emitter {
 		public static final Emitter.Factory ATTRACTING = new Factory() {
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
-				((MagicParticle)emitter.recycle( MagicParticle.class )).resetAttract( x, y );
+				emitter.recycle( MagicParticle.class ).resetAttract( x, y );
 			}
 			@Override
 			public boolean lightMode() {
@@ -355,21 +355,21 @@ public class MagicMissile extends Emitter {
 		public static final Emitter.Factory FACTORY = new Factory() {
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
-				((EarthParticle)emitter.recycle( EarthParticle.class )).reset( x, y );
+				emitter.recycle( EarthParticle.class ).reset( x, y );
 			}
 		};
 		
 		public static final Emitter.Factory BURST = new Factory() {
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
-				((EarthParticle)emitter.recycle( EarthParticle.class )).resetBurst( x, y );
+				emitter.recycle( EarthParticle.class ).resetBurst( x, y );
 			}
 		};
 		
 		public static final Emitter.Factory ATTRACT = new Factory() {
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
-				((EarthParticle)emitter.recycle( EarthParticle.class )).resetAttract( x, y );
+				emitter.recycle( EarthParticle.class ).resetAttract( x, y );
 			}
 		};
 		
@@ -422,7 +422,7 @@ public class MagicMissile extends Emitter {
 		public static final Emitter.Factory RED = new Factory() {
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
-				((ShamanParticle)emitter.recycle( ShamanParticle.class ))
+				emitter.recycle( ShamanParticle.class )
 						.reset( x, y, ColorMath.random(0xFF4D4D, 0x801A1A) );
 			}
 		};
@@ -430,7 +430,7 @@ public class MagicMissile extends Emitter {
 		public static final Emitter.Factory BLUE = new Factory() {
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
-				((ShamanParticle)emitter.recycle( ShamanParticle.class ))
+				emitter.recycle( ShamanParticle.class )
 						.reset( x, y, ColorMath.random(0x6699FF, 0x1A3C80) );
 			}
 		};
@@ -438,7 +438,7 @@ public class MagicMissile extends Emitter {
 		public static final Emitter.Factory PURPLE = new Factory() {
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
-				((ShamanParticle)emitter.recycle( ShamanParticle.class ))
+				emitter.recycle( ShamanParticle.class )
 						.reset( x, y, ColorMath.random(0xBB33FF, 0x5E1A80) );
 			}
 		};
@@ -476,7 +476,7 @@ public class MagicMissile extends Emitter {
 		public static final Emitter.Factory FACTORY = new Factory() {
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
-				((WhiteParticle)emitter.recycle( WhiteParticle.class )).reset( x, y );
+				emitter.recycle( WhiteParticle.class ).reset( x, y );
 			}
 			@Override
 			public boolean lightMode() {
@@ -516,7 +516,7 @@ public class MagicMissile extends Emitter {
 		public static final Emitter.Factory FACTORY = new Factory() {
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
-				((SlowParticle)emitter.recycle( SlowParticle.class )).reset( x, y, emitter );
+				emitter.recycle( SlowParticle.class ).reset( x, y, emitter );
 			}
 			@Override
 			public boolean lightMode() {
@@ -560,7 +560,7 @@ public class MagicMissile extends Emitter {
 		public static final Emitter.Factory FACTORY = new Factory() {
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
-				((ForceParticle)emitter.recycle( ForceParticle.class )).reset( index, x, y );
+				emitter.recycle( ForceParticle.class ).reset( index, x, y );
 			}
 		};
 
@@ -585,7 +585,7 @@ public class MagicMissile extends Emitter {
 		public static final Emitter.Factory FACTORY = new Factory() {
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
-				((WardParticle)emitter.recycle( WardParticle.class )).reset( x, y );
+				emitter.recycle( WardParticle.class ).reset( x, y );
 			}
 			@Override
 			public boolean lightMode() {
@@ -596,7 +596,7 @@ public class MagicMissile extends Emitter {
 		public static final Emitter.Factory UP = new Factory() {
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
-				((WardParticle)emitter.recycle( WardParticle.class )).resetUp( x, y );
+				emitter.recycle( WardParticle.class ).resetUp( x, y );
 			}
 			@Override
 			public boolean lightMode() {

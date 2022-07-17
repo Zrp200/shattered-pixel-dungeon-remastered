@@ -47,8 +47,9 @@ public class CurrencyIndicator extends Component {
 
 		energy = new BitmapText( PixelScene.pixelFont);
 		add( energy );
-		
-		gold.visible = energy.visible = false;
+
+		energy.setVisible(false);
+		gold.setVisible(energy.getVisible());
 	}
 	
 	@Override
@@ -57,7 +58,7 @@ public class CurrencyIndicator extends Component {
 		energy.y = bottom() - energy.height();
 
 		gold.x = x + (width - gold.width()) / 2;
-		if (energy.visible) {
+		if (energy.getVisible()) {
 			gold.y = bottom() - gold.height()- gold.height() + 2;
 		} else {
 			gold.y = bottom() - gold.height();
@@ -68,24 +69,24 @@ public class CurrencyIndicator extends Component {
 	public void update() {
 		super.update();
 		
-		if (gold.visible) {
+		if (gold.getVisible()) {
 			
 			goldTime -= Game.elapsed;
 			if (goldTime > 0) {
 				gold.alpha( goldTime > TIME / 2 ? 1f : goldTime * 2 / TIME );
 			} else {
-				gold.visible = false;
+				gold.setVisible(false);
 			}
 			
 		}
 
-		if (energy.visible) {
+		if (energy.getVisible()) {
 
 			energyTime -= Game.elapsed;
 			if (energyTime > 0) {
 				energy.alpha( energyTime > TIME / 2 ? 1f : energyTime * 2 / TIME );
 			} else {
-				energy.visible = false;
+				energy.setVisible(false);
 			}
 
 		}
@@ -98,7 +99,7 @@ public class CurrencyIndicator extends Component {
 			gold.measure();
 			gold.hardlight( 0xFFFF00 );
 			
-			gold.visible = true;
+			gold.setVisible(true);
 			goldTime = TIME;
 			
 			layout();
@@ -111,7 +112,7 @@ public class CurrencyIndicator extends Component {
 			energy.measure();
 			energy.hardlight( 0x44CCFF );
 
-			energy.visible = true;
+			energy.setVisible(true);
 			energyTime = TIME;
 
 			layout();

@@ -218,7 +218,7 @@ public class LloydsBeacon extends Artifact {
 					curUser.sprite.zap(bolt.collisionPos);
 					curUser.busy();
 
-					MagicMissile.boltFromChar(curUser.sprite.parent,
+					MagicMissile.boltFromChar(curUser.sprite.getParent(),
 							MagicMissile.BEACON,
 							curUser.sprite,
 							bolt.collisionPos,
@@ -251,7 +251,7 @@ public class LloydsBeacon extends Artifact {
 												((Mob) ch).state = ((Mob) ch).WANDERING;
 											}
 											ch.sprite.place(ch.pos);
-											ch.sprite.visible = Dungeon.level.heroFOV[pos];
+											ch.sprite.setVisible(Dungeon.level.heroFOV[pos]);
 
 										}
 									}

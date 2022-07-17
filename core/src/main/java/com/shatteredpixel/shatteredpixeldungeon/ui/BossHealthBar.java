@@ -49,7 +49,8 @@ public class BossHealthBar extends Component {
 
 	public BossHealthBar() {
 		super();
-		visible = active = (boss != null);
+		setActive(boss != null);
+		setVisible(boss != null);
 		instance = this;
 	}
 
@@ -100,7 +101,8 @@ public class BossHealthBar extends Component {
 		if (boss != null){
 			if (!boss.isAlive() || !Dungeon.level.mobs.contains(boss)){
 				boss = null;
-				visible = active = false;
+				setActive(false);
+				setVisible(false);
 			} else {
 
 				float health = boss.HP;
@@ -126,7 +128,8 @@ public class BossHealthBar extends Component {
 		BossHealthBar.boss = boss;
 		bleed(false);
 		if (instance != null) {
-			instance.visible = instance.active = true;
+			instance.setActive(true);
+			instance.setVisible(true);
 		}
 	}
 	

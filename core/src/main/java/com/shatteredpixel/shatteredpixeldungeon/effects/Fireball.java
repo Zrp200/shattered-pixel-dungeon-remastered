@@ -22,7 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.effects;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.watabou.glwrap.Blending;
+import com.watabou.glwrap.BlendingKt;
 import com.watabou.glwrap.Texture;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
@@ -64,7 +64,7 @@ public class Fireball extends Component {
 		emitter.pour( new Emitter.Factory() {
 			@Override
 			public void emit(Emitter emitter, int index, float x, float y) {
-				Flame p = (Flame)emitter.recycle( Flame.class );
+				Flame p = emitter.recycle( Flame.class );
 				p.reset();
 				p.heightLimit(Fireball.this.y - 30);
 				p.x = x - p.width / 2;
@@ -104,7 +104,7 @@ public class Fireball extends Component {
 		super.update();
 		
 		if (Random.Float() < Game.elapsed) {
-			PixelParticle spark = (PixelParticle)sparks.recycle( PixelParticle.Shrinking.class );
+			PixelParticle spark = sparks.recycle( PixelParticle.Shrinking.class );
 			spark.reset( x, y, ColorMath.random( COLOR, 0x66FF66 ), 2, Random.Float( 0.5f, 1.0f ) );
 			spark.speed.set(
 				Random.Float( -40, +40 ),
@@ -116,9 +116,9 @@ public class Fireball extends Component {
 	
 	@Override
 	public void draw() {
-		Blending.setLightMode();
+		BlendingKt.setLightMode();
 		super.draw();
-		Blending.setNormalMode();
+		BlendingKt.setNormalMode();
 	}
 	
 	public static class Flame extends Image {

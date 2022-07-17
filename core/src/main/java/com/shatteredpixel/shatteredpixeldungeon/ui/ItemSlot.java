@@ -142,9 +142,9 @@ public class ItemSlot extends Button {
 			PixelScene.align(extra);
 
 			if ((status.width() + extra.width()) > width){
-				extra.visible = false;
+				extra.setVisible(false);
 			} else if (item != null) {
-				extra.visible = true;
+				extra.setVisible(true);
 			}
 		}
 
@@ -206,10 +206,14 @@ public class ItemSlot extends Button {
 		}
 
 		if (item == null){
-			status.visible = extra.visible = level.visible = false;
+			level.setVisible(false);
+			extra.setVisible(false);
+			status.setVisible(false);
 			return;
 		} else {
-			status.visible = extra.visible = level.visible = true;
+			level.setVisible(true);
+			extra.setVisible(true);
+			status.setVisible(true);
 		}
 
 		status.text( item.status() );
@@ -264,7 +268,7 @@ public class ItemSlot extends Button {
 	
 	public void enable( boolean value ) {
 		
-		active = value;
+		setActive(value);
 		
 		float alpha = value ? ENABLED : DISABLED;
 		sprite.alpha( alpha );

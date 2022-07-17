@@ -209,7 +209,7 @@ public class DM300 extends Mob {
 							turnsSinceLastAbility = 0;
 
 							GLog.w(Messages.get(this, "vent"));
-							if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
+							if (sprite != null && (sprite.getVisible() || enemy.sprite.getVisible())) {
 								sprite.zap(enemy.pos);
 								return false;
 							} else {
@@ -223,7 +223,7 @@ public class DM300 extends Mob {
 							lastAbility = ROCKS;
 							turnsSinceLastAbility = 0;
 							GLog.w(Messages.get(this, "rocks"));
-							if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
+							if (sprite != null && (sprite.getVisible() || enemy.sprite.getVisible())) {
 								((DM300Sprite)sprite).slam(enemy.pos);
 								return false;
 							} else {
@@ -259,7 +259,7 @@ public class DM300 extends Mob {
 
 						if (lastAbility == GAS) {
 							GLog.w(Messages.get(this, "vent"));
-							if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
+							if (sprite != null && (sprite.getVisible() || enemy.sprite.getVisible())) {
 								sprite.zap(enemy.pos);
 								return false;
 							} else {
@@ -269,7 +269,7 @@ public class DM300 extends Mob {
 							}
 						} else {
 							GLog.w(Messages.get(this, "rocks"));
-							if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
+							if (sprite != null && (sprite.getVisible() || enemy.sprite.getVisible())) {
 								((DM300Sprite)sprite).slam(enemy.pos);
 								return false;
 							} else {

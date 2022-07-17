@@ -136,7 +136,7 @@ public class WndResurrect extends Window {
 
 		@Override
 		public void onSelect( Item item ) {
-			if (item != null && btnPressed.parent != null) {
+			if (item != null && btnPressed.getParent() != null) {
 				btnPressed.item( item );
 
 				if (btnItem1.item == btnItem2.item){

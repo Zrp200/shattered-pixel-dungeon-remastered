@@ -63,7 +63,7 @@ public class DM200Sprite extends MobSprite {
 		turnTo( ch.pos , cell );
 		play( zap );
 
-		MagicMissile.boltFromChar( parent,
+		MagicMissile.boltFromChar(getParent(),
 				MagicMissile.TOXIC_VENT,
 				this,
 				cell,
@@ -79,7 +79,7 @@ public class DM200Sprite extends MobSprite {
 
 	@Override
 	public void place(int cell) {
-		if (parent != null) parent.bringToFront(this);
+		if (getParent() != null) getParent().bringToFront(this);
 		super.place(cell);
 	}
 

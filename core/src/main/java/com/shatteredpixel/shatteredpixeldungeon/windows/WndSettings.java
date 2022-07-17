@@ -87,7 +87,8 @@ public class WndSettings extends WndTabbed {
 			@Override
 			protected void select(boolean value) {
 				super.select(value);
-				display.visible = display.active = value;
+				display.setActive(value);
+				display.setVisible(value);
 				if (value) last_index = 0;
 			}
 		});
@@ -101,7 +102,8 @@ public class WndSettings extends WndTabbed {
 			@Override
 			protected void select(boolean value) {
 				super.select(value);
-				ui.visible = ui.active = value;
+				ui.setActive(value);
+				ui.setVisible(value);
 				if (value) last_index = 1;
 			}
 		});
@@ -122,7 +124,8 @@ public class WndSettings extends WndTabbed {
 				@Override
 				protected void select(boolean value) {
 					super.select(value);
-					input.visible = input.active = value;
+					input.setActive(value);
+					input.setVisible(value);
 					if (value) last_index = 2;
 				}
 			});
@@ -137,7 +140,8 @@ public class WndSettings extends WndTabbed {
 			@Override
 			protected void select(boolean value) {
 				super.select(value);
-				data.visible = data.active = value;
+				data.setActive(value);
+				data.setVisible(value);
 				if (value) last_index = 3;
 			}
 		});
@@ -151,7 +155,8 @@ public class WndSettings extends WndTabbed {
 			@Override
 			protected void select(boolean value) {
 				super.select(value);
-				audio.visible = audio.active = value;
+				audio.setActive(value);
+				audio.setVisible(value);
 				if (value) last_index = 4;
 			}
 		});
@@ -166,7 +171,8 @@ public class WndSettings extends WndTabbed {
 			@Override
 			protected void select(boolean value) {
 				super.select(value);
-				langs.visible = langs.active = value;
+				langs.setActive(value);
+				langs.setVisible(value);
 				if (value) last_index = 5;
 			}
 

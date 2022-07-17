@@ -52,11 +52,11 @@ public class CellSelector extends ScrollArea {
 	
 	public CellSelector( DungeonTilemap map ) {
 		super( map );
-		camera = map.camera();
+		setCamera(map.getCamera());
 		
 		dragThreshold = PixelScene.defaultZoom * DungeonTilemap.SIZE / 2;
 		
-		mouseZoom = camera.zoom;
+		mouseZoom = getCamera().zoom;
 		KeyEvent.addKeyListener( keyListener );
 	}
 	
@@ -67,7 +67,7 @@ public class CellSelector extends ScrollArea {
 		float diff = event.amount/10f;
 		
 		//scale zoom difference so zooming is consistent
-		diff /= ((camera.zoom+1)/camera.zoom)-1;
+		diff /= ((getCamera().zoom+1)/ getCamera().zoom)-1;
 		diff = Math.min(1, diff);
 		mouseZoom = GameMath.gate( PixelScene.minZoom, mouseZoom - diff, PixelScene.maxZoom );
 		
@@ -129,7 +129,7 @@ public class CellSelector extends ScrollArea {
 
 		value = GameMath.gate( PixelScene.minZoom, value, PixelScene.maxZoom );
 		SPDSettings.zoom((int) (value - PixelScene.defaultZoom));
-		camera.zoom( value );
+		getCamera().zoom( value );
 
 		//Resets char and item sprite positions with the new camera zoom
 		//This is important as sprites are centered on a 16x16 tile, but may have any sprite size
@@ -189,7 +189,7 @@ public class CellSelector extends ScrollArea {
 			
 			another = event;
 			startSpan = PointF.distance( curEvent.current, another.current );
-			startZoom = camera.zoom;
+			startZoom = getCamera().zoom;
 
 			dragging = false;
 		} else if (event != curEvent) {
@@ -203,7 +203,7 @@ public class CellSelector extends ScrollArea {
 			
 			pinching = false;
 			
-			zoom(Math.round( camera.zoom ));
+			zoom(Math.round( getCamera().zoom ));
 			
 			dragging = true;
 			if (event == curEvent) {
@@ -224,7 +224,7 @@ public class CellSelector extends ScrollArea {
 
 			float curSpan = PointF.distance( curEvent.current, another.current );
 			float zoom = (startZoom * curSpan / startSpan);
-			camera.zoom( GameMath.gate(
+			getCamera().zoom( GameMath.gate(
 				PixelScene.minZoom,
 					zoom - (zoom % 0.1f),
 				PixelScene.maxZoom ) );
@@ -237,7 +237,7 @@ public class CellSelector extends ScrollArea {
 				lastPos.set( event.current );
 				
 			} else if (dragging) {
-				camera.shift( PointF.diff( lastPos, event.current ).invScale( camera.zoom ) );
+				getCamera().shift( PointF.diff( lastPos, event.current ).invScale( getCamera().zoom ) );
 				lastPos.set( event.current );
 			}
 		}
@@ -277,13 +277,13 @@ public class CellSelector extends ScrollArea {
 			if (!event.pressed){
 
 				if (action == SPDAction.ZOOM_IN){
-					zoom( camera.zoom+1 );
-					mouseZoom = camera.zoom;
+					zoom( getCamera().zoom+1 );
+					mouseZoom = getCamera().zoom;
 					return true;
 
 				} else if (action == SPDAction.ZOOM_OUT){
-					zoom( camera.zoom-1 );
-					mouseZoom = camera.zoom;
+					zoom( getCamera().zoom-1 );
+					mouseZoom = getCamera().zoom;
 					return true;
 				}
 				
@@ -485,7 +485,7 @@ public class CellSelector extends ScrollArea {
 		if (pinching){
 			pinching = false;
 
-			zoom( Math.round( camera.zoom ) );
+			zoom( Math.round( getCamera().zoom ) );
 		}
 	}
 

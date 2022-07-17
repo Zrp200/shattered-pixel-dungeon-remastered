@@ -170,7 +170,7 @@ public class SewerLevel extends RegularLevel {
 			
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
-				WaterParticle p = (WaterParticle)emitter.recycle( WaterParticle.class );
+				WaterParticle p = emitter.recycle( WaterParticle.class );
 				p.reset( x, y );
 			}
 		};
@@ -188,7 +188,8 @@ public class SewerLevel extends RegularLevel {
 		
 		@Override
 		public void update() {
-			if (visible = (pos < Dungeon.level.heroFOV.length && Dungeon.level.heroFOV[pos])) {
+			setVisible((pos < Dungeon.level.heroFOV.length && Dungeon.level.heroFOV[pos]));
+			if (getVisible()) {
 				
 				super.update();
 				

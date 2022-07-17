@@ -355,11 +355,6 @@ public class ShadowClone extends ArmorAbility {
 		}
 
 		@Override
-		public void onComplete(Tweener tweener) {
-			super.onComplete(tweener);
-		}
-
-		@Override
 		public void resetColor() {
 			super.resetColor();
 			alpha(0.8f);
@@ -383,7 +378,7 @@ public class ShadowClone extends ArmorAbility {
 			super.update();
 
 			if (smoke != null) {
-				smoke.visible = visible;
+				smoke.setVisible(getVisible());
 			}
 		}
 

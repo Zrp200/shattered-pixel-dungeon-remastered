@@ -23,7 +23,7 @@ package com.watabou.noosa;
 
 import com.watabou.gltextures.SmartTexture;
 import com.watabou.gltextures.TextureCache;
-import com.watabou.glwrap.Quad;
+import com.watabou.glwrap.QuadKt;
 import com.watabou.glwrap.Vertexbuffer;
 import com.watabou.utils.RectF;
 
@@ -48,7 +48,7 @@ public class Image extends Visual {
 		super( 0, 0, 0, 0 );
 		
 		vertices = new float[16];
-		verticesBuffer = Quad.create();
+		verticesBuffer = QuadKt.create();
 	}
 	
 	public Image( Image src ) {
@@ -170,7 +170,7 @@ public class Image extends Visual {
 		
 		texture.bind();
 		
-		script.camera( camera() );
+		script.camera( getCamera() );
 		
 		script.uModel.valueM4( matrix );
 		script.lighting(
@@ -188,7 +188,8 @@ public class Image extends Visual {
 	@Override
 	public void destroy() {
 		super.destroy();
-		if (buffer != null)
+		if (buffer != null) {
 			buffer.delete();
+		}
 	}
 }

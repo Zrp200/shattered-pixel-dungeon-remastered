@@ -45,11 +45,11 @@ public class MobSprite extends CharSprite {
 		
 		super.onComplete( anim );
 		
-		if (anim == die && parent != null) {
-			parent.add( new AlphaTweener( this, 0, FADE_TIME ) {
+		if (anim == die && getParent() != null) {
+			getParent().add(new AlphaTweener( this, 0, FADE_TIME ) {
 				@Override
 				protected void onComplete() {
-					MobSprite.this.killAndErase();
+					MobSprite.this.remove();
 				}
 			} );
 		}
@@ -64,14 +64,14 @@ public class MobSprite extends CharSprite {
 		hideEmo();
 
 		if (health != null){
-			health.killAndErase();
+			health.remove();
 		}
 		
-		parent.add( new ScaleTweener( this, new PointF( 0, 0 ), FALL_TIME ) {
+		getParent().add(new ScaleTweener( this, new PointF( 0, 0 ), FALL_TIME ) {
 			@Override
 			protected void onComplete() {
-				MobSprite.this.killAndErase();
-				parent.erase( this );
+				MobSprite.this.remove();
+				remove();
 			}
 			@Override
 			protected void updateValues( float progress ) {

@@ -34,7 +34,7 @@ public class WindParticle extends PixelParticle {
 	public static final Emitter.Factory FACTORY = new Factory() {
 		@Override
 		public void emit( Emitter emitter, int index, float x, float y ) {
-			((WindParticle)emitter.recycle( WindParticle.class )).reset( x, y );
+			emitter.recycle( WindParticle.class ).reset( x, y );
 		}
 	};
 	
@@ -90,8 +90,9 @@ public class WindParticle extends PixelParticle {
 		
 		@Override
 		public void update() {
-			
-			if (visible = (pos < Dungeon.level.heroFOV.length && Dungeon.level.heroFOV[pos])) {
+
+			setVisible((pos < Dungeon.level.heroFOV.length && Dungeon.level.heroFOV[pos]));
+			if (getVisible()) {
 				
 				super.update();
 

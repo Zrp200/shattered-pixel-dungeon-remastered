@@ -18,29 +18,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
+package com.watabou.noosa.tweeners
 
-package com.watabou.noosa.tweeners;
+import com.watabou.noosa.Visual
+import com.watabou.utils.PointF
 
-import com.watabou.noosa.Camera;
-import com.watabou.utils.PointF;
+/**
+ * [Tweener] that scales a [visual][Visual] to a specified size.
+ *
+ * @param scale desired alpha value
+ * @param interval lifespan of the tweener
+ * @property visual visual to work with
+ */
+open class ScaleTweener(
+    private var visual: Visual,
+    scale: PointF,
+    interval: Float
+) : Tweener(interval) {
 
-public class CameraScrollTweener extends Tweener {
+    var start: PointF = visual.scale
+    var end: PointF = scale
 
-	public Camera camera;
-	
-	public PointF start;
-	public PointF end;
-	
-	public CameraScrollTweener( Camera camera, PointF pos, float time ) {
-		super( camera, time );
-		
-		this.camera = camera;
-		start = camera.scroll;
-		end = pos;
-	}
-
-	@Override
-	protected void updateValues( float progress ) {
-		camera.scroll = PointF.inter( start, end, progress );
-	}
+    override fun updateValues(progress: Float) {
+        visual.scale = PointF.inter(start, end, progress)
+    }
 }

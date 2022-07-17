@@ -277,8 +277,8 @@ public class MenuPane extends Component {
 
 		public void updateKeyDisplay() {
 			keyIcon.updateKeys();
-			keyIcon.visible = keyIcon.keyCount() > 0;
-			journalIcon.visible = !keyIcon.visible;
+			keyIcon.setVisible(keyIcon.keyCount() > 0);
+			journalIcon.setVisible(keyIcon.keyCount() == 0);
 			if (keyIcon.keyCount() > 0) {
 				bg.brightness(.8f - (Math.min(6, keyIcon.keyCount()) / 20f));
 			} else {

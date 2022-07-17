@@ -283,7 +283,7 @@ public class ScrollOfTeleportation extends Scroll {
 
 		if (ch.invisible == 0) {
 			ch.sprite.alpha( 0 );
-			ch.sprite.parent.add( new AlphaTweener( ch.sprite, 1, 0.4f ) );
+			ch.sprite.getParent().add( new AlphaTweener( ch.sprite, 1, 0.4f ) );
 		}
 
 		if (Dungeon.level.heroFOV[pos] || ch == Dungeon.hero ) {

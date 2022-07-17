@@ -168,7 +168,7 @@ public class RipperDemon extends Mob {
 				}
 
 				//do leap
-				sprite.visible = Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[leapPos] || Dungeon.level.heroFOV[endPos];
+				sprite.setVisible(Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[leapPos] || Dungeon.level.heroFOV[endPos]);
 				sprite.jump(pos, leapPos, new Callback() {
 					@Override
 					public void call() {
@@ -236,7 +236,7 @@ public class RipperDemon extends Mob {
 						spend(GameMath.gate(TICK, enemy.cooldown(), 3*TICK));
 						if (Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[leapPos]){
 							GLog.w(Messages.get(RipperDemon.this, "leap"));
-							sprite.parent.addToBack(new TargetedCell(leapPos, 0xFF0000));
+							sprite.getParent().addToBack(new TargetedCell(leapPos, 0xFF0000));
 							((RipperSprite)sprite).leapPrep( leapPos );
 							Dungeon.hero.interrupt();
 						}

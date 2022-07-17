@@ -87,7 +87,7 @@ public class DM300Sprite extends MobSprite {
 		turnTo( ch.pos , cell );
 		play( zap );
 
-		MagicMissile.boltFromChar( parent,
+		MagicMissile.boltFromChar(getParent(),
 				MagicMissile.TOXIC_VENT,
 				this,
 				cell,
@@ -127,13 +127,13 @@ public class DM300Sprite extends MobSprite {
 		if (anim == die) {
 			Sample.INSTANCE.play(Assets.Sounds.BLAST);
 			emitter().burst( BlastParticle.FACTORY, 100 );
-			killAndErase();
+			remove();
 		}
 	}
 
 	@Override
 	public void place(int cell) {
-		if (parent != null) parent.bringToFront(this);
+		if (getParent() != null) getParent().bringToFront(this);
 		super.place(cell);
 	}
 
@@ -156,7 +156,7 @@ public class DM300Sprite extends MobSprite {
 		super.update();
 
 		if (superchargeSparks != null){
-			superchargeSparks.visible = visible;
+			superchargeSparks.setVisible(getVisible());
 		}
 	}
 
@@ -172,7 +172,7 @@ public class DM300Sprite extends MobSprite {
 	public void kill() {
 		super.kill();
 		if (superchargeSparks != null){
-			superchargeSparks.killAndErase();
+			superchargeSparks.remove();
 		}
 	}
 

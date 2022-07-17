@@ -59,7 +59,7 @@ public class WarlockSprite extends MobSprite {
 		turnTo( ch.pos , cell );
 		play( zap );
 
-		MagicMissile.boltFromChar( parent,
+		MagicMissile.boltFromChar(getParent(),
 				MagicMissile.SHADOW,
 				this,
 				cell,

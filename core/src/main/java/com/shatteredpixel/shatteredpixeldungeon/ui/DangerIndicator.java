@@ -50,7 +50,7 @@ public class DangerIndicator extends Tag {
 		
 		setSize( SIZE, HEIGHT );
 		
-		visible = false;
+		setVisible(false);
 	}
 	
 	@Override
@@ -92,7 +92,8 @@ public class DangerIndicator extends Tag {
 			int v =  Dungeon.hero.visibleEnemies();
 			if (v != lastNumber) {
 				lastNumber = v;
-				if (visible = lastNumber > 0) {
+				setVisible(lastNumber > 0);
+				if (getVisible()) {
 					number.text( Integer.toString( lastNumber ) );
 					number.measure();
 					placeNumber();
@@ -101,7 +102,7 @@ public class DangerIndicator extends Tag {
 				}
 			}
 		} else {
-			visible = false;
+			setVisible(false);
 		}
 		
 		super.update();

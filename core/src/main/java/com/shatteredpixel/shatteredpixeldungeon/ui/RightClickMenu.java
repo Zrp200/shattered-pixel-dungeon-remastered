@@ -27,7 +27,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
-import com.shatteredpixel.shatteredpixeldungeon.windows.IconTitle;
 import com.watabou.input.PointerEvent;
 import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Image;
@@ -85,7 +84,7 @@ public class RightClickMenu extends Component {
 				boolean hit = event != null && target.overlapsScreenPoint( (int)event.current.x, (int)event.current.y );
 				if (event != null && event.type == PointerEvent.Type.HOVER && !hit){
 					RightClickMenu.this.destroy();
-					RightClickMenu.this.killAndErase();
+					RightClickMenu.this.remove();
 				} else if (hit){
 					return true;
 				}
@@ -111,7 +110,7 @@ public class RightClickMenu extends Component {
 					}
 					onSelect(finalI);
 					RightClickMenu.this.destroy();
-					RightClickMenu.this.killAndErase();
+					RightClickMenu.this.remove();
 				}
 			};
 			if (item != null){
@@ -144,11 +143,11 @@ public class RightClickMenu extends Component {
 			}
 		}
 
-		if (x + width > (camera.width + camera.scroll.x)){
-			x -= (x + width - (camera.width + camera.scroll.x));
+		if (x + width > (getCamera().width + getCamera().scroll.x)){
+			x -= (x + width - (getCamera().width + getCamera().scroll.x));
 		}
-		if (y + height > (camera.height + camera.scroll.y)){
-			y -= (y + height - (camera.height + camera.scroll.y));
+		if (y + height > (getCamera().height + getCamera().scroll.y)){
+			y -= (y + height - (getCamera().height + getCamera().scroll.y));
 		}
 
 		bg.x = x;

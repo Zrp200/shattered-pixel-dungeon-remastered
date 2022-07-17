@@ -61,10 +61,10 @@ public class SpinnerSprite extends MobSprite {
 	@Override
 	public void link(Char ch) {
 		super.link(ch);
-		if (parent != null) {
-			parent.sendToBack(this);
+		if (getParent() != null) {
+			getParent().sendToBack(this);
 			if (aura != null){
-				parent.sendToBack(aura);
+				getParent().sendToBack(aura);
 			}
 		}
 		renderShadow = false;
@@ -75,7 +75,7 @@ public class SpinnerSprite extends MobSprite {
 		turnTo( ch.pos , cell );
 		play( zap );
 		
-		MagicMissile.boltFromChar( parent,
+		MagicMissile.boltFromChar(getParent(),
 				MagicMissile.MAGIC_MISSILE,
 				this,
 				cell,

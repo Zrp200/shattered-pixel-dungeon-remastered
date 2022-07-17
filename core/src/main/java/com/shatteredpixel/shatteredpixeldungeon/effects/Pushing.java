@@ -60,7 +60,7 @@ public class Pushing extends Actor {
 	protected boolean act() {
 		if (sprite != null) {
 			if (Dungeon.level.heroFOV[from] || Dungeon.level.heroFOV[to]){
-				sprite.visible = true;
+				sprite.setVisible(true);
 			}
 			if (effect == null) {
 				new Effect();
@@ -97,8 +97,8 @@ public class Pushing extends Actor {
 			
 			delay = 0;
 
-			if (sprite.parent != null)
-				sprite.parent.add( this );
+			if (sprite.getParent() != null)
+				sprite.getParent().add( this );
 		}
 		
 		@Override
@@ -114,7 +114,7 @@ public class Pushing extends Actor {
 				
 				sprite.point(end);
 				
-				killAndErase();
+				remove();
 				Actor.remove(Pushing.this);
 				if (callback != null) callback.call();
 				

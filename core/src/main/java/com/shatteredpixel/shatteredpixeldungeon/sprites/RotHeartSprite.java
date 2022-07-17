@@ -79,7 +79,7 @@ public class RotHeartSprite extends MobSprite {
 		super.update();
 
 		if (cloud != null) {
-			cloud.visible = visible;
+			cloud.setVisible(getVisible());
 		}
 	}
 

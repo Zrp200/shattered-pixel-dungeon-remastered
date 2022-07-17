@@ -852,7 +852,7 @@ public class CavesBossLevel extends Level {
 					}
 				}
 
-				SparkParticle s = ((SparkParticle) emitter.recycle(SparkParticle.class));
+				SparkParticle s = emitter.recycle(SparkParticle.class);
 				s.resetStatic(x, y);
 				s.speed.set((energySourceSprite.x + energySourceSprite.width/2f) - x,
 						(energySourceSprite.y + energySourceSprite.height/2f) - y);

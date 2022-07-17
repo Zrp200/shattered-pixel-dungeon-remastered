@@ -62,7 +62,7 @@ public class CheckedCell extends Image {
 			alpha( alpha );
 			scale.set( DungeonTilemap.SIZE * alpha );
 		} else {
-			killAndErase();
+			remove();
 		}
 	}
 }

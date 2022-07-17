@@ -69,7 +69,7 @@ public class InventorySlot extends ItemSlot {
 
 		super.item( item );
 
-		bg.visible = !(item instanceof Gold || item instanceof Bag);
+		bg.setVisible(!(item instanceof Gold || item instanceof Bag));
 
 		if (item != null) {
 

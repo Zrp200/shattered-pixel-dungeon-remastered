@@ -48,7 +48,7 @@ public class PointerArea extends Visual implements Signal.Listener<PointerEvent>
 		super( x, y, width, height );
 		this.target = this;
 		
-		visible = false;
+		setVisible(false);
 		
 		PointerEvent.addPointerListener( this );
 	}
@@ -58,7 +58,7 @@ public class PointerArea extends Visual implements Signal.Listener<PointerEvent>
 
 		boolean hit = event != null && target.overlapsScreenPoint( (int)event.current.x, (int)event.current.y );
 		
-		if (!isActive()) {
+		if (!getActive()) {
 			return (hit && blockLevel == ALWAYS_BLOCK);
 		}
 		

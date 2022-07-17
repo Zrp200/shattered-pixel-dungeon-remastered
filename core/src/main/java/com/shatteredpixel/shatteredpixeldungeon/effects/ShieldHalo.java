@@ -22,7 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.effects;
 
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
-import com.watabou.glwrap.Blending;
+import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Halo;
 import com.watabou.utils.PointF;
@@ -52,15 +52,16 @@ public class ShieldHalo extends Halo {
 		
 		if (phase < 1) {
 			if ((phase -= Game.elapsed) <= 0) {
-				killAndErase();
+				remove();
 			} else {
 				scale.set( (2 - phase) * radius / RADIUS );
 				am = phase * (-1);
 				aa = phase * (+1);
 			}
 		}
-		
-		if (visible = target.visible) {
+
+		setVisible(target.getVisible());
+		if (getVisible()) {
 			PointF p = target.center();
 			point( p.x, p.y );
 		}
@@ -68,9 +69,9 @@ public class ShieldHalo extends Halo {
 	
 	@Override
 	public void draw() {
-		Blending.setLightMode();
+		BlendingKt.setLightMode();
 		super.draw();
-		Blending.setNormalMode();
+		BlendingKt.setNormalMode();
 	}
 	
 	public void putOut() {

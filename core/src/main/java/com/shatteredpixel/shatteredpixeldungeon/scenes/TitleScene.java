@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
+import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Chrome;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
@@ -41,7 +42,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.StyledButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndOptions;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndSettings;
-import com.watabou.glwrap.Blending;
+import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
@@ -49,6 +50,7 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Music;
 import com.watabou.utils.ColorMath;
 import com.watabou.utils.DeviceCompat;
+import com.watabou.utils.Random;
 
 import java.util.Date;
 
@@ -64,7 +66,7 @@ public class TitleScene extends PixelScene {
 				new float[]{1, 1},
 				false);
 
-		uiCamera.visible = false;
+		uiCamera.setVisible(false);
 		
 		int w = Camera.main.width;
 		int h = Camera.main.height;
@@ -96,9 +98,9 @@ public class TitleScene extends PixelScene {
 			}
 			@Override
 			public void draw() {
-				Blending.setLightMode();
+				BlendingKt.setLightMode();
 				super.draw();
-				Blending.setNormalMode();
+				BlendingKt.setNormalMode();
 			}
 		};
 		signs.x = title.x + (title.width() - signs.width())/2f;

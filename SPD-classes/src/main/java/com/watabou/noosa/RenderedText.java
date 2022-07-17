@@ -31,7 +31,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Affine2;
 import com.badlogic.gdx.math.Matrix4;
 import com.watabou.glwrap.Matrix;
-import com.watabou.glwrap.Quad;
+import com.watabou.glwrap.QuadKt;
 
 import java.nio.Buffer;
 import java.nio.FloatBuffer;
@@ -83,10 +83,10 @@ public class RenderedText extends Image {
 		if ( text == null || text.equals("") ) {
 			text = "";
 			width=height=0;
-			visible = false;
+			setVisible(false);
 			return;
 		} else {
-			visible = true;
+			setVisible(true);
 		}
 		
 		font = Game.platform.getFont(size, text, true, true);
@@ -162,7 +162,7 @@ public class RenderedText extends Image {
 				toOpenGL = buffers.get(count/20);
 				((Buffer)toOpenGL).position(0);
 			} else {
-				toOpenGL = Quad.createSet(count / 20);
+				toOpenGL = QuadKt.createSet(count / 20);
 				buffers.put(count/20, toOpenGL);
 			}
 			
@@ -203,7 +203,7 @@ public class RenderedText extends Image {
 			texture.bind();
 			com.watabou.glwrap.Texture.clear();
 			
-			script.camera( v.camera() );
+			script.camera( v.getCamera() );
 			
 			script.uModel.valueM4( v.matrix );
 			script.lighting(

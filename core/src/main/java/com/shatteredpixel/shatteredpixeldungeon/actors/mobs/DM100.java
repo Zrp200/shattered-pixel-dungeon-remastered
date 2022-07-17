@@ -95,7 +95,7 @@ public class DM100 extends Mob implements Callback {
 				dmg = Math.round(dmg * AscensionChallenge.statModifier(this));
 				enemy.damage( dmg, new LightningBolt() );
 
-				if (enemy.sprite.visible) {
+				if (enemy.sprite.getVisible()) {
 					enemy.sprite.centerEmitter().burst(SparkParticle.FACTORY, 3);
 					enemy.sprite.flash();
 				}
@@ -114,7 +114,7 @@ public class DM100 extends Mob implements Callback {
 				enemy.sprite.showStatus( CharSprite.NEUTRAL,  enemy.defenseVerb() );
 			}
 			
-			if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
+			if (sprite != null && (sprite.getVisible() || enemy.sprite.getVisible())) {
 				sprite.zap( enemy.pos );
 				return false;
 			} else {

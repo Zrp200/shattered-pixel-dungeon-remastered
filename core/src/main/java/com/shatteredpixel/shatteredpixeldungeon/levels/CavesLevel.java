@@ -183,8 +183,9 @@ public class CavesLevel extends RegularLevel {
 		
 		@Override
 		public void update() {
-			
-			if (visible = (pos < Dungeon.level.heroFOV.length && Dungeon.level.heroFOV[pos])) {
+
+			setVisible((pos < Dungeon.level.heroFOV.length && Dungeon.level.heroFOV[pos]));
+			if (getVisible()) {
 				
 				super.update();
 
@@ -199,7 +200,7 @@ public class CavesLevel extends RegularLevel {
 					delay = Random.Float();
 					
 					PointF p = DungeonTilemap.tileToWorld( pos );
-					((Sparkle)recycle( Sparkle.class )).reset(
+					recycle( Sparkle.class ).reset(
 						p.x + Random.Float( DungeonTilemap.SIZE ),
 						p.y + Random.Float( DungeonTilemap.SIZE ) );
 				}

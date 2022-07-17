@@ -70,7 +70,7 @@ public class WndChooseSubclass extends Window {
 						@Override
 						protected void onSelect(int index) {
 							hide();
-							if (index == 0 && WndChooseSubclass.this.parent != null){
+							if (index == 0 && WndChooseSubclass.this.getParent() != null){
 								WndChooseSubclass.this.hide();
 								tome.choose( subCls );
 							}

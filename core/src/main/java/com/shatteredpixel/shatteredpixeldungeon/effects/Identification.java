@@ -21,7 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.effects;
 
-import com.watabou.glwrap.Blending;
+import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.PointF;
@@ -53,16 +53,16 @@ public class Identification extends Group {
 	@Override
 	public void update() {
 		super.update();
-		if (countLiving() == 0) {
-			killAndErase();
+		if (getChildren().isEmpty()) {
+			remove();
 		}
 	}
 	
 	@Override
 	public void draw() {
-		Blending.setLightMode();
+		BlendingKt.setLightMode();
 		super.draw();
-		Blending.setNormalMode();
+		BlendingKt.setNormalMode();
 	}
 	
 	public static class Speck extends PixelParticle {

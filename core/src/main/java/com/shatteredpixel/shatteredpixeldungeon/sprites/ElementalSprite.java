@@ -85,7 +85,7 @@ public abstract class ElementalSprite extends MobSprite {
 		super.update();
 		
 		if (particles != null){
-			particles.visible = visible;
+			particles.setVisible(getVisible());
 		}
 	}
 	
@@ -101,7 +101,7 @@ public abstract class ElementalSprite extends MobSprite {
 	public void kill() {
 		super.kill();
 		if (particles != null){
-			particles.killAndErase();
+			particles.remove();
 		}
 	}
 	
@@ -110,7 +110,7 @@ public abstract class ElementalSprite extends MobSprite {
 		turnTo( ch.pos , cell );
 		play( zap );
 		
-		MagicMissile.boltFromChar( parent,
+		MagicMissile.boltFromChar(getParent(),
 				boltType,
 				this,
 				cell,
@@ -212,7 +212,7 @@ public abstract class ElementalSprite extends MobSprite {
 			play( zap );
 			
 			((Elemental)ch).onZapComplete();
-			parent.add( new Beam.LightRay(center(), DungeonTilemap.raisedTileCenterToWorld(cell)));
+			getParent().add( new Beam.LightRay(center(), DungeonTilemap.raisedTileCenterToWorld(cell)));
 		}
 		
 		@Override

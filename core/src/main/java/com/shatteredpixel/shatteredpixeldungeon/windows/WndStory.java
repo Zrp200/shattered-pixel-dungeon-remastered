@@ -94,7 +94,7 @@ public class WndStory extends Window {
 				onBackPressed();
 			}
 		};
-		blocker.camera = PixelScene.uiCamera;
+		blocker.setCamera(PixelScene.uiCamera);
 		add(blocker);
 		
 		resize( (int)(tf.width() + MARGIN * 2), (int)Math.min( tf.bottom()+MARGIN, 180 ) );
@@ -105,8 +105,10 @@ public class WndStory extends Window {
 		super.update();
 		
 		if (delay > 0 && (delay -= Game.elapsed) <= 0) {
-			shadow.visible = chrome.visible = tf.visible = true;
-			if (ttl != null) ttl.visible = true;
+			tf.setVisible(true);
+			chrome.setVisible(tf.getVisible());
+			shadow.setVisible(chrome.getVisible());
+			if (ttl != null) ttl.setVisible(true);
 		}
 	}
 	
@@ -120,8 +122,10 @@ public class WndStory extends Window {
 		if (text != null) {
 			WndStory wnd = new WndStory( text );
 			if ((wnd.delay = 0.6f) > 0) {
-				wnd.shadow.visible = wnd.chrome.visible = wnd.tf.visible = false;
-				if (wnd.ttl != null) wnd.ttl.visible = false;
+				wnd.tf.setVisible(false);
+				wnd.chrome.setVisible(wnd.tf.getVisible());
+				wnd.shadow.setVisible(wnd.chrome.getVisible());
+				if (wnd.ttl != null) wnd.ttl.setVisible(false);
 			}
 			
 			Game.scene().add( wnd );
