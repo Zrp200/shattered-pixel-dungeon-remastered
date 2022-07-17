@@ -217,6 +217,8 @@ public class TitleScene extends PixelScene {
 			add( btnExit );
 		}
 
+		bringToFront(fps);
+
 		fadeIn();
 	}
 	

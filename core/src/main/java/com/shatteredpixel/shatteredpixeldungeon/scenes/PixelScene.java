@@ -33,6 +33,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.Tooltip;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.glwrap.BlendingKt;
+import com.watabou.glwrap.FpsKt;
 import com.watabou.input.ControllerHandler;
 import com.watabou.input.PointerEvent;
 import com.watabou.noosa.BitmapText;
@@ -46,10 +47,7 @@ import com.watabou.noosa.Scene;
 import com.watabou.noosa.Visual;
 import com.watabou.noosa.ui.Component;
 import com.watabou.noosa.ui.Cursor;
-import com.watabou.utils.Callback;
-import com.watabou.utils.GameMath;
-import com.watabou.utils.PointF;
-import com.watabou.utils.Reflection;
+import com.watabou.utils.*;
 
 import java.util.ArrayList;
 
@@ -80,6 +78,8 @@ public class PixelScene extends Scene {
 
 	//stylized 3x5 bitmapped pixel font. Only latin characters supported.
 	public static BitmapText.Font pixelFont;
+
+	protected BitmapText fps;
 
 	protected boolean inGameScene = false;
 
@@ -137,6 +137,16 @@ public class PixelScene extends Scene {
 			TextureCache.get( Assets.Fonts.PIXELFONT), 0x00000000, BitmapText.Font.LATIN_FULL );
 		pixelFont.baseLine = 6;
 		pixelFont.tracking = -1;
+
+		fps = new BitmapText( pixelFont) {
+			@Override
+			public void update() {
+				super.update();
+				text("FPS: " + FpsKt.fps());
+			}
+		};
+		fps.setVisible(DeviceCompat.isDebug());
+		add( fps );
 		
 		//set up the texture size which rendered text will use for any new glyphs.
 		int renderedTextPageSize;
