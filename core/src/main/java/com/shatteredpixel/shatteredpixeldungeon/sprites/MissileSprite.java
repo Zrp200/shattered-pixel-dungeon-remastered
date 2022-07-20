@@ -161,7 +161,7 @@ public class MissileSprite extends ItemSprite {
 		PosTweener tweener = new PosTweener( this, to, d.length() / speed ) {
 			@Override
 			public void onComplete() {
-				kill();
+				MissileSprite.this.kill();
 				if (callback != null) {
 					callback.call();
 				}

@@ -800,7 +800,6 @@ public class PrisonBossLevel extends Level {
 						vis.getParent().add(new AlphaTweener(vis, 0f, fadeDuration) {
 							@Override
 							protected void onComplete() {
-								super.onComplete();
 								vis.remove();
 								remove();
 							}
