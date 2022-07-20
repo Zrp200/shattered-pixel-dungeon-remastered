@@ -33,10 +33,9 @@ open class Group : Gizmo() {
     protected var children: ArrayList<Gizmo> = ArrayList()
 
     /**
-     * Apply an action to all [children] of this group.
+     * Applies an action to all [children] of this group.
      */
-    @Synchronized
-    private fun applyToChildren(action: Gizmo.() -> Unit, condition: (Gizmo) -> Boolean = { _ -> true }) {
+    private inline fun applyToChildren(action: Gizmo.() -> Unit, condition: (Gizmo) -> Boolean = { _ -> true }) {
         for (i in 0 until children.size) {
             if (i >= children.size) break
             val child = children[i]
@@ -49,21 +48,25 @@ open class Group : Gizmo() {
     /**
      * Updates this group and all of its children.
      */
+    @Synchronized
     override fun update() = applyToChildren(Gizmo::update) { g: Gizmo -> g.alive && g.active }
 
     /**
      * Draws this group and all of its children.
      */
+    @Synchronized
     override fun draw() = applyToChildren(Gizmo::draw) { g: Gizmo -> g.alive && g.visible }
 
     /**
      * Kills this group and all of its children.
      */
+    @Synchronized
     override fun kill() = applyToChildren(Gizmo::kill) { g: Gizmo -> g.alive }.also { super.kill() }
 
     /**
      * Destroy this group and all of its children.
      */
+    @Synchronized
     override fun destroy() = applyToChildren(Gizmo::destroy).also { children.clear(); super.destroy() }
 
     /**
