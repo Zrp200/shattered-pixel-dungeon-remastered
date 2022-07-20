@@ -30,7 +30,7 @@ import com.watabou.noosa.Visual
  * @property visual visual to work with
  */
 open class AlphaTweener(
-    val visual: Visual,
+    private val visual: Visual,
     alpha: Float,
     interval: Float
 ) : Tweener(interval) {

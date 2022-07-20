@@ -34,8 +34,6 @@ abstract class Tweener(
 
     private var elapsed = 0f
 
-    var listener: Listener? = null
-
     override fun update() {
         elapsed += Game.elapsed
 
@@ -61,9 +59,7 @@ abstract class Tweener(
     /**
      * Actions to execute upon [completion][finish].
      */
-    protected open fun onComplete() {
-        listener?.onComplete(this)
-    }
+    protected open fun onComplete() {}
 
     /**
      * Action to execute on [update] during the [lifespan][interval] of this tweener.
@@ -71,9 +67,4 @@ abstract class Tweener(
      * @param progress
      */
     protected abstract fun updateValues(progress: Float)
-
-    // TODO: replace with a callback
-    interface Listener {
-        fun onComplete(tweener: Tweener?)
-    }
 }

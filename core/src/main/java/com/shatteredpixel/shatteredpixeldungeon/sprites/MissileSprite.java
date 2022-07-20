@@ -44,7 +44,7 @@ import com.watabou.utils.PointF;
 
 import java.util.HashMap;
 
-public class MissileSprite extends ItemSprite implements Tweener.Listener {
+public class MissileSprite extends ItemSprite {
 
 	private static final float SPEED	= 240f;
 	
@@ -158,16 +158,15 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 			speed *= 1.5f;
 		}
 		
-		PosTweener tweener = new PosTweener( this, to, d.length() / speed );
-		tweener.setListener(this);
+		PosTweener tweener = new PosTweener( this, to, d.length() / speed ) {
+			@Override
+			public void onComplete() {
+				kill();
+				if (callback != null) {
+					callback.call();
+				}
+			}
+		};
 		getParent().add( tweener );
-	}
-
-	@Override
-	public void onComplete( Tweener tweener ) {
-		kill();
-		if (callback != null) {
-			callback.call();
-		}
 	}
 }

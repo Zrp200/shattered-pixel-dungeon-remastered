@@ -170,12 +170,12 @@ public class BuffIndicator extends Component {
 					@Override
 					protected void updateValues( float progress ) {
 						super.updateValues( progress );
-						getVisual().scale.set( 1 + 5 * progress );
+						icon.scale.set( 1 + 5 * progress );
 					}
 					
 					@Override
 					protected void onComplete() {
-						getVisual().remove();
+						icon.remove();
 					}
 				} );
 				

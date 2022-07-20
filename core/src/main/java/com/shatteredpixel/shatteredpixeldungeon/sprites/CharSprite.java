@@ -58,7 +58,7 @@ import com.watabou.utils.Random;
 
 import java.nio.Buffer;
 
-public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip.Listener {
+public class CharSprite extends MovieClip implements MovieClip.Listener {
 	
 	// Color constants for floating text
 	public static final int DEFAULT		= 0xFFFFFF;
@@ -212,8 +212,20 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 
 		play( run );
 		
-		motion = new PosTweener( this, worldToCamera( to ), moveInterval );
-		motion.setListener(this);
+		motion = new PosTweener( this, worldToCamera( to ), moveInterval ) {
+			@Override
+			protected void onComplete() {
+				synchronized (CharSprite.this) {
+					isMoving = false;
+
+					motion.remove();
+					motion = null;
+					ch.onMotionComplete();
+
+					CharSprite.this.notifyAll();
+				}
+			}
+		};
 		getParent().add( motion );
 
 		isMoving = true;
@@ -290,8 +302,17 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	public void jump( int from, int to, Callback callback, float height, float duration ) {
 		jumpCallback = callback;
 
-		jumpTweener = new JumpTweener( this, worldToCamera( to ), height, duration );
-		jumpTweener.setListener(this);
+		jumpTweener = new JumpTweener( this, worldToCamera( to ), height, duration ) {
+			@Override
+			protected void onComplete() {
+				if (CharSprite.this.getVisible() && Dungeon.level.water[ch.pos] && !ch.flying) {
+					GameScene.ripple( ch.pos );
+				}
+				if (jumpCallback != null) {
+					jumpCallback.call();
+				}
+			}
+		};
 		getParent().add( jumpTweener );
 
 		turnTo( from, to );
@@ -696,32 +717,6 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 
 		super.draw();
 
-	}
-
-	@Override
-	public void onComplete( Tweener tweener ) {
-		if (tweener == jumpTweener) {
-
-			if (getVisible() && Dungeon.level.water[ch.pos] && !ch.flying) {
-				GameScene.ripple( ch.pos );
-			}
-			if (jumpCallback != null) {
-				jumpCallback.call();
-			}
-
-		} else if (tweener == motion) {
-
-			synchronized (this) {
-				isMoving = false;
-
-				motion.remove();
-				motion = null;
-				ch.onMotionComplete();
-
-				notifyAll();
-			}
-
-		}
 	}
 
 	@Override

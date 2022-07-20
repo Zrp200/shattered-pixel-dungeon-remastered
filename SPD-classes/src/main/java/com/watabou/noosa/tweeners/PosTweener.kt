@@ -30,7 +30,7 @@ import com.watabou.utils.PointF
  * @param interval lifespan of the tweener
  * @property visual visual to work with
  */
-class PosTweener(
+open class PosTweener(
     private var visual: Visual,
     pos: PointF,
     interval: Float
