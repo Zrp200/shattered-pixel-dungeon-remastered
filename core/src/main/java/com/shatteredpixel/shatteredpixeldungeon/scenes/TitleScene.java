@@ -48,6 +48,7 @@ import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Music;
+import com.watabou.noosa.graph.GizmoGraphKt;
 import com.watabou.utils.ColorMath;
 import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.Random;
@@ -85,13 +86,8 @@ public class TitleScene extends PixelScene {
 
 		align(title);
 
-		if (DeviceCompat.isDebug()) {
-			for (int i = 10; i < 600; i += 10) {
-				for (int j = 10; j < 300; j += 10) {
-					placeTorch(i, j);
-				}
-			}
-		}
+		placeTorch(title.x + 22, title.y + 46);
+		placeTorch(title.x + title.width - 22, title.y + 46);
 
 		Image signs = new Image( BannerSprites.get( BannerSprites.Type.PIXEL_DUNGEON_SIGNS ) ) {
 			private float time = 0;
@@ -157,6 +153,18 @@ public class TitleScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				ShatteredPixelDungeon.switchNoFade( BadgesScene.class );
+			}
+
+			@Override
+			protected boolean onLongClick() {
+				if (DeviceCompat.isDebug()) {
+					for (int i = 30; i < 620; i += 10) {
+						for (int j = 30; j < 320; j += 10) {
+							placeTorch(i, j);
+						}
+					}
+				}
+				return true;
 			}
 		};
 		btnBadges.icon(Icons.get(Icons.BADGES));
@@ -358,6 +366,14 @@ public class TitleScene extends PixelScene {
 				WndSettings.last_index = 4;
 			}
 			ShatteredPixelDungeon.scene().add(new WndSettings());
+		}
+
+		@Override
+		protected boolean onLongClick() {
+			if (DeviceCompat.isDebug()) {
+				GizmoGraphKt.initGraph();
+			}
+			return true;
 		}
 	}
 

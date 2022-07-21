@@ -36,6 +36,7 @@ import com.watabou.input.InputHandler;
 import com.watabou.input.PointerEvent;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.noosa.graph.GizmoGraphKt;
 import com.watabou.utils.Callback;
 import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.PlatformSupport;
@@ -280,6 +281,8 @@ public class Game implements ApplicationListener {
 		Sample.INSTANCE.update();
 		scene.update();
 		Camera.updateAll();
+
+		if (GizmoGraphKt.getOn()) GizmoGraphKt.updateGraph(scene);
 	}
 	
 	public static void reportException( Throwable tr ) {

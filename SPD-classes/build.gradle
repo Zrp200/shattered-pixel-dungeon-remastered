@@ -11,6 +11,9 @@ dependencies {
     api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
     implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 
+    implementation "org.graphstream:gs-core:2.0"
+    implementation "org.graphstream:gs-ui-swing:2.0"
+
     //noinspection GradleDependency , later JSON versions cause crashes on old versions of android
     implementation 'org.json:json:20220320'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
