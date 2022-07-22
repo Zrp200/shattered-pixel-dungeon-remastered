@@ -33,41 +33,59 @@ open class Group : Gizmo() {
     protected var children: ArrayList<Gizmo> = ArrayList()
 
     /**
-     * Applies an action to all [children] of this group.
+     * Updates this group and all of its children.
      */
-    private inline fun applyToChildren(action: Gizmo.() -> Unit, condition: (Gizmo) -> Boolean = { _ -> true }) {
+    @Synchronized
+    override fun update() {
         for (i in 0 until children.size) {
             if (i >= children.size) break
             val child = children[i]
-            if (condition(child)) {
-                child.action()
+            if (child.alive && child.active) {
+                child.update()
             }
         }
     }
 
     /**
-     * Updates this group and all of its children.
-     */
-    @Synchronized
-    override fun update() = applyToChildren(Gizmo::update) { g: Gizmo -> g.alive && g.active }
-
-    /**
      * Draws this group and all of its children.
      */
     @Synchronized
-    override fun draw() = applyToChildren(Gizmo::draw) { g: Gizmo -> g.alive && g.visible }
+    override fun draw() {
+        for (i in 0 until children.size) {
+            if (i >= children.size) break
+            val child = children[i]
+            if (child.alive && child.visible) {
+                child.draw()
+            }
+        }
+    }
 
     /**
      * Kills this group and all of its children.
      */
     @Synchronized
-    override fun kill() = applyToChildren(Gizmo::kill) { g: Gizmo -> g.alive }.also { super.kill() }
+    override fun kill() {
+        for (i in 0 until children.size) {
+            if (i >= children.size) break
+            val child = children[i]
+            if (child.alive) {
+                child.kill()
+            }
+        }
+        super.kill()
+    }
 
     /**
      * Destroy this group and all of its children.
      */
     @Synchronized
-    override fun destroy() = applyToChildren(Gizmo::destroy).also { children.clear(); super.destroy() }
+    override fun destroy() {
+        while (children.size > 0) {
+            children[0].destroy()
+        }
+        children.clear()
+        super.destroy()
+    }
 
     /**
      * Adds a gizmo to the [children] unless it's already there. New children are added to the front.
