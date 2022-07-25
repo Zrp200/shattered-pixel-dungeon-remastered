@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
-import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Chrome;
 import com.shatteredpixel.shatteredpixeldungeon.GamesInProgress;
@@ -51,7 +50,6 @@ import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.graph.GizmoGraphKt;
 import com.watabou.utils.ColorMath;
 import com.watabou.utils.DeviceCompat;
-import com.watabou.utils.Random;
 
 import java.util.Date;
 

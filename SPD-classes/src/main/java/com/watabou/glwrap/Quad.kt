@@ -34,11 +34,11 @@ import java.nio.ShortBuffer
  *
  * 3-2
  */
-val VALUES = arrayOf(0, 1, 2, 0, 2, 3)
+private val VALUES = arrayOf(0, 1, 2, 0, 2, 3)
 const val VALUES_SIZE = 6
-const val VERTEX_COUNT = 4
-const val INDEX_SIZE = Short.MAX_VALUE.toInt()
-const val MATRIX_SIZE = 16
+private const val VERTEX_COUNT = 4
+private const val INDEX_SIZE = Short.MAX_VALUE
+private const val MATRIX_SIZE = 16
 
 private val indices: ShortBuffer by lazy {
     ByteBuffer
@@ -78,9 +78,13 @@ fun createSet(size: Int): FloatBuffer = ByteBuffer
  * Sets up 32k quads for drawing.
  */
 fun setupIndices() {
-    Gdx.gl.glBindBuffer(GL20.GL_ELEMENT_ARRAY_BUFFER, bufferIndex)
-    Gdx.gl.glBufferData(GL20.GL_ELEMENT_ARRAY_BUFFER, INDEX_SIZE * VALUES_SIZE * Short.SIZE_BYTES, indices, GL20.GL_STATIC_DRAW)
-    Gdx.gl.glBindBuffer(GL20.GL_ELEMENT_ARRAY_BUFFER, 0)
+    bindIndices()
+    Gdx.gl.glBufferData(
+        GL20.GL_ELEMENT_ARRAY_BUFFER,
+        INDEX_SIZE * VALUES_SIZE * Short.SIZE_BYTES,
+        indices,
+        GL20.GL_STATIC_DRAW
+    )
 }
 
 fun bindIndices() = Gdx.gl.glBindBuffer(GL20.GL_ELEMENT_ARRAY_BUFFER, bufferIndex)

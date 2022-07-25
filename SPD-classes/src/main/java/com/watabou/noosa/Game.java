@@ -27,10 +27,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.glutils.GLVersion;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.watabou.glscripts.Script;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.glwrap.BlendingKt;
-import com.watabou.glwrap.Vertexbuffer;
+import com.watabou.glwrap.VertexDataset;
 import com.watabou.input.ControllerHandler;
 import com.watabou.input.InputHandler;
 import com.watabou.input.PointerEvent;
@@ -111,7 +110,7 @@ public class Game implements ApplicationListener {
 		versionContextRef = Gdx.graphics.getGLVersion();
 		BlendingKt.useDefault();
 		TextureCache.reload();
-		Vertexbuffer.reload();
+		VertexDataset.reload();
 	}
 
 	private GLVersion versionContextRef;
@@ -128,7 +127,7 @@ public class Game implements ApplicationListener {
 			versionContextRef = Gdx.graphics.getGLVersion();
 			BlendingKt.useDefault();
 			TextureCache.reload();
-			Vertexbuffer.reload();
+			VertexDataset.reload();
 		}
 
 		height -= bottomInset;
@@ -165,8 +164,7 @@ public class Game implements ApplicationListener {
 			if (DeviceCompat.isAndroid()) return;
 		}
 
-		NoosaScript.get().resetCamera();
-		NoosaScriptNoLighting.get().resetCamera();
+		Script.get().resetCamera();
 		Gdx.gl.glDisable(Gdx.gl.GL_SCISSOR_TEST);
 		Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
 		draw();
@@ -258,7 +256,7 @@ public class Game implements ApplicationListener {
 			scene.destroy();
 		}
 		//clear any leftover vertex buffers
-		Vertexbuffer.clear();
+		VertexDataset.clear();
 		scene = requestedScene;
 		if (onChange != null) onChange.beforeCreate();
 		scene.create();
@@ -307,12 +305,7 @@ public class Game implements ApplicationListener {
 	}
 	
 	public static void runOnRenderThread(Callback c){
-		Gdx.app.postRunnable(new Runnable() {
-			@Override
-			public void run() {
-				c.call();
-			}
-		});
+		Gdx.app.postRunnable(c::call);
 	}
 	
 	public static void vibrate( int milliseconds ) {

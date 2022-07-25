@@ -30,7 +30,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Affine2;
 import com.badlogic.gdx.math.Matrix4;
-import com.watabou.glwrap.Matrix;
 import com.watabou.glwrap.QuadKt;
 
 import java.nio.Buffer;
@@ -127,7 +126,7 @@ public class RenderedText extends Image {
 		super.updateMatrix();
 		//sometimes the font is rendered oddly, so we offset here to put it in the correct spot
 		if (renderedHeight != height) {
-			Matrix.translate(matrix, 0, Math.round(height - renderedHeight));
+			matrix.translate(0, Math.round(height - renderedHeight));
 		}
 	}
 	
@@ -198,14 +197,14 @@ public class RenderedText extends Image {
 
 			((Buffer)toOpenGL).position(0);
 			
-			NoosaScript script = NoosaScript.get();
+			Script script = Script.get();
 			
 			texture.bind();
-			com.watabou.glwrap.Texture.clear();
+			com.watabou.gltextures.Texture.clear();
 			
-			script.camera( v.getCamera() );
+			script.setCamera( v.getCamera() );
 			
-			script.uModel.valueM4( v.matrix );
+			script.getUModel().set( v.matrix );
 			script.lighting(
 					v.rm, v.gm, v.bm, v.am,
 					v.ra, v.ga, v.ba, v.aa );

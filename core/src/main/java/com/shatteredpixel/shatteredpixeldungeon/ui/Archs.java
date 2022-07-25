@@ -26,8 +26,6 @@ import com.watabou.gltextures.TextureCache;
 import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
-import com.watabou.noosa.NoosaScript;
-import com.watabou.noosa.NoosaScriptNoLighting;
 import com.watabou.noosa.SkinnedBlock;
 import com.watabou.noosa.ui.Component;
 
@@ -48,11 +46,6 @@ public class Archs extends Component {
 	protected void createChildren() {
 		arcsBg = new SkinnedBlock( 1, 1, Assets.Interfaces.ARCS_BG ){
 			@Override
-			protected NoosaScript script() {
-				return NoosaScriptNoLighting.get();
-			}
-
-			@Override
 			public void draw() {
 				//arch bg has no alpha component, this improves performance
 				BlendingKt.disableBlending();
@@ -64,12 +57,7 @@ public class Archs extends Component {
 		arcsBg.offsetTo( 0,  offsB );
 		add( arcsBg );
 
-		arcsFg = new SkinnedBlock( 1, 1, Assets.Interfaces.ARCS_FG ){
-			@Override
-			protected NoosaScript script() {
-				return NoosaScriptNoLighting.get();
-			}
-		};
+		arcsFg = new SkinnedBlock( 1, 1, Assets.Interfaces.ARCS_FG );
 		arcsFg.autoAdjust = true;
 		arcsFg.offsetTo( 0,  offsF );
 		add( arcsFg );

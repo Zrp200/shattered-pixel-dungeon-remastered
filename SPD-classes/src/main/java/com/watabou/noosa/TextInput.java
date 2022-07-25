@@ -33,12 +33,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.watabou.glscripts.Script;
 import com.watabou.glwrap.BlendingKt;
 import com.watabou.glwrap.QuadKt;
-import com.watabou.glwrap.Texture;
+import com.watabou.gltextures.Texture;
 import com.watabou.noosa.ui.Component;
 import com.watabou.utils.FileUtils;
 import com.watabou.utils.Point;
@@ -94,11 +92,9 @@ public class TextInput extends Component {
 		});
 
 		if (!multiline){
-			textField.setTextFieldListener(new TextField.TextFieldListener(){
-				public void keyTyped (TextField textField, char c){
-					if (c == '\r' || c == '\n'){
-						enterPressed();
-					}
+			textField.setTextFieldListener((textField, c) -> {
+				if (c == '\r' || c == '\n'){
+					enterPressed();
 				}
 			});
 		}

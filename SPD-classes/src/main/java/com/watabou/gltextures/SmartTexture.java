@@ -22,7 +22,6 @@
 package com.watabou.gltextures;
 
 import com.badlogic.gdx.graphics.Pixmap;
-import com.watabou.glwrap.Texture;
 import com.watabou.utils.RectF;
 
 public class SmartTexture extends Texture {
@@ -41,18 +40,15 @@ public class SmartTexture extends Texture {
 	public Atlas atlas;
 
 	public SmartTexture( Pixmap bitmap ) {
-		this( bitmap, NEAREST, CLAMP, false );
+		this( bitmap, NEAREST, CLAMP );
 	}
 
-	public SmartTexture( Pixmap bitmap, int filtering, int wrapping, boolean premultiplied ) {
-
+	public SmartTexture( Pixmap bitmap, int filtering, int wrapping ) {
 		this.bitmap = bitmap;
 		width = bitmap.getWidth();
 		height = bitmap.getHeight();
 		this.fModeMin = this.fModeMax = filtering;
 		this.wModeH = this.wModeV = wrapping;
-		this.premultiplied = premultiplied;
-
 	}
 
 	@Override

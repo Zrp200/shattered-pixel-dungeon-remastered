@@ -24,7 +24,7 @@ package com.watabou.noosa;
 import com.watabou.gltextures.SmartTexture;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.glwrap.QuadKt;
-import com.watabou.glwrap.Vertexbuffer;
+import com.watabou.glwrap.VertexDataset;
 import com.watabou.utils.RectF;
 
 import java.nio.Buffer;
@@ -36,7 +36,7 @@ public class NinePatch extends Visual {
 	
 	protected float[] vertices;
 	protected FloatBuffer quads;
-	protected Vertexbuffer buffer;
+	protected VertexDataset buffer;
 	
 	protected RectF outterF;
 	protected RectF innerF;
@@ -187,22 +187,20 @@ public class NinePatch extends Visual {
 
 		if (dirty){
 			if (buffer == null)
-				buffer = new Vertexbuffer(quads);
+				buffer = new VertexDataset(quads);
 			else
-				buffer.updateVertices(quads);
+				buffer.markForUpdate(quads);
 			dirty = false;
 		}
 
-		NoosaScript script = NoosaScript.get();
+		Script script = Script.get();
 		
 		texture.bind();
 		
-		script.camera( getCamera() );
+		script.setCamera( getCamera() );
 		
-		script.uModel.valueM4( matrix );
-		script.lighting(
-			rm, gm, bm, am,
-			ra, ga, ba, aa );
+		script.getUModel().set( matrix );
+		script.lighting(rm, gm, bm, am, ra, ga, ba, aa);
 		
 		script.drawQuadSet( buffer, 9, 0 );
 		

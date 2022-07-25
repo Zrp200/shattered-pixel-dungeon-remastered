@@ -23,7 +23,6 @@ package com.shatteredpixel.shatteredpixeldungeon.tiles;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.watabou.noosa.Image;
-import com.watabou.noosa.NoosaScript;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.Tilemap;
 import com.watabou.utils.Bundlable;
@@ -83,13 +82,7 @@ public abstract class CustomTilemap implements Bundlable {
 	
 	public Tilemap create(){
 		if (vis != null && vis.getAlive()) vis.remove();
-		vis = new Tilemap(texture, new TextureFilm( texture, SIZE, SIZE )){
-			@Override
-			protected NoosaScript script() {
-				//allow lighting for custom tilemaps
-				return NoosaScript.get();
-			}
-		};
+		vis = new Tilemap(texture, new TextureFilm( texture, SIZE, SIZE ));
 		vis.x = tileX*SIZE;
 		vis.y = tileY*SIZE;
 		return vis;

@@ -26,7 +26,7 @@ import com.watabou.gltextures.TextureCache;
 import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
-import com.watabou.noosa.NoosaScript;
+import com.watabou.noosa.Script;
 import com.watabou.noosa.Visual;
 import com.watabou.utils.PointF;
 
@@ -179,16 +179,16 @@ public class CircleArc extends Visual {
 		
 		if (lightMode) BlendingKt.setLightMode();
 		
-		NoosaScript script = NoosaScript.get();
+		Script script = Script.get();
 		
 		texture.bind();
 		
-		script.uModel.valueM4( matrix );
+		script.getUModel().set( matrix );
 		script.lighting(
 				rm, gm, bm, am,
 				ra, ga, ba, aa );
 
-		script.camera(getCamera());
+		script.setCamera(getCamera());
 		script.drawElements( vertices, indices, nTris * 3 );
 		
 		if (lightMode) BlendingKt.setNormalMode();

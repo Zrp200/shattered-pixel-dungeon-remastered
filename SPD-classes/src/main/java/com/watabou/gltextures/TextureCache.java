@@ -23,7 +23,6 @@ package com.watabou.gltextures;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.watabou.glwrap.Texture;
 import com.watabou.noosa.Game;
 
 import java.util.HashMap;
@@ -145,14 +144,8 @@ public class TextureCache {
 	public static Pixmap getBitmap( Object src ) {
 		
 		try {
-			if (src instanceof Integer){
-				
-				//libGDX does not support android resource integer handles, and they were
-				//never used by the game anyway, should probably remove this entirely
-				return null;
-				
-			} else if (src instanceof String) {
-				
+			if (src instanceof String) {
+
 				return new Pixmap(Gdx.files.internal((String)src));
 				
 			} else if (src instanceof Pixmap) {

@@ -35,11 +35,11 @@ import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.watabou.gltextures.SmartTexture;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.glwrap.Matrix;
-import com.watabou.glwrap.Vertexbuffer;
+import com.watabou.glwrap.VertexDataset;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.MovieClip;
-import com.watabou.noosa.NoosaScript;
+import com.watabou.noosa.Script;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.PointF;
@@ -255,48 +255,46 @@ public class ItemSprite extends MovieClip {
 		emitter = null;
 	}
 
-	private float[] shadowMatrix = new float[16];
+	private final Matrix shadowMatrix = new Matrix();
 
 	@Override
 	protected void updateMatrix() {
 		super.updateMatrix();
-		Matrix.copy(matrix, shadowMatrix);
-		Matrix.translate(shadowMatrix,
-				(width() * (1f - shadowWidth)) / 2f,
-				(height() * (1f - shadowHeight)) + shadowOffset);
-		Matrix.scale(shadowMatrix, shadowWidth, shadowHeight);
+		shadowMatrix.copy(matrix);
+		shadowMatrix.translate((width * (1f - shadowWidth)) / 2f, (height * (1f - shadowHeight)) + shadowOffset);
+		shadowMatrix.scale(shadowWidth, shadowHeight);
 	}
 
 	@Override
 	public void draw() {
-		if (texture == null || (!dirty && buffer == null))
+		if (texture == null || (!dirty && vertexDataset == null))
 			return;
 
 		if (renderShadow) {
 			if (dirty) {
-				((Buffer)verticesBuffer).position(0);
-				verticesBuffer.put(vertices);
-				if (buffer == null)
-					buffer = new Vertexbuffer(verticesBuffer);
+				((Buffer) vertexBuffer).position(0);
+				vertexBuffer.put(vertices);
+				if (vertexDataset == null)
+					vertexDataset = new VertexDataset(vertexBuffer);
 				else
-					buffer.updateVertices(verticesBuffer);
+					vertexDataset.markForUpdate(vertexBuffer);
 				dirty = false;
 			}
 
-			NoosaScript script = script();
+			Script script = Script.get();
 
 			texture.bind();
 
-			script.camera(getCamera());
+			script.setCamera(getCamera());
 
 			updateMatrix();
 
-			script.uModel.valueM4(shadowMatrix);
+			script.getUModel().set(shadowMatrix);
 			script.lighting(
 					0, 0, 0, am * .6f,
 					0, 0, 0, aa * .6f);
 
-			script.drawQuad(buffer);
+			script.drawQuad(vertexDataset);
 		}
 
 		super.draw();

@@ -49,7 +49,7 @@ public class Camera extends Gizmo {
 	int screenWidth;
 	int screenHeight;
 	
-	public float[] matrix;
+	public Matrix matrix;
 	
 	public PointF scroll;
 	public PointF centerOffset;
@@ -125,8 +125,7 @@ public class Camera extends Gizmo {
 		scroll = new PointF();
 		centerOffset = new PointF();
 		
-		matrix = new float[16];
-		Matrix.setIdentity( matrix );
+		matrix = new Matrix();
 	}
 	
 	@Override
@@ -257,20 +256,13 @@ public class Camera extends Gizmo {
 		return height * zoom;
 	}
 	
-	protected void updateMatrix() {
-
-	/*	Matrix.setIdentity( matrix );
-		Matrix.translate( matrix, -1, +1 );
-		Matrix.scale( matrix, 2f / G.width, -2f / G.height );
-		Matrix.translate( matrix, x, y );
-		Matrix.scale( matrix, zoom, zoom );
-		Matrix.translate( matrix, scroll.x, scroll.y );*/
+	protected void updateMatrix() { // TODO: rewrite upon moving to kotlin
 		
-		matrix[0] = +zoom * invW2;
-		matrix[5] = -zoom * invH2;
+		matrix.setValue(0, zoom * invW2);
+		matrix.setValue(5, -zoom * invH2);
 		
-		matrix[12] = -1 + x * invW2 - (scroll.x + shakeX) * matrix[0];
-		matrix[13] = +1 - y * invH2 - (scroll.y + shakeY) * matrix[5];
+		matrix.setValue(12, -1 + x * invW2 - (scroll.x + shakeX) * matrix.getValues()[0]);
+		matrix.setValue(13, 1 - y * invH2 - (scroll.y + shakeY) * matrix.getValues()[5]);
 		
 	}
 	

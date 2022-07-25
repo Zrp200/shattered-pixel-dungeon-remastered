@@ -21,7 +21,7 @@
 
 package com.watabou.noosa;
 
-import com.watabou.glwrap.Texture;
+import com.watabou.gltextures.Texture;
 import com.watabou.utils.RectF;
 
 public class SkinnedBlock extends Image {

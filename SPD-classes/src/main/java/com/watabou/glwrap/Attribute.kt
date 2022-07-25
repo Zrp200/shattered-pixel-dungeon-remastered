@@ -18,38 +18,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
+package com.watabou.glwrap
 
-package com.watabou.glwrap;
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.GL20
+import java.nio.FloatBuffer
 
-import com.badlogic.gdx.Gdx;
+class Attribute(location: Int) : Variable(location) {
 
-import java.nio.FloatBuffer;
+    fun describeData(size: Int, stride: Int, vertexBuffer: FloatBuffer) {
+        Gdx.gl.glVertexAttribPointer(location, size, GL20.GL_FLOAT, false, stride * Float.SIZE_BYTES, vertexBuffer)
+    }
 
-public class Attribute {
-
-	private int location;
-	
-	public Attribute( int location ) {
-		this.location = location;
-	}
-	
-	public int location() {
-		return location;
-	}
-	
-	public void enable() {
-		Gdx.gl.glEnableVertexAttribArray( location );
-	}
-	
-	public void disable() {
-		Gdx.gl.glDisableVertexAttribArray( location );
-	}
-	
-	public void vertexPointer( int size, int stride, FloatBuffer ptr ) {
-		Gdx.gl.glVertexAttribPointer( location, size, Gdx.gl.GL_FLOAT, false, stride * 4, ptr );
-	}
-
-	public void vertexBuffer( int size, int stride, int offset) {
-		Gdx.gl.glVertexAttribPointer(location, size, Gdx.gl.GL_FLOAT, false, stride * 4, offset * 4);
-	}
+    fun describeData(size: Int, stride: Int, offset: Int) {
+        Gdx.gl.glVertexAttribPointer(location, size, GL20.GL_FLOAT, false, stride * Float.SIZE_BYTES, offset * Float.SIZE_BYTES)
+    }
 }

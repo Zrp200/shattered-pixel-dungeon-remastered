@@ -24,7 +24,7 @@ package com.watabou.noosa;
 import com.watabou.gltextures.SmartTexture;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.glwrap.QuadKt;
-import com.watabou.glwrap.Vertexbuffer;
+import com.watabou.glwrap.VertexDataset;
 import com.watabou.utils.RectF;
 
 import java.nio.Buffer;
@@ -39,8 +39,8 @@ public class Image extends Visual {
 	public boolean flipVertical;
 	
 	protected float[] vertices;
-	protected FloatBuffer verticesBuffer;
-	protected Vertexbuffer buffer;
+	protected FloatBuffer vertexBuffer;
+	protected VertexDataset vertexDataset;
 	
 	protected boolean dirty;
 	
@@ -48,7 +48,7 @@ public class Image extends Visual {
 		super( 0, 0, 0, 0 );
 		
 		vertices = new float[16];
-		verticesBuffer = QuadKt.create();
+		vertexBuffer = QuadKt.create();
 	}
 	
 	public Image( Image src ) {
@@ -151,45 +151,41 @@ public class Image extends Visual {
 	@Override
 	public void draw() {
 
-		if (texture == null || (!dirty && buffer == null))
+		if (texture == null || (!dirty && vertexDataset == null))
 			return;
 		
 		super.draw();
 
 		if (dirty) {
-			((Buffer)verticesBuffer).position( 0 );
-			verticesBuffer.put( vertices );
-			if (buffer == null)
-				buffer = new Vertexbuffer( verticesBuffer );
+			((Buffer) vertexBuffer).position( 0 );
+			vertexBuffer.put( vertices );
+			if (vertexDataset == null)
+				vertexDataset = new VertexDataset(vertexBuffer);
 			else
-				buffer.updateVertices( verticesBuffer );
+				vertexDataset.markForUpdate(vertexBuffer);
 			dirty = false;
 		}
 
-		NoosaScript script = script();
+		Script script = Script.get();
 		
 		texture.bind();
 		
-		script.camera( getCamera() );
+		script.setCamera( getCamera() );
 		
-		script.uModel.valueM4( matrix );
+		script.getUModel().set( matrix );
 		script.lighting(
 			rm, gm, bm, am,
 			ra, ga, ba, aa );
 
-		script.drawQuad( buffer );
+		script.drawQuad(vertexDataset);
 		
-	}
-
-	protected NoosaScript script(){
-		return NoosaScript.get();
 	}
 
 	@Override
 	public void destroy() {
 		super.destroy();
-		if (buffer != null) {
-			buffer.delete();
+		if (vertexDataset != null) {
+			vertexDataset.delete();
 		}
 	}
 }

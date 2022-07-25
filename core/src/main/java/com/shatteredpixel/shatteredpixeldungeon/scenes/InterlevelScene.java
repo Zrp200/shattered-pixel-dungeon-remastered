@@ -52,8 +52,6 @@ import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
-import com.watabou.noosa.NoosaScript;
-import com.watabou.noosa.NoosaScriptNoLighting;
 import com.watabou.noosa.SkinnedBlock;
 import com.watabou.utils.DeviceCompat;
 
@@ -176,11 +174,6 @@ public class InterlevelScene extends PixelScene {
 		}
 		
 		SkinnedBlock bg = new SkinnedBlock(Camera.main.width, Camera.main.height, loadingAsset ){
-			@Override
-			protected NoosaScript script() {
-				return NoosaScriptNoLighting.get();
-			}
-			
 			@Override
 			public void draw() {
 				BlendingKt.disableBlending();

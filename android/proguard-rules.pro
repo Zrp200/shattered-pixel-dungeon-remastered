@@ -3,7 +3,6 @@
 -keepnames class com.watabou.** { *; }
 
 # keep members of classes that are instantiated via reflection
--keepclassmembers class * extends com.watabou.glscripts.Script
 -keepclassmembers class * implements com.watabou.utils.Bundlable
 
 # retained to support meaningful stack traces

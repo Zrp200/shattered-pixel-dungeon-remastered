@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.scenes;
 
-import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
@@ -406,11 +405,11 @@ public class PixelScene extends Scene {
 			float sx = align( this, scroll.x + shakeX );
 			float sy = align( this, scroll.y + shakeY );
 			
-			matrix[0] = +zoom * invW2;
-			matrix[5] = -zoom * invH2;
-			
-			matrix[12] = -1 + x * invW2 - sx * matrix[0];
-			matrix[13] = +1 - y * invH2 - sy * matrix[5];
+			matrix.setValue(0, zoom * invW2);
+			matrix.setValue(5, -zoom * invH2);
+
+			matrix.setValue(12, -1 + x * invW2 - sx * matrix.getValues()[0]);
+			matrix.setValue(13, 1 - y * invH2 - sy * matrix.getValues()[5]);
 			
 		}
 	}

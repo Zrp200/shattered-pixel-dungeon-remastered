@@ -35,7 +35,7 @@ public class Visual extends Gizmo {
 	public PointF scale;
 	public PointF origin;
 
-	protected float[] matrix;
+	protected Matrix matrix;
 
 	public float rm;
 	public float gm;
@@ -64,7 +64,7 @@ public class Visual extends Gizmo {
 		scale = new PointF( 1, 1 );
 		origin = new PointF();
 
-		matrix = new float[16];
+		matrix = new Matrix();
 
 		resetColor();
 
@@ -107,18 +107,18 @@ public class Visual extends Gizmo {
 	}
 
 	protected void updateMatrix() {
-		Matrix.setIdentity( matrix );
-		Matrix.translate( matrix, x, y );
+		matrix.setIdentity();
+		matrix.translate(x, y);
 		if (origin.x != 0 || origin.y != 0)
-			Matrix.translate( matrix, origin.x, origin.y );
+			matrix.translate(origin.x, origin.y);
 		if (angle != 0) {
-			Matrix.rotate( matrix, angle );
+			matrix.rotate(angle);
 		}
 		if (scale.x != 1 || scale.y != 1) {
-			Matrix.scale( matrix, scale.x, scale.y );
+			matrix.scale(scale.x, scale.y);
 		}
 		if (origin.x != 0 || origin.y != 0)
-			Matrix.translate( matrix, -origin.x, -origin.y );
+			matrix.translate(-origin.x, -origin.y);
 	}
 
 	public PointF point() {

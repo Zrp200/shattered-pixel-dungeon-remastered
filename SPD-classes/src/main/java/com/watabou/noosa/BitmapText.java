@@ -25,7 +25,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.watabou.gltextures.SmartTexture;
 import com.watabou.glwrap.Matrix;
 import com.watabou.glwrap.QuadKt;
-import com.watabou.glwrap.Vertexbuffer;
+import com.watabou.glwrap.VertexDataset;
 import com.watabou.utils.RectF;
 
 import java.nio.Buffer;
@@ -38,7 +38,7 @@ public class BitmapText extends Visual {
 
 	protected float[] vertices = new float[16];
 	protected FloatBuffer quads;
-	protected Vertexbuffer buffer;
+	protected VertexDataset buffer;
 	
 	public int realLength;
 	
@@ -62,10 +62,10 @@ public class BitmapText extends Visual {
 	@Override
 	protected void updateMatrix() {
 		// "origin" field is ignored
-		Matrix.setIdentity( matrix );
-		Matrix.translate( matrix, x, y );
-		Matrix.scale( matrix, scale.x, scale.y );
-		Matrix.rotate( matrix, angle );
+		matrix.setIdentity();
+		matrix.translate(x, y);
+		matrix.scale(scale.x, scale.y);
+		matrix.rotate(angle);
 	}
 	
 	@Override
@@ -77,18 +77,18 @@ public class BitmapText extends Visual {
 			updateVertices();
 			((Buffer)quads).limit(quads.position());
 			if (buffer == null)
-				buffer = new Vertexbuffer(quads);
+				buffer = new VertexDataset(quads);
 			else
-				buffer.updateVertices(quads);
+				buffer.markForUpdate(quads);
 		}
 		
-		NoosaScript script = NoosaScript.get();
+		Script script = Script.get();
 		
 		font.texture.bind();
 		
-		script.camera( getCamera() );
+		script.setCamera( getCamera() );
 		
-		script.uModel.valueM4( matrix );
+		script.getUModel().set(matrix);
 		script.lighting(
 			rm, gm, bm, am,
 			ra, ga, ba, aa );
@@ -112,16 +112,13 @@ public class BitmapText extends Visual {
 			text = "";
 		}
 
-		quads = QuadKt.createSet( text.length() );
+		int length = text.length();
+		quads = QuadKt.createSet( length );
 		realLength = 0;
 
-		int length = text.length();
 		for (int i=0; i < length; i++) {
 			RectF rect = font.get( text.charAt( i ) );
 
-			if (rect == null) {
-				rect=null;
-			}
 			float w = font.width( rect );
 			float h = font.height( rect );
 

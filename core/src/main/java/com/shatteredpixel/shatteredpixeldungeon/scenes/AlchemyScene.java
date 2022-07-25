@@ -56,8 +56,6 @@ import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.NinePatch;
-import com.watabou.noosa.NoosaScript;
-import com.watabou.noosa.NoosaScriptNoLighting;
 import com.watabou.noosa.SkinnedBlock;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
@@ -97,11 +95,6 @@ public class AlchemyScene extends PixelScene {
 		water = new SkinnedBlock(
 				Camera.main.width, Camera.main.height,
 				Dungeon.level.waterTex() ){
-			
-			@Override
-			protected NoosaScript script() {
-				return NoosaScriptNoLighting.get();
-			}
 			
 			@Override
 			public void draw() {

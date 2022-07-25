@@ -120,8 +120,6 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.Gizmo;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.Image;
-import com.watabou.noosa.NoosaScript;
-import com.watabou.noosa.NoosaScriptNoLighting;
 import com.watabou.noosa.SkinnedBlock;
 import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Sample;
@@ -218,11 +216,6 @@ public class GameScene extends PixelScene {
 			Dungeon.level.width() * DungeonTilemap.SIZE,
 			Dungeon.level.height() * DungeonTilemap.SIZE,
 			Dungeon.level.waterTex() ){
-
-			@Override
-			protected NoosaScript script() {
-				return NoosaScriptNoLighting.get();
-			}
 
 			@Override
 			public void draw() {

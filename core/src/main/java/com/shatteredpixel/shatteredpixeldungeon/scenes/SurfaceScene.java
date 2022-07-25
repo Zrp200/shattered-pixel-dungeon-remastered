@@ -48,7 +48,7 @@ import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.Image;
-import com.watabou.noosa.NoosaScript;
+import com.watabou.noosa.Script;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.PointerArea;
 import com.watabou.noosa.Visual;
@@ -334,18 +334,18 @@ public class SurfaceScene extends PixelScene {
 			
 			super.draw();
 
-			NoosaScript script = NoosaScript.get();
+			Script script = Script.get();
 			
 			texture.bind();
 			
-			script.camera( getCamera() );
+			script.setCamera( getCamera() );
 			
-			script.uModel.valueM4( matrix );
+			script.getUModel().set( matrix );
 			script.lighting(
 				rm, gm, bm, am,
 				ra, ga, ba, aa );
 			
-			script.drawQuad( verticesBuffer );
+			script.drawQuadSet( verticesBuffer );
 		}
 	}
 	
@@ -465,7 +465,7 @@ public class SurfaceScene extends PixelScene {
 		@Override
 		protected void updateMatrix() {
 			super.updateMatrix();
-			Matrix.skewX( matrix, (float)(angle / Matrix.G2RAD) );
+			matrix.skewX((float)(angle / Matrix.G2RAD));
 		}
 	}
 }

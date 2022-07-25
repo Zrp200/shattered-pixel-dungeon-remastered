@@ -24,7 +24,7 @@ package com.watabou.noosa;
 import com.watabou.gltextures.SmartTexture;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.glwrap.QuadKt;
-import com.watabou.glwrap.Vertexbuffer;
+import com.watabou.glwrap.VertexDataset;
 import com.watabou.utils.Rect;
 import com.watabou.utils.RectF;
 
@@ -47,7 +47,7 @@ public class Tilemap extends Visual {
 
 	protected float[] vertices;
 	protected FloatBuffer quads;
-	protected Vertexbuffer buffer;
+	protected VertexDataset buffer;
 
 	private volatile Rect updated;
 	private boolean fullUpdate;
@@ -201,13 +201,13 @@ public class Tilemap extends Visual {
 		if (!updated.isEmpty()) {
 			updateVertices();
 			if (buffer == null)
-				buffer = new Vertexbuffer(quads);
+				buffer = new VertexDataset(quads);
 			else {
 				if (fullUpdate) {
-					buffer.updateVertices(quads);
+					buffer.markForUpdate(quads);
 					fullUpdate = false;
 				} else {
-					buffer.updateVertices(quads,
+					buffer.markForUpdate(quads,
 							topLeftUpdating * 16,
 							bottomRightUpdating * 16);
 				}
@@ -216,23 +216,19 @@ public class Tilemap extends Visual {
 			updating.setEmpty();
 		}
 
-		NoosaScript script = script();
+		Script script = Script.get();
 
 		texture.bind();
 
-		script.uModel.valueM4( matrix );
+		script.getUModel().set( matrix );
 		script.lighting(
 				rm, gm, bm, am,
 				ra, ga, ba, aa );
 
-		script.camera(getCamera());
+		script.setCamera(getCamera());
 
 		script.drawQuadSet( buffer, size, 0 );
 
-	}
-	
-	protected NoosaScript script(){
-		return NoosaScriptNoLighting.get();
 	}
 
 	@Override
