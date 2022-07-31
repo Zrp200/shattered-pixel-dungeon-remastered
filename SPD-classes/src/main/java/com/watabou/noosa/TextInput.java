@@ -176,7 +176,6 @@ public class TextInput extends Component {
 	public synchronized void destroy() {
 		super.destroy();
 		if (stage != null) {
-			stage.dispose();
 			skin.dispose();
 			Game.inputHandler.removeInputProcessor(stage);
 			Gdx.input.setOnscreenKeyboardVisible(false);
