@@ -44,6 +44,11 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.ui.Component;
 
+import static com.watabou.utils.MathKt.PI;
+import static com.watabou.utils.MathKt.cos;
+import static java.lang.Math.abs;
+import static java.lang.Math.min;
+
 public class MenuPane extends Component {
 
 	private Image bg;
@@ -266,10 +271,10 @@ public class MenuPane extends Component {
 			super.update();
 
 			if (flashingPage != null){
-				journalIcon.am = (float)Math.abs(Math.cos( StatusPane.FLASH_RATE * (time += Game.elapsed) ));
+				journalIcon.am = abs(cos( StatusPane.FLASH_RATE * (time += Game.elapsed) ));
 				keyIcon.am = journalIcon.am;
 				bg.brightness(0.5f + journalIcon.am);
-				if (time >= Math.PI/StatusPane.FLASH_RATE) {
+				if (time >= PI / StatusPane.FLASH_RATE) {
 					time = 0;
 				}
 			}
@@ -280,7 +285,7 @@ public class MenuPane extends Component {
 			keyIcon.setVisible(keyIcon.keyCount() > 0);
 			journalIcon.setVisible(keyIcon.keyCount() == 0);
 			if (keyIcon.keyCount() > 0) {
-				bg.brightness(.8f - (Math.min(6, keyIcon.keyCount()) / 20f));
+				bg.brightness(.8f - (min(6, keyIcon.keyCount()) / 20f));
 			} else {
 				bg.resetColor();
 			}
@@ -295,7 +300,7 @@ public class MenuPane extends Component {
 		@Override
 		protected void onPointerUp() {
 			if (keyIcon.keyCount() > 0) {
-				bg.brightness(.8f - (Math.min(6, keyIcon.keyCount()) / 20f));
+				bg.brightness(.8f - (min(6, keyIcon.keyCount()) / 20f));
 			} else {
 				bg.resetColor();
 			}

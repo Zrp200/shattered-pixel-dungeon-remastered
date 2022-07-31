@@ -47,7 +47,7 @@ import com.watabou.noosa.Group;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.particles.PixelParticle;
-import com.watabou.utils.ColorMath;
+import com.watabou.utils.ColorMathKt;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
@@ -212,7 +212,7 @@ public class SewerLevel extends RegularLevel {
 			acc.y = 50;
 			am = 0.5f;
 			
-			color( ColorMath.random( 0xb6ccc2, 0x3b6653 ) );
+			color( ColorMathKt.random( 0xb6ccc2, 0x3b6653 ) );
 			size( 2 );
 		}
 		

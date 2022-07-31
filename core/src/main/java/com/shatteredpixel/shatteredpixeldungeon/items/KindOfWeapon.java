@@ -90,19 +90,19 @@ abstract public class KindOfWeapon extends EquipableItem {
 		}
 	}
 
-	public int min(){
-		return min(buffedLvl());
+	public int minDmg(){
+		return minDmg(buffedLvl());
 	}
 
-	public int max(){
-		return max(buffedLvl());
+	public int maxDmg(){
+		return maxDmg(buffedLvl());
 	}
 
-	abstract public int min(int lvl);
-	abstract public int max(int lvl);
+	abstract public int minDmg(int lvl);
+	abstract public int maxDmg(int lvl);
 
 	public int damageRoll( Char owner ) {
-		return Random.NormalIntRange( min(), max() );
+		return Random.NormalIntRange( minDmg(), maxDmg() );
 	}
 	
 	public float accuracyFactor( Char owner ) {

@@ -30,6 +30,8 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite.Glowing;
 import com.watabou.utils.Random;
 
+import static java.lang.Math.max;
+
 public class Potential extends Glyph {
 	
 	private static ItemSprite.Glowing WHITE = new ItemSprite.Glowing( 0xFFFFFF, 0.6f );
@@ -37,7 +39,7 @@ public class Potential extends Glyph {
 	@Override
 	public int proc( Armor armor, Char attacker, Char defender, int damage) {
 
-		int level = Math.max( 0, armor.buffedLvl() );
+		int level = max( 0, armor.buffedLvl() );
 		
 		// lvl 0 - 16.7%
 		// lvl 1 - 28.6%

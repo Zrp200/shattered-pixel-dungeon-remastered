@@ -31,16 +31,24 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
+import static com.watabou.utils.MathKt.HALF_PI;
+import static com.watabou.utils.MathKt.R2D;
+import static com.watabou.utils.MathKt.cos;
+import static com.watabou.utils.MathKt.sin;
+import static com.watabou.utils.MathKt.atan;
+import static java.lang.Math.abs;
+import static java.lang.Math.max;
+
 public class CavesFissureRoom extends StandardRoom {
 
 	@Override
 	public int minWidth() {
-		return Math.max(7, super.minWidth());
+		return max(7, super.minWidth());
 	}
 
 	@Override
 	public int minHeight() {
-		return Math.max(7, super.minHeight());
+		return max(7, super.minHeight());
 	}
 
 	@Override
@@ -95,7 +103,7 @@ public class CavesFissureRoom extends StandardRoom {
 					valid = true;
 					float lineAngle = Random.Float(0, 360);
 					for (float doorAngle : doorAngles) {
-						float angleDiff = Math.abs(lineAngle - doorAngle);
+						float angleDiff = abs(lineAngle - doorAngle);
 						if (angleDiff > 180f) angleDiff = 360f - angleDiff;
 						if (angleDiff <= (sizeCat == SizeCategory.NORMAL ? 30f : 15f)) {
 							valid = false;
@@ -104,7 +112,7 @@ public class CavesFissureRoom extends StandardRoom {
 					}
 
 					for (float existingLineAngle : lineAngles) {
-						float angleDiff = Math.abs(lineAngle - existingLineAngle);
+						float angleDiff = abs(lineAngle - existingLineAngle);
 						if (angleDiff > 180f) angleDiff = 360f - angleDiff;
 						if (angleDiff <= (numLines == 2 ? 120f : 60f)) {
 							valid = false;
@@ -127,18 +135,18 @@ public class CavesFissureRoom extends StandardRoom {
 
 			//fill in each fissure
 			for (float lineAngle : lineAngles) {
-				float dX = (float) Math.cos(lineAngle / A - Math.PI / 2.0);
-				float dY = (float) Math.sin(lineAngle / A - Math.PI / 2.0);
+				float dX = cos(lineAngle / R2D - HALF_PI);
+				float dY = sin(lineAngle / R2D - HALF_PI);
 
 				boolean horizontal;
-				if (Math.abs(dX) >= Math.abs(dY)) {
+				if (abs(dX) >= abs(dY)) {
 					horizontal = true;
-					dY /= Math.abs(dX);
-					dX /= Math.abs(dX);
+					dY /= abs(dX);
+					dX /= abs(dX);
 				} else {
 					horizontal = false;
-					dX /= Math.abs(dY);
-					dY /= Math.abs(dY);
+					dX /= abs(dY);
+					dY /= abs(dY);
 				}
 
 				PointF curr = new PointF(center);
@@ -230,13 +238,13 @@ public class CavesFissureRoom extends StandardRoom {
 	}
 
 	private void buildBridge( Level level, float fisssureAngle, PointF center, int centerMargin){
-		float dX = (float)Math.cos(fisssureAngle/A - Math.PI/2.0);
-		float dY = (float)Math.sin(fisssureAngle/A - Math.PI/2.0);
+		float dX = cos(fisssureAngle / R2D - HALF_PI);
+		float dY = sin(fisssureAngle / R2D - HALF_PI);
 
 		int edgemargin = 2;
 
 		//horizontal bridge
-		if (Math.abs(dY) >= Math.abs(dX)){
+		if (abs(dY) >= abs(dX)){
 			int Y;
 			if (dY > 0) Y = Random.IntRange((int)center.y+centerMargin, bottom-edgemargin);
 			else        Y = Random.IntRange(top+edgemargin, (int)center.y-centerMargin);
@@ -296,12 +304,10 @@ public class CavesFissureRoom extends StandardRoom {
 		}
 	}
 
-	private static final double A = 180 / Math.PI;
-
 	protected static float angleBetweenPoints( PointF from, PointF to ){
-		double m = (to.y - from.y)/(to.x - from.x);
+		float m = (to.y - from.y)/(to.x - from.x);
 
-		float angle = (float)(A*(Math.atan(m) + Math.PI/2.0));
+		float angle = R2D * (atan(m) + HALF_PI);
 		if (from.x > to.x) angle -= 180f;
 		return angle;
 	}

@@ -34,6 +34,8 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
+import static com.watabou.utils.MathKt.ceil;
+
 public class BadgesGrid extends Component {
 
 	ArrayList<BadgeButton> badgeButtons;
@@ -91,7 +93,7 @@ public class BadgesGrid extends Component {
 			else                                nCols = 2;
 		}
 
-		int nRows = (int) Math.ceil(badgeButtons.size()/(float)nCols);
+		int nRows = ceil(badgeButtons.size()/(float)nCols);
 
 		float badgeWidth = width()/nCols;
 		float badgeHeight = height()/nRows;

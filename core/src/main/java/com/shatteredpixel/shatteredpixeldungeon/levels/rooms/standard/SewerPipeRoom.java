@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.Room;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Point;
 import com.watabou.utils.PointF;
@@ -34,16 +33,21 @@ import com.watabou.utils.Rect;
 
 import java.util.ArrayList;
 
+import static com.watabou.utils.MathKt.clamp;
+import static java.lang.Math.abs;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class SewerPipeRoom extends StandardRoom {
 
 	@Override
 	public int minWidth() {
-		return Math.max(7, super.minWidth());
+		return max(7, super.minWidth());
 	}
 
 	@Override
 	public int minHeight() {
-		return Math.max(7, super.minHeight());
+		return max(7, super.minHeight());
 	}
 
 	@Override
@@ -72,42 +76,42 @@ public class SewerPipeRoom extends StandardRoom {
 
 		if (connected.size() <= 2) {
 			for (Door door : connected.values()) {
-				
+
 				Point start;
 				Point mid;
 				Point end;
-				
+
 				start = new Point(door);
 				if (start.x == left) start.x += 2;
 				else if (start.y == top) start.y += 2;
 				else if (start.x == right) start.x -= 2;
 				else if (start.y == bottom) start.y -= 2;
-				
+
 				int rightShift;
 				int downShift;
-				
+
 				if (start.x < c.left) rightShift = c.left - start.x;
 				else if (start.x > c.right) rightShift = c.right - start.x;
 				else rightShift = 0;
-				
+
 				if (start.y < c.top) downShift = c.top - start.y;
 				else if (start.y > c.bottom) downShift = c.bottom - start.y;
 				else downShift = 0;
-				
+
 				//always goes inward first
 				if (door.x == left || door.x == right) {
 					mid = new Point(start.x + rightShift, start.y);
 					end = new Point(mid.x, mid.y + downShift);
-					
+
 				} else {
 					mid = new Point(start.x, start.y + downShift);
 					end = new Point(mid.x + rightShift, mid.y);
-					
+
 				}
-				
+
 				Painter.drawLine(level, start, mid, Terrain.WATER);
 				Painter.drawLine(level, mid, end, Terrain.WATER);
-				
+
 			}
 		} else {
 			ArrayList<Point> pointsToFill = new ArrayList<>();
@@ -124,10 +128,10 @@ public class SewerPipeRoom extends StandardRoom {
 				}
 				pointsToFill.add( p );
 			}
-			
+
 			ArrayList<Point> pointsFilled = new ArrayList<>();
 			pointsFilled.add(pointsToFill.remove(0));
-			
+
 			Point from = null, to = null;
 			int shortestDistance;
 			while(!pointsToFill.isEmpty()){
@@ -200,14 +204,14 @@ public class SewerPipeRoom extends StandardRoom {
 		Point c = new Point((int)doorCenter.x / connected.size(), (int)doorCenter.y / connected.size());
 		if (Random.Float() < doorCenter.x % 1) c.x++;
 		if (Random.Float() < doorCenter.y % 1) c.y++;
-		c.x = (int) GameMath.gate(left+2, c.x, right-2);
-		c.y = (int)GameMath.gate(top+2, c.y, bottom-2);
+		c.x = clamp(left+2, c.x, right-2);
+		c.y = clamp(top+2, c.y, bottom-2);
 
 		return c;
 	}
 
 	private int spaceBetween(int a, int b){
-		return Math.abs(a - b)-1;
+		return abs(a - b)-1;
 	}
 
 	//gets the path distance between two points
@@ -215,19 +219,14 @@ public class SewerPipeRoom extends StandardRoom {
 		//on the same side
 		if (((a.x == left+2 || a.x == right-2) && a.y == b.y)
 				|| ((a.y == top+2 || a.y == bottom-2) && a.x == b.x)){
-			return Math.max(spaceBetween(a.x, b.x), spaceBetween(a.y, b.y));
+			return max(spaceBetween(a.x, b.x), spaceBetween(a.y, b.y));
 		}
 
 		//otherwise...
 		//subtract 1 at the end to account for overlap
-		return
-				Math.min(spaceBetween(left, a.x) + spaceBetween(left, b.x),
-						spaceBetween(right, a.x) + spaceBetween(right, b.x))
-						+
-						Math.min(spaceBetween(top, a.y) + spaceBetween(top, b.y),
-								spaceBetween(bottom, a.y) + spaceBetween(bottom, b.y))
-						-
-						1;
+		return min(spaceBetween(left, a.x) + spaceBetween(left, b.x),
+				spaceBetween(right, a.x) + spaceBetween(right, b.x)) + min(spaceBetween(top, a.y) + spaceBetween(top, b.y),
+				spaceBetween(bottom, a.y) + spaceBetween(bottom, b.y)) - 1;
 	}
 
 	private Point[] corners;
@@ -239,8 +238,8 @@ public class SewerPipeRoom extends StandardRoom {
 		if (((from.x == left+2 || from.x == right-2) && from.x == to.x)
 				|| ((from.y == top+2 || from.y == bottom-2) && from.y == to.y)){
 			Painter.fill(level,
-					Math.min(from.x, to.x),
-					Math.min(from.y, to.y),
+					min(from.x, to.x),
+					min(from.y, to.y),
 					spaceBetween(from.x, to.x) + 2,
 					spaceBetween(from.y, to.y) + 2,
 					floor);

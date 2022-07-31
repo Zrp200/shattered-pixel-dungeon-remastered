@@ -47,6 +47,8 @@ import com.watabou.utils.Bundle;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import static java.lang.Math.floor;
+
 abstract public class ClassArmor extends Armor {
 
 	private static final String AC_ABILITY = "ABILITY";
@@ -164,7 +166,7 @@ abstract public class ClassArmor extends Armor {
 
 	@Override
 	public String status() {
-		return Messages.format( "%.0f%%", Math.floor(charge) );
+		return Messages.format( "%.0f%%", floor(charge) );
 	}
 
 	@Override

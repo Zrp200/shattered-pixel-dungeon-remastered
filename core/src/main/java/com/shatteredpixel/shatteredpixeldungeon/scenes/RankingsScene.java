@@ -43,7 +43,9 @@ import com.watabou.noosa.Camera;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Music;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Button;
-import com.watabou.utils.GameMath;
+
+import static com.watabou.utils.MathKt.clamp;
+import static java.lang.Math.min;
 
 public class RankingsScene extends PixelScene {
 	
@@ -89,9 +91,9 @@ public class RankingsScene extends PixelScene {
 		if (Rankings.INSTANCE.records.size() > 0) {
 
 			//attempts to give each record as much space as possible, ideally as much space as portrait mode
-			float rowHeight = GameMath.gate(ROW_HEIGHT_MIN, (uiCamera.height - 26)/Rankings.INSTANCE.records.size(), ROW_HEIGHT_MAX);
+			float rowHeight = clamp(ROW_HEIGHT_MIN, (uiCamera.height - 26)/Rankings.INSTANCE.records.size(), ROW_HEIGHT_MAX);
 
-			float left = (w - Math.min( MAX_ROW_WIDTH, w )) / 2 + GAP;
+			float left = (w - min( MAX_ROW_WIDTH, w )) / 2 + GAP;
 			float top = (h - rowHeight  * Rankings.INSTANCE.records.size()) / 2;
 			
 			int pos = 0;

@@ -43,6 +43,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import static java.lang.Math.min;
+
 public class Ring extends KindofMisc {
 	
 	protected Buff buff;
@@ -320,7 +322,7 @@ public class Ring extends KindofMisc {
 	
 	public int soloBonus(){
 		if (cursed){
-			return Math.min( 0, Ring.this.level()-2 );
+			return min( 0, Ring.this.level()-2 );
 		} else {
 			return Ring.this.level()+1;
 		}
@@ -328,7 +330,7 @@ public class Ring extends KindofMisc {
 
 	public int soloBuffedBonus(){
 		if (cursed){
-			return Math.min( 0, Ring.this.buffedLvl()-2 );
+			return min( 0, Ring.this.buffedLvl()-2 );
 		} else {
 			return Ring.this.buffedLvl()+1;
 		}

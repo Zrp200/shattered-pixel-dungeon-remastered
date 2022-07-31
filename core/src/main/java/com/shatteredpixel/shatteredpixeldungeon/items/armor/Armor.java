@@ -73,6 +73,12 @@ import com.watabou.utils.Reflection;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static com.watabou.utils.MathKt.pow;
+import static com.watabou.utils.MathKt.sqrt;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
+
 public class Armor extends EquipableItem {
 
 	protected static final String AC_DETACH       = "DETACH";
@@ -91,11 +97,11 @@ public class Armor extends EquipableItem {
 		}
 		
 		public int evasionFactor(int level){
-			return Math.round((2 + level) * evasionFactor);
+			return round((2 + level) * evasionFactor);
 		}
 		
 		public int defenseFactor(int level){
-			return Math.round((2 + level) * defenceFactor);
+			return round((2 + level) * defenceFactor);
 		}
 	}
 	
@@ -325,11 +331,11 @@ public class Armor extends EquipableItem {
 		
 		if (owner instanceof Hero){
 			int aEnc = STRReq() - ((Hero) owner).STR();
-			if (aEnc > 0) evasion /= Math.pow(1.5, aEnc);
+			if (aEnc > 0) evasion /= pow(1.5f, aEnc);
 			
 			Momentum momentum = owner.buff(Momentum.class);
 			if (momentum != null){
-				evasion += momentum.evasionBonus(((Hero) owner).lvl, Math.max(0, -aEnc));
+				evasion += momentum.evasionBonus(((Hero) owner).lvl, max(0, -aEnc));
 			}
 		}
 		
@@ -340,7 +346,7 @@ public class Armor extends EquipableItem {
 		
 		if (owner instanceof Hero) {
 			int aEnc = STRReq() - ((Hero) owner).STR();
-			if (aEnc > 0) speed /= Math.pow(1.2, aEnc);
+			if (aEnc > 0) speed /= pow(1.2f, aEnc);
 		}
 		
 		if (hasGlyph(Swiftness.class, owner)) {
@@ -407,7 +413,7 @@ public class Armor extends EquipableItem {
 		} else {
 			if (hasCurseGlyph()){
 				if (Random.Int(3) == 0) inscribe(null);
-			} else if (level() >= 4 && Random.Float(10) < Math.pow(2, level()-4)){
+			} else if (level() >= 4 && Random.Float(10) < pow(2, level()-4)){
 				inscribe(null);
 			}
 		}
@@ -427,7 +433,7 @@ public class Armor extends EquipableItem {
 		}
 		
 		if (!levelKnown && defender == Dungeon.hero) {
-			float uses = Math.min( availableUsesToID, Talent.itemIDSpeedFactor(Dungeon.hero, this) );
+			float uses = min( availableUsesToID, Talent.itemIDSpeedFactor(Dungeon.hero, this) );
 			availableUsesToID -= uses;
 			usesLeftToID -= uses;
 			if (usesLeftToID <= 0) {
@@ -445,7 +451,7 @@ public class Armor extends EquipableItem {
 		levelPercent *= Talent.itemIDSpeedFactor(hero, this);
 		if (!levelKnown && isEquipped(hero) && availableUsesToID <= USES_TO_ID/2f) {
 			//gains enough uses to ID over 0.5 levels
-			availableUsesToID = Math.min(USES_TO_ID/2f, availableUsesToID + levelPercent * USES_TO_ID);
+			availableUsesToID = min(USES_TO_ID/2f, availableUsesToID + levelPercent * USES_TO_ID);
 		}
 	}
 	
@@ -550,10 +556,10 @@ public class Armor extends EquipableItem {
 	}
 
 	protected static int STRReq(int tier, int lvl){
-		lvl = Math.max(0, lvl);
+		lvl = max(0, lvl);
 
 		//strength req decreases at +1,+3,+6,+10,etc.
-		return (8 + Math.round(tier * 2)) - (int)(Math.sqrt(8 * lvl + 1) - 1)/2;
+		return (8 + round(tier * 2)) - (int)(sqrt(8 * lvl + 1) - 1)/2;
 	}
 	
 	@Override

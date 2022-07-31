@@ -32,6 +32,8 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 import java.util.Calendar;
 
+import static java.lang.Math.min;
+
 public class Pasty extends Food {
 
 	//TODO: implement fun stuff for other holidays
@@ -103,7 +105,7 @@ public class Pasty extends Food {
 				break; //do nothing extra
 			case HWEEN:
 				//heals for 10% max hp
-				hero.HP = Math.min(hero.HP + hero.HT/10, hero.HT);
+				hero.HP = min(hero.HP + hero.HT/10, hero.HT);
 				hero.sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
 				break;
 			case XMAS:

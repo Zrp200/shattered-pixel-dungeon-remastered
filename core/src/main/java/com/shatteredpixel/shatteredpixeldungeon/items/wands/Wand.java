@@ -58,10 +58,15 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
-import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+
+import static com.watabou.utils.MathKt.PI2;
+import static com.watabou.utils.MathKt.pow;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
 
 public abstract class Wand extends Item {
 
@@ -162,8 +167,8 @@ public abstract class Wand extends Item {
 	public void gainCharge( float amt, boolean overcharge ){
 		partialCharge += amt;
 		while (partialCharge >= 1) {
-			if (overcharge) curCharges = Math.min(maxCharges+(int)amt, curCharges+1);
-			else curCharges = Math.min(maxCharges, curCharges+1);
+			if (overcharge) curCharges = min(maxCharges+(int)amt, curCharges+1);
+			else curCharges = min(maxCharges, curCharges+1);
 			partialCharge--;
 			updateQuickslot();
 		}
@@ -193,7 +198,7 @@ public abstract class Wand extends Item {
 		if (target != Dungeon.hero &&
 				Dungeon.hero.subClass == HeroSubClass.WARLOCK &&
 				//standard 1 - 0.92^x chance, plus 7%. Starts at 15%
-				Random.Float() > (Math.pow(0.92f, (wandLevel*chargesUsed)+1) - 0.07f)){
+				Random.Float() > (pow(0.92f, (wandLevel*chargesUsed)+1) - 0.07f)){
 			SoulMark.prolong(target, SoulMark.class, SoulMark.DURATION + wandLevel);
 		}
 	}
@@ -230,7 +235,7 @@ public abstract class Wand extends Item {
 		levelPercent *= Talent.itemIDSpeedFactor(hero, this);
 		if (!isIdentified() && availableUsesToID <= USES_TO_ID/2f) {
 			//gains enough uses to ID over 1 level
-			availableUsesToID = Math.min(USES_TO_ID/2f, availableUsesToID + levelPercent * USES_TO_ID/2f);
+			availableUsesToID = min(USES_TO_ID/2f, availableUsesToID + levelPercent * USES_TO_ID/2f);
 		}
 	}
 
@@ -303,7 +308,7 @@ public abstract class Wand extends Item {
 		}
 
 		updateLevel();
-		curCharges = Math.min( curCharges + 1, maxCharges );
+		curCharges = min( curCharges + 1, maxCharges );
 		updateQuickslot();
 		
 		return this;
@@ -331,7 +336,7 @@ public abstract class Wand extends Item {
 
 				int maxBonusLevel = 3 + ((Hero)charger.target).pointsInTalent(Talent.WILD_POWER);
 				if (lvl < maxBonusLevel) {
-					lvl = Math.min(lvl + bonus, maxBonusLevel);
+					lvl = min(lvl + bonus, maxBonusLevel);
 				}
 			}
 
@@ -348,8 +353,8 @@ public abstract class Wand extends Item {
 	}
 
 	public void updateLevel() {
-		maxCharges = Math.min( initialCharges() + level(), 10 );
-		curCharges = Math.min( curCharges, maxCharges );
+		maxCharges = min( initialCharges() + level(), 10 );
+		curCharges = min( curCharges, maxCharges );
 	}
 	
 	protected int initialCharges() {
@@ -372,14 +377,14 @@ public abstract class Wand extends Item {
 	public void staffFx( MagesStaff.StaffParticle particle ){
 		particle.color(0xFFFFFF); particle.am = 0.3f;
 		particle.setLifespan( 1f);
-		particle.speed.polar( Random.Float(PointF.PI2), 2f );
+		particle.speed.polar( Random.Float(PI2), 2f );
 		particle.setSize( 1f, 2f );
 		particle.radiateXY(0.5f);
 	}
 
 	protected void wandUsed() {
 		if (!isIdentified()) {
-			float uses = Math.min( availableUsesToID, Talent.itemIDSpeedFactor(Dungeon.hero, this) );
+			float uses = min( availableUsesToID, Talent.itemIDSpeedFactor(Dungeon.hero, this) );
 			availableUsesToID -= uses;
 			usesLeftToID -= uses;
 			if (usesLeftToID <= 0 || Dungeon.hero.pointsInTalent(Talent.SCHOLARS_INTUITION) == 2) {
@@ -580,7 +585,7 @@ public abstract class Wand extends Item {
 					if (target == curUser.pos && curUser.hasTalent(Talent.SHIELD_BATTERY)){
 						float shield = curUser.HT * (0.04f*curWand.curCharges);
 						if (curUser.pointsInTalent(Talent.SHIELD_BATTERY) == 2) shield *= 1.5f;
-						Buff.affect(curUser, Barrier.class).setShield(Math.round(shield));
+						Buff.affect(curUser, Barrier.class).setShield(round(shield));
 						curWand.curCharges = 0;
 						curUser.sprite.operate(curUser.pos);
 						Sample.INSTANCE.play(Assets.Sounds.CHARGEUP);
@@ -671,10 +676,9 @@ public abstract class Wand extends Item {
 
 		private void recharge(){
 			int missingCharges = maxCharges - curCharges;
-			missingCharges = Math.max(0, missingCharges);
+			missingCharges = max(0, missingCharges);
 
-			float turnsToCharge = (float) (BASE_CHARGE_DELAY
-					+ (SCALING_CHARGE_ADDITION * Math.pow(scalingFactor, missingCharges)));
+			float turnsToCharge = (BASE_CHARGE_DELAY + (SCALING_CHARGE_ADDITION * pow(scalingFactor, missingCharges)));
 
 			LockedFloor lock = target.buff(LockedFloor.class);
 			if (lock == null || lock.regenOn())
@@ -698,7 +702,7 @@ public abstract class Wand extends Item {
 					curCharges++;
 					partialCharge--;
 				}
-				curCharges = Math.min(curCharges, maxCharges);
+				curCharges = min(curCharges, maxCharges);
 				updateQuickslot();
 			}
 		}

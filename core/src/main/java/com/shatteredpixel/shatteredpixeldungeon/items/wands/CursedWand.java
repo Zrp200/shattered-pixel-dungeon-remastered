@@ -78,6 +78,8 @@ import com.watabou.utils.Random;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static java.lang.Math.min;
+
 //helper class to contain all the cursed wand zapping logic, so the main wand class doesn't get huge.
 public class CursedWand {
 
@@ -211,7 +213,7 @@ public class CursedWand {
 						toHeal = target;
 						toDamage = user;
 					}
-					toHeal.HP = Math.min(toHeal.HT, toHeal.HP + damage);
+					toHeal.HP = min(toHeal.HT, toHeal.HP + damage);
 					toHeal.sprite.emitter().burst(Speck.factory(Speck.HEALING), 3);
 					toDamage.damage(damage, origin == null ? toHeal : origin);
 					toDamage.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10);

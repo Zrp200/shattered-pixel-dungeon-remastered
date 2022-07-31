@@ -67,12 +67,12 @@ public class Pickaxe extends Weapon {
 	public boolean bloodStained = false;
 
 	@Override
-	public int min(int lvl) {
+	public int minDmg(int lvl) {
 		return 2;   //tier 2
 	}
 
 	@Override
-	public int max(int lvl) {
+	public int maxDmg(int lvl) {
 		return 15;  //tier 2
 	}
 

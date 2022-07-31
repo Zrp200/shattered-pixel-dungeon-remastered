@@ -25,6 +25,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.watabou.noosa.Game;
 
+import static com.watabou.utils.MathKt.clamp;
+
 public class GameSettings {
 	
 	public static final String DEFAULT_PREFS_FILE = "settings.xml";
@@ -55,7 +57,7 @@ public class GameSettings {
 		try {
 			int i = get().getInteger( key, defValue );
 			if (i < min || i > max){
-				int val = (int)GameMath.gate(min, i, max);
+				int val = clamp(min, i, max);
 				put(key, val);
 				return val;
 			} else {
@@ -76,7 +78,7 @@ public class GameSettings {
 		try {
 			long i = get().getLong( key, defValue );
 			if (i < min || i > max){
-				long val = (long)GameMath.gate(min, i, max);
+				long val = (long) clamp(min, i, max);
 				put(key, val);
 				return val;
 			} else {

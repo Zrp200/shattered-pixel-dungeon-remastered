@@ -37,7 +37,7 @@ public class Spear extends MeleeWeapon {
 	}
 
 	@Override
-	public int max(int lvl) {
+	public int maxDmg(int lvl) {
 		return  Math.round(6.67f*(tier+1)) +    //20 base, up from 15
 				lvl*Math.round(1.33f*(tier+1)); //+4 per level, up from +3
 	}

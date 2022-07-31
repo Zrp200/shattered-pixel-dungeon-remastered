@@ -44,6 +44,8 @@ import com.watabou.utils.PointF;
 
 import java.util.HashMap;
 
+import static com.watabou.utils.MathKt.R2D;
+
 public class MissileSprite extends ItemSprite {
 
 	private static final float SPEED	= 240f;
@@ -135,7 +137,7 @@ public class MissileSprite extends ItemSprite {
 			}
 		}
 		
-		angle = 135 - (float)(Math.atan2( d.x, d.y ) / 3.1415926 * 180);
+		angle = 135 - (float)(Math.atan2( d.x, d.y ) * R2D);
 		
 		if (d.x >= 0){
 			flipHorizontal = false;

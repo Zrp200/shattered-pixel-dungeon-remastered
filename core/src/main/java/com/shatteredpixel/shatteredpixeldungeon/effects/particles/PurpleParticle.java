@@ -24,9 +24,11 @@ package com.shatteredpixel.shatteredpixeldungeon.effects.particles;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.particles.Emitter.Factory;
 import com.watabou.noosa.particles.PixelParticle;
-import com.watabou.utils.ColorMath;
+import com.watabou.utils.ColorMathKt;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
+
+import static com.watabou.utils.MathKt.PI2;
 
 public class PurpleParticle extends PixelParticle {
 	
@@ -71,7 +73,7 @@ public class PurpleParticle extends PixelParticle {
 		this.x = x;
 		this.y = y;
 		
-		speed.polar( Random.Float( PointF.PI2 ), Random.Float( 16, 32 ) );
+		speed.polar( Random.Float( PI2 ), Random.Float( 16, 32 ) );
 		
 		left = lifespan;
 	}
@@ -82,6 +84,6 @@ public class PurpleParticle extends PixelParticle {
 		// alpha: 1 -> 0; size: 1 -> 5
 		size( 5 - (am = left / lifespan) * 4 );
 		// color: 0xFF0044 -> 0x220066
-		color( ColorMath.interpolate( 0x220066, 0xFF0044, am ) );
+		color( ColorMathKt.interpolate( 0x220066, 0xFF0044, am ) );
 	}
 }

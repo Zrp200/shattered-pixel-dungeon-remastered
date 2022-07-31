@@ -27,6 +27,8 @@ import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import static com.watabou.utils.MathKt.PI;
+
 public class SmokeParticle extends PixelParticle {
 	
 	public static final Factory FACTORY = new Factory() {
@@ -70,7 +72,7 @@ public class SmokeParticle extends PixelParticle {
 		acc.set( -40, 40 );
 		
 		left = lifespan = Random.Float( 0.6f, 1f );
-		speed.polar( Random.Float(PointF.PI*1.7f, PointF.PI*1.8f), Random.Float( 30, 60 ));
+		speed.polar( Random.Float(PI*1.7f, PI*1.8f), Random.Float( 30, 60 ));
 	}
 	
 	@Override

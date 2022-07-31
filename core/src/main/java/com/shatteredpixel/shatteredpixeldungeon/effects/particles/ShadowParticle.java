@@ -24,9 +24,11 @@ package com.shatteredpixel.shatteredpixeldungeon.effects.particles;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.particles.Emitter.Factory;
 import com.watabou.noosa.particles.PixelParticle;
-import com.watabou.utils.ColorMath;
+import com.watabou.utils.ColorMathKt;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
+
+import static com.watabou.utils.MathKt.PI2;
 
 public class ShadowParticle extends PixelParticle.Shrinking {
 	
@@ -69,7 +71,7 @@ public class ShadowParticle extends PixelParticle.Shrinking {
 		size = 8;
 		left = lifespan = 0.5f;
 		
-		speed.polar( Random.Float( PointF.PI2 ), Random.Float( 16, 32 ) );
+		speed.polar( Random.Float( PI2 ), Random.Float( 16, 32 ) );
 		this.x = x - speed.x * lifespan;
 		this.y = y - speed.y * lifespan;
 	}
@@ -91,7 +93,7 @@ public class ShadowParticle extends PixelParticle.Shrinking {
 		
 		float p = left / lifespan;
 		// alpha: 0 -> 1 -> 0; size: 6 -> 0; color: 0x660044 -> 0x000000
-		color( ColorMath.interpolate( 0x000000, 0x440044, p ) );
+		color( ColorMathKt.interpolate( 0x000000, 0x440044, p ) );
 		am = p < 0.5f ? p * p * 4 : (1 - p) * 2;
 	}
 }

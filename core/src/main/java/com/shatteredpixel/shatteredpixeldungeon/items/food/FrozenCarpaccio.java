@@ -33,6 +33,8 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Random;
 
+import static java.lang.Math.min;
+
 public class FrozenCarpaccio extends Food {
 
 	{
@@ -67,7 +69,7 @@ public class FrozenCarpaccio extends Food {
 			case 3:
 				GLog.i( Messages.get(FrozenCarpaccio.class, "better") );
 				if (hero.HP < hero.HT) {
-					hero.HP = Math.min( hero.HP + hero.HT / 4, hero.HT );
+					hero.HP = min( hero.HP + hero.HT / 4, hero.HT );
 					hero.sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
 				}
 				break;

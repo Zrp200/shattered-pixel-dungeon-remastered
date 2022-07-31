@@ -29,6 +29,8 @@ import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import static com.watabou.utils.MathKt.PI2;
+
 public class WindParticle extends PixelParticle {
 
 	public static final Emitter.Factory FACTORY = new Factory() {
@@ -38,7 +40,7 @@ public class WindParticle extends PixelParticle {
 		}
 	};
 	
-	private static float angle = Random.Float( PointF.PI2 );
+	private static float angle = Random.Float( PI2 );
 	private static PointF speed = new PointF().polar( angle, 5 );
 
 	

@@ -28,6 +28,8 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.audio.Sample;
 
+import static java.lang.Math.max;
+
 //simple button which support a background chrome, text, and an icon.
 public class StyledButton extends Button {
 	
@@ -163,10 +165,10 @@ public class StyledButton extends Button {
 	public float reqHeight() {
 		float reqHeight = 0;
 		if (icon != null){
-			reqHeight = Math.max(icon.height() + 4, reqHeight);
+			reqHeight = max(icon.height() + 4, reqHeight);
 		}
 		if (text != null && !text.text().equals("")){
-			reqHeight = Math.max(text.height() + 4, reqHeight);
+			reqHeight = max(text.height() + 4, reqHeight);
 		}
 		return reqHeight;
 	}

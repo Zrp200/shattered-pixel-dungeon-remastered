@@ -30,6 +30,8 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 import java.text.DecimalFormat;
 
+import static com.watabou.utils.MathKt.pow;
+
 public class RingOfEnergy extends Ring {
 
 	{
@@ -39,8 +41,8 @@ public class RingOfEnergy extends Ring {
 	public String statsInfo() {
 		if (isIdentified()){
 			return Messages.get(this, "stats",
-					new DecimalFormat("#.##").format(100f * (Math.pow(1.20f, soloBuffedBonus()) - 1f)),
-					new DecimalFormat("#.##").format(100f * (Math.pow(1.15f, soloBuffedBonus()) - 1f)));
+					new DecimalFormat("#.##").format(100f * (pow(1.20f, soloBuffedBonus()) - 1f)),
+					new DecimalFormat("#.##").format(100f * (pow(1.15f, soloBuffedBonus()) - 1f)));
 		} else {
 			return Messages.get(this, "typical_stats",
 					new DecimalFormat("#.##").format(20f),
@@ -54,11 +56,11 @@ public class RingOfEnergy extends Ring {
 	}
 	
 	public static float wandChargeMultiplier( Char target ){
-		return (float)Math.pow(1.20, getBuffedBonus(target, Energy.class));
+		return pow(1.20f, getBuffedBonus(target, Energy.class));
 	}
 
 	public static float artifactChargeMultiplier( Char target ){
-		float bonus = (float)Math.pow(1.15, getBuffedBonus(target, Energy.class));
+		float bonus = pow(1.15f, getBuffedBonus(target, Energy.class));
 
 		if (target instanceof Hero && ((Hero) target).heroClass != HeroClass.ROGUE && ((Hero) target).hasTalent(Talent.LIGHT_CLOAK)){
 			bonus *= 1f + (0.2f * ((Hero) target).pointsInTalent(Talent.LIGHT_CLOAK)/3f);

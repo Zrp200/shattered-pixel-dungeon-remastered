@@ -48,10 +48,15 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.graph.GizmoGraphKt;
-import com.watabou.utils.ColorMath;
+import com.watabou.utils.ColorMathKt;
 import com.watabou.utils.DeviceCompat;
 
 import java.util.Date;
+
+import static com.watabou.utils.MathKt.PI;
+import static com.watabou.utils.MathKt.sin;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 public class TitleScene extends PixelScene {
 	
@@ -77,7 +82,7 @@ public class TitleScene extends PixelScene {
 		Image title = BannerSprites.get( BannerSprites.Type.PIXEL_DUNGEON );
 		add( title );
 
-		float topRegion = Math.max(title.height - 6, h*0.45f);
+		float topRegion = max(title.height - 6, h*0.45f);
 
 		title.x = (w - title.width()) / 2f;
 		title.y = 2 + (topRegion - title.height()) / 2f;
@@ -92,8 +97,8 @@ public class TitleScene extends PixelScene {
 			@Override
 			public void update() {
 				super.update();
-				am = Math.max(0f, (float)Math.sin( time += Game.elapsed ));
-				if (time >= 1.5f*Math.PI) time = 0;
+				am = max(0f, sin( time += Game.elapsed ));
+				if (time >= 1.5f * PI) time = 0;
 			}
 			@Override
 			public void draw() {
@@ -191,7 +196,7 @@ public class TitleScene extends PixelScene {
 		final int BTN_HEIGHT = 20;
 		int GAP = (int)(h - topRegion - (landscape() ? 3 : 4)*BTN_HEIGHT)/3;
 		GAP /= landscape() ? 3 : 5;
-		GAP = Math.max(GAP, 2);
+		GAP = max(GAP, 2);
 
 		if (landscape()) {
 			btnPlay.setRect(title.x-50, topRegion+GAP, ((title.width()+100)/2)-1, BTN_HEIGHT);
@@ -261,14 +266,14 @@ public class TitleScene extends PixelScene {
 				} else {
 					unreadCount = News.unreadArticles(new Date(SPDSettings.newsLastRead()));
 					if (unreadCount > 0) {
-						unreadCount = Math.min(unreadCount, 9);
+						unreadCount = min(unreadCount, 9);
 						text(text() + "(" + unreadCount + ")");
 					}
 				}
 			}
 
 			if (unreadCount > 0){
-				textColor(ColorMath.interpolate( 0xFFFFFF, Window.SHPX_COLOR, 0.5f + (float)Math.sin(Game.timeTotal*5)/2f));
+				textColor(ColorMathKt.interpolate( 0xFFFFFF, Window.SHPX_COLOR, 0.5f + sin(Game.timeTotal*5)/2f));
 			}
 		}
 
@@ -299,7 +304,7 @@ public class TitleScene extends PixelScene {
 			}
 
 			if (updateShown){
-				textColor(ColorMath.interpolate( 0xFFFFFF, Window.SHPX_COLOR, 0.5f + (float)Math.sin(Game.timeTotal*5)/2f));
+				textColor(ColorMathKt.interpolate( 0xFFFFFF, Window.SHPX_COLOR, 0.5f + sin(Game.timeTotal*5)/2f));
 			}
 		}
 
@@ -354,7 +359,7 @@ public class TitleScene extends PixelScene {
 			super.update();
 
 			if (Messages.lang().status() == Languages.Status.INCOMPLETE){
-				textColor(ColorMath.interpolate( 0xFFFFFF, CharSprite.NEGATIVE, 0.5f + (float)Math.sin(Game.timeTotal*5)/2f));
+				textColor(ColorMathKt.interpolate( 0xFFFFFF, CharSprite.NEGATIVE, 0.5f + sin(Game.timeTotal*5)/2f));
 			}
 		}
 

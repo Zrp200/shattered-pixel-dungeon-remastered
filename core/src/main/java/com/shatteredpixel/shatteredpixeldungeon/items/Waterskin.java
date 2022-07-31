@@ -30,9 +30,12 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.GameMath;
 
 import java.util.ArrayList;
+
+import static com.watabou.utils.MathKt.ceil;
+import static com.watabou.utils.MathKt.clamp;
+import static java.lang.Math.round;
 
 public class Waterskin extends Item {
 
@@ -90,7 +93,7 @@ public class Waterskin extends Item {
 
 				int curShield = 0;
 				if (hero.buff(Barrier.class) != null) curShield = hero.buff(Barrier.class).shielding();
-				int maxShield = Math.round(hero.HT *0.2f*hero.pointsInTalent(Talent.SHIELDING_DEW));
+				int maxShield = round(hero.HT *0.2f*hero.pointsInTalent(Talent.SHIELDING_DEW));
 				if (hero.hasTalent(Talent.SHIELDING_DEW)){
 					float missingShieldPercent = 1f - (curShield / (float)maxShield);
 					missingShieldPercent *= 0.2f*hero.pointsInTalent(Talent.SHIELDING_DEW);
@@ -100,8 +103,8 @@ public class Waterskin extends Item {
 				}
 				
 				//trimming off 0.01 drops helps with floating point errors
-				int dropsNeeded = (int)Math.ceil((missingHealthPercent / 0.05f) - 0.01f);
-				dropsNeeded = (int)GameMath.gate(1, dropsNeeded, volume);
+				int dropsNeeded = ceil((missingHealthPercent / 0.05f) - 0.01f);
+				dropsNeeded = clamp(1, dropsNeeded, volume);
 
 				if (Dewdrop.consumeDew(dropsNeeded, hero, true)){
 					volume -= dropsNeeded;

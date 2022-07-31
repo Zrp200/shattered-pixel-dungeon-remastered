@@ -33,9 +33,16 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.GameMath;
 
 import java.text.DecimalFormat;
+
+import static com.watabou.utils.MathKt.ceil;
+import static com.watabou.utils.MathKt.clamp;
+import static com.watabou.utils.MathKt.floor;
+import static com.watabou.utils.MathKt.pow;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
 
 public class Berserk extends Buff {
 
@@ -83,7 +90,7 @@ public class Berserk extends Buff {
 		if (berserking()){
 			ShieldBuff buff = target.buff(WarriorShield.class);
 			if (target.HP <= 0) {
-				int dmg = 1 + (int)Math.ceil(target.shielding() * 0.05f);
+				int dmg = 1 + ceil(target.shielding() * 0.05f);
 				if (buff != null && buff.shielding() > 0) {
 					buff.absorbDamage(dmg);
 				} else {
@@ -107,7 +114,7 @@ public class Berserk extends Buff {
 			if (powerLossBuffer > 0){
 				powerLossBuffer--;
 			} else {
-				power -= GameMath.gate(0.1f, power, 1f) * 0.067f * Math.pow((target.HP / (float) target.HT), 2);
+				power -= clamp(0.1f, power, 1f) * 0.067f * pow((target.HP / (float) target.HT), 2);
 
 				if (power <= 0) {
 					detach();
@@ -119,11 +126,11 @@ public class Berserk extends Buff {
 	}
 
 	public float rageAmount(){
-		return Math.min(1f, power);
+		return min(1f, power);
 	}
 
 	public float damageFactor(float dmg){
-		return dmg * Math.min(1.5f, 1f + (power / 2f));
+		return dmg * min(1.5f, 1f + (power / 2f));
 	}
 
 	public boolean berserking(){
@@ -133,7 +140,7 @@ public class Berserk extends Buff {
 			if (shield != null){
 				state = State.BERSERK;
 				int shieldAmount = shield.maxShield() * 8;
-				shieldAmount = Math.round(shieldAmount * (1f + Dungeon.hero.pointsInTalent(Talent.BERSERKING_STAMINA)/4f));
+				shieldAmount = round(shieldAmount * (1f + Dungeon.hero.pointsInTalent(Talent.BERSERKING_STAMINA)/4f));
 				shield.supercharge(shieldAmount);
 
 				SpellSprite.show(target, SpellSprite.BERSERK);
@@ -149,7 +156,7 @@ public class Berserk extends Buff {
 	public void damage(int damage){
 		if (state == State.RECOVERING) return;
 		float maxPower = 1f + 0.1f*((Hero)target).pointsInTalent(Talent.ENDLESS_RAGE);
-		power = Math.min(maxPower, power + (damage/(float)target.HT)/3f );
+		power = min(maxPower, power + (damage/(float)target.HT)/3f );
 		BuffIndicator.refreshHero(); //show new power immediately
 		powerLossBuffer = 3; //2 turns until rage starts dropping
 	}
@@ -189,7 +196,7 @@ public class Berserk extends Buff {
 	public float iconFadePercent() {
 		switch (state){
 			case NORMAL: default:
-				return Math.max(0f, 1f - power);
+				return max(0f, 1f - power);
 			case BERSERK:
 				return 0f;
 			case RECOVERING:
@@ -223,7 +230,7 @@ public class Berserk extends Buff {
 		float dispDamage = ((int)damageFactor(10000) / 100f) - 100f;
 		switch (state){
 			case NORMAL: default:
-				return Messages.get(this, "angered_desc", Math.floor(power * 100f), dispDamage);
+				return Messages.get(this, "angered_desc", floor(power * 100f), dispDamage);
 			case BERSERK:
 				return Messages.get(this, "berserk_desc");
 			case RECOVERING:

@@ -56,6 +56,8 @@ import com.watabou.utils.PointF;
 
 import java.util.ArrayList;
 
+import static com.watabou.utils.MathKt.sqrt;
+
 public class Toolbar extends Component {
 
 	private Tool btnWait;
@@ -905,7 +907,7 @@ public class Toolbar extends Component {
 				
 			} else {
 				float p = left / DURATION;
-				scale.set( startScale * (float)Math.sqrt( p ) );
+				scale.set( startScale * sqrt( p ) );
 				
 				x = startX*p + endX*(1-p);
 				y = startY*p + endY*(1-p);

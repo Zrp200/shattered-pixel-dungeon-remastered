@@ -28,9 +28,9 @@ import com.watabou.noosa.Image;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 
-public class Chains extends Group {
+import static com.watabou.utils.MathKt.R2D;
 
-	private static final double A = 180 / Math.PI;
+public class Chains extends Group {
 
 	private float spent = 0f;
 	private float duration;
@@ -65,7 +65,7 @@ public class Chains extends Group {
 
 		duration = distance/300f + 0.1f;
 
-		rotation = (float)(Math.atan2( dy, dx ) * A) + 90f;
+		rotation = (float)(Math.atan2( dy, dx ) * R2D) + 90f;
 
 		numChains = Math.round(distance/6f)+1;
 

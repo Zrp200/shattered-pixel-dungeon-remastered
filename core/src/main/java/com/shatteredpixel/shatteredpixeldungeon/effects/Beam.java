@@ -28,9 +28,9 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PointF;
 
+import static com.watabou.utils.MathKt.R2D;
+
 public class Beam extends Image {
-	
-	private static final double A = 180 / Math.PI;
 	
 	private  float duration;
 	
@@ -46,7 +46,7 @@ public class Beam extends Image {
 		
 		float dx = e.x - s.x;
 		float dy = e.y - s.y;
-		angle = (float)(Math.atan2( dy, dx ) * A);
+		angle = (float)(Math.atan2( dy, dx ) * R2D);
 		scale.x = (float)Math.sqrt( dx * dx + dy * dy ) / width;
 		
 		Sample.INSTANCE.play( Assets.Sounds.RAY );

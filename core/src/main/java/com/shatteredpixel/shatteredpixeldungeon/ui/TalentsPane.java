@@ -36,6 +36,9 @@ import com.watabou.noosa.ui.Component;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class TalentsPane extends ScrollPane {
 
 	ArrayList<TalentTierPane> panes = new ArrayList<>();
@@ -78,9 +81,9 @@ public class TalentsPane extends ScrollPane {
 			}
 		}
 
-		tiersAvailable = Math.min(tiersAvailable, talents.size());
+		tiersAvailable = min(tiersAvailable, talents.size());
 
-		for (int i = 0; i < Math.min(tiersAvailable, talents.size()); i++){
+		for (int i = 0; i < min(tiersAvailable, talents.size()); i++){
 			if (talents.get(i).isEmpty()) continue;
 
 			TalentTierPane pane = new TalentTierPane(talents.get(i), i+1, mode);
@@ -136,7 +139,7 @@ public class TalentsPane extends ScrollPane {
 
 		float bottom;
 		if (blockText != null) {
-			bottom = Math.max(height, top + 20);
+			bottom = max(height, top + 20);
 
 			blocker.x = 0;
 			blocker.y = top;
@@ -146,7 +149,7 @@ public class TalentsPane extends ScrollPane {
 			blockText.align(RenderedTextBlock.CENTER_ALIGN);
 			blockText.setPos((width - blockText.width()) / 2f, blocker.y + (bottom - blocker.y - blockText.height()) / 2);
 		} else {
-			bottom = Math.max(height, top);
+			bottom = max(height, top);
 
 			blocker.setVisible(false);
 		}
@@ -222,7 +225,7 @@ public class TalentsPane extends ScrollPane {
 			int regStars = Talent.tierLevelThresholds[tier+1] - Talent.tierLevelThresholds[tier];
 
 			float titleWidth = title.width();
-			titleWidth += 2 + Math.min(stars.size(), regStars)*6;
+			titleWidth += 2 + min(stars.size(), regStars)*6;
 			title.setPos(x + (width - titleWidth)/2f, y);
 
 			float left = title.right() + 2;

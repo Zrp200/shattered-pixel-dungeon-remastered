@@ -37,6 +37,8 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
 
+import static java.lang.Math.round;
+
 public class WildEnergy extends TargetedSpell {
 	
 	{
@@ -71,7 +73,7 @@ public class WildEnergy extends TargetedSpell {
 	@Override
 	public int value() {
 		//prices of ingredients, divided by output quantity
-		return Math.round(quantity * ((50 + 50) / 5f));
+		return round(quantity * ((50 + 50) / 5f));
 	}
 	
 	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe.SimpleRecipe {

@@ -29,7 +29,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.AllyBuff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Amok;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Corruption;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Doom;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Dread;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
@@ -58,13 +57,18 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.LotusSprite;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
-import com.watabou.utils.ColorMath;
-import com.watabou.utils.GameMath;
+import com.watabou.utils.ColorMathKt;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import static com.watabou.utils.MathKt.ceil;
+import static com.watabou.utils.MathKt.clamp;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
 
 public class WandOfRegrowth extends Wand {
 
@@ -102,7 +106,7 @@ public class WandOfRegrowth extends Wand {
 		}
 
 		int chrgUsed = chargesPerCast();
-		int grassToPlace = Math.round((3.67f+buffedLvl()/3f)*chrgUsed);
+		int grassToPlace = round((3.67f+buffedLvl()/3f)*chrgUsed);
 
 		//ignore cells which can't have anything grow in them.
 		for (Iterator<Integer> i = cells.iterator(); i.hasNext();) {
@@ -215,7 +219,7 @@ public class WandOfRegrowth extends Wand {
 			//8 charges at base, plus:
 			//2/3.33/5/7/10/14/20/30/50/110/infinite charges per hero level, based on wand level
 			float lvl = level();
-			return Math.round(8 + heroLvl * (2+lvl) * (1f + (lvl/(10 - lvl))));
+			return round(8 + heroLvl * (2+lvl) * (1f + (lvl/(10 - lvl))));
 		}
 	}
 
@@ -233,12 +237,12 @@ public class WandOfRegrowth extends Wand {
 		}
 
 		if (grass) {
-			int level = Math.max(0, staff.buffedLvl());
+			int level = max(0, staff.buffedLvl());
 
 			// lvl 0 - 16%
 			// lvl 1 - 21%
 			// lvl 2 - 25%
-			int healing = Math.round(damage * (level + 2f) / (level + 6f) / 2f);
+			int healing = round(damage * (level + 2f) / (level + 6f) / 2f);
 			Buff.affect(attacker, Sungrass.Health.class).boost(healing);
 		}
 
@@ -248,7 +252,7 @@ public class WandOfRegrowth extends Wand {
 
 		// 4/6/8 distance
 		int maxDist = 2 + 2*chargesPerCast();
-		int dist = Math.min(bolt.dist, maxDist);
+		int dist = min(bolt.dist, maxDist);
 
 		cone = new ConeAOE( bolt,
 				maxDist,
@@ -280,7 +284,7 @@ public class WandOfRegrowth extends Wand {
 			return 1;
 		}
 		//consumes 30% of current charges, rounded up, with a min of 1 and a max of 3.
-		return (int) GameMath.gate(1, (int)Math.ceil(curCharges*0.3f), 3);
+		return clamp(1, ceil(curCharges*0.3f), 3);
 	}
 
 	@Override
@@ -288,14 +292,14 @@ public class WandOfRegrowth extends Wand {
 		String desc = Messages.get(this, "stats_desc", chargesPerCast());
 		if (isIdentified()){
 			int chargeLeft = chargeLimit(Dungeon.hero.lvl) - totChrgUsed;
-			if (chargeLeft < 10000) desc += " " + Messages.get(this, "degradation", Math.max(chargeLeft, 0));
+			if (chargeLeft < 10000) desc += " " + Messages.get(this, "degradation", max(chargeLeft, 0));
 		}
 		return desc;
 	}
 
 	@Override
 	public void staffFx(MagesStaff.StaffParticle particle) {
-		particle.color( ColorMath.random(0x004400, 0x88CC44) );
+		particle.color( ColorMathKt.random(0x004400, 0x88CC44) );
 		particle.am = 1f;
 		particle.setLifespan(1f);
 		particle.setSize( 1f, 1.5f);
@@ -475,7 +479,7 @@ public class WandOfRegrowth extends Wand {
 
 		@Override
 		public String description() {
-			int preservation = Math.round(seedPreservation()*100);
+			int preservation = round(seedPreservation()*100);
 			return Messages.get(this, "desc", wandLvl, preservation, preservation);
 		}
 

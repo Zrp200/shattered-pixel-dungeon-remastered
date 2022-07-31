@@ -43,9 +43,14 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.ui.Component;
-import com.watabou.utils.ColorMath;
+import com.watabou.utils.ColorMathKt;
 
 import java.util.ArrayList;
+
+import static com.watabou.utils.MathKt.PI;
+import static com.watabou.utils.MathKt.cos;
+import static java.lang.Math.abs;
+import static java.lang.Math.max;
 
 public class StatusPane extends Component {
 
@@ -55,7 +60,7 @@ public class StatusPane extends Component {
 	public static float talentBlink;
 	private float warning;
 
-	public static final float FLASH_RATE = (float)(Math.PI*1.5f); //1.5 blinks per second
+	public static final float FLASH_RATE = (float)(PI * 1.5f); //1.5 blinks per second
 
 	private int lastTier = 0;
 
@@ -250,15 +255,15 @@ public class StatusPane extends Component {
 		} else if ((health/(float)max) < 0.3f) {
 			warning += Game.elapsed * 5f *(0.4f - (health/(float)max));
 			warning %= 1f;
-			avatar.tint(ColorMath.interpolate(warning, warningColors), 0.5f );
+			avatar.tint(ColorMathKt.interpolate(warning, warningColors), 0.5f );
 		} else if (talentBlink > 0.33f){ //stops early so it doesn't end in the middle of a blink
 			talentBlink -= Game.elapsed;
-			avatar.tint(1, 1, 0, (float)Math.abs(Math.cos(talentBlink*FLASH_RATE))/2f);
+			avatar.tint(1, 1, 0, abs(cos(talentBlink*FLASH_RATE))/2f);
 		} else {
 			avatar.resetColor();
 		}
 
-		hp.scale.x = Math.max( 0, (health-shield)/(float)max);
+		hp.scale.x = max( 0, (health-shield)/(float)max);
 		shieldedHP.scale.x = health/(float)max;
 
 		if (shield > health) {

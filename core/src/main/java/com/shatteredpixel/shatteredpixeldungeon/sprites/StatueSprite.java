@@ -23,7 +23,8 @@ package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.watabou.noosa.TextureFilm;
-import com.watabou.utils.GameMath;
+
+import static com.watabou.utils.MathKt.clamp;
 
 public class StatueSprite extends MobSprite {
 	
@@ -52,7 +53,7 @@ public class StatueSprite extends MobSprite {
 	private static int[] tierFrames = {0, 21, 32, 43, 54, 65};
 
 	public void setArmor( int tier ){
-		int c = tierFrames[(int)GameMath.gate(0, tier, 5)];
+		int c = tierFrames[clamp(0, tier, 5)];
 
 		TextureFilm frames = new TextureFilm( texture, 12, 15 );
 

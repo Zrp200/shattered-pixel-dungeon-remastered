@@ -26,6 +26,8 @@ import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import static com.watabou.utils.MathKt.PI2;
+
 public class RainbowParticle extends PixelParticle {
 
 	public static final Emitter.Factory BURST = new Emitter.Factory() {
@@ -64,7 +66,7 @@ public class RainbowParticle extends PixelParticle {
 		this.x = x;
 		this.y = y;
 
-		speed.polar( Random.Float( PointF.PI2 ), Random.Float( 16, 32 ) );
+		speed.polar( Random.Float( PI2 ), Random.Float( 16, 32 ) );
 
 		left = lifespan;
 	}

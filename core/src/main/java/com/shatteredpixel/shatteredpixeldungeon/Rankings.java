@@ -37,7 +37,6 @@ import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Toolbar;
-import com.watabou.noosa.Game;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.FileUtils;
@@ -48,6 +47,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.UUID;
+
+import static com.watabou.utils.MathKt.pow;
+import static com.watabou.utils.MathKt.signum;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
 
 public enum Rankings {
 	
@@ -143,7 +147,7 @@ public enum Rankings {
 
 		if (Dungeon.initialVersion > ShatteredPixelDungeon.v1_2_3){
 			Statistics.progressScore = Dungeon.hero.lvl * Statistics.deepestFloor * 65;
-			Statistics.progressScore = Math.min(Statistics.progressScore, 50_000);
+			Statistics.progressScore = min(Statistics.progressScore, 50_000);
 
 			if (Statistics.heldItemValue == 0) {
 				for (Item i : Dungeon.hero.belongings) {
@@ -155,7 +159,7 @@ public enum Rankings {
 				}
 			}
 			Statistics.treasureScore = Statistics.goldCollected + Statistics.heldItemValue;
-			Statistics.treasureScore = Math.min(Statistics.treasureScore, 20_000);
+			Statistics.treasureScore = min(Statistics.treasureScore, 20_000);
 
 			Statistics.exploreScore = 0;
 			int scorePerFloor = Statistics.floorsExplored.size * 50;
@@ -182,7 +186,7 @@ public enum Rankings {
 		//win multiplier is a simple 2x if run was a win, challenge multi is the same as 1.3.0
 		} else {
 			Statistics.progressScore = Dungeon.hero.lvl * Statistics.deepestFloor * 100;
-			Statistics.treasureScore = Math.min(Statistics.goldCollected, 30_000);
+			Statistics.treasureScore = min(Statistics.goldCollected, 30_000);
 
 			Statistics.exploreScore = Statistics.totalBossScore = Statistics.totalQuestScore = 0;
 
@@ -190,8 +194,8 @@ public enum Rankings {
 
 		}
 
-		Statistics.chalMultiplier = (float)Math.pow(1.25, Challenges.activeChallenges());
-		Statistics.chalMultiplier = Math.round(Statistics.chalMultiplier*20f)/20f;
+		Statistics.chalMultiplier = pow(1.25f, Challenges.activeChallenges());
+		Statistics.chalMultiplier = round(Statistics.chalMultiplier*20f)/20f;
 
 		Statistics.totalScore = Statistics.progressScore + Statistics.treasureScore + Statistics.exploreScore
 					+ Statistics.totalBossScore + Statistics.totalQuestScore;
@@ -511,9 +515,9 @@ public enum Rankings {
 				return -1;
 			}
 
-			int result = (int)Math.signum( rhs.score - lhs.score );
+			int result = signum( rhs.score - lhs.score );
 			if (result == 0) {
-				return (int)Math.signum( rhs.gameID.hashCode() - lhs.gameID.hashCode());
+				return signum( rhs.gameID.hashCode() - lhs.gameID.hashCode());
 			} else {
 				return result;
 			}

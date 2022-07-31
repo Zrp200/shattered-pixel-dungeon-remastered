@@ -27,6 +27,8 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 import java.text.DecimalFormat;
 
+import static com.watabou.utils.MathKt.pow;
+
 public class RingOfSharpshooting extends Ring {
 
 	{
@@ -35,7 +37,7 @@ public class RingOfSharpshooting extends Ring {
 
 	public String statsInfo() {
 		if (isIdentified()){
-			return Messages.get(this, "stats", soloBuffedBonus(), new DecimalFormat("#.##").format(100f * (Math.pow(1.2, soloBonus()) - 1f)));
+			return Messages.get(this, "stats", soloBuffedBonus(), new DecimalFormat("#.##").format(100f * (pow(1.2f, soloBonus()) - 1f)));
 		} else {
 			return Messages.get(this, "typical_stats", 1, new DecimalFormat("#.##").format(20f));
 		}
@@ -51,7 +53,7 @@ public class RingOfSharpshooting extends Ring {
 	}
 	
 	public static float durabilityMultiplier( Char target ){
-		return (float)(Math.pow(1.2, getBonus(target, Aim.class)));
+		return pow(1.2f, getBonus(target, Aim.class));
 	}
 
 	public class Aim extends RingBuff {

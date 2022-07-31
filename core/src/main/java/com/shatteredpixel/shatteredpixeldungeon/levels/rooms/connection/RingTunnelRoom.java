@@ -24,20 +24,22 @@ package com.shatteredpixel.shatteredpixeldungeon.levels.rooms.connection;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.Point;
 import com.watabou.utils.Rect;
+
+import static com.watabou.utils.MathKt.clamp;
+import static java.lang.Math.max;
 
 public class RingTunnelRoom extends TunnelRoom {
 
 	@Override
 	public int minWidth() {
-		return Math.max(5, super.minWidth());
+		return max(5, super.minWidth());
 	}
 
 	@Override
 	public int minHeight() {
-		return Math.max(5, super.minHeight());
+		return max(5, super.minHeight());
 	}
 
 	@Override
@@ -60,8 +62,8 @@ public class RingTunnelRoom extends TunnelRoom {
 		if (connSpace == null) {
 			Point c = getDoorCenter();
 
-			c.x = (int) GameMath.gate(left + 2, c.x, right - 2);
-			c.y = (int) GameMath.gate(top + 2, c.y, bottom - 2);
+			c.x = clamp(left + 2, c.x, right - 2);
+			c.y = clamp(top + 2, c.y, bottom - 2);
 
 
 			connSpace = new Rect(c.x-1, c.y-1, c.x+1, c.y+1);

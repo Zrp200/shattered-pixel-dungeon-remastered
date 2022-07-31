@@ -27,6 +27,8 @@ import com.watabou.input.GameAction;
 import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.ui.Component;
 
+import static java.lang.Math.max;
+
 public class Toast extends Component {
 
 	private static final float MARGIN_HOR	= 2;
@@ -41,7 +43,7 @@ public class Toast extends Component {
 		text( text );
 
 		width = this.text.width() + close.width() + bg.marginHor() + MARGIN_HOR * 3;
-		height = Math.max( this.text.height(), close.height() ) + bg.marginVer() + MARGIN_VER * 2;
+		height = max( this.text.height(), close.height() ) + bg.marginVer() + MARGIN_VER * 2;
 	}
 
 	@Override

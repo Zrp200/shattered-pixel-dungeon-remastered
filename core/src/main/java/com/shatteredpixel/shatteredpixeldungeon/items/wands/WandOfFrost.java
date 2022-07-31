@@ -38,8 +38,12 @@ import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
-import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
+
+import static com.watabou.utils.MathKt.PI2;
+import static com.watabou.utils.MathKt.pow;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
 
 public class WandOfFrost extends DamageWand {
 
@@ -47,11 +51,11 @@ public class WandOfFrost extends DamageWand {
 		image = ItemSpriteSheet.WAND_FROST;
 	}
 
-	public int min(int lvl){
+	public int minDmg(int lvl){
 		return 2+lvl;
 	}
 
-	public int max(int lvl){
+	public int maxDmg(int lvl){
 		return 8+5*lvl;
 	}
 
@@ -88,8 +92,8 @@ public class WandOfFrost extends DamageWand {
 			}
 			if (ch.buff(Chill.class) != null){
 				//6.67% less damage per turn of chill remaining, to a max of 10 turns (50% dmg)
-				float chillturns = Math.min(10, ch.buff(Chill.class).cooldown());
-				damage = (int)Math.round(damage * Math.pow(0.9333f, chillturns));
+				float chillturns = min(10f, ch.buff(Chill.class).cooldown());
+				damage = round(damage * pow(0.9333f, chillturns));
 			} else {
 				ch.sprite.burst( 0xFF99CCFF, buffedLvl() / 2 + 2 );
 			}
@@ -139,7 +143,7 @@ public class WandOfFrost extends DamageWand {
 		particle.color(0x88CCFF);
 		particle.am = 0.6f;
 		particle.setLifespan(2f);
-		float angle = Random.Float(PointF.PI2);
+		float angle = Random.Float(PI2);
 		particle.speed.polar( angle, 2f);
 		particle.acc.set( 0f, 1f);
 		particle.setSize( 0f, 1.5f);

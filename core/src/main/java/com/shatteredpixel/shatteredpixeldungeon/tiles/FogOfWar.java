@@ -30,6 +30,9 @@ import com.watabou.utils.Rect;
 
 import java.util.ArrayList;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class FogOfWar extends Image {
 
 	//first index is visibility type, second is brightness level
@@ -145,10 +148,10 @@ public class FogOfWar extends Image {
 				(cell / mapWidth) - radius,
 				(cell % mapWidth) - radius + 1 + 2*radius,
 				(cell / mapWidth) - radius + 1 + 2*radius);
-		update.left = Math.max(0, update.left);
-		update.top = Math.max(0, update.top);
-		update.right = Math.min(mapWidth, update.right);
-		update.bottom = Math.min(mapHeight, update.bottom);
+		update.left = max(0, update.left);
+		update.top = max(0, update.top);
+		update.right = min(mapWidth, update.right);
+		update.bottom = min(mapHeight, update.bottom);
 		if (update.isEmpty()) return;
 		updateFog( update );
 	}
@@ -226,11 +229,11 @@ public class FogOfWar extends Image {
 									if (wall(cell + mapWidth - 1)) {
 										fillLeft(fog, j, i, FOG_COLORS[INVISIBLE][brightness]);
 									} else {
-										fillLeft(fog, j, i, FOG_COLORS[Math.max(getCellFog(cell), Math.max(getCellFog(cell + mapWidth - 1), getCellFog(cell - 1)))][brightness]);
+										fillLeft(fog, j, i, FOG_COLORS[max(getCellFog(cell), max(getCellFog(cell + mapWidth - 1), getCellFog(cell - 1)))][brightness]);
 									}
 									
 								} else {
-									fillLeft(fog, j, i, FOG_COLORS[Math.max(getCellFog(cell), getCellFog(cell - 1))][brightness]);
+									fillLeft(fog, j, i, FOG_COLORS[max(getCellFog(cell), getCellFog(cell - 1))][brightness]);
 								}
 								
 							} else {
@@ -247,11 +250,11 @@ public class FogOfWar extends Image {
 									if (wall(cell + mapWidth + 1)) {
 										fillRight(fog, j, i, FOG_COLORS[INVISIBLE][brightness]);
 									} else {
-										fillRight(fog, j, i, FOG_COLORS[Math.max(getCellFog(cell), Math.max(getCellFog(cell + mapWidth + 1), getCellFog(cell + 1)))][brightness]);
+										fillRight(fog, j, i, FOG_COLORS[max(getCellFog(cell), max(getCellFog(cell + mapWidth + 1), getCellFog(cell + 1)))][brightness]);
 									}
 									
 								} else {
-									fillRight(fog, j, i, FOG_COLORS[Math.max(getCellFog(cell), getCellFog(cell + 1))][brightness]);
+									fillRight(fog, j, i, FOG_COLORS[max(getCellFog(cell), getCellFog(cell + 1))][brightness]);
 								}
 								
 							} else {
@@ -261,7 +264,7 @@ public class FogOfWar extends Image {
 						//camera-facing wall tiles
 						//darkest between themselves and the tile below them
 						} else {
-							fillCell(fog, j, i, FOG_COLORS[Math.max(getCellFog(cell), getCellFog(cell + mapWidth))][brightness]);
+							fillCell(fog, j, i, FOG_COLORS[max(getCellFog(cell), getCellFog(cell + mapWidth))][brightness]);
 						}
 						
 					//other tiles, just their direct value

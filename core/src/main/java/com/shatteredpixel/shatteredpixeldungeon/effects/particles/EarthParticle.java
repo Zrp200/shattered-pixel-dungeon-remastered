@@ -24,7 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.effects.particles;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.particles.Emitter.Factory;
 import com.watabou.noosa.particles.PixelParticle;
-import com.watabou.utils.ColorMath;
+import com.watabou.utils.ColorMathKt;
 import com.watabou.utils.Random;
 
 public class EarthParticle extends PixelParticle {
@@ -46,7 +46,7 @@ public class EarthParticle extends PixelParticle {
 	public EarthParticle() {
 		super();
 		
-		color( ColorMath.random( 0x444444, 0x777766 ) );
+		color( ColorMathKt.random( 0x444444, 0x777766 ) );
 		angle = Random.Float( -30, 30 );
 	}
 	

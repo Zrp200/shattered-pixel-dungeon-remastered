@@ -38,9 +38,11 @@ import com.watabou.noosa.Visual;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.Callback;
-import com.watabou.utils.ColorMath;
+import com.watabou.utils.ColorMathKt;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
+
+import static com.watabou.utils.MathKt.PI2;
 
 public class MagicMissile extends Emitter {
 
@@ -337,7 +339,7 @@ public class MagicMissile extends Emitter {
 			//size = 8;
 			left = lifespan;
 
-			speed.polar( Random.Float( PointF.PI2 ), Random.Float( 16, 32 ) );
+			speed.polar( Random.Float( PI2 ), Random.Float( 16, 32 ) );
 			this.x = x - speed.x * lifespan;
 			this.y = y - speed.y * lifespan;
 		}
@@ -391,9 +393,9 @@ public class MagicMissile extends Emitter {
 			size = 4;
 			
 			if (Random.Int(10) == 0){
-				color(ColorMath.random(0xFFF266, 0x80771A));
+				color(ColorMathKt.random(0xFFF266, 0x80771A));
 			} else {
-				color(ColorMath.random(0x805500, 0x332500));
+				color(ColorMathKt.random(0x805500, 0x332500));
 			}
 			
 			speed.set( Random.Float( -10, +10 ), Random.Float( -10, +10 ) );
@@ -402,13 +404,13 @@ public class MagicMissile extends Emitter {
 		public void resetBurst( float x, float y ){
 			reset(x, y);
 			
-			speed.polar( Random.Float( PointF.PI2 ), Random.Float( 40, 60 ) );
+			speed.polar( Random.Float( PI2 ), Random.Float( 40, 60 ) );
 		}
 		
 		public void resetAttract( float x, float y ){
 			reset(x, y);
 			
-			speed.polar( Random.Float( PointF.PI2 ), Random.Float( 24, 32 ) );
+			speed.polar( Random.Float( PI2 ), Random.Float( 24, 32 ) );
 			
 			this.x = x - speed.x * lifespan;
 			this.y = y - speed.y * lifespan;
@@ -423,7 +425,7 @@ public class MagicMissile extends Emitter {
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
 				emitter.recycle( ShamanParticle.class )
-						.reset( x, y, ColorMath.random(0xFF4D4D, 0x801A1A) );
+						.reset( x, y, ColorMathKt.random(0xFF4D4D, 0x801A1A) );
 			}
 		};
 		
@@ -431,7 +433,7 @@ public class MagicMissile extends Emitter {
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
 				emitter.recycle( ShamanParticle.class )
-						.reset( x, y, ColorMath.random(0x6699FF, 0x1A3C80) );
+						.reset( x, y, ColorMathKt.random(0x6699FF, 0x1A3C80) );
 			}
 		};
 		
@@ -439,7 +441,7 @@ public class MagicMissile extends Emitter {
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
 				emitter.recycle( ShamanParticle.class )
-						.reset( x, y, ColorMath.random(0xBB33FF, 0x5E1A80) );
+						.reset( x, y, ColorMathKt.random(0xBB33FF, 0x5E1A80) );
 			}
 		};
 		
@@ -459,7 +461,7 @@ public class MagicMissile extends Emitter {
 			size( 1 );
 			
 			this.endColor = endColor;
-			startColor = ColorMath.random(0x805500, 0x332500);
+			startColor = ColorMathKt.random(0x805500, 0x332500);
 			
 			speed.set( Random.Float( -10, +10 ), Random.Float( -10, +10 ) );
 		}
@@ -467,7 +469,7 @@ public class MagicMissile extends Emitter {
 		@Override
 		public void update() {
 			super.update();
-			color( ColorMath.interpolate( endColor, startColor, (left / lifespan) ));
+			color( ColorMathKt.interpolate( endColor, startColor, (left / lifespan) ));
 		}
 	}
 	
@@ -567,7 +569,7 @@ public class MagicMissile extends Emitter {
 		public void reset( int index, float x, float y ) {
 			super.reset( x, y, 0xFFFFFF, 8, 0.5f );
 
-			speed.polar( PointF.PI2 / 8 * index, 12 );
+			speed.polar( PI2 / 8 * index, 12 );
 			this.x -= speed.x * lifespan;
 			this.y -= speed.y * lifespan;
 		}

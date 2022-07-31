@@ -59,8 +59,6 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Callback;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
@@ -68,6 +66,9 @@ import com.watabou.utils.Reflection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+
+import static com.watabou.utils.MathKt.clamp;
+import static java.lang.Math.max;
 
 public class YogDzewa extends Mob {
 
@@ -276,7 +277,7 @@ public class YogDzewa extends Mob {
 				}
 
 				//don't want to overly punish players with slow move or attack speed
-				spend(GameMath.gate(TICK, Dungeon.hero.cooldown(), 3*TICK));
+				spend(clamp(TICK, Dungeon.hero.cooldown(), 3*TICK));
 				Dungeon.hero.interrupt();
 
 				abilityCooldown += Random.NormalFloat(MIN_ABILITY_CD, MAX_ABILITY_CD);
@@ -366,9 +367,9 @@ public class YogDzewa extends Mob {
 		if (phase == 0 || findFist() != null) return;
 
 		if (phase < 4) {
-			HP = Math.max(HP, HT - 300 * phase);
+			HP = max(HP, HT - 300 * phase);
 		} else if (phase == 4) {
-			HP = Math.max(HP, 100);
+			HP = max(HP, 100);
 		}
 		int dmgTaken = preHP - HP;
 
@@ -442,7 +443,7 @@ public class YogDzewa extends Mob {
 		} else {
 			level.viewDistance = 4;
 		}
-		level.viewDistance = Math.max(1, level.viewDistance);
+		level.viewDistance = max(1, level.viewDistance);
 		if (Dungeon.hero != null) {
 			if (Dungeon.hero.buff(Light.class) == null) {
 				Dungeon.hero.viewDistance = level.viewDistance;

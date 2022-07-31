@@ -25,7 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.particles.Emitter.Factory;
 import com.watabou.noosa.particles.PixelParticle;
-import com.watabou.utils.ColorMath;
+import com.watabou.utils.ColorMathKt;
 import com.watabou.utils.Random;
 
 public class LeafParticle extends PixelParticle.Shrinking {
@@ -38,7 +38,7 @@ public class LeafParticle extends PixelParticle.Shrinking {
 		@Override
 		public void emit( Emitter emitter, int index, float x, float y ) {
 			LeafParticle p = emitter.recycle( LeafParticle.class );
-			p.color( ColorMath.random( 0x004400, 0x88CC44 ) );
+			p.color( ColorMathKt.random( 0x004400, 0x88CC44 ) );
 			p.reset( x, y );
 		}
 	};
@@ -47,7 +47,7 @@ public class LeafParticle extends PixelParticle.Shrinking {
 		@Override
 		public void emit( Emitter emitter, int index, float x, float y ) {
 			LeafParticle p = emitter.recycle( LeafParticle.class );
-			p.color( ColorMath.random( Dungeon.level.color1, Dungeon.level.color2 ) );
+			p.color( ColorMathKt.random( Dungeon.level.color1, Dungeon.level.color2 ) );
 			p.reset( x, y );
 		}
 	};

@@ -22,7 +22,6 @@
 package com.shatteredpixel.shatteredpixeldungeon.levels.builders;
 
 import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.Room;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.Point;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
@@ -30,6 +29,16 @@ import com.watabou.utils.Rect;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import static com.watabou.utils.MathKt.HALF_PI;
+import static com.watabou.utils.MathKt.R2D;
+import static com.watabou.utils.MathKt.clamp;
+import static com.watabou.utils.MathKt.tan;
+import static java.lang.Math.abs;
+import static java.lang.Math.atan;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
 
 public abstract class Builder {
 	
@@ -63,8 +72,8 @@ public abstract class Builder {
 				Room room = it.next();
 				//if not colliding
 				if ( room.isEmpty()
-						|| Math.max(space.left, room.left) >= Math.min(space.right, room.right)
-						|| Math.max(space.top, room.top) >= Math.min(space.bottom, room.bottom) ){
+						|| max(space.left, room.left) >= min(space.right, room.right)
+						|| max(space.top, room.top) >= min(space.bottom, room.bottom) ){
 					it.remove();
 				}
 			}
@@ -139,8 +148,6 @@ public abstract class Builder {
 		
 		return space;
 	}
-
-	private static final double A = 180 / Math.PI;
 	
 	//returns the angle in degrees made by the centerpoints of 2 rooms, with 0 being straight up.
 	protected static float angleBetweenRooms( Room from, Room to){
@@ -152,7 +159,7 @@ public abstract class Builder {
 	protected static float angleBetweenPoints( PointF from, PointF to ){
 		double m = (to.y - from.y)/(to.x - from.x);
 		
-		float angle = (float)(A*(Math.atan(m) + Math.PI/2.0));
+		float angle = (float)(R2D * (atan(m) + HALF_PI));
 		if (from.x > to.x) angle -= 180f;
 		return angle;
 	}
@@ -172,39 +179,39 @@ public abstract class Builder {
 		PointF prevCenter = new PointF((prev.left + prev.right)/2f, (prev.top + prev.bottom)/2f);
 
 		// calculating using y = mx+b, straight line formula
-		double m = Math.tan(angle/A + Math.PI/2.0);
+		double m = tan(angle / R2D + HALF_PI);
 		double b = prevCenter.y -m*prevCenter.x;
 
 		//using the line equation, we find the point along the prev room where the line exists
 		Point start;
 		int direction;
-		if (Math.abs(m) >= 1){
+		if (abs(m) >= 1){
 			if (angle < 90 || angle > 270){
 				direction = Room.TOP;
-				start = new Point( (int)Math.round((prev.top - b)/m), prev.top);
+				start = new Point( (int) round((prev.top - b)/m), prev.top);
 			} else {
 				direction = Room.BOTTOM;
-				start = new Point( (int)Math.round((prev.bottom - b)/m), prev.bottom);
+				start = new Point( (int) round((prev.bottom - b)/m), prev.bottom);
 			}
 		} else {
 			if (angle < 180){
 				direction = Room.RIGHT;
-				start = new Point(prev.right, (int) Math.round(m * prev.right + b));
+				start = new Point(prev.right, (int) round(m * prev.right + b));
 			} else {
 				direction = Room.LEFT;
-				start = new Point(prev.left, (int) Math.round(m * prev.left + b));
+				start = new Point(prev.left, (int) round(m * prev.left + b));
 			}
 		}
 
 		//cap it to a valid connection point for most rooms
 		if (direction == Room.TOP || direction == Room.BOTTOM) {
-			start.x = (int) GameMath.gate(prev.left + 1, start.x, prev.right - 1);
+			start.x = clamp(prev.left + 1, start.x, prev.right - 1);
 		} else {
-			start.y = (int) GameMath.gate(prev.top + 1, start.y, prev.bottom - 1);
+			start.y = clamp(prev.top + 1, start.y, prev.bottom - 1);
 		}
 
 		//space checking
-		Rect space = findFreeSpace(start, collision, Math.max(next.maxWidth(), next.maxHeight()));
+		Rect space = findFreeSpace(start, collision, max(next.maxWidth(), next.maxHeight()));
 		if (!next.setSizeWithLimit(space.width()+1, space.height()+1)){
 			return -1;
 		}
@@ -214,22 +221,22 @@ public abstract class Builder {
 		if (direction == Room.TOP) {
 			targetCenter.y = prev.top - (next.height() - 1) / 2f;
 			targetCenter.x = (float) ((targetCenter.y - b) / m);
-			next.setPos(Math.round(targetCenter.x - (next.width() - 1) / 2f), prev.top - (next.height() - 1));
+			next.setPos(round(targetCenter.x - (next.width() - 1) / 2f), prev.top - (next.height() - 1));
 
 		} else if (direction == Room.BOTTOM) {
 			targetCenter.y = prev.bottom + (next.height() - 1) / 2f;
 			targetCenter.x = (float) ((targetCenter.y - b) / m);
-			next.setPos(Math.round(targetCenter.x - (next.width() - 1) / 2f), prev.bottom);
+			next.setPos(round(targetCenter.x - (next.width() - 1) / 2f), prev.bottom);
 
 		} else if (direction == Room.RIGHT) {
 			targetCenter.x = prev.right + (next.width()-1)/2f;
 			targetCenter.y = (float)(m*targetCenter.x + b);
-			next.setPos( prev.right, Math.round(targetCenter.y - (next.height()-1)/2f));
+			next.setPos( prev.right, round(targetCenter.y - (next.height()-1)/2f));
 
 		} else if (direction == Room.LEFT) {
 			targetCenter.x = prev.left - (next.width()-1)/2f;
 			targetCenter.y = (float)(m*targetCenter.x + b);
-			next.setPos( prev.left - (next.width() - 1), Math.round(targetCenter.y - (next.height()-1)/2f));
+			next.setPos( prev.left - (next.width() - 1), round(targetCenter.y - (next.height()-1)/2f));
 
 		}
 

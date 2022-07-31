@@ -167,12 +167,13 @@ import com.shatteredpixel.shatteredpixeldungeon.plants.Stormvine;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Sungrass;
 import com.shatteredpixel.shatteredpixeldungeon.plants.Swiftthistle;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+
+import static com.watabou.utils.MathKt.clamp;
 
 public class Generator {
 
@@ -575,7 +576,7 @@ public class Generator {
 	
 	public static Armor randomArmor(int floorSet) {
 
-		floorSet = (int)GameMath.gate(0, floorSet, floorSetTierProbs.length-1);
+		floorSet = clamp(0, floorSet, floorSetTierProbs.length-1);
 		
 		Armor a = (Armor)Reflection.newInstance(Category.ARMOR.classes[Random.chances(floorSetTierProbs[floorSet])]);
 		a.random();
@@ -596,7 +597,7 @@ public class Generator {
 	
 	public static MeleeWeapon randomWeapon(int floorSet) {
 
-		floorSet = (int)GameMath.gate(0, floorSet, floorSetTierProbs.length-1);
+		floorSet = clamp(0, floorSet, floorSetTierProbs.length-1);
 		
 		Category c = wepTiers[Random.chances(floorSetTierProbs[floorSet])];
 		MeleeWeapon w = (MeleeWeapon)Reflection.newInstance(c.classes[Random.chances(c.probs)]);
@@ -618,7 +619,7 @@ public class Generator {
 	
 	public static MissileWeapon randomMissile(int floorSet) {
 		
-		floorSet = (int)GameMath.gate(0, floorSet, floorSetTierProbs.length-1);
+		floorSet = clamp(0, floorSet, floorSetTierProbs.length-1);
 		
 		Category c = misTiers[Random.chances(floorSetTierProbs[floorSet])];
 		MissileWeapon w = (MissileWeapon)Reflection.newInstance(c.classes[Random.chances(c.probs)]);

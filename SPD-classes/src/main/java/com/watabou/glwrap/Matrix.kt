@@ -20,6 +20,7 @@
  */
 package com.watabou.glwrap
 
+import com.watabou.utils.D2R
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.tan
@@ -41,8 +42,8 @@ class Matrix {
     }
 
     fun rotate(angle: Float) {
-        val sin = sin(angle * G2RAD)
-        val cos = cos(angle * G2RAD)
+        val sin = sin(angle * D2R)
+        val cos = cos(angle * D2R)
         val m0 = values[0]
         val m1 = values[1]
         val m4 = values[4]
@@ -54,7 +55,7 @@ class Matrix {
     }
 
     fun skewX(angle: Float) {
-        val tan = tan(angle * G2RAD)
+        val tan = tan(angle * D2R)
         values[4] += -values[0] * tan
         values[5] += -values[1] * tan
     }
@@ -76,9 +77,6 @@ class Matrix {
     }
 
     companion object {
-
-        const val G2RAD = 0.017453292f
-
         private val identity = floatArrayOf(
             1f, 0f, 0f, 0f,
             0f, 1f, 0f, 0f,

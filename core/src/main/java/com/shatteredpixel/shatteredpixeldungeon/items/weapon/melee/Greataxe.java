@@ -35,7 +35,7 @@ public class Greataxe extends MeleeWeapon {
 	}
 
 	@Override
-	public int max(int lvl) {
+	public int maxDmg(int lvl) {
 		return  5*(tier+4) +    //45 base, up from 30
 				lvl*(tier+1);   //scaling unchanged
 	}

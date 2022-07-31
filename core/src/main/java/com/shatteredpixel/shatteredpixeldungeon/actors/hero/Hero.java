@@ -148,8 +148,6 @@ import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Callback;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Point;
 import com.watabou.utils.Random;
@@ -157,6 +155,14 @@ import com.watabou.utils.Random;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+
+import static com.watabou.utils.MathKt.ceil;
+import static com.watabou.utils.MathKt.clamp;
+import static com.watabou.utils.MathKt.floor;
+import static java.lang.Math.abs;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
 
 public class Hero extends Char {
 
@@ -225,16 +231,16 @@ public class Hero extends Char {
 		
 		HT = 20 + 5*(lvl-1) + HTBoost;
 		float multiplier = RingOfMight.HTMultiplier(this);
-		HT = Math.round(multiplier * HT);
+		HT = round(multiplier * HT);
 		
 		if (buff(ElixirOfMight.HTBoost.class) != null){
 			HT += buff(ElixirOfMight.HTBoost.class).boost();
 		}
 		
 		if (boostHP){
-			HP += Math.max(HT - curHT, 0);
+			HP += max(HT - curHT, 0);
 		}
-		HP = Math.min(HP, HT);
+		HP = min(HP, HT);
 	}
 
 	public int STR() {
@@ -248,7 +254,7 @@ public class Hero extends Char {
 		}
 
 		if (hasTalent(Talent.STRONGMAN)){
-			strBonus += (int)Math.floor(STR * (0.03f + 0.05f*pointsInTalent(Talent.STRONGMAN)));
+			strBonus += floor(STR * (0.03f + 0.05f*pointsInTalent(Talent.STRONGMAN)));
 		}
 
 		return STR + strBonus;
@@ -393,7 +399,7 @@ public class Hero extends Char {
 			belongings.weapon().hitSound(pitch);
 		} else if (RingOfForce.getBuffedBonus(this, RingOfForce.Force.class) > 0) {
 			//pitch deepens by 2.5% (additive) per point of strength, down to 75%
-			super.hitSound( pitch * GameMath.gate( 0.75f, 1.25f - 0.025f*STR(), 1f) );
+			super.hitSound( pitch * clamp( 0.75f, 1.25f - 0.025f*STR(), 1f) );
 		} else {
 			super.hitSound(pitch * 1.1f);
 		}
@@ -489,7 +495,7 @@ public class Hero extends Char {
 			evasion = belongings.armor().evasionFactor(this, evasion);
 		}
 
-		return Math.round(evasion);
+		return round(evasion);
 	}
 
 	@Override
@@ -1209,7 +1215,7 @@ public class Hero extends Char {
 		if (!(src instanceof Char)){
 			//reduce damage here if it isn't coming from a character (if it is we already reduced it)
 			if (endure != null){
-				dmg = Math.round(endure.adjustDamageTaken(dmg));
+				dmg = round(endure.adjustDamageTaken(dmg));
 			}
 			//the same also applies to challenge scroll damage reduction
 			if (buff(ScrollOfChallenge.ChallengeArena.class) != null){
@@ -1222,7 +1228,7 @@ public class Hero extends Char {
 			dmg = thorns.proc(dmg, (src instanceof Char ? (Char)src : null),  this);
 		}
 
-		dmg = (int)Math.ceil(dmg * RingOfTenacity.damageMultiplier( this ));
+		dmg = ceil(dmg * RingOfTenacity.damageMultiplier( this ));
 
 		//TODO improve this when I have proper damage source logic
 		if (belongings.armor() != null && belongings.armor().hasGlyph(AntiMagic.class, this)
@@ -1231,8 +1237,8 @@ public class Hero extends Char {
 		}
 
 		if (buff(Talent.WarriorFoodImmunity.class) != null){
-			if (pointsInTalent(Talent.IRON_STOMACH) == 1)       dmg = Math.round(dmg*0.25f);
-			else if (pointsInTalent(Talent.IRON_STOMACH) == 2)  dmg = Math.round(dmg*0.00f);
+			if (pointsInTalent(Talent.IRON_STOMACH) == 1)       dmg = round(dmg*0.25f);
+			else if (pointsInTalent(Talent.IRON_STOMACH) == 2)  dmg = round(dmg*0.00f);
 		}
 
 		int preHP = HP + shielding();
@@ -1249,7 +1255,7 @@ public class Hero extends Char {
 		float flashIntensity = 0.25f * (percentDMG * percentDMG) / percentHP;
 		//if the intensity is very low don't flash at all
 		if (flashIntensity >= 0.05f){
-			flashIntensity = Math.min(1/3f, flashIntensity); //cap intensity at 1/3
+			flashIntensity = min(1/3f, flashIntensity); //cap intensity at 1/3
 			GameScene.flash( (int)(0xFF*flashIntensity) << 16 );
 			if (isAlive()) {
 				if (flashIntensity >= 1/6f) {
@@ -1927,20 +1933,20 @@ public class Hero extends Char {
 
 		int left, right;
 		int curr;
-		for (int y = Math.max(0, c.y - distance); y <= Math.min(Dungeon.level.height()-1, c.y + distance); y++) {
+		for (int y = max(0, c.y - distance); y <= min(Dungeon.level.height()-1, c.y + distance); y++) {
 			if (!circular){
 				left = c.x - distance;
-			} else if (rounding[Math.abs(c.y - y)] < Math.abs(c.y - y)) {
-				left = c.x - rounding[Math.abs(c.y - y)];
+			} else if (rounding[abs(c.y - y)] < abs(c.y - y)) {
+				left = c.x - rounding[abs(c.y - y)];
 			} else {
 				left = distance;
-				while (rounding[left] < rounding[Math.abs(c.y - y)]){
+				while (rounding[left] < rounding[abs(c.y - y)]){
 					left--;
 				}
 				left = c.x - left;
 			}
-			right = Math.min(Dungeon.level.width()-1, c.x + c.x - left);
-			left = Math.max(0, left);
+			right = min(Dungeon.level.width()-1, c.x + c.x - left);
+			left = max(0, left);
 			for (curr = left + y * Dungeon.level.width(); curr <= right + y * Dungeon.level.width(); curr++){
 
 				if ((foresight || fieldOfView[curr]) && curr != pos) {

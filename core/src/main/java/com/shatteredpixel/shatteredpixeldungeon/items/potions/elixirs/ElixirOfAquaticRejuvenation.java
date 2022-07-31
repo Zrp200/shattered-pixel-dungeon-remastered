@@ -34,8 +34,14 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.Random;
+
+import static com.watabou.utils.MathKt.ceil;
+import static com.watabou.utils.MathKt.clamp;
+import static com.watabou.utils.MathKt.floor;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
 
 public class ElixirOfAquaticRejuvenation extends Elixir {
 	
@@ -48,7 +54,7 @@ public class ElixirOfAquaticRejuvenation extends Elixir {
 		if (Dungeon.isChallenged(Challenges.NO_HEALING)){
 			PotionOfHealing.pharmacophobiaProc(hero);
 		} else {
-			Buff.affect(hero, AquaHealing.class).set(Math.round(hero.HT * 1.5f));
+			Buff.affect(hero, AquaHealing.class).set(round(hero.HT * 1.5f));
 			Talent.onHealingPotionUsed( hero );
 		}
 	}
@@ -76,12 +82,12 @@ public class ElixirOfAquaticRejuvenation extends Elixir {
 		public boolean act() {
 			
 			if (!target.flying && Dungeon.level.water[target.pos] && target.HP < target.HT){
-				float healAmt = GameMath.gate( 1, target.HT/50f, left );
-				healAmt = Math.min(healAmt, target.HT - target.HP);
+				float healAmt = clamp( 1, target.HT/50f, left );
+				healAmt = min(healAmt, target.HT - target.HP);
 				if (Random.Float() < (healAmt % 1)){
-					healAmt = (float)Math.ceil(healAmt);
+					healAmt = (float) ceil(healAmt);
 				} else {
-					healAmt = (float)Math.floor(healAmt);
+					healAmt = (float) floor(healAmt);
 				}
 				target.HP += healAmt;
 				left -= healAmt;
@@ -108,8 +114,8 @@ public class ElixirOfAquaticRejuvenation extends Elixir {
 
 		@Override
 		public float iconFadePercent() {
-			float max = Math.round(target.HT * 1.5f);
-			return Math.max(0, (max - left) / max);
+			float max = round(target.HT * 1.5f);
+			return max(0, (max - left) / max);
 		}
 
 		@Override

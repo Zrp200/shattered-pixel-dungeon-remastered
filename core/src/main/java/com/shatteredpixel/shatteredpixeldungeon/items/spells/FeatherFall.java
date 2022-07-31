@@ -34,6 +34,8 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 
+import static java.lang.Math.max;
+
 public class FeatherFall extends Spell {
 	
 	{
@@ -74,7 +76,7 @@ public class FeatherFall extends Spell {
 
 		@Override
 		public float iconFadePercent() {
-			return Math.max(0, (DURATION - visualcooldown()) / DURATION);
+			return max(0, (DURATION - visualcooldown()) / DURATION);
 		}
 
 		@Override

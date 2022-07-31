@@ -34,6 +34,8 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 
+import static java.lang.Math.round;
+
 public class PhaseShift extends TargetedSpell {
 	
 	{
@@ -66,7 +68,7 @@ public class PhaseShift extends TargetedSpell {
 	@Override
 	public int value() {
 		//prices of ingredients, divided by output quantity
-		return Math.round(quantity * ((30 + 40) / 8f));
+		return round(quantity * ((30 + 40) / 8f));
 	}
 	
 	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe.SimpleRecipe {

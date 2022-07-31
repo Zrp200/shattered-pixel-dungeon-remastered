@@ -34,6 +34,8 @@ import com.watabou.utils.Point;
 
 import java.util.Locale;
 
+import static java.lang.Math.min;
+
 public class SPDSettings extends GameSettings {
 	
 	//Version info
@@ -137,7 +139,7 @@ public class SPDSettings extends GameSettings {
 			//force mobile UI if there is not enough space for full UI
 			float wMin = Game.width / PixelScene.MIN_WIDTH_FULL;
 			float hMin = Game.height / PixelScene.MIN_HEIGHT_FULL;
-			if (Math.min(wMin, hMin) < 2*Game.density){
+			if (min(wMin, hMin) < 2*Game.density){
 				size = 0;
 			}
 		}

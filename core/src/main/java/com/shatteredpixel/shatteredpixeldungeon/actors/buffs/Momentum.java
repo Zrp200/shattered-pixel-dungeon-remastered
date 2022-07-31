@@ -33,7 +33,10 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.GameMath;
+
+import static com.watabou.utils.MathKt.clamp;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
 
 public class Momentum extends Buff implements ActionIndicator.Action {
 	
@@ -57,7 +60,7 @@ public class Momentum extends Buff implements ActionIndicator.Action {
 		}
 
 		if (freerunCooldown == 0 && !freerunning() && target.invisible > 0 && Dungeon.hero.pointsInTalent(Talent.SPEEDY_STEALTH) >= 1){
-			momentumStacks = Math.min(momentumStacks + 2, 10);
+			momentumStacks = min(momentumStacks + 2, 10);
 			movedLastTurn = true;
 		}
 
@@ -66,7 +69,7 @@ public class Momentum extends Buff implements ActionIndicator.Action {
 				freerunTurns--;
 			}
 		} else if (!movedLastTurn){
-			momentumStacks = (int)GameMath.gate(0, momentumStacks-1, Math.round(momentumStacks * 0.667f));
+			momentumStacks = clamp(0, momentumStacks-1, round(momentumStacks * 0.667f));
 			if (momentumStacks <= 0) {
 				ActionIndicator.clearAction(this);
 				if (freerunCooldown <= 0) detach();
@@ -82,7 +85,7 @@ public class Momentum extends Buff implements ActionIndicator.Action {
 		movedLastTurn = true;
 		if (freerunCooldown <= 0 && !freerunning()){
 			postpone(target.cooldown()+(1/target.speed()));
-			momentumStacks = Math.min(momentumStacks + 1, 10);
+			momentumStacks = min(momentumStacks + 1, 10);
 			ActionIndicator.setAction(this);
 		}
 	}

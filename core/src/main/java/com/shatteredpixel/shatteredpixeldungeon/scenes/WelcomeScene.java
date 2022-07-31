@@ -46,9 +46,12 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Music;
 import com.watabou.utils.FileUtils;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+
+import static com.watabou.utils.MathKt.PI;
+import static com.watabou.utils.MathKt.sin;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 public class WelcomeScene extends PixelScene {
 
@@ -100,7 +103,7 @@ public class WelcomeScene extends PixelScene {
 		Image title = BannerSprites.get( BannerSprites.Type.PIXEL_DUNGEON );
 		add( title );
 
-		float topRegion = Math.max(title.height - 6, h*0.45f);
+		float topRegion = max(title.height - 6, h*0.45f);
 
 		title.x = (w - title.width()) / 2f;
 		title.y = 2 + (topRegion - title.height()) / 2f;
@@ -115,8 +118,8 @@ public class WelcomeScene extends PixelScene {
 			@Override
 			public void update() {
 				super.update();
-				am = Math.max(0f, (float)Math.sin( time += Game.elapsed ));
-				if (time >= 1.5f*Math.PI) time = 0;
+				am = max(0f, sin( time += Game.elapsed ));
+				if (time >= 1.5f * PI) time = 0;
 			}
 			@Override
 			public void draw() {
@@ -145,7 +148,7 @@ public class WelcomeScene extends PixelScene {
 			}
 		};
 
-		float buttonY = Math.min(topRegion + (PixelScene.landscape() ? 60 : 120), h - 24);
+		float buttonY = min(topRegion + (PixelScene.landscape() ? 60 : 120), h - 24);
 
 		if (previousVersion != 0 && !SPDSettings.intro()){
 			StyledButton changes = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(TitleScene.class, "changes")){
@@ -189,7 +192,7 @@ public class WelcomeScene extends PixelScene {
 		} else {
 			message = Messages.get(this, "what_msg");
 		}
-		text.text(message, Math.min(w-20, 300));
+		text.text(message, min(w-20, 300));
 		float textSpace = okay.top() - topRegion - 4;
 		text.setPos((w - text.width()) / 2f, (topRegion + 2) + (textSpace - text.height())/2);
 		add(text);

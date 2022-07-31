@@ -27,6 +27,8 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 import java.text.DecimalFormat;
 
+import static com.watabou.utils.MathKt.pow;
+
 public class RingOfAccuracy extends Ring {
 
 	{
@@ -35,7 +37,7 @@ public class RingOfAccuracy extends Ring {
 	
 	public String statsInfo() {
 		if (isIdentified()){
-			return Messages.get(this, "stats", new DecimalFormat("#.##").format(100f * (Math.pow(1.3f, soloBuffedBonus()) - 1f)));
+			return Messages.get(this, "stats", new DecimalFormat("#.##").format(100f * (pow(1.3f, soloBuffedBonus()) - 1f)));
 		} else {
 			return Messages.get(this, "typical_stats", new DecimalFormat("#.##").format(30f));
 		}
@@ -47,7 +49,7 @@ public class RingOfAccuracy extends Ring {
 	}
 	
 	public static float accuracyMultiplier( Char target ){
-		return (float)Math.pow(1.3f, getBuffedBonus(target, Accuracy.class));
+		return pow(1.3f, getBuffedBonus(target, Accuracy.class));
 	}
 	
 	public class Accuracy extends RingBuff {

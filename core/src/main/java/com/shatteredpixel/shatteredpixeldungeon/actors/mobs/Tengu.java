@@ -71,14 +71,15 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Callback;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+
+import static com.watabou.utils.MathKt.clamp;
+import static java.lang.Math.max;
 
 public class Tengu extends Mob {
 	
@@ -470,7 +471,7 @@ public class Tengu extends Mob {
 		int targetAbilityUses = 1 + 2*arenaJumps;
 		
 		//and ane extra 2 use for jumps 3 and 4
-		targetAbilityUses += Math.max(0, arenaJumps-2);
+		targetAbilityUses += max(0, arenaJumps-2);
 		
 		return targetAbilityUses;
 	}
@@ -835,7 +836,7 @@ public class Tengu extends Mob {
 				for (int i = area.left; i < area.right; i++){
 					for (int j = area.top; j < area.bottom; j++){
 						cell = i + j* Dungeon.level.width();
-						off[cell] = (int)GameMath.gate(0, cur[cell] - 1, 1);
+						off[cell] = clamp(0, cur[cell] - 1, 1);
 						
 						if (off[cell] > 0) {
 							volume += off[cell];

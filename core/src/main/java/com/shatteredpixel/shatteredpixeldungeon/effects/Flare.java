@@ -36,6 +36,10 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
+import static com.watabou.utils.MathKt.PI2;
+import static com.watabou.utils.MathKt.cos;
+import static com.watabou.utils.MathKt.sin;
+
 public class Flare extends Visual {
 	
 	private float duration = 0;
@@ -85,14 +89,14 @@ public class Flare extends Visual {
 		
 		for (int i=0; i < nRays; i++) {
 			
-			float a = i * 3.1415926f * 2 / nRays;
-			v[0] = (float)Math.cos( a ) * radius;
-			v[1] = (float)Math.sin( a ) * radius;
+			float a = i * PI2 / nRays;
+			v[0] = cos( a ) * radius;
+			v[1] = sin( a ) * radius;
 			vertices.put( v );
 			
-			a += 3.1415926f * 2 / nRays / 2;
-			v[0] = (float)Math.cos( a ) * radius;
-			v[1] = (float)Math.sin( a ) * radius;
+			a += PI2 / nRays / 2;
+			v[0] = cos( a ) * radius;
+			v[1] = sin( a ) * radius;
 			vertices.put( v );
 			
 			indices.put( (short)0 );

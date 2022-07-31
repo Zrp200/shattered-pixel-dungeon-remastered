@@ -37,6 +37,8 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
+import static java.lang.Math.round;
+
 public class ArcaneBomb extends Bomb {
 	
 	{
@@ -81,9 +83,9 @@ public class ArcaneBomb extends Bomb {
 		
 		for (Char ch : affected){
 			// 100%/83%/67% bomb damage based on distance, but pierces armor.
-			int damage = Math.round(Random.NormalIntRange( Dungeon.scalingDepth()+5, 10 + Dungeon.scalingDepth() * 2 ));
+			int damage = round(Random.NormalIntRange( Dungeon.scalingDepth()+5, 10 + Dungeon.scalingDepth() * 2 ));
 			float multiplier = 1f - (.16667f*Dungeon.level.distance(cell, ch.pos));
-			ch.damage(Math.round(damage*multiplier), this);
+			ch.damage(round(damage*multiplier), this);
 			if (ch == Dungeon.hero && !ch.isAlive()){
 				Badges.validateDeathFromFriendlyMagic();
 				Dungeon.fail(Bomb.class);

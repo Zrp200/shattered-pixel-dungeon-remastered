@@ -33,6 +33,8 @@ import com.watabou.utils.Random;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.watabou.utils.MathKt.R2D;
+
 public class Lightning extends Group {
 
 	private static final float DURATION = 0.3f;
@@ -71,8 +73,6 @@ public class Lightning extends Group {
 		
 		life = DURATION;
 	}
-	
-	private static final double A = 180 / Math.PI;
 	
 	@Override
 	public void update() {
@@ -152,12 +152,12 @@ public class Lightning extends Group {
 
 			float dx = x2 - start.x;
 			float dy = y2 - start.y;
-			arc1.angle = (float)(Math.atan2( dy, dx ) * A);
+			arc1.angle = (float)(Math.atan2( dy, dx ) * R2D);
 			arc1.scale.x = (float)Math.sqrt( dx * dx + dy * dy ) / arc1.width;
 
 			dx = end.x - x2;
 			dy = end.y - y2;
-			arc2.angle = (float)(Math.atan2( dy, dx ) * A);
+			arc2.angle = (float)(Math.atan2( dy, dx ) * R2D);
 			arc2.scale.x = (float)Math.sqrt( dx * dx + dy * dy ) / arc2.width;
 			arc2.x = x2 - arc2.origin.x;
 			arc2.y = y2 - arc2.origin.x;

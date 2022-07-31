@@ -40,6 +40,9 @@ import com.watabou.noosa.ui.Component;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+import static com.watabou.utils.MathKt.ceil;
+import static com.watabou.utils.MathKt.floor;
+
 public class BuffIndicator extends Component {
 	
 	//transparent icon
@@ -242,9 +245,9 @@ public class BuffIndicator extends Component {
 				float fadeHeight = buff.iconFadePercent() * icon.height();
 				float zoom = (getCamera() != null) ? getCamera().zoom : 1;
 				if (fadeHeight < icon.height() / 2f) {
-					grey.scale.set(icon.width(), (float) Math.ceil(zoom * fadeHeight) / zoom);
+					grey.scale.set(icon.width(), (float) ceil(zoom * fadeHeight) / zoom);
 				} else {
-					grey.scale.set(icon.width(), (float) Math.floor(zoom * fadeHeight) / zoom);
+					grey.scale.set(icon.width(), (float) floor(zoom * fadeHeight) / zoom);
 				}
 			} else if (!buff.iconTextDisplay().isEmpty()) {
 				grey.setVisible(false);

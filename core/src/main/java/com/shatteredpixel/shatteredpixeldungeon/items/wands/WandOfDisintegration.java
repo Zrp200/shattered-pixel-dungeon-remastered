@@ -40,6 +40,8 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
+import static java.lang.Math.min;
+
 public class WandOfDisintegration extends DamageWand {
 
 	{
@@ -49,11 +51,11 @@ public class WandOfDisintegration extends DamageWand {
 	}
 
 
-	public int min(int lvl){
+	public int minDmg(int lvl){
 		return 2+lvl;
 	}
 
-	public int max(int lvl){
+	public int maxDmg(int lvl){
 		return 8+4*lvl;
 	}
 	
@@ -69,7 +71,7 @@ public class WandOfDisintegration extends DamageWand {
 		
 		int level = buffedLvl();
 		
-		int maxDistance = Math.min(distance(), beam.dist);
+		int maxDistance = min(distance(), beam.dist);
 		
 		ArrayList<Char> chars = new ArrayList<>();
 
@@ -129,7 +131,7 @@ public class WandOfDisintegration extends DamageWand {
 	@Override
 	public void fx(Ballistica beam, Callback callback) {
 		
-		int cell = beam.path.get(Math.min(beam.dist, distance()));
+		int cell = beam.path.get(min(beam.dist, distance()));
 		curUser.sprite.getParent().add(new Beam.DeathRay(curUser.sprite.center(), DungeonTilemap.raisedTileCenterToWorld( cell )));
 		callback.call();
 	}

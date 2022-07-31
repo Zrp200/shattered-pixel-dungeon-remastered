@@ -40,6 +40,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWea
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 
+import static java.lang.Math.round;
+
 public class CurseInfusion extends InventorySpell {
 	
 	{
@@ -90,7 +92,7 @@ public class CurseInfusion extends InventorySpell {
 	@Override
 	public int value() {
 		//prices of ingredients, divided by output quantity
-		return Math.round(quantity * ((30 + 50) / 3f));
+		return round(quantity * ((30 + 50) / 3f));
 	}
 	
 	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe.SimpleRecipe {

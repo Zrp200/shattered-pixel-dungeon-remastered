@@ -26,6 +26,8 @@ import com.watabou.noosa.particles.Emitter.Factory;
 import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.Random;
 
+import static com.watabou.utils.MathKt.PI;
+
 public class BlastParticle extends PixelParticle.Shrinking {
 	
 	public static final Factory FACTORY = new Factory() {
@@ -55,7 +57,7 @@ public class BlastParticle extends PixelParticle.Shrinking {
 		left = lifespan = Random.Float();
 		
 		size = 8;
-		speed.polar( -Random.Float( 3.1415926f ), Random.Float( 32, 64 ) );
+		speed.polar( -Random.Float( PI ), Random.Float( 32, 64 ) );
 	}
 	
 	@Override

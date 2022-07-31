@@ -36,6 +36,8 @@ import java.nio.Buffer;
 import java.nio.FloatBuffer;
 import java.util.HashMap;
 
+import static java.lang.Math.round;
+
 public class RenderedText extends Image {
 	
 	private BitmapFont font = null;
@@ -114,7 +116,7 @@ public class RenderedText extends Image {
 			}
 			
 			//this is identical to l.height in most cases, but we force this for consistency.
-			height = Math.round(size*0.75f);
+			height = round(size*0.75f);
 			renderedHeight = glyphs.height;
 		}
 	}
@@ -126,7 +128,7 @@ public class RenderedText extends Image {
 		super.updateMatrix();
 		//sometimes the font is rendered oddly, so we offset here to put it in the correct spot
 		if (renderedHeight != height) {
-			matrix.translate(0, Math.round(height - renderedHeight));
+			matrix.translate(0, round(height - renderedHeight));
 		}
 	}
 	

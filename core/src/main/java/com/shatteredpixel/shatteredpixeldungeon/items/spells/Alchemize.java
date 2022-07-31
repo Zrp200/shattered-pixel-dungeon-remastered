@@ -42,6 +42,8 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndInfoItem;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndTradeItem;
 import com.watabou.noosa.audio.Sample;
 
+import static java.lang.Math.round;
+
 public class Alchemize extends Spell {
 	
 	{
@@ -58,7 +60,7 @@ public class Alchemize extends Spell {
 	@Override
 	public int value() {
 		//prices of ingredients, divided by output quantity
-		return Math.round(quantity * (40 / 8f));
+		return round(quantity * (40 / 8f));
 	}
 
 	//TODO also allow alchemical catalyst? Or save that for an elixir/brew?

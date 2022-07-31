@@ -46,9 +46,18 @@ import com.watabou.noosa.Scene;
 import com.watabou.noosa.Visual;
 import com.watabou.noosa.ui.Component;
 import com.watabou.noosa.ui.Cursor;
-import com.watabou.utils.*;
+import com.watabou.utils.DeviceCompat;
+import com.watabou.utils.PointF;
+import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
+
+import static com.watabou.utils.MathKt.ceil;
+import static com.watabou.utils.MathKt.clamp;
+import static com.watabou.utils.MathKt.pow;
+import static java.lang.Math.abs;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
 
 public class PixelScene extends Scene {
 
@@ -110,12 +119,12 @@ public class PixelScene extends Scene {
 			scaleFactor = 2.5f;
 		}
 
-		maxDefaultZoom = (int)Math.min(Game.width/minWidth, Game.height/minHeight);
-		maxScreenZoom = (int)Math.min(Game.dispWidth/minWidth, Game.dispHeight/minHeight);
+		maxDefaultZoom = (int) min(Game.width/minWidth, Game.height/minHeight);
+		maxScreenZoom = (int) min(Game.dispWidth/minWidth, Game.dispHeight/minHeight);
 		defaultZoom = SPDSettings.scale();
 
-		if (defaultZoom < Math.ceil( Game.density * 2 ) || defaultZoom > maxDefaultZoom){
-			defaultZoom = (int)GameMath.gate(2, (int)Math.ceil( Game.density * scaleFactor ), maxDefaultZoom);
+		if (defaultZoom < ceil( Game.density * 2 ) || defaultZoom > maxDefaultZoom){
+			defaultZoom = clamp(2, ceil( Game.density * scaleFactor ), maxDefaultZoom);
 
 			if (SPDSettings.interfaceSize() > 0 && defaultZoom < (maxDefaultZoom+1)/2){
 				defaultZoom = (maxDefaultZoom+1)/2;
@@ -175,8 +184,8 @@ public class PixelScene extends Scene {
 		super.update();
 		//20% deadzone
 		if (!Cursor.isCursorCaptured()) {
-			if (Math.abs(ControllerHandler.rightStickPosition.x) >= 0.2f
-					|| Math.abs(ControllerHandler.rightStickPosition.y) >= 0.2f) {
+			if (abs(ControllerHandler.rightStickPosition.x) >= 0.2f
+					|| abs(ControllerHandler.rightStickPosition.y) >= 0.2f) {
 				if (!ControllerHandler.controllerPointerActive()) {
 					ControllerHandler.setControllerPointer(true);
 				}
@@ -185,17 +194,17 @@ public class PixelScene extends Scene {
 
 				//cursor moves 100xsens scaled pixels per second at full speed
 				//35x at 50% movement, ~9x at 20% deadzone threshold
-				float xMove = (float) Math.pow(Math.abs(ControllerHandler.rightStickPosition.x), 1.5);
+				float xMove = pow(abs(ControllerHandler.rightStickPosition.x), 1.5f);
 				if (ControllerHandler.rightStickPosition.x < 0) xMove = -xMove;
 
-				float yMove = (float) Math.pow(Math.abs(ControllerHandler.rightStickPosition.y), 1.5);
+				float yMove = pow(abs(ControllerHandler.rightStickPosition.y), 1.5f);
 				if (ControllerHandler.rightStickPosition.y < 0) yMove = -yMove;
 
 				PointF virtualCursorPos = ControllerHandler.getControllerPointerPos();
 				virtualCursorPos.x += defaultZoom * sensitivity * Game.elapsed * xMove;
 				virtualCursorPos.y += defaultZoom * sensitivity * Game.elapsed * yMove;
-				virtualCursorPos.x = GameMath.gate(0, virtualCursorPos.x, Game.width);
-				virtualCursorPos.y = GameMath.gate(0, virtualCursorPos.y, Game.height);
+				virtualCursorPos.x = clamp(0, virtualCursorPos.x, Game.width);
+				virtualCursorPos.y = clamp(0, virtualCursorPos.y, Game.height);
 				ControllerHandler.updateControllerPointer(virtualCursorPos, true);
 			}
 		}
@@ -280,11 +289,11 @@ public class PixelScene extends Scene {
 	 */
 
 	public static float align( float pos ) {
-		return Math.round(pos * defaultZoom) / (float)defaultZoom;
+		return round(pos * defaultZoom) / (float)defaultZoom;
 	}
 
 	public static float align( Camera camera, float pos ) {
-		return Math.round(pos * camera.zoom) / camera.zoom;
+		return round(pos * camera.zoom) / camera.zoom;
 	}
 
 	public static void align( Visual v ) {
@@ -390,10 +399,10 @@ public class PixelScene extends Scene {
 		
 		public PixelCamera( float zoom ) {
 			super(
-				(int)(Game.width - Math.ceil( Game.width / zoom ) * zoom) / 2,
-				(int)(Game.height - Math.ceil( Game.height / zoom ) * zoom) / 2,
-				(int)Math.ceil( Game.width / zoom ),
-				(int)Math.ceil( Game.height / zoom ), zoom );
+				(int)(Game.width - ceil( Game.width / zoom ) * zoom) / 2,
+				(int)(Game.height - ceil( Game.height / zoom ) * zoom) / 2,
+				ceil( Game.width / zoom ),
+				ceil( Game.height / zoom ), zoom );
 			fullScreen = true;
 		}
 		

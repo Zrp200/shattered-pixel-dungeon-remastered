@@ -27,6 +27,8 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 import java.text.DecimalFormat;
 
+import static com.watabou.utils.MathKt.pow;
+
 public class RingOfHaste extends Ring {
 
 	{
@@ -35,7 +37,7 @@ public class RingOfHaste extends Ring {
 
 	public String statsInfo() {
 		if (isIdentified()){
-			return Messages.get(this, "stats", new DecimalFormat("#.##").format(100f * (Math.pow(1.2f, soloBuffedBonus()) - 1f)));
+			return Messages.get(this, "stats", new DecimalFormat("#.##").format(100f * (pow(1.2f, soloBuffedBonus()) - 1f)));
 		} else {
 			return Messages.get(this, "typical_stats", new DecimalFormat("#.##").format(20f));
 		}
@@ -47,7 +49,7 @@ public class RingOfHaste extends Ring {
 	}
 	
 	public static float speedMultiplier( Char target ){
-		return (float)Math.pow(1.2, getBuffedBonus(target, Haste.class));
+		return pow(1.2f, getBuffedBonus(target, Haste.class));
 	}
 	
 	public class Haste extends RingBuff {

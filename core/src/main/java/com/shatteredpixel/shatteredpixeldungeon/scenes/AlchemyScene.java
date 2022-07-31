@@ -64,6 +64,8 @@ import com.watabou.noosa.ui.Component;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static java.lang.Math.max;
+
 public class AlchemyScene extends PixelScene {
 
 	//max of 3 inputs, and 3 potential recipe outputs
@@ -188,7 +190,7 @@ public class AlchemyScene extends PixelScene {
 		
 		pos += 10;
 
-		lowerBubbles.pos(0, pos, Camera.main.width, Math.max(0, Camera.main.height-pos));
+		lowerBubbles.pos(0, pos, Camera.main.width, max(0, Camera.main.height-pos));
 		lowerBubbles.pour(Speck.factory( Speck.BUBBLE ), 0.1f );
 		
 		ExitButton btnExit = new ExitButton(){

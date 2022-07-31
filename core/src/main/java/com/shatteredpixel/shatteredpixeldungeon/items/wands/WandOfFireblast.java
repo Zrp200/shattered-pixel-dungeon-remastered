@@ -44,10 +44,13 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 
 import java.util.ArrayList;
+
+import static com.watabou.utils.MathKt.ceil;
+import static com.watabou.utils.MathKt.clamp;
+import static java.lang.Math.min;
 
 public class WandOfFireblast extends DamageWand {
 
@@ -59,12 +62,12 @@ public class WandOfFireblast extends DamageWand {
 	}
 
 	//1x/2x/3x damage
-	public int min(int lvl){
+	public int minDmg(int lvl){
 		return (1+lvl) * chargesPerCast();
 	}
 
 	//1x/2x/3x damage
-	public int max(int lvl){
+	public int maxDmg(int lvl){
 		return (6+2*lvl) * chargesPerCast();
 	}
 
@@ -144,7 +147,7 @@ public class WandOfFireblast extends DamageWand {
 
 		// 5/7/9 distance
 		int maxDist = 3 + 2*chargesPerCast();
-		int dist = Math.min(bolt.dist, maxDist);
+		int dist = min(bolt.dist, maxDist);
 
 		cone = new ConeAOE( bolt,
 				maxDist,
@@ -177,15 +180,15 @@ public class WandOfFireblast extends DamageWand {
 			return 1;
 		}
 		//consumes 30% of current charges, rounded up, with a min of 1 and a max of 3.
-		return (int) GameMath.gate(1, (int)Math.ceil(curCharges*0.3f), 3);
+		return clamp(1, ceil(curCharges*0.3f), 3);
 	}
 
 	@Override
 	public String statsDesc() {
 		if (levelKnown)
-			return Messages.get(this, "stats_desc", chargesPerCast(), min(), max());
+			return Messages.get(this, "stats_desc", chargesPerCast(), minDmg(), maxDmg());
 		else
-			return Messages.get(this, "stats_desc", chargesPerCast(), min(0), max(0));
+			return Messages.get(this, "stats_desc", chargesPerCast(), minDmg(0), maxDmg(0));
 	}
 
 	@Override

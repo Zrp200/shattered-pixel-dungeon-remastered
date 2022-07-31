@@ -23,11 +23,12 @@ package com.shatteredpixel.shatteredpixeldungeon.levels.rooms.connection;
 
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.Point;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 import com.watabou.utils.Rect;
+
+import static com.watabou.utils.MathKt.clamp;
 
 //tunnels along the rooms center, with straight lines
 public class TunnelRoom extends ConnectionRoom {
@@ -83,8 +84,8 @@ public class TunnelRoom extends ConnectionRoom {
 			p.x += Random.Int(2) == 0 ? 1 : -1;
 			p.y += Random.Int(2) == 0 ? 1 : -1;
 			//also prevent filling a tile outside the room in rare cases
-			p.x = (int)GameMath.gate(left+1, p.x, right-1);
-			p.y = (int)GameMath.gate(top+1, p.y, bottom-1);
+			p.x = clamp(left+1, p.x, right-1);
+			p.y = clamp(top+1, p.y, bottom-1);
 			Painter.set(level, p, floor);
 		}
 
@@ -113,8 +114,8 @@ public class TunnelRoom extends ConnectionRoom {
 		Point c = new Point((int)doorCenter.x / connected.size(), (int)doorCenter.y / connected.size());
 		if (Random.Float() < doorCenter.x % 1) c.x++;
 		if (Random.Float() < doorCenter.y % 1) c.y++;
-		c.x = (int)GameMath.gate(left+1, c.x, right-1);
-		c.y = (int)GameMath.gate(top+1, c.y, bottom-1);
+		c.x = clamp(left+1, c.x, right-1);
+		c.y = clamp(top+1, c.y, bottom-1);
 
 		return c;
 	}

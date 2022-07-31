@@ -33,13 +33,13 @@ public class MeleeWeapon extends Weapon {
 	public int tier;
 
 	@Override
-	public int min(int lvl) {
+	public int minDmg(int lvl) {
 		return  tier +  //base
 				lvl;    //level scaling
 	}
 
 	@Override
-	public int max(int lvl) {
+	public int maxDmg(int lvl) {
 		return  5*(tier+1) +    //base
 				lvl*(tier+1);   //level scaling
 	}
@@ -68,14 +68,14 @@ public class MeleeWeapon extends Weapon {
 		String info = desc();
 
 		if (levelKnown) {
-			info += "\n\n" + Messages.get(MeleeWeapon.class, "stats_known", tier, augment.damageFactor(min()), augment.damageFactor(max()), STRReq());
+			info += "\n\n" + Messages.get(MeleeWeapon.class, "stats_known", tier, augment.damageFactor(minDmg()), augment.damageFactor(maxDmg()), STRReq());
 			if (STRReq() > Dungeon.hero.STR()) {
 				info += " " + Messages.get(Weapon.class, "too_heavy");
 			} else if (Dungeon.hero.STR() > STRReq()){
 				info += " " + Messages.get(Weapon.class, "excess_str", Dungeon.hero.STR() - STRReq());
 			}
 		} else {
-			info += "\n\n" + Messages.get(MeleeWeapon.class, "stats_unknown", tier, min(0), max(0), STRReq(0));
+			info += "\n\n" + Messages.get(MeleeWeapon.class, "stats_unknown", tier, minDmg(0), maxDmg(0), STRReq(0));
 			if (STRReq(0) > Dungeon.hero.STR()) {
 				info += " " + Messages.get(MeleeWeapon.class, "probably_too_heavy");
 			}

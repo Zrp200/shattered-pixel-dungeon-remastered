@@ -60,6 +60,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import static java.lang.Math.round;
+
 public class Bomb extends Item {
 	
 	{
@@ -182,7 +184,7 @@ public class Bomb extends Item {
 
 				//those not at the center of the blast take less damage
 				if (ch.pos != cell){
-					dmg = Math.round(dmg*0.67f);
+					dmg = round(dmg*0.67f);
 				}
 
 				dmg -= ch.drRoll();

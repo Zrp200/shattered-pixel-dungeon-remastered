@@ -48,6 +48,11 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import static com.watabou.utils.MathKt.PI2;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
+
 public class WandOfWarding extends Wand {
 
 	{
@@ -161,7 +166,7 @@ public class WandOfWarding extends Wand {
 	@Override
 	public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
 
-		int level = Math.max( 0, staff.buffedLvl() );
+		int level = max( 0, staff.buffedLvl() );
 
 		// lvl 0 - 20%
 		// lvl 1 - 33%
@@ -181,7 +186,7 @@ public class WandOfWarding extends Wand {
 		particle.color( 0x8822FF );
 		particle.am = 0.3f;
 		particle.setLifespan(3f);
-		particle.speed.polar(Random.Float(PointF.PI2), 0.3f);
+		particle.speed.polar(Random.Float(PI2), 0.3f);
 		particle.setSize( 1f, 2f);
 		particle.radiateXY(2.5f);
 	}
@@ -269,17 +274,17 @@ public class WandOfWarding extends Wand {
 				default:
 					return;
 				case 4:
-					heal = Math.round(9 * healFactor);
+					heal = round(9 * healFactor);
 					break;
 				case 5:
-					heal = Math.round(12 * healFactor);
+					heal = round(12 * healFactor);
 					break;
 				case 6:
-					heal = Math.round(16 * healFactor);
+					heal = round(16 * healFactor);
 					break;
 			}
 
-			HP = Math.min(HT, HP+heal);
+			HP = min(HT, HP+heal);
 			if (sprite != null) sprite.showStatus(CharSprite.POSITIVE, Integer.toString(heal));
 
 		}
@@ -295,7 +300,7 @@ public class WandOfWarding extends Wand {
 		@Override
 		public int drRoll() {
 			if (tier > 3){
-				return Math.round(Random.NormalIntRange(0, 3 + Dungeon.scalingDepth()/2) / (7f - tier));
+				return round(Random.NormalIntRange(0, 3 + Dungeon.scalingDepth()/2) / (7f - tier));
 			} else {
 				return 0;
 			}

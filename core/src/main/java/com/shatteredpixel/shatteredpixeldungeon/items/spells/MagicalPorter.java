@@ -31,6 +31,8 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 
 import java.util.ArrayList;
 
+import static java.lang.Math.round;
+
 //beacon was removed from drops, here for pre-1.1.0 saves
 public class MagicalPorter extends InventorySpell {
 	
@@ -68,7 +70,7 @@ public class MagicalPorter extends InventorySpell {
 	@Override
 	public int value() {
 		//prices of ingredients, divided by output quantity
-		return Math.round(quantity * ((5 + 40) / 8f));
+		return round(quantity * ((5 + 40) / 8f));
 	}
 	
 	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe.SimpleRecipe {

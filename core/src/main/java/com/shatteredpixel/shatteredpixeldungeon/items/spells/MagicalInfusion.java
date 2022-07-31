@@ -34,6 +34,8 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 
+import static java.lang.Math.round;
+
 public class MagicalInfusion extends InventorySpell {
 	
 	{
@@ -72,7 +74,7 @@ public class MagicalInfusion extends InventorySpell {
 	@Override
 	public int value() {
 		//prices of ingredients, divided by output quantity
-		return Math.round(quantity * ((50 + 40) / 1f));
+		return round(quantity * ((50 + 40) / 1f));
 	}
 	
 	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe.SimpleRecipe {

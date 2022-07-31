@@ -52,6 +52,8 @@ import com.watabou.utils.Random;
 
 import java.util.HashSet;
 
+import static java.lang.Math.round;
+
 public class AntiMagic extends Armor.Glyph {
 
 	private static ItemSprite.Glowing TEAL = new ItemSprite.Glowing( 0x88EEFF );
@@ -96,7 +98,7 @@ public class AntiMagic extends Armor.Glyph {
 	}
 	
 	public static int drRoll( int level ){
-		return Random.NormalIntRange(level, 3 + Math.round(level*1.5f));
+		return Random.NormalIntRange(level, 3 + round(level*1.5f));
 	}
 
 	@Override

@@ -24,8 +24,10 @@ package com.shatteredpixel.shatteredpixeldungeon.effects.particles;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.particles.Emitter.Factory;
 import com.watabou.noosa.particles.PixelParticle;
-import com.watabou.utils.ColorMath;
+import com.watabou.utils.ColorMathKt;
 import com.watabou.utils.Random;
+
+import static com.watabou.utils.MathKt.PI;
 
 public class PoisonParticle extends PixelParticle {
 	
@@ -67,7 +69,7 @@ public class PoisonParticle extends PixelParticle {
 		
 		left = lifespan;
 		
-		speed.polar( -Random.Float( 3.1415926f ), Random.Float( 6 ) );
+		speed.polar( -Random.Float( PI ), Random.Float( 6 ) );
 	}
 	
 	public void resetSplash( float x, float y ) {
@@ -78,7 +80,7 @@ public class PoisonParticle extends PixelParticle {
 		
 		left = lifespan;
 		
-		speed.polar( Random.Float( 3.1415926f ), Random.Float( 10, 20 ) );
+		speed.polar( Random.Float( PI ), Random.Float( 10, 20 ) );
 	}
 	
 	@Override
@@ -87,6 +89,6 @@ public class PoisonParticle extends PixelParticle {
 		// alpha: 1 -> 0; size: 1 -> 4
 		size( 4 - (am = left / lifespan) * 3 );
 		// color: 0x8844FF -> 0x00FF00
-		color( ColorMath.interpolate( 0x00FF00, 0x8844FF, am ) );
+		color( ColorMathKt.interpolate( 0x00FF00, 0x8844FF, am ) );
 	}
 }

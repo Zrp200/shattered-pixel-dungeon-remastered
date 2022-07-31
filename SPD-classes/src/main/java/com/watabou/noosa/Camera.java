@@ -28,6 +28,9 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
+import static com.watabou.utils.MathKt.ceil;
+import static java.lang.Math.min;
+
 public class Camera extends Gizmo {
 
 	private static ArrayList<Camera> all = new ArrayList<>();
@@ -101,8 +104,8 @@ public class Camera extends Gizmo {
 	}
 	
 	public static Camera createFullscreen( float zoom ) {
-		int w = (int)Math.ceil( Game.width / zoom );
-		int h = (int)Math.ceil( Game.height / zoom );
+		int w = ceil( Game.width / zoom );
+		int h = ceil( Game.height / zoom );
 		Camera c = new Camera(
 				(int)(Game.width - w * zoom) / 2,
 				(int)(Game.height - h * zoom) / 2,
@@ -177,7 +180,7 @@ public class Camera extends Gizmo {
 			panMove.x = panTarget.x - (scroll.x + width/2f);
 			panMove.y = panTarget.y - (scroll.y + height/2f);
 			
-			panMove.scale(Math.min(1f, Game.elapsed * panIntensity));
+			panMove.scale(min(1f, Game.elapsed * panIntensity));
 			
 			scroll.offset(panMove);
 		}

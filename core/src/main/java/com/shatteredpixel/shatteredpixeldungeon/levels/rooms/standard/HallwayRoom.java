@@ -24,22 +24,24 @@ package com.shatteredpixel.shatteredpixeldungeon.levels.rooms.standard;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Level;
 import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.levels.painters.Painter;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.Point;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 import com.watabou.utils.Rect;
 
+import static com.watabou.utils.MathKt.clamp;
+import static java.lang.Math.max;
+
 public class HallwayRoom extends StandardRoom {
 
 	@Override
 	public int minWidth() {
-		return Math.max(5, super.minWidth());
+		return max(5, super.minWidth());
 	}
 
 	@Override
 	public int minHeight() {
-		return Math.max(5, super.minHeight());
+		return max(5, super.minHeight());
 	}
 
 	@Override
@@ -108,8 +110,8 @@ public class HallwayRoom extends StandardRoom {
 	protected Rect getConnectionSpace(){
 		Point c = center();
 
-		c.x = (int) GameMath.gate(left + 2, c.x, right - 2);
-		c.y = (int) GameMath.gate(top + 2, c.y, bottom - 2);
+		c.x = clamp(left + 2, c.x, right - 2);
+		c.y = clamp(top + 2, c.y, bottom - 2);
 
 		return new Rect(c.x-1, c.y-1, c.x+1, c.y+1);
 	}
@@ -126,8 +128,8 @@ public class HallwayRoom extends StandardRoom {
 		Point c = new Point((int)doorCenter.x / connected.size(), (int)doorCenter.y / connected.size());
 		if (Random.Float() < doorCenter.x % 1) c.x++;
 		if (Random.Float() < doorCenter.y % 1) c.y++;
-		c.x = (int) GameMath.gate(left+2, c.x, right-2);
-		c.y = (int)GameMath.gate(top+2, c.y, bottom-2);
+		c.x = clamp(left+2, c.x, right-2);
+		c.y = clamp(top+2, c.y, bottom-2);
 
 		return c;
 	}

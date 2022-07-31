@@ -55,9 +55,12 @@ import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.PointerArea;
 import com.watabou.noosa.ui.Component;
 import com.watabou.utils.DeviceCompat;
-import com.watabou.utils.GameMath;
 
 import java.util.ArrayList;
+
+import static com.watabou.utils.MathKt.clamp;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 public class HeroSelectScene extends PixelScene {
 
@@ -160,7 +163,7 @@ public class HeroSelectScene extends PixelScene {
 		int btnWidth = HeroBtn.MIN_WIDTH;
 		int curX = (Camera.main.width - btnWidth * classes.length)/2;
 		if (curX > 0){
-			btnWidth += Math.min(curX/(classes.length/2), 15);
+			btnWidth += min(curX/(classes.length/2), 15);
 			curX = (Camera.main.width - btnWidth * classes.length)/2;
 		}
 
@@ -293,7 +296,7 @@ public class HeroSelectScene extends PixelScene {
 			if (uiAlpha > 0f){
 				uiAlpha -= Game.elapsed/4f;
 			}
-			float alpha = GameMath.gate(0f, uiAlpha, 1f);
+			float alpha = clamp(0f, uiAlpha, 1f);
 			for (StyledButton b : heroBtns){
 				b.alpha(alpha);
 			}
@@ -466,7 +469,7 @@ public class HeroSelectScene extends PixelScene {
 
 									//earliest possible daily for v1.3.0 is June 20 2022
 									//which is 19,163 days after Jan 1 1970
-									time = Math.max(time, 19_163 * DAY);
+									time = max(time, 19_163 * DAY);
 
 									SPDSettings.lastDaily(time);
 

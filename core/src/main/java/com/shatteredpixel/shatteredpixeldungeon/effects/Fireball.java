@@ -30,7 +30,7 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.noosa.ui.Component;
-import com.watabou.utils.ColorMath;
+import com.watabou.utils.ColorMathKt;
 import com.watabou.utils.Random;
 import com.watabou.utils.RectF;
 
@@ -105,7 +105,7 @@ public class Fireball extends Component {
 		
 		if (Random.Float() < Game.elapsed) {
 			PixelParticle spark = sparks.recycle( PixelParticle.Shrinking.class );
-			spark.reset( x, y, ColorMath.random( COLOR, 0x66FF66 ), 2, Random.Float( 0.5f, 1.0f ) );
+			spark.reset( x, y, ColorMathKt.random( COLOR, 0x66FF66 ), 2, Random.Float( 0.5f, 1.0f ) );
 			spark.speed.set(
 				Random.Float( -40, +40 ),
 				Random.Float( -60, +20 ) );

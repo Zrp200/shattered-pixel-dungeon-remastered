@@ -59,6 +59,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static com.watabou.utils.MathKt.ceil;
+import static java.lang.Math.max;
+
 public class InterlevelScene extends PixelScene {
 	
 	//slow fade on entering a new region
@@ -152,7 +155,7 @@ public class InterlevelScene extends PixelScene {
 		}
 
 		//flush the texture cache whenever moving between regions, helps reduce memory load
-		int region = (int)Math.ceil(loadingDepth / 5f);
+		int region = ceil(loadingDepth / 5f);
 		if (region != lastRegion){
 			Texture.Companion.clear();
 			lastRegion = region;
@@ -195,8 +198,8 @@ public class InterlevelScene extends PixelScene {
 			@Override
 			public void update() {
 				super.update();
-				if (phase == Phase.FADE_IN)         aa = Math.max( 0, (timeLeft - (fadeTime - 0.333f)));
-				else if (phase == Phase.FADE_OUT)   aa = Math.max( 0, (0.333f - timeLeft));
+				if (phase == Phase.FADE_IN)         aa = max( 0, (timeLeft - (fadeTime - 0.333f)));
+				else if (phase == Phase.FADE_OUT)   aa = max( 0, (0.333f - timeLeft));
 				else                                aa = 0;
 			}
 		};

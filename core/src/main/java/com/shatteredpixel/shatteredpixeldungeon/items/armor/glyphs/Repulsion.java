@@ -28,6 +28,8 @@ import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.watabou.utils.Random;
 
+import static java.lang.Math.max;
+
 public class Repulsion extends Armor.Glyph {
 
 	private static ItemSprite.Glowing WHITE = new ItemSprite.Glowing( 0xFFFFFF );
@@ -37,7 +39,7 @@ public class Repulsion extends Armor.Glyph {
 		// lvl 0 - 20%
 		// lvl 1 - 33%
 		// lvl 2 - 43%
-		int level = Math.max( 0, armor.buffedLvl() );
+		int level = max( 0, armor.buffedLvl() );
 
 		if (Random.Int( level + 5 ) >= 4){
 			int oppositeHero = attacker.pos + (attacker.pos - defender.pos);

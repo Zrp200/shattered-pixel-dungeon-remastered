@@ -32,6 +32,12 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.ui.Cursor;
 import com.watabou.utils.PointF;
 
+import static com.watabou.utils.MathKt.D2R;
+import static com.watabou.utils.MathKt.HALF_PI;
+import static com.watabou.utils.MathKt.PI2;
+import static java.lang.Math.abs;
+import static java.lang.Math.round;
+
 public class RadialMenu extends Window {
 
 	int slots;
@@ -73,7 +79,7 @@ public class RadialMenu extends Window {
 
 		for (int i = 0; i < slots; i++){
 
-			PointF iconCenter = new PointF().polar((PointF.PI2/slots * i)-PointF.PI/2, length);
+			PointF iconCenter = new PointF().polar((PI2/slots * i) - HALF_PI, length);
 			iconCenter.offset(center);
 			optionIcons[i].x = iconCenter.x - optionIcons[i].width()/2f;
 			optionIcons[i].y = iconCenter.y - optionIcons[i].height()/2f;
@@ -159,8 +165,8 @@ public class RadialMenu extends Window {
 
 		PointF movement = Cursor.getCursorDelta();
 		//40% deadzone for controller input here
-		if (Math.abs(ControllerHandler.rightStickPosition.x) >= 0.4f
-				|| Math.abs(ControllerHandler.rightStickPosition.y) >= 0.4f){
+		if (abs(ControllerHandler.rightStickPosition.x) >= 0.4f
+				|| abs(ControllerHandler.rightStickPosition.y) >= 0.4f){
 			movement.x = ControllerHandler.rightStickPosition.x;
 			movement.y = ControllerHandler.rightStickPosition.y;
 			first = false;
@@ -178,13 +184,13 @@ public class RadialMenu extends Window {
 				return;
 			}
 
-			targetAngle = PointF.angle(movement.x, movement.y) / PointF.G2R + 90;
+			targetAngle = PointF.angle(movement.x, movement.y) / D2R + 90;
 			if (targetAngle < 0) targetAngle += 360f;
 
 			selectionArc.setVisible(true);
 			selectionArc.angle = targetAngle + selectionArc.getSweep()*180;
 
-			int newSelect = (int) Math.round((targetAngle) / (360f/slots));
+			int newSelect = round((targetAngle) / (360f/slots));
 			if (newSelect >= slots) newSelect = 0;
 
 			if (newSelect != selectedIdx) {

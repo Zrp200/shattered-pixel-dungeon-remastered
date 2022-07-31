@@ -36,10 +36,10 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.RipperSprite;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Callback;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
+
+import static com.watabou.utils.MathKt.clamp;
 
 public class RipperDemon extends Mob {
 
@@ -230,7 +230,7 @@ public class RipperDemon extends Mob {
 						//get ready to leap
 						leapPos = targetPos;
 						//don't want to overly punish players with slow move or attack speed
-						spend(GameMath.gate(TICK, enemy.cooldown(), 3*TICK));
+						spend(clamp(TICK, enemy.cooldown(), 3*TICK));
 						if (Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[leapPos]){
 							GLog.w(Messages.get(RipperDemon.this, "leap"));
 							sprite.getParent().addToBack(new TargetedCell(leapPos, 0xFF0000));

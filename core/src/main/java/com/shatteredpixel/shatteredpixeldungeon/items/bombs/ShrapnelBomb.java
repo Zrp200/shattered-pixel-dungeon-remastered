@@ -33,6 +33,8 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
+import static java.lang.Math.round;
+
 public class ShrapnelBomb extends Bomb {
 	
 	{
@@ -68,8 +70,8 @@ public class ShrapnelBomb extends Bomb {
 		
 		for (Char ch : affected){
 			//regular bomb damage, which falls off at a rate of 5% per tile of distance
-			int damage = Math.round(Random.NormalIntRange( Dungeon.scalingDepth()+5, 10 + Dungeon.scalingDepth() * 2 ));
-			damage = Math.round(damage * (1f - .05f*Dungeon.level.distance(cell, ch.pos)));
+			int damage = round(Random.NormalIntRange( Dungeon.scalingDepth()+5, 10 + Dungeon.scalingDepth() * 2 ));
+			damage = round(damage * (1f - .05f*Dungeon.level.distance(cell, ch.pos)));
 			damage -= ch.drRoll();
 			ch.damage(damage, this);
 			if (ch == Dungeon.hero && !ch.isAlive()) {

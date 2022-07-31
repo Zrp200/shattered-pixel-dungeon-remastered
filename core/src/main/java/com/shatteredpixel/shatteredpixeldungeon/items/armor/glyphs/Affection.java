@@ -31,6 +31,8 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite.Glowing;
 import com.watabou.utils.Random;
 
+import static java.lang.Math.max;
+
 public class Affection extends Glyph {
 	
 	private static ItemSprite.Glowing PINK = new ItemSprite.Glowing( 0xFF4488 );
@@ -38,7 +40,7 @@ public class Affection extends Glyph {
 	@Override
 	public int proc( Armor armor, Char attacker, Char defender, int damage) {
 
-		int level = Math.max(0, armor.buffedLvl());
+		int level = max(0, armor.buffedLvl());
 		
 		// lvl 0 - 15%
 		// lvl 1 ~ 19%

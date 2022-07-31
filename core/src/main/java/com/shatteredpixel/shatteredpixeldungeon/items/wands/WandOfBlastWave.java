@@ -47,6 +47,10 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import static com.watabou.utils.MathKt.PI2;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
+
 public class WandOfBlastWave extends DamageWand {
 
 	{
@@ -55,11 +59,11 @@ public class WandOfBlastWave extends DamageWand {
 		collisionProperties = Ballistica.PROJECTILE;
 	}
 
-	public int min(int lvl){
+	public int minDmg(int lvl){
 		return 1+lvl;
 	}
 
-	public int max(int lvl){
+	public int maxDmg(int lvl){
 		return 3+3*lvl;
 	}
 
@@ -85,7 +89,7 @@ public class WandOfBlastWave extends DamageWand {
 
 				if (ch.pos == bolt.collisionPos + i) {
 					Ballistica trajectory = new Ballistica(ch.pos, ch.pos + i, Ballistica.MAGIC_BOLT);
-					int strength = 1 + Math.round(buffedLvl() / 2f);
+					int strength = 1 + round(buffedLvl() / 2f);
 					throwChar(ch, trajectory, strength, false, true, getClass());
 				}
 
@@ -113,7 +117,7 @@ public class WandOfBlastWave extends DamageWand {
 			power /= 2;
 		}
 
-		int dist = Math.min(trajectory.dist, power);
+		int dist = min(trajectory.dist, power);
 
 		boolean collided = dist == trajectory.dist;
 
@@ -197,7 +201,7 @@ public class WandOfBlastWave extends DamageWand {
 	public void staffFx(MagesStaff.StaffParticle particle) {
 		particle.color( 0x664422 ); particle.am = 0.6f;
 		particle.setLifespan(3f);
-		particle.speed.polar(Random.Float(PointF.PI2), 0.3f);
+		particle.speed.polar(Random.Float(PI2), 0.3f);
 		particle.setSize( 1f, 2f);
 		particle.radiateXY(2.5f);
 	}

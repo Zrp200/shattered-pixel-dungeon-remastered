@@ -42,7 +42,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
-import com.watabou.utils.ColorMath;
+import com.watabou.utils.ColorMathKt;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
@@ -104,7 +104,7 @@ public class WandOfCorrosion extends Wand {
 
 	@Override
 	public void staffFx(MagesStaff.StaffParticle particle) {
-		particle.color( ColorMath.random( 0xAAAAAA, 0xFF8800) );
+		particle.color( ColorMathKt.random( 0xAAAAAA, 0xFF8800) );
 		particle.am = 0.6f;
 		particle.setLifespan( 1f );
 		particle.acc.set(0, 20);

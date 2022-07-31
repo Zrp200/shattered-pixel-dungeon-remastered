@@ -28,6 +28,9 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Random;
 
+import static java.lang.Math.max;
+import static java.lang.Math.round;
+
 public class RingOfForce extends Ring {
 
 	{
@@ -47,7 +50,7 @@ public class RingOfForce extends Ring {
 	// *** Weapon-like properties ***
 
 	private static float tier(int str){
-		float tier = Math.max(1, (str - 8)/2f);
+		float tier = max(1, (str - 8)/2f);
 		//each str point after 18 is half as effective
 		if (tier > 5){
 			tier = 5 + (tier - 5) / 2f;
@@ -59,24 +62,24 @@ public class RingOfForce extends Ring {
 		if (hero.buff(Force.class) != null) {
 			int level = getBuffedBonus(hero, Force.class);
 			float tier = tier(hero.STR());
-			return Random.NormalIntRange(min(level, tier), max(level, tier));
+			return Random.NormalIntRange(minDmg(level, tier), maxDmg(level, tier));
 		} else {
 			//attack without any ring of force influence
-			return Random.NormalIntRange(1, Math.max(hero.STR()-8, 1));
+			return Random.NormalIntRange(1, max(hero.STR()-8, 1));
 		}
 	}
 
 	//same as equivalent tier weapon
-	private static int min(int lvl, float tier){
-		return Math.max( 0, Math.round(
+	private static int minDmg(int lvl, float tier){
+		return max( 0, round(
 				tier +  //base
 				lvl     //level scaling
 		));
 	}
 
 	//same as equivalent tier weapon
-	private static int max(int lvl, float tier){
-		return Math.max( 0, Math.round(
+	private static int maxDmg(int lvl, float tier){
+		return max( 0, round(
 				5*(tier+1) +    //base
 				lvl*(tier+1)    //level scaling
 		));
@@ -87,9 +90,9 @@ public class RingOfForce extends Ring {
 		float tier = tier(Dungeon.hero.STR());
 		if (isIdentified()) {
 			int level = soloBuffedBonus();
-			return Messages.get(this, "stats", min(level, tier), max(level, tier), level);
+			return Messages.get(this, "stats", minDmg(level, tier), maxDmg(level, tier), level);
 		} else {
-			return Messages.get(this, "typical_stats", min(1, tier), max(1, tier), 1);
+			return Messages.get(this, "typical_stats", minDmg(1, tier), maxDmg(1, tier), 1);
 		}
 	}
 

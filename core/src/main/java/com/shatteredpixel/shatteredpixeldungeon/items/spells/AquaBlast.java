@@ -27,6 +27,8 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.traps.GeyserTrap;
 import com.shatteredpixel.shatteredpixeldungeon.mechanics.Ballistica;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
+import static java.lang.Math.round;
+
 public class AquaBlast extends TargetedSpell {
 	
 	{
@@ -49,7 +51,7 @@ public class AquaBlast extends TargetedSpell {
 	@Override
 	public int value() {
 		//prices of ingredients, divided by output quantity
-		return Math.round(quantity * ((60 + 40) / 8f));
+		return round(quantity * ((60 + 40) / 8f));
 	}
 	
 	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe.SimpleRecipe {

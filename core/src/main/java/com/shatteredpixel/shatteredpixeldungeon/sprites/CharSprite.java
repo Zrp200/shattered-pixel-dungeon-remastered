@@ -58,6 +58,11 @@ import com.watabou.utils.Random;
 
 import java.nio.Buffer;
 
+import static com.watabou.utils.MathKt.HALF_PI;
+import static com.watabou.utils.MathKt.sqrt;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class CharSprite extends MovieClip implements MovieClip.Listener {
 	
 	// Color constants for floating text
@@ -295,7 +300,7 @@ public class CharSprite extends MovieClip implements MovieClip.Listener {
 	}
 
 	public void jump( int from, int to, Callback callback ) {
-		float distance = Math.max( 1f, Dungeon.level.trueDistance( from, to ));
+		float distance = max( 1f, Dungeon.level.trueDistance( from, to ));
 		jump( from, to, callback, distance * 2, distance * 0.1f );
 	}
 
@@ -356,8 +361,8 @@ public class CharSprite extends MovieClip implements MovieClip.Listener {
 	public void bloodBurstA( PointF from, int damage ) {
 		if (getVisible()) {
 			PointF c = center();
-			int n = (int)Math.min( 9 * Math.sqrt( (double)damage / ch.HT ), 9 );
-			Splash.at( c, PointF.angle( from, c ), 3.1415926f / 2, blood(), n );
+			int n = (int) min( 9 * sqrt( (float)damage / ch.HT ), 9 );
+			Splash.at( c, PointF.angle( from, c ), HALF_PI, blood(), n );
 		}
 	}
 
@@ -504,8 +509,8 @@ public class CharSprite extends MovieClip implements MovieClip.Listener {
 		if (aura != null){
 			aura.remove();
 		}
-		float size = Math.max(width(), height());
-		size = Math.max(size+4, 16);
+		float size = max(width(), height());
+		size = max(size+4, 16);
 		aura = new Flare(5, size);
 		aura.angularSpeed = 90;
 		aura.color(color, true);

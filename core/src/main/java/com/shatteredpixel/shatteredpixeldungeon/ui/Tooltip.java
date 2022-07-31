@@ -26,8 +26,10 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.ui.Component;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.RectF;
+
+import static com.watabou.utils.MathKt.clamp;
+import static java.lang.Math.min;
 
 public class Tooltip extends Component {
 
@@ -65,8 +67,8 @@ public class Tooltip extends Component {
 			}
 		}
 		lastUsedTime = Game.timeTotal;
-		bg.alpha(GameMath.gate(0, tooltipAlpha, 1));
-		text.alpha(GameMath.gate(0, tooltipAlpha, 1));
+		bg.alpha(clamp(0, tooltipAlpha, 1));
+		text.alpha(clamp(0, tooltipAlpha, 1));
 	}
 
 	@Override
@@ -95,11 +97,11 @@ public class Tooltip extends Component {
 		}
 
 		super.update();
-		tooltipAlpha = Math.min(1f, tooltipAlpha + 10f*Game.elapsed);
+		tooltipAlpha = min(1f, tooltipAlpha + 10f*Game.elapsed);
 		lastUsedTime = Game.timeTotal;
 
-		bg.alpha(GameMath.gate(0, tooltipAlpha, 1));
-		text.alpha(GameMath.gate(0, tooltipAlpha, 1));
+		bg.alpha(clamp(0, tooltipAlpha, 1));
+		text.alpha(clamp(0, tooltipAlpha, 1));
 	}
 
 	@Override

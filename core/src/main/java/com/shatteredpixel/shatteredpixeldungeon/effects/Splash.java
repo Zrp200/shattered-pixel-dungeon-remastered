@@ -28,6 +28,9 @@ import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import static com.watabou.utils.MathKt.HALF_PI;
+import static com.watabou.utils.MathKt.PI;
+
 public class Splash {
 	
 	public static void at( int cell, final int color, int n ) {
@@ -45,8 +48,8 @@ public class Splash {
 		emitter.pos( p );
 		
 		FACTORY.color = color;
-		FACTORY.dir = -3.1415926f / 2;
-		FACTORY.cone = 3.1415926f;
+		FACTORY.dir = -HALF_PI;
+		FACTORY.cone = PI;
 		emitter.burst( FACTORY, n );
 	}
 	

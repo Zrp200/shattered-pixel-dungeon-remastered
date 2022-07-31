@@ -88,6 +88,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.TimeZone;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
+
 public class Dungeon {
 
 	//enum of items which have limited spawns, records how many have spawned
@@ -440,7 +444,7 @@ public class Dungeon {
 		}
 		
 		Light light = hero.buff( Light.class );
-		hero.viewDistance = light == null ? level.viewDistance : Math.max( Light.DISTANCE, level.viewDistance );
+		hero.viewDistance = light == null ? level.viewDistance : max( Light.DISTANCE, level.viewDistance );
 		
 		hero.curAction = hero.lastAction = null;
 
@@ -483,7 +487,7 @@ public class Dungeon {
 		int souLeftThisSet;
 		//3 SOU each floor set, 1.5 (rounded) on forbidden runes challenge
 		if (isChallenged(Challenges.NO_SCROLLS)){
-			souLeftThisSet = Math.round(1.5f - (LimitedDrops.UPGRADE_SCROLLS.count - (depth / 5) * 1.5f));
+			souLeftThisSet = round(1.5f - (LimitedDrops.UPGRADE_SCROLLS.count - (depth / 5) * 1.5f));
 		} else {
 			souLeftThisSet = 3 - (LimitedDrops.UPGRADE_SCROLLS.count - (depth / 5) * 3);
 		}
@@ -801,11 +805,11 @@ public class Dungeon {
 
 	//default to recomputing based on max hero vision, in case vision just shrank/grew
 	public static void observe(){
-		int dist = Math.max(Dungeon.hero.viewDistance, 8);
+		int dist = max(Dungeon.hero.viewDistance, 8);
 		dist *= 1f + 0.25f*Dungeon.hero.pointsInTalent(Talent.FARSIGHT);
 
 		if (Dungeon.hero.buff(MagicalSight.class) != null){
-			dist = Math.max( dist, MagicalSight.DISTANCE );
+			dist = max( dist, MagicalSight.DISTANCE );
 		}
 
 		observe( dist+1 );
@@ -823,10 +827,10 @@ public class Dungeon {
 		int y = hero.pos / level.width();
 	
 		//left, right, top, bottom
-		int l = Math.max( 0, x - dist );
-		int r = Math.min( x + dist, level.width() - 1 );
-		int t = Math.max( 0, y - dist );
-		int b = Math.min( y + dist, level.height() - 1 );
+		int l = max( 0, x - dist );
+		int r = min( x + dist, level.width() - 1 );
+		int t = max( 0, y - dist );
+		int b = min( y + dist, level.height() - 1 );
 	
 		int width = r - l + 1;
 		int height = b - t + 1;
@@ -893,10 +897,10 @@ public class Dungeon {
 
 				//left, right, top, bottom
 				dist = ch.viewDistance+1;
-				l = Math.max( 0, x - dist );
-				r = Math.min( x + dist, level.width() - 1 );
-				t = Math.max( 0, y - dist );
-				b = Math.min( y + dist, level.height() - 1 );
+				l = max( 0, x - dist );
+				r = min( x + dist, level.width() - 1 );
+				t = max( 0, y - dist );
+				b = min( y + dist, level.height() - 1 );
 
 				width = r - l + 1;
 				height = b - t + 1;

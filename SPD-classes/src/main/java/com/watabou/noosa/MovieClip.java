@@ -23,6 +23,8 @@ package com.watabou.noosa;
 
 import com.watabou.utils.RectF;
 
+import static java.lang.Math.round;
+
 public class MovieClip extends Image {
 
 	protected Animation curAnim;
@@ -134,7 +136,7 @@ public class MovieClip extends Image {
 		}
 		
 		public Animation clone() {
-			return new Animation( Math.round( 1 / delay ), looped ).frames( frames );
+			return new Animation( round( 1 / delay ), looped ).frames( frames );
 		}
 	}
 	

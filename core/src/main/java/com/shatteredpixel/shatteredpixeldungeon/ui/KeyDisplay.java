@@ -40,6 +40,8 @@ import java.nio.Buffer;
 import java.nio.FloatBuffer;
 import java.util.LinkedHashMap;
 
+import static com.watabou.utils.MathKt.ceil;
+
 public class KeyDisplay extends Visual {
 	
 	private float[] vertices = new float[16];
@@ -142,7 +144,7 @@ public class KeyDisplay extends Visual {
 			totalKeys--;
 		}
 		
-		int rows = (int)Math.ceil(totalKeys / (float)maxPerRow);
+		int rows = ceil(totalKeys / (float)maxPerRow);
 		
 		boolean shortKeys = (rows * 8) > height;
 		float left;

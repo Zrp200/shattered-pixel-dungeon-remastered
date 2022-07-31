@@ -47,6 +47,9 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
+import static com.watabou.utils.MathKt.PI;
+import static java.lang.Math.round;
+
 public class WandOfLightning extends DamageWand {
 
 	{
@@ -57,11 +60,11 @@ public class WandOfLightning extends DamageWand {
 
 	private ArrayList<Lightning.Arc> arcs = new ArrayList<>();
 
-	public int min(int lvl){
+	public int minDmg(int lvl){
 		return 5+lvl;
 	}
 
-	public int max(int lvl){
+	public int maxDmg(int lvl){
 		return 10+5*lvl;
 	}
 	
@@ -83,9 +86,9 @@ public class WandOfLightning extends DamageWand {
 			}
 			wandProc(ch, chargesPerCast());
 			if (ch == curUser) {
-				ch.damage(Math.round(damageRoll() * multipler * 0.5f), this);
+				ch.damage(round(damageRoll() * multipler * 0.5f), this);
 			} else {
-				ch.damage(Math.round(damageRoll() * multipler), this);
+				ch.damage(round(damageRoll() * multipler), this);
 			}
 		}
 
@@ -161,7 +164,7 @@ public class WandOfLightning extends DamageWand {
 		particle.am = 0.6f;
 		particle.setLifespan(0.6f);
 		particle.acc.set(0, +10);
-		particle.speed.polar(-Random.Float(3.1415926f), 6f);
+		particle.speed.polar(-Random.Float(PI), 6f);
 		particle.setSize(0f, 1.5f);
 		particle.sizeJitter = 1f;
 		particle.shuffleXY(1f);

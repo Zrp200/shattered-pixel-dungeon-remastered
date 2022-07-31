@@ -29,6 +29,8 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.ui.Component;
 
+import static java.lang.Math.max;
+
 public class BossHealthBar extends Component {
 
 	private Image bar;
@@ -109,7 +111,7 @@ public class BossHealthBar extends Component {
 				float shield = boss.shielding();
 				float max = boss.HT;
 
-				hp.scale.x = Math.max( 0, (health-shield)/max);
+				hp.scale.x = max( 0, (health-shield)/max);
 				shieldedHP.scale.x = health/max;
 				rawShielding.scale.x = shield/max;
 

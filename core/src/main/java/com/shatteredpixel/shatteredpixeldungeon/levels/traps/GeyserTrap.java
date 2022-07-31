@@ -38,6 +38,8 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
+import static com.watabou.utils.MathKt.HALF_PI;
+
 public class GeyserTrap extends Trap {
 
 	{
@@ -49,7 +51,7 @@ public class GeyserTrap extends Trap {
 
 	@Override
 	public void activate() {
-		Splash.at( DungeonTilemap.tileCenterToWorld( pos ), -PointF.PI/2, PointF.PI/2, 0x5bc1e3, 100, 0.01f);
+		Splash.at( DungeonTilemap.tileCenterToWorld( pos ), -HALF_PI, HALF_PI, 0x5bc1e3, 100, 0.01f);
 		Sample.INSTANCE.play(Assets.Sounds.GAS, 1f, 0.75f);
 
 		Fire fire = (Fire) Dungeon.level.blobs.get(Fire.class);

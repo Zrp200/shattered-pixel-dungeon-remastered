@@ -28,8 +28,10 @@ import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.PointerArea;
 import com.watabou.noosa.ui.Component;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.PointF;
+
+import static com.watabou.utils.MathKt.clamp;
+import static java.lang.Math.round;
 
 public abstract class OptionSlider extends Component {
 
@@ -113,7 +115,7 @@ public abstract class OptionSlider extends Component {
 			protected void onPointerDown( PointerEvent event ) {
 				pressed = true;
 				PointF p = getCamera().screenToCamera((int) event.current.x, (int) event.current.y);
-				sliderNode.x = GameMath.gate(sliderBG.x-2, p.x - sliderNode.width()/2, sliderBG.x+sliderBG.width()-2);
+				sliderNode.x = clamp(sliderBG.x-2, p.x - sliderNode.width()/2, sliderBG.x+sliderBG.width()-2);
 				sliderNode.brightness(1.5f);
 			}
 
@@ -121,11 +123,11 @@ public abstract class OptionSlider extends Component {
 			protected void onPointerUp( PointerEvent event ) {
 				if (pressed) {
 					PointF p = getCamera().screenToCamera((int) event.current.x, (int) event.current.y);
-					sliderNode.x = GameMath.gate(sliderBG.x - 2, p.x - sliderNode.width()/2, sliderBG.x + sliderBG.width() - 2);
+					sliderNode.x = clamp(sliderBG.x - 2, p.x - sliderNode.width()/2, sliderBG.x + sliderBG.width() - 2);
 					sliderNode.resetColor();
 					
 					//sets the selected value
-					selectedVal = minVal + Math.round((sliderNode.x - x) / tickDist);
+					selectedVal = minVal + round((sliderNode.x - x) / tickDist);
 					sliderNode.x = x + tickDist * (selectedVal - minVal);
 					PixelScene.align(sliderNode);
 					onChange();
@@ -137,7 +139,7 @@ public abstract class OptionSlider extends Component {
 			protected void onDrag( PointerEvent event ) {
 				if (pressed) {
 					PointF p = getCamera().screenToCamera((int) event.current.x, (int) event.current.y);
-					sliderNode.x = GameMath.gate(sliderBG.x - 2, p.x - sliderNode.width()/2, sliderBG.x + sliderBG.width() - 2);
+					sliderNode.x = clamp(sliderBG.x - 2, p.x - sliderNode.width()/2, sliderBG.x + sliderBG.width() - 2);
 				}
 			}
 		};

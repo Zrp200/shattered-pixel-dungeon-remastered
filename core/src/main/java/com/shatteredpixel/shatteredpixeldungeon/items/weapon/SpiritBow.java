@@ -49,7 +49,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.MissileSprite;
 import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
-import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
@@ -139,8 +138,8 @@ public class SpiritBow extends Weapon {
 		String info = desc();
 		
 		info += "\n\n" + Messages.get( SpiritBow.class, "stats",
-				Math.round(augment.damageFactor(min())),
-				Math.round(augment.damageFactor(max())),
+				Math.round(augment.damageFactor(minDmg())),
+				Math.round(augment.damageFactor(maxDmg())),
 				STRReq());
 		
 		if (STRReq() > Dungeon.hero.STR()) {
@@ -183,7 +182,7 @@ public class SpiritBow extends Weapon {
 	}
 	
 	@Override
-	public int min(int lvl) {
+	public int minDmg(int lvl) {
 		int dmg = 1 + Dungeon.hero.lvl/5
 				+ RingOfSharpshooting.levelDamageBonus(Dungeon.hero)
 				+ (curseInfusionBonus ? 1 + Dungeon.hero.lvl/30 : 0);
@@ -191,7 +190,7 @@ public class SpiritBow extends Weapon {
 	}
 	
 	@Override
-	public int max(int lvl) {
+	public int maxDmg(int lvl) {
 		int dmg = 6 + (int)(Dungeon.hero.lvl/2.5f)
 				+ 2*RingOfSharpshooting.levelDamageBonus(Dungeon.hero)
 				+ (curseInfusionBonus ? 2 + Dungeon.hero.lvl/15 : 0);

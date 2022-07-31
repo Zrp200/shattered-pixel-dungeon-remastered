@@ -60,6 +60,12 @@ import java.nio.Buffer;
 import java.nio.FloatBuffer;
 import java.util.Calendar;
 
+import static com.watabou.utils.MathKt.D2R;
+import static com.watabou.utils.MathKt.cos;
+import static com.watabou.utils.MathKt.tan;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class SurfaceScene extends PixelScene {
 
 	private static final int FRAME_WIDTH    = 88;
@@ -177,10 +183,10 @@ public class SurfaceScene extends PixelScene {
 		if (rose != null){
 			roseLevel = rose.level()/2;
 			if (rose.ghostWeapon() != null){
-				roseLevel = Math.max(roseLevel, rose.ghostWeapon().level());
+				roseLevel = max(roseLevel, rose.ghostWeapon().level());
 			}
 			if (rose.ghostArmor() != null){
-				roseLevel = Math.max(roseLevel, rose.ghostArmor().level());
+				roseLevel = max(roseLevel, rose.ghostArmor().level());
 			}
 		}
 		
@@ -190,9 +196,9 @@ public class SurfaceScene extends PixelScene {
 		MagesStaff staff = Dungeon.hero.belongings.getItem(MagesStaff.class);
 		if (staff != null){
 			if (staff.wandClass() == WandOfLivingEarth.class){
-				earthLevel = Math.max(earthLevel, staff.level());
+				earthLevel = max(earthLevel, staff.level());
 			} else if (staff.wandClass() == WandOfWarding.class){
-				wardLevel = Math.max(wardLevel, staff.level());
+				wardLevel = max(wardLevel, staff.level());
 			}
 		}
 		
@@ -203,7 +209,7 @@ public class SurfaceScene extends PixelScene {
 			allySprite = new EarthGuardianSprite();
 		} else if (wardLevel >= 3){
 			allySprite = new WardSprite();
-			((WardSprite) allySprite).updateTier(Math.min(wardLevel+2, 6));
+			((WardSprite) allySprite).updateTier(min(wardLevel+2, 6));
 		}
 		
 		if (allySprite != null){
@@ -432,8 +438,8 @@ public class SurfaceScene extends PixelScene {
 		private float tx;
 		private float ty;
 		
-		private double a = Random.Float( 5 );
-		private double angle;
+		private float a = Random.Float( 5 );
+		private float angle;
 		
 		private boolean forward;
 		
@@ -453,18 +459,18 @@ public class SurfaceScene extends PixelScene {
 		public void update() {
 			super.update();
 			a += Random.Float( Game.elapsed * 5 );
-			angle = (2 + Math.cos( a )) * (forward ? +0.2 : -0.2);
+			angle = (2 + cos( a )) * (forward ? +0.2f : -0.2f);
 			
-			scale.y = (float)Math.cos( angle );
+			scale.y = cos( angle );
 			
-			x = tx + (float)Math.tan( angle ) * width;
+			x = tx + tan( angle ) * width;
 			y = ty - scale.y * height;
 		}
 		
 		@Override
 		protected void updateMatrix() {
 			super.updateMatrix();
-			matrix.skewX((float)(angle / Matrix.G2RAD));
+			matrix.skewX(angle / D2R);
 		}
 	}
 }

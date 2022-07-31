@@ -27,6 +27,8 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 import java.text.DecimalFormat;
 
+import static com.watabou.utils.MathKt.pow;
+
 public class RingOfTenacity extends Ring {
 
 	{
@@ -35,7 +37,7 @@ public class RingOfTenacity extends Ring {
 
 	public String statsInfo() {
 		if (isIdentified()){
-			return Messages.get(this, "stats", new DecimalFormat("#.##").format(100f * (1f - Math.pow(0.85f, soloBuffedBonus()))));
+			return Messages.get(this, "stats", new DecimalFormat("#.##").format(100f * (1f - pow(0.85f, soloBuffedBonus()))));
 		} else {
 			return Messages.get(this, "typical_stats", new DecimalFormat("#.##").format(15f));
 		}
@@ -48,7 +50,7 @@ public class RingOfTenacity extends Ring {
 	
 	public static float damageMultiplier( Char t ){
 		//(HT - HP)/HT = heroes current % missing health.
-		return (float)Math.pow(0.85, getBuffedBonus( t, Tenacity.class)*((float)(t.HT - t.HP)/t.HT));
+		return pow(0.85f, getBuffedBonus( t, Tenacity.class)*((float)(t.HT - t.HP)/t.HT));
 	}
 
 	public class Tenacity extends RingBuff {

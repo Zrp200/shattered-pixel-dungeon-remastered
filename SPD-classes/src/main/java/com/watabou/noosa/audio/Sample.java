@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import static java.lang.Math.max;
+
 public enum Sample {
 
 	INSTANCE;
@@ -109,7 +111,7 @@ public enum Sample {
 	}
 	
 	public synchronized long play( Object id, float leftVolume, float rightVolume, float pitch ) {
-		float volume = Math.max(leftVolume, rightVolume);
+		float volume = max(leftVolume, rightVolume);
 		float pan = rightVolume - leftVolume;
 		if (enabled && ids.containsKey( id )) {
 			return ids.get(id).play( globalVolume*volume, pitch, pan );

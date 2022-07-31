@@ -45,9 +45,13 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
-import com.watabou.utils.ColorMath;
+import com.watabou.utils.ColorMathKt;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
+
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
 
 public class WandOfLivingEarth extends DamageWand {
 	
@@ -56,12 +60,12 @@ public class WandOfLivingEarth extends DamageWand {
 	}
 	
 	@Override
-	public int min(int lvl) {
+	public int minDmg(int lvl) {
 		return 4;
 	}
 	
 	@Override
-	public int max(int lvl) {
+	public int maxDmg(int lvl) {
 		return 6 + 2*lvl;
 	}
 	
@@ -196,7 +200,7 @@ public class WandOfLivingEarth extends DamageWand {
 			}
 		}
 		
-		int armor = Math.round(damage*0.33f);
+		int armor = round(damage*0.33f);
 
 		if (guardian != null){
 			guardian.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + buffedLvl() / 2);
@@ -210,9 +214,9 @@ public class WandOfLivingEarth extends DamageWand {
 	@Override
 	public void staffFx(MagesStaff.StaffParticle particle) {
 		if (Random.Int(10) == 0){
-			particle.color(ColorMath.random(0xFFF568, 0x80791A));
+			particle.color(ColorMathKt.random(0xFFF568, 0x80791A));
 		} else {
-			particle.color(ColorMath.random(0x805500, 0x332500));
+			particle.color(ColorMathKt.random(0x805500, 0x332500));
 		}
 		particle.am = 1f;
 		particle.setLifespan(2f);
@@ -233,9 +237,9 @@ public class WandOfLivingEarth extends DamageWand {
 		private int armor;
 
 		private void addArmor( int wandLevel, int toAdd ){
-			this.wandLevel = Math.max(this.wandLevel, wandLevel);
+			this.wandLevel = max(this.wandLevel, wandLevel);
 			armor += toAdd;
-			armor = Math.min(armor, 2*armorToGuardian());
+			armor = min(armor, 2*armorToGuardian());
 		}
 
 		private int armorToGuardian(){
@@ -265,7 +269,7 @@ public class WandOfLivingEarth extends DamageWand {
 
 		@Override
 		public float iconFadePercent() {
-			return Math.max(0, (armorToGuardian() - armor) / (float)armorToGuardian());
+			return max(0, (armorToGuardian() - armor) / (float)armorToGuardian());
 		}
 
 		@Override
@@ -327,7 +331,7 @@ public class WandOfLivingEarth extends DamageWand {
 				this.wandLevel = wandLevel;
 				HT = 16 + 8 * wandLevel;
 			}
-			HP = Math.min(HT, HP + healthToAdd);
+			HP = min(HT, HP + healthToAdd);
 			//half of hero's evasion
 			defenseSkill = (hero.lvl + 4)/2;
 		}

@@ -32,6 +32,8 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PointF;
 
+import static com.watabou.utils.MathKt.HALF_PI;
+import static com.watabou.utils.MathKt.PI;
 import static com.watabou.utils.Random.NormalFloat;
 
 public class Bleeding extends Buff {
@@ -104,7 +106,7 @@ public class Bleeding extends Buff {
 				
 				target.damage( dmg, this );
 				if (target.sprite.getVisible()) {
-					Splash.at( target.sprite.center(), -PointF.PI / 2, PointF.PI / 6,
+					Splash.at( target.sprite.center(), -HALF_PI, PI / 6,
 							target.sprite.blood(), Math.min( 10 * dmg / target.HT, 10 ) );
 				}
 				

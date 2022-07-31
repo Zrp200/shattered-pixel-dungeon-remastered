@@ -38,9 +38,13 @@ import com.watabou.input.ScrollEvent;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.ScrollArea;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Signal;
+
+import static com.watabou.utils.MathKt.clamp;
+import static java.lang.Math.abs;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
 
 public class CellSelector extends ScrollArea {
 
@@ -68,10 +72,10 @@ public class CellSelector extends ScrollArea {
 		
 		//scale zoom difference so zooming is consistent
 		diff /= ((getCamera().zoom+1)/ getCamera().zoom)-1;
-		diff = Math.min(1, diff);
-		mouseZoom = GameMath.gate( PixelScene.minZoom, mouseZoom - diff, PixelScene.maxZoom );
+		diff = min(1, diff);
+		mouseZoom = clamp( PixelScene.minZoom, mouseZoom - diff, PixelScene.maxZoom );
 		
-		zoom( Math.round(mouseZoom) );
+		zoom( round(mouseZoom) );
 	}
 	
 	@Override
@@ -90,7 +94,7 @@ public class CellSelector extends ScrollArea {
 			//hero first
 			if (Dungeon.hero.sprite != null && Dungeon.hero.sprite.overlapsPoint( p.x, p.y )){
 				PointF c = DungeonTilemap.tileCenterToWorld(Dungeon.hero.pos);
-				if (Math.abs(p.x - c.x) <= 12 && Math.abs(p.y - c.y) <= 12) {
+				if (abs(p.x - c.x) <= 12 && abs(p.y - c.y) <= 12) {
 					select(Dungeon.hero.pos, event.button);
 					return;
 				}
@@ -100,7 +104,7 @@ public class CellSelector extends ScrollArea {
 			for (Char mob : Dungeon.level.mobs.toArray(new Mob[0])){
 				if (mob.sprite != null && mob.sprite.overlapsPoint( p.x, p.y )){
 					PointF c = DungeonTilemap.tileCenterToWorld(mob.pos);
-					if (Math.abs(p.x - c.x) <= 12 && Math.abs(p.y - c.y) <= 12) {
+					if (abs(p.x - c.x) <= 12 && abs(p.y - c.y) <= 12) {
 						select(mob.pos, event.button);
 						return;
 					}
@@ -111,7 +115,7 @@ public class CellSelector extends ScrollArea {
 			for (Heap heap : Dungeon.level.heaps.valueList()){
 				if (heap.sprite != null && heap.sprite.overlapsPoint( p.x, p.y)){
 					PointF c = DungeonTilemap.tileCenterToWorld(heap.pos);
-					if (Math.abs(p.x - c.x) <= 12 && Math.abs(p.y - c.y) <= 12) {
+					if (abs(p.x - c.x) <= 12 && abs(p.y - c.y) <= 12) {
 						select(heap.pos, event.button);
 						return;
 					}
@@ -127,7 +131,7 @@ public class CellSelector extends ScrollArea {
 
 	private float zoom( float value ) {
 
-		value = GameMath.gate( PixelScene.minZoom, value, PixelScene.maxZoom );
+		value = clamp( PixelScene.minZoom, value, PixelScene.maxZoom );
 		SPDSettings.zoom((int) (value - PixelScene.defaultZoom));
 		getCamera().zoom( value );
 
@@ -203,7 +207,7 @@ public class CellSelector extends ScrollArea {
 			
 			pinching = false;
 			
-			zoom(Math.round( getCamera().zoom ));
+			zoom(round( getCamera().zoom ));
 			
 			dragging = true;
 			if (event == curEvent) {
@@ -224,7 +228,7 @@ public class CellSelector extends ScrollArea {
 
 			float curSpan = PointF.distance( curEvent.current, another.current );
 			float zoom = (startZoom * curSpan / startSpan);
-			getCamera().zoom( GameMath.gate(
+			getCamera().zoom(clamp(
 				PixelScene.minZoom,
 					zoom - (zoom % 0.1f),
 				PixelScene.maxZoom ) );
@@ -485,7 +489,7 @@ public class CellSelector extends ScrollArea {
 		if (pinching){
 			pinching = false;
 
-			zoom( Math.round( getCamera().zoom ) );
+			zoom( round( getCamera().zoom ) );
 		}
 	}
 

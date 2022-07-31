@@ -32,10 +32,11 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.particles.Emitter.Factory;
 import com.watabou.noosa.particles.PixelParticle;
-import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+
+import static com.watabou.utils.MathKt.PI;
 
 public class GooSprite extends MobSprite {
 	
@@ -172,7 +173,7 @@ public class GooSprite extends MobSprite {
 			left = lifespan;
 
 			size = 4;
-			speed.polar( -Random.Float( PointF.PI ), Random.Float( 32, 48 ) );
+			speed.polar( -Random.Float( PI ), Random.Float( 32, 48 ) );
 		}
 
 		@Override

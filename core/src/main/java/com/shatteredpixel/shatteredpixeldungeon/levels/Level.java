@@ -86,7 +86,6 @@ import com.watabou.noosa.Group;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Point;
 import com.watabou.utils.Random;
@@ -98,6 +97,14 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+
+import static com.watabou.utils.MathKt.clamp;
+import static com.watabou.utils.MathKt.pow;
+import static com.watabou.utils.MathKt.sqrt;
+import static java.lang.Math.abs;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
 
 public abstract class Level implements Bundlable {
 	
@@ -233,7 +240,7 @@ public abstract class Level implements Bundlable {
 					case 3:
 						feeling = Feeling.DARK;
 						addItemToSpawn(new Torch());
-						viewDistance = Math.round(viewDistance/2f);
+						viewDistance = round(viewDistance/2f);
 						break;
 					case 4:
 						feeling = Feeling.LARGE;
@@ -411,7 +418,7 @@ public abstract class Level implements Bundlable {
 
 		feeling = bundle.getEnum( FEELING, Feeling.class );
 		if (feeling == Feeling.DARK)
-			viewDistance = Math.round(viewDistance/2f);
+			viewDistance = round(viewDistance/2f);
 
 		if (bundle.contains( "mobs_to_spawn" )) {
 			for (Class<? extends Mob> mob : bundle.getClassArray("mobs_to_spawn")) {
@@ -591,7 +598,7 @@ public abstract class Level implements Bundlable {
 				count += mob.spawningWeight();
 			}
 		}
-		return Math.round(count);
+		return round(count);
 	}
 
 	public Mob findMob( int pos ){
@@ -655,7 +662,7 @@ public abstract class Level implements Bundlable {
 				return (Dungeon.level.mobCount()) * (TIME_TO_RESPAWN / 25f);
 			} else {
 				//respawn time is 5/5/10/15/20/25/25, etc.
-				return Math.round(GameMath.gate( TIME_TO_RESPAWN/10f, Dungeon.level.mobCount() * (TIME_TO_RESPAWN / 10f), TIME_TO_RESPAWN / 2f));
+				return round(clamp( TIME_TO_RESPAWN/10f, Dungeon.level.mobCount() * (TIME_TO_RESPAWN / 10f), TIME_TO_RESPAWN / 2f));
 			}
 		} else if (Dungeon.level.feeling == Feeling.DARK){
 			return 2*TIME_TO_RESPAWN/3f;
@@ -1197,10 +1204,10 @@ public abstract class Level implements Bundlable {
 		//Currently only the hero can get mind vision
 		if (c.isAlive() && c == Dungeon.hero) {
 			for (Buff b : c.buffs( MindVision.class )) {
-				sense = Math.max( ((MindVision)b).distance, sense );
+				sense = max( ((MindVision)b).distance, sense );
 			}
 			if (c.buff(MagicalSight.class) != null){
-				sense = Math.max( MagicalSight.DISTANCE, sense );
+				sense = max( MagicalSight.DISTANCE, sense );
 			}
 		}
 		
@@ -1211,18 +1218,18 @@ public abstract class Level implements Bundlable {
 			
 			int left, right;
 			int pos;
-			for (int y = Math.max(0, cy - sense); y <= Math.min(height()-1, cy + sense); y++) {
-				if (rounding[sense][Math.abs(cy - y)] < Math.abs(cy - y)) {
-					left = cx - rounding[sense][Math.abs(cy - y)];
+			for (int y = max(0, cy - sense); y <= min(height()-1, cy + sense); y++) {
+				if (rounding[sense][abs(cy - y)] < abs(cy - y)) {
+					left = cx - rounding[sense][abs(cy - y)];
 				} else {
 					left = sense;
-					while (rounding[sense][left] < rounding[sense][Math.abs(cy - y)]){
+					while (rounding[sense][left] < rounding[sense][abs(cy - y)]){
 						left--;
 					}
 					left = cx - left;
 				}
-				right = Math.min(width()-1, cx + cx - left);
-				left = Math.max(0, left);
+				right = min(width()-1, cx + cx - left);
+				left = max(0, left);
 				pos = left + y * width();
 				System.arraycopy(discoverable, pos, fieldOfView, pos, right - left + 1);
 			}
@@ -1335,7 +1342,7 @@ public abstract class Level implements Bundlable {
 		int ay = a / width();
 		int bx = b % width();
 		int by = b / width();
-		return Math.max( Math.abs( ax - bx ), Math.abs( ay - by ) );
+		return max( abs( ax - bx ), abs( ay - by ) );
 	}
 	
 	public boolean adjacent( int a, int b ) {
@@ -1348,7 +1355,7 @@ public abstract class Level implements Bundlable {
 		int ay = a / width();
 		int bx = b % width();
 		int by = b / width();
-		return (float)Math.sqrt(Math.pow(Math.abs( ax - bx ), 2) + Math.pow(Math.abs( ay - by ), 2));
+		return sqrt(pow(abs( ax - bx ), 2) + pow(abs( ay - by ), 2));
 	}
 
 	//returns true if the input is a valid tile within the level

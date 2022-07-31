@@ -38,17 +38,19 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import static java.lang.Math.max;
+
 public class WandOfMagicMissile extends DamageWand {
 
 	{
 		image = ItemSpriteSheet.WAND_MAGIC_MISSILE;
 	}
 
-	public int min(int lvl){
+	public int minDmg(int lvl){
 		return 2+lvl;
 	}
 
-	public int max(int lvl){
+	public int maxDmg(int lvl){
 		return 8+2*lvl;
 	}
 	
@@ -140,7 +142,7 @@ public class WandOfMagicMissile extends DamageWand {
 
 		@Override
 		public float iconFadePercent() {
-			return Math.max(0, (DURATION - visualcooldown()) / DURATION);
+			return max(0, (DURATION - visualcooldown()) / DURATION);
 		}
 
 		@Override

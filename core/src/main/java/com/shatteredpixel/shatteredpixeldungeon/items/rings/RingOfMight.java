@@ -30,6 +30,8 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 import java.text.DecimalFormat;
 
+import static com.watabou.utils.MathKt.pow;
+
 public class RingOfMight extends Ring {
 
 	{
@@ -77,7 +79,7 @@ public class RingOfMight extends Ring {
 	
 	public String statsInfo() {
 		if (isIdentified()){
-			return Messages.get(this, "stats", soloBonus(), new DecimalFormat("#.##").format(100f * (Math.pow(1.035, soloBuffedBonus()) - 1f)));
+			return Messages.get(this, "stats", soloBonus(), new DecimalFormat("#.##").format(100f * (pow(1.035f, soloBuffedBonus()) - 1f)));
 		} else {
 			return Messages.get(this, "typical_stats", 1, new DecimalFormat("#.##").format(3.5f));
 		}
@@ -93,7 +95,7 @@ public class RingOfMight extends Ring {
 	}
 	
 	public static float HTMultiplier( Char target ){
-		return (float)Math.pow(1.035, getBuffedBonus(target, Might.class));
+		return pow(1.035f, getBuffedBonus(target, Might.class));
 	}
 
 	public class Might extends RingBuff {

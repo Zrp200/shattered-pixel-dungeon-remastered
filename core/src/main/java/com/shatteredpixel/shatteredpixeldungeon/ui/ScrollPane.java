@@ -33,10 +33,11 @@ import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.ScrollArea;
 import com.watabou.noosa.ui.Component;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.Point;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Signal;
+
+import static com.watabou.utils.MathKt.clamp;
 
 public class ScrollPane extends Component {
 
@@ -72,7 +73,7 @@ public class ScrollPane extends Component {
 					} else {
 						keyScroll -= 1;
 					}
-					keyScroll = GameMath.gate(-1f, keyScroll, +1f);
+					keyScroll = clamp(-1f, keyScroll, +1f);
 					return true;
 				} else if (action == SPDAction.ZOOM_OUT){
 					if (keyEvent.pressed){
@@ -80,7 +81,7 @@ public class ScrollPane extends Component {
 					} else {
 						keyScroll += 1;
 					}
-					keyScroll = GameMath.gate(-1f, keyScroll, +1f);
+					keyScroll = clamp(-1f, keyScroll, +1f);
 					return true;
 				}
 				return false;

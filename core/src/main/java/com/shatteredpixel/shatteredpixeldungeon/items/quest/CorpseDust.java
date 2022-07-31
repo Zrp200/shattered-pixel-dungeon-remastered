@@ -38,6 +38,8 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
+import static java.lang.Math.min;
+
 public class CorpseDust extends Item {
 	
 	{
@@ -107,7 +109,7 @@ public class CorpseDust extends Item {
 				}
 			}
 
-			int powerNeeded = Math.min(25, wraiths*wraiths);
+			int powerNeeded = min(25, wraiths*wraiths);
 
 			if (powerNeeded <= spawnPower){
 				spawnPower -= powerNeeded;

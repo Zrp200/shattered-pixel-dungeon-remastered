@@ -22,13 +22,16 @@
 package com.shatteredpixel.shatteredpixeldungeon.mechanics;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.Point;
 import com.watabou.utils.PointF;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+
+import static com.watabou.utils.MathKt.D2R;
+import static com.watabou.utils.MathKt.clamp;
+import static com.watabou.utils.MathKt.floor;
 
 //a cone made of up several ballisticas scanning in an arc
 public class ConeAOE {
@@ -70,32 +73,32 @@ public class ConeAOE {
 		//Now we find every unique cell along the outer arc of our cone.
 		PointF scan = new PointF();
 		Point scanInt = new Point();
-		float initalAngle = PointF.angle(fromP, toP)/PointF.G2R;
+		float initalAngle = PointF.angle(fromP, toP) / D2R;
 		//want to preserve order so that our collection of rays is going clockwise
 		LinkedHashSet<Integer> targetCells = new LinkedHashSet<>();
 		LinkedHashSet<Integer> outerCells = new LinkedHashSet<>();
 
 		//cast a ray every 0.5 degrees in a clockwise arc, to find cells along the cone's outer arc
 		for (float a = initalAngle+degrees/2f; a >= initalAngle-degrees/2f; a-=0.5f){
-			scan.polar(a * PointF.G2R, circleRadius);
+			scan.polar(a * D2R, circleRadius);
 			scan.offset(fromP);
 			scan.x += (fromP.x > scan.x ? +0.5f : -0.5f);
 			scan.y += (fromP.y > scan.y ? +0.5f : -0.5f);
 			scanInt.set(
-					(int)GameMath.gate(0, (int)Math.floor(scan.x), Dungeon.level.width()-1),
-					(int)GameMath.gate(0, (int)Math.floor(scan.y), Dungeon.level.height()-1));
+					clamp(0, floor(scan.x), Dungeon.level.width()-1),
+					clamp(0, floor(scan.y), Dungeon.level.height()-1));
 			targetCells.add(Dungeon.level.pointToCell(scanInt));
 			outerCells.add(Dungeon.level.pointToCell(scanInt));
 			//if the cone is large enough, also cast rays to cells just inside of the outer arc
 			// this helps fill in any holes when casting rays
 			if (circleRadius >= 4) {
-				scan.polar(a * PointF.G2R, circleRadius - 1);
+				scan.polar(a * D2R, circleRadius - 1);
 				scan.offset(fromP);
 				scan.x += (fromP.x > scan.x ? +0.5f : -0.5f);
 				scan.y += (fromP.y > scan.y ? +0.5f : -0.5f);
 				scanInt.set(
-						(int)GameMath.gate(0, (int)Math.floor(scan.x), Dungeon.level.width()-1),
-						(int)GameMath.gate(0, (int)Math.floor(scan.y), Dungeon.level.height()-1));
+						clamp(0, floor(scan.x), Dungeon.level.width()-1),
+						clamp(0, floor(scan.y), Dungeon.level.height()-1));
 				targetCells.add(Dungeon.level.pointToCell(scanInt));
 			}
 		}

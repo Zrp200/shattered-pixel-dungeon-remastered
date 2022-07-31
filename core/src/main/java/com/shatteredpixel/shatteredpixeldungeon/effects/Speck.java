@@ -26,10 +26,12 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.particles.Emitter;
-import com.watabou.utils.ColorMath;
+import com.watabou.utils.ColorMathKt;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 import com.watabou.utils.SparseArray;
+
+import static com.watabou.utils.MathKt.*;
 
 public class Speck extends Image {
 
@@ -162,7 +164,7 @@ public class Speck extends Image {
 			break;
 			
 		case STAR:
-			speed.polar( Random.Float( 2 * 3.1415926f ), Random.Float( 128 ) );
+			speed.polar( Random.Float( PI2 ), Random.Float( 128 ) );
 			acc.set( 0, 128 );
 			angle = Random.Float( 360 );
 			angularSpeed = Random.Float( -360, +360 );
@@ -170,7 +172,7 @@ public class Speck extends Image {
 			break;
 		
 		case FORGE:
-			speed.polar( Random.Float( -3.1415926f ), Random.Float( 64 ) );
+			speed.polar( Random.Float( -PI ), Random.Float( 64 ) );
 			acc.set( 0, 128 );
 			angle = Random.Float( 360 );
 			angularSpeed = Random.Float( -360, +360 );
@@ -178,7 +180,7 @@ public class Speck extends Image {
 			break;
 			
 		case EVOKE:
-			speed.polar( Random.Float( -3.1415926f ), 50 );
+			speed.polar( Random.Float( -PI ), 50 );
 			acc.set( 0, 50 );
 			angle = Random.Float( 360 );
 			angularSpeed = Random.Float( -180, +180 );
@@ -186,7 +188,7 @@ public class Speck extends Image {
 			break;
 
 		case MASK:
-			speed.polar( index * 3.1415926f / 5, 50 );
+			speed.polar( index * PI / 5, 50 );
 			acc.set( -speed.x, -speed.y );
 			angle = index * 36;
 			angularSpeed = 360;
@@ -232,7 +234,7 @@ public class Speck extends Image {
 			
 		case BONE:
 			lifespan = 0.2f;
-			speed.polar( Random.Float( 2 * 3.1415926f ), 24 / lifespan );
+			speed.polar( Random.Float( PI2 ), 24 / lifespan );
 			acc.set( 0, 128 );
 			angle = Random.Float( 360 );
 			angularSpeed = 360;
@@ -264,13 +266,13 @@ public class Speck extends Image {
 			
 		case NOTE:
 			angularSpeed = Random.Float( -30, +30 );
-			speed.polar( (angularSpeed - 90) * PointF.G2R, 30 );
+			speed.polar( (angularSpeed - 90) * D2R, 30 );
 			lifespan = 1f;
 			break;
 			
 		case CHANGE:
 			angle = Random.Float( 360 );
-			speed.polar( (angle - 90) * PointF.G2R, Random.Float( 4, 12 ) );
+			speed.polar( (angle - 90) * D2R, Random.Float( 4, 12 ) );
 			lifespan = 1.5f;
 			break;
 			
@@ -367,12 +369,12 @@ public class Speck extends Image {
 		case DUST:
 			hardlight( 0xFFFF66 );
 			angle = Random.Float( 360 );
-			speed.polar( Random.Float( 2 * 3.1415926f ), Random.Float( 16, 48 ) );
+			speed.polar( Random.Float( PI2 ), Random.Float( 16, 48 ) );
 			lifespan = 0.5f;
 			break;
 
 		case COIN:
-			speed.polar( -PointF.PI * Random.Float( 0.3f, 0.7f ), Random.Float( 48, 96 ) );
+			speed.polar( -PI * Random.Float( 0.3f, 0.7f ), Random.Float( 48, 96 ) );
 			acc.y = 256;
 			lifespan = -speed.y / acc.y * 2;
 			break;
@@ -482,7 +484,7 @@ public class Speck extends Image {
 				break;
 
 			case CORROSION:
-				hardlight( ColorMath.interpolate( 0xAAAAAA, 0xFF8800 , p ));
+				hardlight( ColorMathKt.interpolate( 0xAAAAAA, 0xFF8800 , p ));
 			case STENCH:
 			case SMOKE:
 				am = (float)Math.sqrt( (p < 0.5f ? p : 1 - p) );

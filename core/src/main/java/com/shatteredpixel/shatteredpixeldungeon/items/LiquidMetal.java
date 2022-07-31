@@ -42,6 +42,12 @@ import com.watabou.noosa.audio.Sample;
 
 import java.util.ArrayList;
 
+import static com.watabou.utils.MathKt.ceil;
+import static com.watabou.utils.MathKt.pow;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
+
 //these aren't considered potions internally as most potion effects shouldn't apply to them
 //mainly due to their high quantity
 public class LiquidMetal extends Item {
@@ -108,7 +114,7 @@ public class LiquidMetal extends Item {
 
 	@Override
 	public int value() {
-		return Math.max(1, quantity/2);
+		return max(1, quantity/2);
 	}
 
 	private final WndBag.ItemSelector itemSelector = new WndBag.ItemSelector() {
@@ -134,21 +140,21 @@ public class LiquidMetal extends Item {
 				MissileWeapon m = (MissileWeapon)item;
 
 				int maxToUse = 5*(m.tier+1);
-				maxToUse *= Math.pow(2, m.level());
+				maxToUse *= pow(2, m.level());
 
 				float durabilityPerMetal = 100 / (float)maxToUse;
 
 				//we remove a tiny amount here to account for rounding errors
 				float percentDurabilityLost = 0.999f - (m.durabilityLeft()/100f);
-				maxToUse = (int)Math.ceil(maxToUse*percentDurabilityLost);
+				maxToUse = ceil(maxToUse * percentDurabilityLost);
 				float durPerUse = m.durabilityPerUse()/100f;
 				if (maxToUse == 0 ||
-						Math.ceil(m.durabilityLeft()/ m.durabilityPerUse()) >= Math.ceil(m.MAX_DURABILITY/ m.durabilityPerUse()) ){
+						ceil(m.durabilityLeft()/ m.durabilityPerUse()) >= ceil(m.MAX_DURABILITY/ m.durabilityPerUse()) ){
 					GLog.w(Messages.get(LiquidMetal.class, "already_fixed"));
 					return;
 				} else if (maxToUse < quantity()) {
-					m.repair(maxToUse*durabilityPerMetal);
-					quantity(quantity()-maxToUse);
+					m.repair(maxToUse * durabilityPerMetal);
+					quantity(quantity() - maxToUse);
 					GLog.i(Messages.get(LiquidMetal.class, "apply", maxToUse));
 
 				} else {
@@ -206,8 +212,8 @@ public class LiquidMetal extends Item {
 				MissileWeapon m = (MissileWeapon) i;
 				float quantity = m.quantity()-1;
 				quantity += 0.25f + 0.0075f*m.durabilityLeft();
-				quantity *= Math.pow(2, Math.min(3, m.level()));
-				metalQuantity += Math.round((5*(m.tier+1))*quantity);
+				quantity *= pow(2, min(3, m.level()));
+				metalQuantity += round((5*(m.tier+1))*quantity);
 			}
 
 			return new LiquidMetal().quantity(metalQuantity);

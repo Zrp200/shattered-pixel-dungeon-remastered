@@ -24,7 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.effects.particles;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.particles.Emitter.Factory;
 import com.watabou.noosa.particles.PixelParticle;
-import com.watabou.utils.ColorMath;
+import com.watabou.utils.ColorMathKt;
 import com.watabou.utils.Random;
 
 public class WoolParticle extends PixelParticle.Shrinking {
@@ -39,7 +39,7 @@ public class WoolParticle extends PixelParticle.Shrinking {
 	public WoolParticle() {
 		super();
 		
-		color( ColorMath.random( 0x999999, 0xEEEEE0 ) );
+		color( ColorMathKt.random( 0x999999, 0xEEEEE0 ) );
 		
 		acc.set( 0, -40 );
 	}

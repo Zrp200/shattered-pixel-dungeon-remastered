@@ -74,23 +74,23 @@ abstract public class MissileWeapon extends Weapon {
 	public int tier;
 	
 	@Override
-	public int min() {
-		return Math.max(0, min( buffedLvl() + RingOfSharpshooting.levelDamageBonus(Dungeon.hero) ));
+	public int minDmg() {
+		return Math.max(0, minDmg( buffedLvl() + RingOfSharpshooting.levelDamageBonus(Dungeon.hero) ));
 	}
 	
 	@Override
-	public int min(int lvl) {
+	public int minDmg(int lvl) {
 		return  2 * tier +                      //base
 				(tier == 1 ? lvl : 2*lvl);      //level scaling
 	}
 	
 	@Override
-	public int max() {
-		return Math.max(0, max( buffedLvl() + RingOfSharpshooting.levelDamageBonus(Dungeon.hero) ));
+	public int maxDmg() {
+		return Math.max(0, maxDmg( buffedLvl() + RingOfSharpshooting.levelDamageBonus(Dungeon.hero) ));
 	}
 	
 	@Override
-	public int max(int lvl) {
+	public int maxDmg(int lvl) {
 		return  5 * tier +                      //base
 				(tier == 1 ? 2*lvl : tier*lvl); //level scaling
 	}
@@ -400,8 +400,8 @@ abstract public class MissileWeapon extends Weapon {
 		
 		info += "\n\n" + Messages.get( MissileWeapon.class, "stats",
 				tier,
-				Math.round(augment.damageFactor(min())),
-				Math.round(augment.damageFactor(max())),
+				Math.round(augment.damageFactor(minDmg())),
+				Math.round(augment.damageFactor(maxDmg())),
 				STRReq());
 
 		if (STRReq() > Dungeon.hero.STR()) {

@@ -26,6 +26,8 @@ import com.watabou.noosa.particles.Emitter.Factory;
 import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.Random;
 
+import static com.watabou.utils.MathKt.PI;
+
 public class SparkParticle extends PixelParticle {
 
 	public static final Emitter.Factory FACTORY = new Factory() {
@@ -67,7 +69,7 @@ public class SparkParticle extends PixelParticle {
 		
 		left = lifespan = Random.Float( 0.5f, 1.0f );
 		
-		speed.polar( -Random.Float( 3.1415926f ), Random.Float( 20, 40 ) );
+		speed.polar( -Random.Float( PI ), Random.Float( 20, 40 ) );
 	}
 	
 	public void resetStatic( float x, float y){

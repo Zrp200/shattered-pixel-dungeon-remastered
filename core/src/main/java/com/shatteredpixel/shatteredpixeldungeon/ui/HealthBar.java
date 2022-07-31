@@ -25,6 +25,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.ui.Component;
 
+import static com.watabou.utils.MathKt.ceil;
+import static java.lang.Math.max;
+
 public class HealthBar extends Component {
 
 	private static final int COLOR_BG	= 0xFFCC0000;
@@ -65,8 +68,8 @@ public class HealthBar extends Component {
 		//logic here rounds up to the nearest pixel
 		float pixelWidth = width;
 		if (getCamera() != null) pixelWidth *= getCamera().zoom;
-		Shld.size( width * (float)Math.ceil(shield * pixelWidth)/pixelWidth, height );
-		Hp.size( width * (float)Math.ceil(health * pixelWidth)/pixelWidth, height );
+		Shld.size( width * (float) ceil(shield * pixelWidth)/pixelWidth, height );
+		Hp.size( width * (float) ceil(health * pixelWidth)/pixelWidth, height );
 	}
 	
 	public void level( float value ) {
@@ -82,7 +85,7 @@ public class HealthBar extends Component {
 	public void level(Char c){
 		float health = c.HP;
 		float shield = c.shielding();
-		float max = Math.max(health+shield, c.HT);
+		float max = max(health+shield, c.HT);
 
 		level(health/max, (health+shield)/max);
 	}

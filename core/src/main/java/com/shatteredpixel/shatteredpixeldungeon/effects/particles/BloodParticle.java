@@ -27,6 +27,8 @@ import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import static com.watabou.utils.MathKt.PI2;
+
 public class BloodParticle extends PixelParticle.Shrinking {
 	
 	public static final Emitter.Factory FACTORY = new Factory() {
@@ -74,7 +76,7 @@ public class BloodParticle extends PixelParticle.Shrinking {
 		this.x = x;
 		this.y = y;
 
-		speed.polar( Random.Float(PointF.PI2), Random.Float( 16, 32 ) );
+		speed.polar( Random.Float(PI2), Random.Float( 16, 32 ) );
 		size = 5;
 
 		left = 0.5f;

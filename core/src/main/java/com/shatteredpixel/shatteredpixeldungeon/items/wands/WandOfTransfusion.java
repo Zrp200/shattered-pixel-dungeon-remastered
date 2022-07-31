@@ -48,6 +48,9 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import static com.watabou.utils.MathKt.PI2;
+import static java.lang.Math.round;
+
 public class WandOfTransfusion extends Wand {
 
 	{
@@ -78,7 +81,7 @@ public class WandOfTransfusion extends Wand {
 			if (ch.alignment == Char.Alignment.ALLY || ch.buff(Charm.class) != null){
 				
 				// 5% of max hp
-				int selfDmg = Math.round(curUser.HT*0.05f);
+				int selfDmg = round(curUser.HT*0.05f);
 				
 				int healing = selfDmg + 3*buffedLvl();
 				int shielding = (ch.HP + healing) - ch.HT;
@@ -161,14 +164,14 @@ public class WandOfTransfusion extends Wand {
 		particle.color( 0xCC0000 );
 		particle.am = 0.6f;
 		particle.setLifespan(1f);
-		particle.speed.polar( Random.Float(PointF.PI2), 2f );
+		particle.speed.polar( Random.Float(PI2), 2f );
 		particle.setSize( 1f, 2f);
 		particle.radiateXY(0.5f);
 	}
 
 	@Override
 	public String statsDesc() {
-		int selfDMG = Math.round(Dungeon.hero.HT*0.05f);
+		int selfDMG = round(Dungeon.hero.HT*0.05f);
 		if (levelKnown)
 			return Messages.get(this, "stats_desc", selfDMG, selfDMG + 3*buffedLvl(), 5+buffedLvl(), 3+buffedLvl()/2, 6+ buffedLvl());
 		else

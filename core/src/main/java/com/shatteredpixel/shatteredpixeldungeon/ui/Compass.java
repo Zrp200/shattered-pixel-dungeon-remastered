@@ -27,9 +27,11 @@ import com.watabou.noosa.Camera;
 import com.watabou.noosa.Image;
 import com.watabou.utils.PointF;
 
+import static com.watabou.utils.MathKt.R2D;
+import static com.watabou.utils.MathKt.atan2;
+
 public class Compass extends Image {
 
-	private static final float RAD_2_G	= 180f / 3.1415926f;
 	private static final float RADIUS	= 12;
 	
 	private int cell;
@@ -66,7 +68,7 @@ public class Compass extends Image {
 			if (!scroll.equals( lastScroll )) {
 				lastScroll.set( scroll );
 				PointF center = Camera.main.center().offset( scroll );
-				angle = (float)Math.atan2( cellCenter.x - center.x, center.y - cellCenter.y ) * RAD_2_G;
+				angle = atan2( cellCenter.x - center.x, center.y - cellCenter.y ) * R2D;
 			}
 		}
 	}

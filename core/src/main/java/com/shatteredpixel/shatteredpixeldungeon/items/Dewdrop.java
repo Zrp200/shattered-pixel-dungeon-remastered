@@ -36,6 +36,9 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 
+import static java.lang.Math.min;
+import static java.lang.Math.round;
+
 public class Dewdrop extends Item {
 	
 	{
@@ -72,16 +75,16 @@ public class Dewdrop extends Item {
 
 	public static boolean consumeDew(int quantity, Hero hero, boolean force){
 		//20 drops for a full heal
-		int heal = Math.round( hero.HT * 0.05f * quantity );
+		int heal = round( hero.HT * 0.05f * quantity );
 
-		int effect = Math.min( hero.HT - hero.HP, heal );
+		int effect = min( hero.HT - hero.HP, heal );
 		int shield = 0;
 		if (hero.hasTalent(Talent.SHIELDING_DEW)){
 			shield = heal - effect;
-			int maxShield = Math.round(hero.HT *0.2f*hero.pointsInTalent(Talent.SHIELDING_DEW));
+			int maxShield = round(hero.HT *0.2f*hero.pointsInTalent(Talent.SHIELDING_DEW));
 			int curShield = 0;
 			if (hero.buff(Barrier.class) != null) curShield = hero.buff(Barrier.class).shielding();
-			shield = Math.min(shield, maxShield-curShield);
+			shield = min(shield, maxShield-curShield);
 		}
 		if (effect > 0 || shield > 0) {
 			hero.HP += effect;
@@ -126,7 +129,7 @@ public class Dewdrop extends Item {
 
 	@Override
 	public Item quantity(int value) {
-		quantity = Math.min( value, 1);
+		quantity = min( value, 1);
 		return this;
 	}
 

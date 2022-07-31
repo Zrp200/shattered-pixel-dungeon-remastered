@@ -39,6 +39,9 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
 
+import static com.watabou.utils.MathKt.ceil;
+import static java.lang.Math.max;
+
 public class Viscosity extends Glyph {
 	
 	private static ItemSprite.Glowing PURPLE = new ItemSprite.Glowing( 0x8844CC );
@@ -67,10 +70,10 @@ public class Viscosity extends Glyph {
 			return 0;
 		}
 
-		int level = Math.max( 0, armor.buffedLvl() );
+		int level = max( 0, armor.buffedLvl() );
 		
 		float percent = (level+1)/(float)(level+6);
-		int amount = (int)Math.ceil(realDamage * percent);
+		int amount = ceil(realDamage * percent);
 
 		DeferedDamage deferred = Buff.affect( defender, DeferedDamage.class );
 		deferred.prolong( amount );
@@ -142,7 +145,7 @@ public class Viscosity extends Glyph {
 		public boolean act() {
 			if (target.isAlive()) {
 
-				int damageThisTick = Math.max(1, (int)(damage*0.1f));
+				int damageThisTick = max(1, (int)(damage*0.1f));
 				target.damage( damageThisTick, this );
 				if (target == Dungeon.hero && !target.isAlive()) {
 

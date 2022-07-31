@@ -125,7 +125,6 @@ import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.DeviceCompat;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.Point;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
@@ -134,6 +133,10 @@ import com.watabou.utils.RectF;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import static com.watabou.utils.MathKt.clamp;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 public class GameScene extends PixelScene {
 
@@ -205,7 +208,7 @@ public class GameScene extends PixelScene {
 		SPDSettings.lastClass(Dungeon.hero.heroClass.ordinal());
 		
 		super.create();
-		Camera.main.zoom( GameMath.gate(minZoom, defaultZoom + SPDSettings.zoom(), maxZoom));
+		Camera.main.zoom(clamp(minZoom, defaultZoom + SPDSettings.zoom(), maxZoom));
 
 		scene = this;
 
@@ -747,7 +750,7 @@ public class GameScene extends PixelScene {
 		//move the camera center up a bit if we're on full UI and it is taking up lots of space
 		if (scene.inventory != null && scene.inventory.getVisible()
 				&& (uiCamera.width < 460 && uiCamera.height < 300)){
-			Camera.main.setCenterOffset(0, Math.min(300-uiCamera.height, 460-uiCamera.width) / Camera.main.zoom);
+			Camera.main.setCenterOffset(0, min(300-uiCamera.height, 460-uiCamera.width) / Camera.main.zoom);
 		} else {
 			Camera.main.setCenterOffset(0, 0);
 		}
@@ -1207,7 +1210,7 @@ public class GameScene extends PixelScene {
 		restart.alpha(0);
 		restart.setCamera(uiCamera);
 		float offset = Camera.main.centerOffset.y;
-		restart.setSize(Math.max(80, restart.reqWidth()), 20);
+		restart.setSize(max(80, restart.reqWidth()), 20);
 		restart.setPos(
 				align(uiCamera, (restart.getCamera().width - restart.width()) / 2),
 				align(uiCamera, (restart.getCamera().height - restart.height()) / 2 + restart.height()/2 + 16 - offset)
@@ -1229,7 +1232,7 @@ public class GameScene extends PixelScene {
 		menu.icon(Icons.get(Icons.PREFS));
 		menu.alpha(0);
 		menu.setCamera(uiCamera);
-		menu.setSize(Math.max(80, menu.reqWidth()), 20);
+		menu.setSize(max(80, menu.reqWidth()), 20);
 		menu.setPos(
 				align(uiCamera, (menu.getCamera().width - menu.width()) / 2),
 				restart.bottom() + 2

@@ -33,6 +33,8 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite.Glowing;
 import com.watabou.noosa.Camera;
 import com.watabou.utils.Random;
 
+import static java.lang.Math.max;
+
 public class Entanglement extends Glyph {
 	
 	private static ItemSprite.Glowing BROWN = new ItemSprite.Glowing( 0x663300 );
@@ -40,7 +42,7 @@ public class Entanglement extends Glyph {
 	@Override
 	public int proc(Armor armor, Char attacker, final Char defender, final int damage ) {
 
-		final int level = Math.max( 0, armor.buffedLvl() );
+		final int level = max( 0, armor.buffedLvl() );
 		
 		if (Random.Int( 4 ) == 0) {
 			

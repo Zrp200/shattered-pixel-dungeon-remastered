@@ -35,6 +35,8 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
+import static com.watabou.utils.MathKt.*;
+
 public class CircleArc extends Visual {
 	
 	private float duration = 0;
@@ -130,18 +132,18 @@ public class CircleArc extends Visual {
 		v[3] = 0;
 		
 		//starting position is very top by default, use angle to adjust this.
-		double start = 2 * (Math.PI - Math.PI*sweep) - Math.PI/2.0;
+		float start = 2 * (PI - PI * sweep) - HALF_PI;
 		
 		for (int i = 0; i < nTris; i++) {
 			
-			double a = start + i * Math.PI * 2 / nTris * sweep;
-			v[0] = (float)Math.cos( a ) * rad;
-			v[1] = (float)Math.sin( a ) * rad;
+			float a = start + i * PI2 / nTris * sweep;
+			v[0] = cos( a ) * rad;
+			v[1] = sin( a ) * rad;
 			vertices.put( v );
 			
-			a += 3.1415926f * 2 / nTris * sweep;
-			v[0] = (float)Math.cos( a ) * rad;
-			v[1] = (float)Math.sin( a ) * rad;
+			a += PI2 / nTris * sweep;
+			v[0] = cos( a ) * rad;
+			v[1] = sin( a ) * rad;
 			vertices.put( v );
 			
 			indices.put( (short)0 );

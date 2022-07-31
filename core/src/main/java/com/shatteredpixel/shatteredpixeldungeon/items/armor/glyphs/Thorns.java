@@ -28,6 +28,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 import com.watabou.utils.Random;
 
+import static java.lang.Math.max;
+
 public class Thorns extends Armor.Glyph {
 
 	private static ItemSprite.Glowing RED = new ItemSprite.Glowing( 0x660022 );
@@ -35,7 +37,7 @@ public class Thorns extends Armor.Glyph {
 	@Override
 	public int proc(Armor armor, Char attacker, Char defender, int damage) {
 
-		int level = Math.max(0, armor.buffedLvl());
+		int level = max(0, armor.buffedLvl());
 
 		// lvl 0 - 16.7%
 		// lvl 1 - 23.1%
