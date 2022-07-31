@@ -30,7 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndInfoBuff;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
@@ -227,7 +227,7 @@ public class BuffIndicator extends Component {
 		@Override
 		protected void createChildren() {
 			super.createChildren();
-			grey = new Image( TextureCache.createSolid(0xCC666666));
+			grey = new Image( Texture.Companion.createSolid(0xCC666666));
 			add( grey );
 
 			text = new BitmapText(PixelScene.pixelFont);

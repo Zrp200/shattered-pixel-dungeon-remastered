@@ -21,8 +21,7 @@
 
 package com.watabou.noosa;
 
-import com.watabou.gltextures.SmartTexture;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.utils.RectF;
 
 import java.util.HashMap;
@@ -38,24 +37,24 @@ public class TextureFilm {
 	
 	public TextureFilm( Object tx ) {
 
-		SmartTexture texture = TextureCache.get( tx );
+		Texture texture = Texture.Companion.get( tx );
 		
-		texWidth = texture.width;
-		texHeight = texture.height;
+		texWidth = texture.bitmap.getWidth();
+		texHeight = texture.bitmap.getHeight();
 		
 		add( null, FULL );
 	}
 	
-	public TextureFilm( SmartTexture texture, int width ) {
-		this( texture, width, texture.height );
+	public TextureFilm( Texture texture, int width ) {
+		this( texture, width, texture.bitmap.getHeight() );
 	}
 	
 	public TextureFilm( Object tx, int width, int height ) {
 
-		SmartTexture texture = TextureCache.get( tx );
+		Texture texture = Texture.Companion.get( tx );
 		
-		texWidth = texture.width;
-		texHeight = texture.height;
+		texWidth = texture.bitmap.getWidth();
+		texHeight = texture.bitmap.getHeight();
 		
 		float uw = (float)width / texWidth;
 		float vh = (float)height / texHeight;

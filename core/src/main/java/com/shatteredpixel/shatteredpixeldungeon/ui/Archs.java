@@ -22,7 +22,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.ui;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
@@ -62,7 +62,7 @@ public class Archs extends Component {
 		arcsFg.offsetTo( 0,  offsF );
 		add( arcsFg );
 
-		darkness= new Image(TextureCache.createGradient(0x00000000, 0x22000000, 0x55000000, 0x99000000, 0xEE000000));
+		darkness= new Image(Texture.Companion.createGradient(0x00000000, 0x22000000, 0x55000000, 0x99000000, 0xEE000000));
 		darkness.angle = 90;
 		add(darkness);
 	}
@@ -70,10 +70,10 @@ public class Archs extends Component {
 	@Override
 	protected void layout() {
 		arcsBg.size( width, height );
-		arcsBg.offset( arcsBg.texture.width / 4 - (width % arcsBg.texture.width) / 2, 0 );
+		arcsBg.offset( arcsBg.texture.bitmap.getWidth() / 4 - (width % arcsBg.texture.bitmap.getWidth()) / 2, 0 );
 
 		arcsFg.size( width, height );
-		arcsFg.offset( arcsFg.texture.width / 4 - (width % arcsFg.texture.width) / 2, 0 );
+		arcsFg.offset( arcsFg.texture.bitmap.getWidth() / 4 - (width % arcsFg.texture.bitmap.getWidth()) / 2, 0 );
 
 		darkness.x = width;
 		darkness.scale.x = height/5f;

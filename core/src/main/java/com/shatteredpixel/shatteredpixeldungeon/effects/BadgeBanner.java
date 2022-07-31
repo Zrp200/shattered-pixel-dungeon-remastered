@@ -23,8 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.effects;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Badges;
-import com.watabou.gltextures.SmartTexture;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.TextureFilm;
@@ -154,28 +153,28 @@ public class BadgeBanner extends Image {
 			p.y = highlightPositions.get(index).y * image.scale.y;
 		} else {
 
-			SmartTexture tx = TextureCache.get(Assets.Interfaces.BADGES);
+			Texture tx = Texture.Companion.get(Assets.Interfaces.BADGES);
 
 			int size = 16;
 
-			int cols = tx.width / size;
+			int cols = tx.bitmap.getWidth() / size;
 			int row = index / cols;
 			int col = index % cols;
 
 			int x = 3;
 			int y = 4;
-			int bgColor = tx.getPixel(col * size + x, row * size + y);
+			int bgColor = tx.bitmap.getPixel(col * size + x, row * size + y);
 			int curColor = 0;
 
 			for (x = 3; x <= 12; x++) {
-				curColor = tx.getPixel(col * size + x, row * size + y);
+				curColor = tx.bitmap.getPixel(col * size + x, row * size + y);
 				if (curColor != bgColor) break;
 			}
 
 			if (curColor == bgColor) {
 				y++;
 				for (x = 3; x <= 12; x++) {
-					curColor = tx.getPixel(col * size + x, row * size + y);
+					curColor = tx.bitmap.getPixel(col * size + x, row * size + y);
 					if (curColor != bgColor) break;
 				}
 			}

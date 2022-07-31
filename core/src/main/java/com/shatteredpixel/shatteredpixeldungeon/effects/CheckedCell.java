@@ -23,7 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.effects;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 
@@ -33,7 +33,7 @@ public class CheckedCell extends Image {
 	private float delay;
 	
 	public CheckedCell( int pos ) {
-		super( TextureCache.createSolid( 0xFF55AAFF ) );
+		super( Texture.Companion.createSolid( 0xFF55AAFF ) );
 
 		origin.set( 0.5f );
 		

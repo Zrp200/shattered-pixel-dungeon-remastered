@@ -24,7 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.tiles;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Rect;
 
@@ -109,7 +109,7 @@ public class FogOfWar extends Image {
 		height = height2 * size;
 
 		String key = "FogOfWar" + width2 + "x" + height2;
-		texture(TextureCache.create(key, width2, height2));
+		texture(Texture.Companion.create(key, width2, height2));
 
 		//sets contents to all black
 		texture.bitmap.setColor( 0x000000FF );
@@ -275,7 +275,7 @@ public class FogOfWar extends Image {
 			
 		}
 		
-		texture.bitmap(fog);
+		texture.setImage(fog);
 
 	}
 	
@@ -325,7 +325,7 @@ public class FogOfWar extends Image {
 	public void destroy() {
 		super.destroy();
 		if (texture != null){
-			TextureCache.remove(FogOfWar.class);
+			Texture.Companion.remove(FogOfWar.class);
 		}
 	}
 }

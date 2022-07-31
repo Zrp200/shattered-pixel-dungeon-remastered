@@ -45,9 +45,9 @@ class Shader private constructor(type: Int) {
         const val VERTEX = GL20.GL_VERTEX_SHADER
         const val FRAGMENT = GL20.GL_FRAGMENT_SHADER
 
-        fun get(type: Int, fileName: String): Int = Shader(type).also {
-            it.source(Gdx.files.internal("shaders/$fileName").readString())
-            it.compile()
+        fun get(type: Int, fileName: String): Int = Shader(type).apply {
+            source(Gdx.files.internal("shaders/$fileName").readString())
+            compile()
         }.handle
     }
 }

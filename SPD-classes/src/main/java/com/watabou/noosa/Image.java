@@ -21,8 +21,7 @@
 
 package com.watabou.noosa;
 
-import com.watabou.gltextures.SmartTexture;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.glwrap.QuadKt;
 import com.watabou.glwrap.VertexDataset;
 import com.watabou.utils.RectF;
@@ -32,7 +31,7 @@ import java.nio.FloatBuffer;
 
 public class Image extends Visual {
 
-	public SmartTexture texture;
+	public Texture texture;
 	protected RectF frame;
 	
 	public boolean flipHorizontal;
@@ -67,15 +66,15 @@ public class Image extends Visual {
 	}
 	
 	public void texture( Object tx ) {
-		texture = tx instanceof SmartTexture ? (SmartTexture)tx : TextureCache.get( tx );
+		texture = tx instanceof Texture ? (Texture)tx : Texture.Companion.get( tx );
 		frame( new RectF( 0, 0, 1, 1 ) );
 	}
 	
 	public void frame( RectF frame ) {
 		this.frame = frame;
 		
-		width = frame.width() * texture.width;
-		height = frame.height() * texture.height;
+		width = frame.width() * texture.bitmap.getWidth();
+		height = frame.height() * texture.bitmap.getHeight();
 		
 		updateFrame();
 		updateVertices();

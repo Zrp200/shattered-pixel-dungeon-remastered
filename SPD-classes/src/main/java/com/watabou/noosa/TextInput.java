@@ -36,7 +36,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.watabou.glwrap.BlendingKt;
 import com.watabou.glwrap.QuadKt;
-import com.watabou.gltextures.Texture;
+import com.watabou.glwrap.Texture;
 import com.watabou.noosa.ui.Component;
 import com.watabou.utils.FileUtils;
 import com.watabou.utils.Point;
@@ -166,7 +166,7 @@ public class TextInput extends Component {
 		super.draw();
 		QuadKt.releaseIndices();
 		Script.unuse();
-		Texture.clear();
+		Texture.Companion.reset();
 		stage.draw();
 		QuadKt.bindIndices();
 		BlendingKt.useDefault();

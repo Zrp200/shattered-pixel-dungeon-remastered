@@ -21,12 +21,12 @@
 
 package com.watabou.noosa;
 
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 
 public class PseudoPixel extends Image {
 	
 	public PseudoPixel() {
-		super( TextureCache.createSolid( 0xFFFFFFFF ) );
+		super( Texture.Companion.createSolid( 0xFFFFFFFF ) );
 	}
 	
 	public PseudoPixel( float x, float y, int color ) {

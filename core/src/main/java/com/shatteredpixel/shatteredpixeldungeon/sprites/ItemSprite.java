@@ -32,8 +32,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.Terrain;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
-import com.watabou.gltextures.SmartTexture;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.glwrap.Matrix;
 import com.watabou.glwrap.VertexDataset;
 import com.watabou.noosa.Camera;
@@ -367,11 +366,11 @@ public class ItemSprite extends MovieClip {
 	}
 
 	public static int pick( int index, int x, int y ) {
-		SmartTexture tx = TextureCache.get( Assets.Sprites.ITEMS );
-		int rows = tx.width / SIZE;
+		Texture tx = Texture.Companion.get( Assets.Sprites.ITEMS );
+		int rows = tx.bitmap.getWidth() / SIZE;
 		int row = index / rows;
 		int col = index % rows;
-		return tx.getPixel( col * SIZE + x, row * SIZE + y );
+		return tx.bitmap.getPixel( col * SIZE + x, row * SIZE + y );
 	}
 	
 	public static class Glowing {

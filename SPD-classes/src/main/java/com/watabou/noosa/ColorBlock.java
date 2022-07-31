@@ -21,12 +21,12 @@
 
 package com.watabou.noosa;
 
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 
 public class ColorBlock extends Image implements Resizable {
 	
 	public ColorBlock( float width, float height, int color ) {
-		super( TextureCache.createSolid( color ) );
+		super( Texture.Companion.createSolid( color ) );
 		scale.set( width, height );
 		origin.set( 0, 0 );
 	}

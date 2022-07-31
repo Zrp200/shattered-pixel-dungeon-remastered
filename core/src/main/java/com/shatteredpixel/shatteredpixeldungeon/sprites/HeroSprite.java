@@ -26,8 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
-import com.watabou.gltextures.SmartTexture;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
@@ -160,8 +159,8 @@ public class HeroSprite extends CharSprite {
 	
 	public static TextureFilm tiers() {
 		if (tiers == null) {
-			SmartTexture texture = TextureCache.get( Assets.Sprites.ROGUE );
-			tiers = new TextureFilm( texture, texture.width, FRAME_HEIGHT );
+			Texture texture = Texture.Companion.get( Assets.Sprites.ROGUE );
+			tiers = new TextureFilm( texture, texture.bitmap.getWidth(), FRAME_HEIGHT );
 		}
 		
 		return tiers;

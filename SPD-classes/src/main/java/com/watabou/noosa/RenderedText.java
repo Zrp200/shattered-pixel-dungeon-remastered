@@ -200,7 +200,7 @@ public class RenderedText extends Image {
 			Script script = Script.get();
 			
 			texture.bind();
-			com.watabou.gltextures.Texture.clear();
+			com.watabou.glwrap.Texture.Companion.reset();
 			
 			script.setCamera( v.getCamera() );
 			

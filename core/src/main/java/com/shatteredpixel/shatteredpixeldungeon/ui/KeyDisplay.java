@@ -29,8 +29,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.keys.IronKey;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.Key;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.SkeletonKey;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Notes;
-import com.watabou.gltextures.SmartTexture;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.glwrap.QuadKt;
 import com.watabou.glwrap.VertexDataset;
 import com.watabou.noosa.Script;
@@ -47,7 +46,7 @@ public class KeyDisplay extends Visual {
 	private FloatBuffer quads;
 	private VertexDataset buffer;
 	
-	private SmartTexture tx = TextureCache.get(Assets.Interfaces.MENU_BTN);
+	private Texture tx = Texture.Companion.get(Assets.Interfaces.MENU_BTN);
 	
 	private boolean dirty = true;
 	private int[] keys;

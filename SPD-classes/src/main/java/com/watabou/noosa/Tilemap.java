@@ -21,8 +21,7 @@
 
 package com.watabou.noosa;
 
-import com.watabou.gltextures.SmartTexture;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.glwrap.QuadKt;
 import com.watabou.glwrap.VertexDataset;
 import com.watabou.utils.Rect;
@@ -34,7 +33,7 @@ import java.util.Arrays;
 
 public class Tilemap extends Visual {
 
-	protected SmartTexture texture;
+	protected Texture texture;
 	protected TextureFilm tileset;
 
 	protected int[] data;
@@ -59,7 +58,7 @@ public class Tilemap extends Visual {
 
 		super( 0, 0, 0, 0 );
 
-		this.texture = TextureCache.get( tx );
+		this.texture = Texture.Companion.get( tx );
 		this.tileset = tileset;
 
 		RectF r = tileset.get( 0 );

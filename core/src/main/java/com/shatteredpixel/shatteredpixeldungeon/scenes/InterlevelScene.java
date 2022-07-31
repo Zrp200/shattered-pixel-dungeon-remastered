@@ -47,7 +47,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.shatteredpixel.shatteredpixeldungeon.utils.BArray;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndError;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndStory;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
@@ -154,7 +154,7 @@ public class InterlevelScene extends PixelScene {
 		//flush the texture cache whenever moving between regions, helps reduce memory load
 		int region = (int)Math.ceil(loadingDepth / 5f);
 		if (region != lastRegion){
-			TextureCache.clear();
+			Texture.Companion.clear();
 			lastRegion = region;
 		}
 
@@ -191,7 +191,7 @@ public class InterlevelScene extends PixelScene {
 		bg.autoAdjust = true;
 		add(bg);
 		
-		Image im = new Image(TextureCache.createGradient(0xAA000000, 0xBB000000, 0xCC000000, 0xDD000000, 0xFF000000)){
+		Image im = new Image(Texture.Companion.createGradient(0xAA000000, 0xBB000000, 0xCC000000, 0xDD000000, 0xFF000000)){
 			@Override
 			public void update() {
 				super.update();

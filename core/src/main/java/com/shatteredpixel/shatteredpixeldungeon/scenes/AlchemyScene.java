@@ -50,7 +50,7 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndEnergizeItem;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndInfoItem;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndJournal;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
@@ -107,7 +107,7 @@ public class AlchemyScene extends PixelScene {
 		water.autoAdjust = true;
 		add(water);
 		
-		Image im = new Image(TextureCache.createGradient(0x66000000, 0x88000000, 0xAA000000, 0xCC000000, 0xFF000000));
+		Image im = new Image(Texture.Companion.createGradient(0x66000000, 0x88000000, 0xAA000000, 0xCC000000, 0xFF000000));
 		im.angle = 90;
 		im.x = Camera.main.width;
 		im.scale.x = Camera.main.height/5f;

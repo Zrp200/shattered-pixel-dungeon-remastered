@@ -21,8 +21,7 @@
 
 package com.watabou.noosa;
 
-import com.watabou.gltextures.SmartTexture;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.glwrap.QuadKt;
 import com.watabou.glwrap.VertexDataset;
 import com.watabou.utils.RectF;
@@ -32,7 +31,7 @@ import java.nio.FloatBuffer;
 
 public class NinePatch extends Visual {
 	
-	public SmartTexture texture;
+	public Texture texture;
 	
 	protected float[] vertices;
 	protected FloatBuffer quads;
@@ -69,9 +68,9 @@ public class NinePatch extends Visual {
 	public NinePatch( Object tx, int x, int y, int w, int h, int left, int top, int right, int bottom ) {
 		super( 0, 0, 0, 0 );
 		
-		texture = TextureCache.get( tx );
-		w = w == 0 ? texture.width : w;
-		h = h == 0 ? texture.height : h;
+		texture = Texture.Companion.get( tx );
+		w = w == 0 ? texture.bitmap.getWidth() : w;
+		h = h == 0 ? texture.bitmap.getHeight() : h;
 		
 		nWidth = width = w;
 		nHeight = height = h;

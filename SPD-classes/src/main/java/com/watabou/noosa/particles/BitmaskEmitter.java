@@ -21,7 +21,7 @@
 
 package com.watabou.noosa.particles;
 
-import com.watabou.gltextures.SmartTexture;
+import com.watabou.glwrap.Texture;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Random;
 import com.watabou.utils.RectF;
@@ -30,7 +30,7 @@ public class BitmaskEmitter extends Emitter {
 
 	// DON'T USE WITH COMPLETELY TRANSPARENT IMAGES!!!
 
-	private SmartTexture map;
+	private Texture map;
 	private int mapW;
 	private int mapH;
 

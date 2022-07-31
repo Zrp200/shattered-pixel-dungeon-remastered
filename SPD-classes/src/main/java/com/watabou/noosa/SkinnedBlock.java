@@ -21,7 +21,7 @@
 
 package com.watabou.noosa;
 
-import com.watabou.gltextures.Texture;
+import com.watabou.glwrap.Texture;
 import com.watabou.utils.RectF;
 
 public class SkinnedBlock extends Image {
@@ -37,7 +37,7 @@ public class SkinnedBlock extends Image {
 	public SkinnedBlock( float width, float height, Object tx ) {
 		super( tx );
 		
-		texture.wrap( Texture.REPEAT, Texture.REPEAT );
+		texture.wrap(Texture.REPEAT);
 		
 		size( width, height );
 	}
@@ -57,22 +57,22 @@ public class SkinnedBlock extends Image {
 	protected void updateFrame() {
 
 		if (autoAdjust) {
-			while (offsetX > texture.width) {
-				offsetX -= texture.width;
+			while (offsetX > texture.bitmap.getWidth()) {
+				offsetX -= texture.bitmap.getWidth();
 			}
-			while (offsetX < -texture.width) {
-				offsetX += texture.width;
+			while (offsetX < -texture.bitmap.getWidth()) {
+				offsetX += texture.bitmap.getHeight();
 			}
-			while (offsetY > texture.height) {
-				offsetY -= texture.height;
+			while (offsetY > texture.bitmap.getHeight()) {
+				offsetY -= texture.bitmap.getHeight();
 			}
-			while (offsetY < -texture.height) {
-				offsetY += texture.height;
+			while (offsetY < -texture.bitmap.getHeight()) {
+				offsetY += texture.bitmap.getHeight();
 			}
 		}
 
-		float tw = 1f / texture.width;
-		float th = 1f / texture.height;
+		float tw = 1f / texture.bitmap.getWidth();
+		float th = 1f / texture.bitmap.getHeight();
 		
 		float u0 = offsetX * tw;
 		float v0 = offsetY * th;

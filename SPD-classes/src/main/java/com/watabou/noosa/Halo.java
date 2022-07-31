@@ -22,7 +22,7 @@
 package com.watabou.noosa;
 
 import com.badlogic.gdx.graphics.Pixmap;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 
 public class Halo extends Image {
 	
@@ -36,9 +36,9 @@ public class Halo extends Image {
 	public Halo() {
 		super();
 		
-		if (!TextureCache.contains( CACHE_KEY )) {
+		if (!Texture.Companion.contains( CACHE_KEY )) {
 
-			Pixmap pixmap = TextureCache.create( CACHE_KEY, 2*RADIUS+1, 2*RADIUS+1 ).bitmap;
+			Pixmap pixmap = Texture.Companion.create( CACHE_KEY, 2*RADIUS+1, 2*RADIUS+1 ).bitmap;
 
 			pixmap.setColor( 0x00000000 );
 			pixmap.fill();

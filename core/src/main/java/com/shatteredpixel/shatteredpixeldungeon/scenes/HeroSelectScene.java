@@ -45,7 +45,7 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndChallenges;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndHeroInfo;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndKeyBindings;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndMessage;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.input.PointerEvent;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.ColorBlock;
@@ -101,7 +101,7 @@ public class HeroSelectScene extends PixelScene {
 		add(background);
 
 		if (background.x > 0){
-			Image fadeLeft = new Image(TextureCache.createGradient(0xFF000000, 0x00000000));
+			Image fadeLeft = new Image(Texture.Companion.createGradient(0xFF000000, 0x00000000));
 			fadeLeft.x = background.x-2;
 			fadeLeft.scale.set(4, background.height());
 			add(fadeLeft);

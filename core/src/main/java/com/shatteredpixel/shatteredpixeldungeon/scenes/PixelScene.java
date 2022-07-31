@@ -30,7 +30,7 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Tooltip;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.glwrap.BlendingKt;
 import com.watabou.glwrap.FpsKt;
 import com.watabou.input.ControllerHandler;
@@ -92,7 +92,7 @@ public class PixelScene extends Scene {
 		//flush the texture cache whenever moving from ingame to menu, helps reduce memory load
 		if (!inGameScene && InterlevelScene.lastRegion != -1){
 			InterlevelScene.lastRegion = -1;
-			TextureCache.clear();
+			Texture.Companion.clear();
 		}
 
 		float minWidth, minHeight, scaleFactor;
@@ -133,7 +133,7 @@ public class PixelScene extends Scene {
 
 		// 3x5 (6)
 		pixelFont = Font.colorMarked(
-			TextureCache.get( Assets.Fonts.PIXELFONT), 0x00000000, BitmapText.Font.LATIN_FULL );
+			Texture.Companion.get( Assets.Fonts.PIXELFONT), 0x00000000, BitmapText.Font.LATIN_FULL );
 		pixelFont.baseLine = 6;
 		pixelFont.tracking = -1;
 

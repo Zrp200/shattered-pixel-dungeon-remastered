@@ -27,7 +27,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.glutils.GLVersion;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.glwrap.BlendingKt;
 import com.watabou.glwrap.VertexDataset;
 import com.watabou.input.ControllerHandler;
@@ -109,7 +109,7 @@ public class Game implements ApplicationListener {
 		//refreshes texture and vertex data stored on the gpu
 		versionContextRef = Gdx.graphics.getGLVersion();
 		BlendingKt.useDefault();
-		TextureCache.reload();
+		Texture.Companion.reload();
 		VertexDataset.reload();
 	}
 
@@ -126,7 +126,7 @@ public class Game implements ApplicationListener {
 		if (versionContextRef != Gdx.graphics.getGLVersion()) {
 			versionContextRef = Gdx.graphics.getGLVersion();
 			BlendingKt.useDefault();
-			TextureCache.reload();
+			Texture.Companion.reload();
 			VertexDataset.reload();
 		}
 

@@ -22,8 +22,7 @@
 package com.watabou.noosa;
 
 import com.badlogic.gdx.graphics.Pixmap;
-import com.watabou.gltextures.SmartTexture;
-import com.watabou.glwrap.Matrix;
+import com.watabou.glwrap.Texture;
 import com.watabou.glwrap.QuadKt;
 import com.watabou.glwrap.VertexDataset;
 import com.watabou.utils.RectF;
@@ -218,32 +217,32 @@ public class BitmapText extends Visual {
 		public static final String LATIN_FULL =
 			" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u007F";
 		
-		public SmartTexture texture;
+		public Texture texture;
 		
 		public float tracking = 0;
 		public float baseLine;
 		
 		public float lineHeight;
 		
-		protected Font( SmartTexture tx ) {
+		protected Font( Texture tx ) {
 			super( tx );
 			
 			texture = tx;
 		}
 		
-		public Font( SmartTexture tx, int width, String chars ) {
-			this( tx, width, tx.height, chars );
+		public Font( Texture tx, int width, String chars ) {
+			this( tx, width, tx.bitmap.getHeight(), chars );
 		}
 		
-		public Font( SmartTexture tx, int width, int height, String chars ) {
+		public Font( Texture tx, int width, int height, String chars ) {
 			super( tx );
 			
 			texture = tx;
 			
 			int length = chars.length();
 			
-			float uw = (float)width / tx.width;
-			float vh = (float)height / tx.height;
+			float uw = (float)width / tx.bitmap.getWidth();
+			float vh = (float)height / tx.bitmap.getHeight();
 			
 			float left = 0;
 			float top = 0;
@@ -341,13 +340,13 @@ public class BitmapText extends Visual {
 			return pixel != color;
 		}
 		
-		public static Font colorMarked( SmartTexture tex, int color, String chars ) {
+		public static Font colorMarked( Texture tex, int color, String chars ) {
 			Font font = new Font( tex );
-			font.splitBy( tex.bitmap, tex.height, color, chars );
+			font.splitBy( tex.bitmap, tex.bitmap.getHeight(), color, chars );
 			return font;
 		}
 		 
-		public static Font colorMarked( SmartTexture tex, int height, int color, String chars ) {
+		public static Font colorMarked( Texture tex, int height, int color, String chars ) {
 			Font font = new Font( tex );
 			font.splitBy( tex.bitmap, height, color, chars );
 			return font;

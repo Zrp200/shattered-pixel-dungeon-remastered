@@ -21,8 +21,7 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.effects;
 
-import com.watabou.gltextures.SmartTexture;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.glwrap.BlendingKt;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
@@ -47,7 +46,7 @@ public class CircleArc extends Visual {
 	
 	private boolean lightMode = true;
 	
-	private SmartTexture texture;
+	private Texture texture;
 	
 	private FloatBuffer vertices;
 	private ShortBuffer indices;
@@ -60,7 +59,7 @@ public class CircleArc extends Visual {
 		
 		super( 0, 0, 0, 0 );
 
-		texture = TextureCache.createSolid( 0xFFFFFFFF );
+		texture = Texture.Companion.createSolid( 0xFFFFFFFF );
 		
 		this.nTris = triangles;
 		this.rad = radius;

@@ -41,19 +41,17 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndUseItem;
-import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.input.GameAction;
 import com.watabou.input.KeyBindings;
 import com.watabou.input.KeyEvent;
 import com.watabou.input.PointerEvent;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.ColorBlock;
-import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.PointerArea;
 import com.watabou.noosa.ui.Component;
-import com.watabou.utils.Point;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Signal;
 
@@ -581,11 +579,11 @@ public class InventoryPane extends Component {
 			setVisible(bag != null);
 
 			if (lastBag == bag){
-				bgTop.texture(TextureCache.createSolid(ACTIVE));
-				bgBottom.texture(TextureCache.createSolid(ACTIVE));
+				bgTop.texture(Texture.Companion.createSolid(ACTIVE));
+				bgBottom.texture(Texture.Companion.createSolid(ACTIVE));
 			} else {
-				bgTop.texture(TextureCache.createSolid(INACTIVE));
-				bgBottom.texture(TextureCache.createSolid(INACTIVE));
+				bgTop.texture(Texture.Companion.createSolid(INACTIVE));
+				bgBottom.texture(Texture.Companion.createSolid(INACTIVE));
 			}
 		}
 
