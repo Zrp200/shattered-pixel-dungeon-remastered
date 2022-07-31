@@ -93,24 +93,21 @@ public class GrimTrap extends Trap {
 							MagicMissile.SHADOW,
 							DungeonTilemap.tileCenterToWorld(pos),
 							finalTarget.sprite.center(),
-							new Callback() {
-								@Override
-								public void call() {
-									finalTarget.damage(finalDmg, trap);
-									if (finalTarget == Dungeon.hero) {
-										Sample.INSTANCE.play(Assets.Sounds.CURSED);
-										if (!finalTarget.isAlive()) {
-											Badges.validateDeathFromGrimTrap();
-											Dungeon.fail( GrimTrap.class );
-											GLog.n( Messages.get(GrimTrap.class, "ondeath") );
-										}
-									} else {
-										Sample.INSTANCE.play(Assets.Sounds.BURNING);
+							() -> {
+								finalTarget.damage(finalDmg, trap);
+								if (finalTarget == Dungeon.hero) {
+									Sample.INSTANCE.play(Assets.Sounds.CURSED);
+									if (!finalTarget.isAlive()) {
+										Badges.validateDeathFromGrimTrap();
+										Dungeon.fail( GrimTrap.class );
+										GLog.n( Messages.get(GrimTrap.class, "ondeath") );
 									}
-									finalTarget.sprite.emitter().burst(ShadowParticle.UP, 10);
-									Actor.remove(toRemove);
-									next();
+								} else {
+									Sample.INSTANCE.play(Assets.Sounds.BURNING);
 								}
+								finalTarget.sprite.emitter().burst(ShadowParticle.UP, 10);
+								Actor.remove(toRemove);
+								next();
 							});
 					return false;
 				}

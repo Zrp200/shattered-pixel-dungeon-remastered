@@ -714,12 +714,7 @@ public class DriedRose extends Artifact {
 			updateRose();
 			if (c == Dungeon.hero && rose != null && !rose.talkedTo){
 				rose.talkedTo = true;
-				Game.runOnRenderThread(new Callback() {
-					@Override
-					public void call() {
-						GameScene.show(new WndQuest(GhostHero.this, Messages.get(GhostHero.this, "introduce") ));
-					}
-				});
+				Game.runOnRenderThread(() -> GameScene.show(new WndQuest(GhostHero.this, Messages.get(GhostHero.this, "introduce") )));
 				return true;
 			} else {
 				return super.interact(c);

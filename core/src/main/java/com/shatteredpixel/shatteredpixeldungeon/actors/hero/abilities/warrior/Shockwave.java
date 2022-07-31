@@ -99,47 +99,44 @@ public class Shockwave extends ArmorAbility {
 				MagicMissile.FORCE_CONE,
 				hero.sprite,
 				cone.coreRay.path.get(dist * 2 / 3),
-				new Callback() {
-					@Override
-					public void call() {
+				() -> {
 
-						for (int cell : cone.cells){
+					for (int cell : cone.cells){
 
-							Char ch = Actor.findChar(cell);
-							if (ch != null && ch.alignment != hero.alignment){
-								int scalingStr = hero.STR()-10;
-								int damage = Random.NormalIntRange(5 + scalingStr, 10 + 2*scalingStr);
-								damage = Math.round(damage * (1f + 0.2f*hero.pointsInTalent(Talent.SHOCK_FORCE)));
-								damage -= ch.drRoll();
+						Char ch = Actor.findChar(cell);
+						if (ch != null && ch.alignment != hero.alignment){
+							int scalingStr = hero.STR()-10;
+							int damage = Random.NormalIntRange(5 + scalingStr, 10 + 2*scalingStr);
+							damage = Math.round(damage * (1f + 0.2f*hero.pointsInTalent(Talent.SHOCK_FORCE)));
+							damage -= ch.drRoll();
 
-								if (hero.pointsInTalent(Talent.STRIKING_WAVE) == 4){
-									Buff.affect(hero, Talent.StrikingWaveTracker.class, 0f);
-								}
-
-								if (Random.Int(10) < 3*hero.pointsInTalent(Talent.STRIKING_WAVE)){
-									damage = hero.attackProc(ch, damage);
-									ch.damage(damage, hero);
-									if (hero.subClass == HeroSubClass.GLADIATOR){
-										Buff.affect( hero, Combo.class ).hit( ch );
-									}
-								} else {
-									ch.damage(damage, hero);
-								}
-								if (ch.isAlive()){
-									if (Random.Int(4) < hero.pointsInTalent(Talent.SHOCK_FORCE)){
-										Buff.affect(ch, Paralysis.class, 5f);
-									} else {
-										Buff.affect(ch, Cripple.class, 5f);
-									}
-								}
-
+							if (hero.pointsInTalent(Talent.STRIKING_WAVE) == 4){
+								Buff.affect(hero, Talent.StrikingWaveTracker.class, 0f);
 							}
+
+							if (Random.Int(10) < 3*hero.pointsInTalent(Talent.STRIKING_WAVE)){
+								damage = hero.attackProc(ch, damage);
+								ch.damage(damage, hero);
+								if (hero.subClass == HeroSubClass.GLADIATOR){
+									Buff.affect( hero, Combo.class ).hit( ch );
+								}
+							} else {
+								ch.damage(damage, hero);
+							}
+							if (ch.isAlive()){
+								if (Random.Int(4) < hero.pointsInTalent(Talent.SHOCK_FORCE)){
+									Buff.affect(ch, Paralysis.class, 5f);
+								} else {
+									Buff.affect(ch, Cripple.class, 5f);
+								}
+							}
+
 						}
-
-						Invisibility.dispel();
-						hero.spendAndNext(Actor.TICK);
-
 					}
+
+					Invisibility.dispel();
+					hero.spendAndNext(Actor.TICK);
+
 				});
 	}
 

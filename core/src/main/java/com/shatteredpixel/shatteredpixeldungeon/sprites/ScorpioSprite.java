@@ -81,12 +81,7 @@ public class ScorpioSprite extends MobSprite {
 			idle();
 			
 			getParent().recycle( MissileSprite.class ).
-			reset( this, cellToAttack, new ScorpioShot(), new Callback() {
-				@Override
-				public void call() {
-					ch.onAttackComplete();
-				}
-			} );
+			reset( this, cellToAttack, new ScorpioShot(), () -> ch.onAttackComplete());
 		} else {
 			super.onComplete( anim );
 		}

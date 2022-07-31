@@ -52,12 +52,7 @@ public class SkeletonKey extends Key {
 		if(!SPDSettings.supportNagged()){
 			try {
 				Dungeon.saveAll();
-				Game.runOnRenderThread(new Callback() {
-					@Override
-					public void call() {
-						ShatteredPixelDungeon.scene().add(new WndSupportPrompt());
-					}
-				});
+				Game.runOnRenderThread(() -> ShatteredPixelDungeon.scene().add(new WndSupportPrompt()));
 			} catch (IOException e) {
 				ShatteredPixelDungeon.reportException(e);
 			}

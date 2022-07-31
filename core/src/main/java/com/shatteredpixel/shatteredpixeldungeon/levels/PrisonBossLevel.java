@@ -429,12 +429,7 @@ public class PrisonBossLevel extends Level {
 				
 				state = State.FIGHT_START;
 
-				Game.runOnRenderThread(new Callback() {
-					@Override
-					public void call() {
-						Music.INSTANCE.play(Assets.Music.PRISON_BOSS, true);
-					}
-				});
+				Game.runOnRenderThread(() -> Music.INSTANCE.play(Assets.Music.PRISON_BOSS, true));
 				break;
 				
 			case FIGHT_START:
@@ -525,12 +520,7 @@ public class PrisonBossLevel extends Level {
 				Sample.INSTANCE.play(Assets.Sounds.BLAST);
 				
 				state = State.WON;
-				Game.runOnRenderThread(new Callback() {
-					@Override
-					public void call() {
-						Music.INSTANCE.end();
-					}
-				});
+				Game.runOnRenderThread(Music.INSTANCE::end);
 				break;
 		}
 	}

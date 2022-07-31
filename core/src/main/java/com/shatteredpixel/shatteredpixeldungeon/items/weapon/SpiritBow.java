@@ -390,29 +390,23 @@ public class SpiritBow extends Weapon {
 						reset(user.sprite,
 								cell,
 								this,
-								new Callback() {
-									@Override
-									public void call() {
-										if (enemy.isAlive()) {
-											curUser = user;
-											onThrow(cell);
-										}
-										
-										if (last) {
-											user.spendAndNext(castDelay(user, dst));
-											sniperSpecial = false;
-											flurryCount = -1;
-										}
+								() -> {
+									if (enemy.isAlive()) {
+										curUser = user;
+										onThrow(cell);
+									}
+
+									if (last) {
+										user.spendAndNext(castDelay(user, dst));
+										sniperSpecial = false;
+										flurryCount = -1;
 									}
 								});
 				
-				user.sprite.zap(cell, new Callback() {
-					@Override
-					public void call() {
-						flurryCount--;
-						if (flurryCount > 0){
-							cast(user, dst);
-						}
+				user.sprite.zap(cell, () -> {
+					flurryCount--;
+					if (flurryCount > 0){
+						cast(user, dst);
 					}
 				});
 				

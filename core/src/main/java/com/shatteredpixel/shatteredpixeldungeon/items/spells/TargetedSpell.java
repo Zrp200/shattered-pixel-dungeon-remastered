@@ -83,14 +83,12 @@ public abstract class TargetedSpell extends Spell {
 				
 				curUser.busy();
 				
-				curSpell.fx(shot, new Callback() {
-					public void call() {
-						curSpell.affectTarget(shot, curUser);
-						curSpell.detach( curUser.belongings.backpack );
-						Invisibility.dispel();
-						curSpell.updateQuickslot();
-						curUser.spendAndNext( 1f );
-					}
+				curSpell.fx(shot, () -> {
+					curSpell.affectTarget(shot, curUser);
+					curSpell.detach( curUser.belongings.backpack );
+					Invisibility.dispel();
+					curSpell.updateQuickslot();
+					curUser.spendAndNext( 1f );
 				});
 				
 			}

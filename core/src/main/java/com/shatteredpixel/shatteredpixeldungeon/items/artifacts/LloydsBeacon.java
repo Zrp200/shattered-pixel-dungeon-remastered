@@ -222,41 +222,38 @@ public class LloydsBeacon extends Artifact {
 							MagicMissile.BEACON,
 							curUser.sprite,
 							bolt.collisionPos,
-							new Callback() {
-								@Override
-								public void call() {
-									if (ch != null) {
+							() -> {
+								if (ch != null) {
 
-										int count = 10;
-										int pos;
-										do {
-											pos = Dungeon.level.randomRespawnCell( ch );
-											if (count-- <= 0) {
-												break;
-											}
-										} while (pos == -1);
-
-										if (pos == -1 || Dungeon.bossLevel()) {
-
-											GLog.w( Messages.get(ScrollOfTeleportation.class, "no_tele") );
-
-										} else if (ch.properties().contains(Char.Property.IMMOVABLE)) {
-
-											GLog.w( Messages.get(LloydsBeacon.class, "tele_fail") );
-
-										} else  {
-
-											ch.pos = pos;
-											if (ch instanceof Mob && ((Mob) ch).state == ((Mob) ch).HUNTING){
-												((Mob) ch).state = ((Mob) ch).WANDERING;
-											}
-											ch.sprite.place(ch.pos);
-											ch.sprite.setVisible(Dungeon.level.heroFOV[pos]);
-
+									int count = 10;
+									int pos;
+									do {
+										pos = Dungeon.level.randomRespawnCell( ch );
+										if (count-- <= 0) {
+											break;
 										}
+									} while (pos == -1);
+
+									if (pos == -1 || Dungeon.bossLevel()) {
+
+										GLog.w( Messages.get(ScrollOfTeleportation.class, "no_tele") );
+
+									} else if (ch.properties().contains(Char.Property.IMMOVABLE)) {
+
+										GLog.w( Messages.get(LloydsBeacon.class, "tele_fail") );
+
+									} else  {
+
+										ch.pos = pos;
+										if (ch instanceof Mob && ((Mob) ch).state == ((Mob) ch).HUNTING){
+											((Mob) ch).state = ((Mob) ch).WANDERING;
+										}
+										ch.sprite.place(ch.pos);
+										ch.sprite.setVisible(Dungeon.level.heroFOV[pos]);
+
 									}
-									curUser.spendAndNext(1f);
 								}
+								curUser.spendAndNext(1f);
 							});
 
 				}

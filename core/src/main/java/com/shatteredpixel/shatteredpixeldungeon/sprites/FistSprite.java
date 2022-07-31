@@ -127,12 +127,7 @@ public abstract class FistSprite extends MobSprite {
 				boltType,
 				this,
 				cell,
-				new Callback() {
-					@Override
-					public void call() {
-						((YogFist)ch).onZapComplete();
-					}
-				} );
+				() -> ((YogFist)ch).onZapComplete());
 		Sample.INSTANCE.play( Assets.Sounds.ZAP );
 	}
 

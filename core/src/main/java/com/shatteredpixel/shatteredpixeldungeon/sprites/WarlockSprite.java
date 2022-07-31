@@ -63,12 +63,7 @@ public class WarlockSprite extends MobSprite {
 				MagicMissile.SHADOW,
 				this,
 				cell,
-				new Callback() {
-					@Override
-					public void call() {
-						((Warlock)ch).onZapComplete();
-					}
-				} );
+				() -> ((Warlock)ch).onZapComplete());
 		Sample.INSTANCE.play( Assets.Sounds.ZAP );
 	}
 	

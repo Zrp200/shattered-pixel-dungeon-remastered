@@ -67,12 +67,7 @@ public class DM200Sprite extends MobSprite {
 				MagicMissile.TOXIC_VENT,
 				this,
 				cell,
-				new Callback() {
-					@Override
-					public void call() {
-						((DM200)ch).onZapComplete();
-					}
-				} );
+				() -> ((DM200)ch).onZapComplete());
 		Sample.INSTANCE.play( Assets.Sounds.GAS );
 		GLog.w(Messages.get(DM200.class, "vent"));
 	}

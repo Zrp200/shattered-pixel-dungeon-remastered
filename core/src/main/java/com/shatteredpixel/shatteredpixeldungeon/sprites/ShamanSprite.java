@@ -69,12 +69,7 @@ public abstract class ShamanSprite extends MobSprite {
 				boltType,
 				this,
 				cell,
-				new Callback() {
-					@Override
-					public void call() {
-						((Shaman)ch).onZapComplete();
-					}
-				} );
+				() -> ((Shaman)ch).onZapComplete());
 		Sample.INSTANCE.play( Assets.Sounds.ZAP );
 	}
 

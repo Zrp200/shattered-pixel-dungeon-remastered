@@ -148,6 +148,7 @@ public class WandOfBlastWave extends DamageWand {
 		final int initialpos = ch.pos;
 
 		Actor.addDelayed(new Pushing(ch, ch.pos, newPos, new Callback() {
+			@Override
 			public void call() {
 				if (initialpos != ch.pos) {
 					//something caused movement before pushing resolved, cancel to be safe.

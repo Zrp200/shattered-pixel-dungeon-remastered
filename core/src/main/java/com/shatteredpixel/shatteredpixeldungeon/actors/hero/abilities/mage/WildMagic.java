@@ -135,39 +135,33 @@ public class WildMagic extends ArmorAbility {
 
 		float startTime = Game.timeTotal;
 		if (!cur.cursed) {
-			cur.fx(aim, new Callback() {
-				@Override
-				public void call() {
-					cur.onZap(aim);
-					if (Game.timeTotal - startTime < 0.33f){
-						hero.sprite.getParent().add(new Delayer(0.33f - (Game.timeTotal - startTime)) {
-							@Override
-							protected void onComplete() {
-								afterZap(cur, wands, hero, cell);
-							}
-						});
-					} else {
-						afterZap(cur, wands, hero, cell);
-					}
+			cur.fx(aim, () -> {
+				cur.onZap(aim);
+				if (Game.timeTotal - startTime < 0.33f){
+					hero.sprite.getParent().add(new Delayer(0.33f - (Game.timeTotal - startTime)) {
+						@Override
+						protected void onComplete() {
+							afterZap(cur, wands, hero, cell);
+						}
+					});
+				} else {
+					afterZap(cur, wands, hero, cell);
 				}
 			});
 		} else {
 			CursedWand.cursedZap(cur,
 					hero,
 					new Ballistica(hero.pos, cell, Ballistica.MAGIC_BOLT),
-					new Callback() {
-						@Override
-						public void call() {
-							if (Game.timeTotal - startTime < 0.33f){
-								hero.sprite.getParent().add(new Delayer(0.33f - (Game.timeTotal - startTime)) {
-									@Override
-									protected void onComplete() {
-										afterZap(cur, wands, hero, cell);
-									}
-								});
-							} else {
-								afterZap(cur, wands, hero, cell);
-							}
+					() -> {
+						if (Game.timeTotal - startTime < 0.33f){
+							hero.sprite.getParent().add(new Delayer(0.33f - (Game.timeTotal - startTime)) {
+								@Override
+								protected void onComplete() {
+									afterZap(cur, wands, hero, cell);
+								}
+							});
+						} else {
+							afterZap(cur, wands, hero, cell);
 						}
 					});
 		}

@@ -105,12 +105,7 @@ public class Imp extends NPC {
 			
 			DwarfToken tokens = Dungeon.hero.belongings.getItem( DwarfToken.class );
 			if (tokens != null && (tokens.quantity() >= 5 || (!Quest.alternative && tokens.quantity() >= 4))) {
-				Game.runOnRenderThread(new Callback() {
-					@Override
-					public void call() {
-						GameScene.show( new WndImp( Imp.this, tokens ) );
-					}
-				});
+				Game.runOnRenderThread(() -> GameScene.show( new WndImp( Imp.this, tokens ) ));
 			} else {
 				tell( Quest.alternative ?
 						Messages.get(this, "monks_2", Dungeon.hero.name())
@@ -128,12 +123,7 @@ public class Imp extends NPC {
 	}
 	
 	private void tell( String text ) {
-		Game.runOnRenderThread(new Callback() {
-			@Override
-			public void call() {
-				GameScene.show( new WndQuest( Imp.this, text ));
-			}
-		});
+		Game.runOnRenderThread(() -> GameScene.show( new WndQuest( Imp.this, text )));
 	}
 	
 	public void flee() {

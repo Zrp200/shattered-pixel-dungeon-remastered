@@ -115,12 +115,7 @@ public class Wandmaker extends NPC {
 			}
 
 			if (item != null) {
-				Game.runOnRenderThread(new Callback() {
-					@Override
-					public void call() {
-						GameScene.show( new WndWandmaker( Wandmaker.this, item ) );
-					}
-				});
+				Game.runOnRenderThread(() -> GameScene.show( new WndWandmaker( Wandmaker.this, item ) ));
 			} else {
 				String msg;
 				switch(Quest.type){
@@ -134,12 +129,7 @@ public class Wandmaker extends NPC {
 						msg = Messages.get(this, "reminder_berry", Dungeon.hero.name());
 						break;
 				}
-				Game.runOnRenderThread(new Callback() {
-					@Override
-					public void call() {
-						GameScene.show(new WndQuest(Wandmaker.this, msg));
-					}
-				});
+				Game.runOnRenderThread(() -> GameScene.show(new WndQuest(Wandmaker.this, msg)));
 			}
 			
 		} else {

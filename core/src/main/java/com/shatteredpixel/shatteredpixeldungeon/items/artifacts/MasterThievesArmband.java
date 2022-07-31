@@ -119,67 +119,64 @@ public class MasterThievesArmband extends Artifact {
 					GLog.w( Messages.get(MasterThievesArmband.class, "no_target") );
 				} else if (ch instanceof Mob) {
 					curUser.busy();
-					curUser.sprite.attack(target, new Callback() {
-						@Override
-						public void call() {
-							Sample.INSTANCE.play(Assets.Sounds.HIT);
+					curUser.sprite.attack(target, () -> {
+						Sample.INSTANCE.play(Assets.Sounds.HIT);
 
-							boolean surprised = ((Mob) ch).surprisedBy(curUser, false);
-							float lootMultiplier = 1f + 0.1f*level();
-							int debuffDuration = 3 + level()/2;
+						boolean surprised = ((Mob) ch).surprisedBy(curUser, false);
+						float lootMultiplier = 1f + 0.1f*level();
+						int debuffDuration = 3 + level()/2;
 
-							if (surprised){
-								lootMultiplier += 0.5f;
-								Surprise.hit(ch);
-								Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
-								debuffDuration += 2;
-								exp += 2;
-							}
+						if (surprised){
+							lootMultiplier += 0.5f;
+							Surprise.hit(ch);
+							Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
+							debuffDuration += 2;
+							exp += 2;
+						}
 
-							float lootChance = ((Mob) ch).lootChance() * lootMultiplier;
+						float lootChance = ((Mob) ch).lootChance() * lootMultiplier;
 
-							if (Dungeon.hero.lvl > ((Mob) ch).maxLvl + 2) {
-								lootChance = 0;
-							} else if (ch.buff(StolenTracker.class) != null){
-								lootChance = 0;
-							}
+						if (Dungeon.hero.lvl > ((Mob) ch).maxLvl + 2) {
+							lootChance = 0;
+						} else if (ch.buff(StolenTracker.class) != null){
+							lootChance = 0;
+						}
 
-							if (lootChance == 0){
-								GLog.w(Messages.get(MasterThievesArmband.class, "no_steal"));
-							} else if (Random.Float() <= lootChance){
-								Item loot = ((Mob) ch).createLoot();
-								if (Challenges.isItemBlocked(loot)){
-									GLog.i(Messages.get(MasterThievesArmband.class, "failed_steal"));
-									Buff.affect(ch, StolenTracker.class).setItemStolen(false);
-								} else {
-									if (loot.doPickUp(curUser)) {
-										//item collection happens instantly
-										curUser.spend(-TIME_TO_PICK_UP);
-									} else {
-										Dungeon.level.drop(loot, curUser.pos).sprite.drop();
-									}
-									GLog.i(Messages.get(MasterThievesArmband.class, "stole_item", loot.name()));
-									Buff.affect(ch, StolenTracker.class).setItemStolen(true);
-								}
-							} else {
+						if (lootChance == 0){
+							GLog.w(Messages.get(MasterThievesArmband.class, "no_steal"));
+						} else if (Random.Float() <= lootChance){
+							Item loot = ((Mob) ch).createLoot();
+							if (Challenges.isItemBlocked(loot)){
 								GLog.i(Messages.get(MasterThievesArmband.class, "failed_steal"));
 								Buff.affect(ch, StolenTracker.class).setItemStolen(false);
+							} else {
+								if (loot.doPickUp(curUser)) {
+									//item collection happens instantly
+									curUser.spend(-TIME_TO_PICK_UP);
+								} else {
+									Dungeon.level.drop(loot, curUser.pos).sprite.drop();
+								}
+								GLog.i(Messages.get(MasterThievesArmband.class, "stole_item", loot.name()));
+								Buff.affect(ch, StolenTracker.class).setItemStolen(true);
 							}
-
-							Buff.prolong(ch, Blindness.class, debuffDuration);
-							Buff.prolong(ch, Cripple.class, debuffDuration);
-
-							charge--;
-							exp += 3;
-							Talent.onArtifactUsed(Dungeon.hero);
-							while (exp >= (10 + Math.round(3.33f * level())) && level() < levelCap) {
-								exp -= 10 + Math.round(3.33f * level());
-								GLog.p(Messages.get(MasterThievesArmband.class, "level_up"));
-								upgrade();
-							}
-							Item.updateQuickslot();
-							curUser.next();
+						} else {
+							GLog.i(Messages.get(MasterThievesArmband.class, "failed_steal"));
+							Buff.affect(ch, StolenTracker.class).setItemStolen(false);
 						}
+
+						Buff.prolong(ch, Blindness.class, debuffDuration);
+						Buff.prolong(ch, Cripple.class, debuffDuration);
+
+						charge--;
+						exp += 3;
+						Talent.onArtifactUsed(Dungeon.hero);
+						while (exp >= (10 + Math.round(3.33f * level())) && level() < levelCap) {
+							exp -= 10 + Math.round(3.33f * level());
+							GLog.p(Messages.get(MasterThievesArmband.class, "level_up"));
+							upgrade();
+						}
+						Item.updateQuickslot();
+						curUser.next();
 					});
 
 				}

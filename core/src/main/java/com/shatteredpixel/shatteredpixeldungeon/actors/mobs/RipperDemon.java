@@ -169,26 +169,23 @@ public class RipperDemon extends Mob {
 
 				//do leap
 				sprite.setVisible(Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[leapPos] || Dungeon.level.heroFOV[endPos]);
-				sprite.jump(pos, leapPos, new Callback() {
-					@Override
-					public void call() {
+				sprite.jump(pos, leapPos, () -> {
 
-						if (leapVictim != null && alignment != leapVictim.alignment){
-							Buff.affect(leapVictim, Bleeding.class).set(0.75f*damageRoll());
-							leapVictim.sprite.flash();
-							Sample.INSTANCE.play(Assets.Sounds.HIT);
-						}
-
-						if (endPos != leapPos){
-							Actor.addDelayed(new Pushing(RipperDemon.this, leapPos, endPos), -1);
-						}
-
-						pos = endPos;
-						leapPos = -1;
-						sprite.idle();
-						Dungeon.level.occupyCell(RipperDemon.this);
-						next();
+					if (leapVictim != null && alignment != leapVictim.alignment){
+						Buff.affect(leapVictim, Bleeding.class).set(0.75f*damageRoll());
+						leapVictim.sprite.flash();
+						Sample.INSTANCE.play(Assets.Sounds.HIT);
 					}
+
+					if (endPos != leapPos){
+						Actor.addDelayed(new Pushing(RipperDemon.this, leapPos, endPos), -1);
+					}
+
+					pos = endPos;
+					leapPos = -1;
+					sprite.idle();
+					Dungeon.level.occupyCell(RipperDemon.this);
+					next();
 				});
 				return false;
 			}

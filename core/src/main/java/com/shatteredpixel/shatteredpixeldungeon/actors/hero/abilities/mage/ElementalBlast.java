@@ -183,224 +183,221 @@ public class ElementalBlast extends ArmorAbility {
 				effectTypes.get(wandCls),
 				hero.sprite,
 				aim.path.get(aoeSize / 2),
-				new Callback() {
-					@Override
-					public void call() {
+				() -> {
 
-						int charsHit = 0;
-						Freezing freeze = (Freezing)Dungeon.level.blobs.get( Freezing.class );
-						Fire fire = (Fire)Dungeon.level.blobs.get( Fire.class );
-						for (int cell : aoe.cells) {
+					int charsHit = 0;
+					Freezing freeze = (Freezing)Dungeon.level.blobs.get( Freezing.class );
+					Fire fire = (Fire)Dungeon.level.blobs.get( Fire.class );
+					for (int cell : aoe.cells) {
 
-							//### Cell effects ###
-							//*** Wand of Lightning ***
-							if (finalWandCls == WandOfLightning.class){
-								if (Dungeon.level.water[cell]){
-									GameScene.add( Blob.seed( cell, 4, Electricity.class ) );
-								}
-
-							//*** Wand of Fireblast ***
-							} else if (finalWandCls == WandOfFireblast.class){
-								if (Dungeon.level.map[cell] == Terrain.DOOR){
-									Level.set(cell, Terrain.OPEN_DOOR);
-									GameScene.updateMap(cell);
-								}
-								if (freeze != null){
-									freeze.clear(cell);
-								}
-								if (Dungeon.level.flamable[cell]){
-									GameScene.add( Blob.seed( cell, 4, Fire.class ) );
-								}
-
-							//*** Wand of Frost ***
-							} else if (finalWandCls == WandOfFrost.class){
-								if (fire != null){
-									fire.clear(cell);
-								}
-
-							//*** Wand of Prismatic Light ***
-							} else if (finalWandCls == WandOfPrismaticLight.class){
-								for (int n : PathFinder.NEIGHBOURS9) {
-									int c = cell+n;
-
-									if (Dungeon.level.discoverable[c]) {
-										Dungeon.level.mapped[c] = true;
-									}
-
-									int terr = Dungeon.level.map[c];
-									if ((Terrain.flags[terr] & Terrain.SECRET) != 0) {
-
-										Dungeon.level.discover(c);
-
-										GameScene.discoverTile(c, terr);
-										ScrollOfMagicMapping.discover(c);
-
-									}
-								}
-
-							//*** Wand of Regrowth ***
-							} else if (finalWandCls == WandOfRegrowth.class){
-								//TODO: spend 3 charges worth of regrowth energy from staff?
-								int t = Dungeon.level.map[cell];
-								if (Random.Float() < 0.33f*effectMulti) {
-									if ((t == Terrain.EMPTY || t == Terrain.EMPTY_DECO || t == Terrain.EMBERS
-											|| t == Terrain.GRASS || t == Terrain.FURROWED_GRASS)
-											&& Dungeon.level.plants.get(cell) == null) {
-										Level.set(cell, Terrain.HIGH_GRASS);
-										GameScene.updateMap(cell);
-									}
-								}
+						//### Cell effects ###
+						//*** Wand of Lightning ***
+						if (finalWandCls == WandOfLightning.class){
+							if (Dungeon.level.water[cell]){
+								GameScene.add( Blob.seed( cell, 4, Electricity.class ) );
 							}
 
-							//### Deal damage ###
-							Char mob = Actor.findChar(cell);
-							int damage = Math.round(Random.NormalIntRange(15, 25)
-									* effectMulti
-									* damageFactors.get(finalWandCls));
-
-							if (mob != null && damage > 0 && mob.alignment != Char.Alignment.ALLY){
-								mob.damage(damage, Reflection.newInstance(finalWandCls));
-								charsHit++;
+						//*** Wand of Fireblast ***
+						} else if (finalWandCls == WandOfFireblast.class){
+							if (Dungeon.level.map[cell] == Terrain.DOOR){
+								Level.set(cell, Terrain.OPEN_DOOR);
+								GameScene.updateMap(cell);
 							}
-
-							//### Other Char Effects ###
-							if (mob != null && mob != hero){
-								//*** Wand of Lightning ***
-								if (finalWandCls == WandOfLightning.class){
-									if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
-										Buff.affect( mob, Paralysis.class, effectMulti*Paralysis.DURATION/2 );
-									}
-
-								//*** Wand of Fireblast ***
-								} else if (finalWandCls == WandOfFireblast.class){
-									if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
-										Buff.affect( mob, Burning.class ).reignite( mob );
-									}
-
-								//*** Wand of Corrosion ***
-								} else if (finalWandCls == WandOfCorrosion.class){
-									if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
-										Buff.affect( mob, Corrosion.class ).set(4, Math.round(6*effectMulti));
-										charsHit++;
-									}
-
-								//*** Wand of Blast Wave ***
-								} else if (finalWandCls == WandOfBlastWave.class){
-									if (mob.alignment != Char.Alignment.ALLY) {
-										Ballistica aim = new Ballistica(hero.pos, mob.pos, Ballistica.WONT_STOP);
-										int knockback = aoeSize + 1 - (int)Dungeon.level.trueDistance(hero.pos, mob.pos);
-										knockback *= effectMulti;
-										WandOfBlastWave.throwChar(mob,
-												new Ballistica(mob.pos, aim.collisionPos, Ballistica.MAGIC_BOLT),
-												knockback,
-												true,
-												true,
-												ElementalBlast.this.getClass());
-									}
-
-								//*** Wand of Frost ***
-								} else if (finalWandCls == WandOfFrost.class){
-									if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
-										Buff.affect( mob, Frost.class, effectMulti*Frost.DURATION );
-									}
-
-								//*** Wand of Prismatic Light ***
-								} else if (finalWandCls == WandOfPrismaticLight.class){
-									if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
-										Buff.prolong(mob, Blindness.class, effectMulti*Blindness.DURATION/2);
-										charsHit++;
-									}
-
-								//*** Wand of Warding ***
-								} else if (finalWandCls == WandOfWarding.class){
-									if (mob instanceof WandOfWarding.Ward){
-										((WandOfWarding.Ward) mob).wandHeal(0, effectMulti);
-										charsHit++;
-									}
-
-								//*** Wand of Transfusion ***
-								} else if (finalWandCls == WandOfTransfusion.class){
-									if(mob.alignment == Char.Alignment.ALLY || mob.buff(Charm.class) != null){
-										int healing = Math.round(10*effectMulti);
-										int shielding = (mob.HP + healing) - mob.HT;
-										if (shielding > 0){
-											healing -= shielding;
-											Buff.affect(mob, Barrier.class).setShield(shielding);
-										} else {
-											shielding = 0;
-										}
-										mob.HP += healing;
-
-										mob.sprite.emitter().burst(Speck.factory(Speck.HEALING), 4);
-										mob.sprite.showStatus(CharSprite.POSITIVE, "+%dHP", healing + shielding);
-									} else {
-										if (!mob.properties().contains(Char.Property.UNDEAD)) {
-											Charm charm = Buff.affect(mob, Charm.class, effectMulti*Charm.DURATION/2f);
-											charm.object = hero.id();
-											charm.ignoreHeroAllies = true;
-											mob.sprite.centerEmitter().start(Speck.factory(Speck.HEART), 0.2f, 3);
-										} else {
-											damage = Math.round(Random.NormalIntRange(15, 25) * effectMulti);
-											mob.damage(damage, Reflection.newInstance(finalWandCls));
-											mob.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10);
-										}
-									}
-									charsHit++;
-
-								//*** Wand of Corruption ***
-								} else if (finalWandCls == WandOfCorruption.class){
-									if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
-										Buff.prolong(mob, Amok.class, effectMulti*5f);
-										charsHit++;
-									}
-
-								//*** Wand of Regrowth ***
-								} else if (finalWandCls == WandOfRegrowth.class){
-									if (mob.alignment != Char.Alignment.ALLY) {
-										Buff.prolong( mob, Roots.class, effectMulti*Roots.DURATION );
-										charsHit++;
-									}
-								}
+							if (freeze != null){
+								freeze.clear(cell);
 							}
-
-						}
-
-						//### Self-Effects ###
-						//*** Wand of Magic Missile ***
-						if (finalWandCls == WandOfMagicMissile.class) {
-							Buff.affect(hero, Recharging.class, effectMulti* Recharging.DURATION / 2f);
-							SpellSprite.show( hero, SpellSprite.CHARGE );
-
-						//*** Wand of Living Earth ***
-						} else if (finalWandCls == WandOfLivingEarth.class && charsHit > 0){
-							for (Mob m : Dungeon.level.mobs){
-								if (m instanceof WandOfLivingEarth.EarthGuardian){
-									((WandOfLivingEarth.EarthGuardian) m).setInfo(hero, 0, Math.round(effectMulti*charsHit*5));
-									m.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + charsHit);
-									break;
-								}
+							if (Dungeon.level.flamable[cell]){
+								GameScene.add( Blob.seed( cell, 4, Fire.class ) );
 							}
 
 						//*** Wand of Frost ***
 						} else if (finalWandCls == WandOfFrost.class){
-							if ((hero.buff(Burning.class)) != null) {
-								hero.buff(Burning.class).detach();
+							if (fire != null){
+								fire.clear(cell);
 							}
 
 						//*** Wand of Prismatic Light ***
 						} else if (finalWandCls == WandOfPrismaticLight.class){
-							Buff.prolong( hero, Light.class, effectMulti*50f);
+							for (int n : PathFinder.NEIGHBOURS9) {
+								int c = cell+n;
 
+								if (Dungeon.level.discoverable[c]) {
+									Dungeon.level.mapped[c] = true;
+								}
+
+								int terr = Dungeon.level.map[c];
+								if ((Terrain.flags[terr] & Terrain.SECRET) != 0) {
+
+									Dungeon.level.discover(c);
+
+									GameScene.discoverTile(c, terr);
+									ScrollOfMagicMapping.discover(c);
+
+								}
+							}
+
+						//*** Wand of Regrowth ***
+						} else if (finalWandCls == WandOfRegrowth.class){
+							//TODO: spend 3 charges worth of regrowth energy from staff?
+							int t = Dungeon.level.map[cell];
+							if (Random.Float() < 0.33f*effectMulti) {
+								if ((t == Terrain.EMPTY || t == Terrain.EMPTY_DECO || t == Terrain.EMBERS
+										|| t == Terrain.GRASS || t == Terrain.FURROWED_GRASS)
+										&& Dungeon.level.plants.get(cell) == null) {
+									Level.set(cell, Terrain.HIGH_GRASS);
+									GameScene.updateMap(cell);
+								}
+							}
 						}
 
-						charsHit = Math.min(4 + hero.pointsInTalent(Talent.REACTIVE_BARRIER), charsHit);
-						if (charsHit > 0 && hero.hasTalent(Talent.REACTIVE_BARRIER)){
-							int shielding = Math.round(charsHit*2.5f*hero.pointsInTalent(Talent.REACTIVE_BARRIER));
-							Buff.affect(hero, Barrier.class).setShield(shielding);
+						//### Deal damage ###
+						Char mob = Actor.findChar(cell);
+						int damage = Math.round(Random.NormalIntRange(15, 25)
+								* effectMulti
+								* damageFactors.get(finalWandCls));
+
+						if (mob != null && damage > 0 && mob.alignment != Char.Alignment.ALLY){
+							mob.damage(damage, Reflection.newInstance(finalWandCls));
+							charsHit++;
 						}
 
-						hero.spendAndNext(Actor.TICK);
+						//### Other Char Effects ###
+						if (mob != null && mob != hero){
+							//*** Wand of Lightning ***
+							if (finalWandCls == WandOfLightning.class){
+								if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
+									Buff.affect( mob, Paralysis.class, effectMulti*Paralysis.DURATION/2 );
+								}
+
+							//*** Wand of Fireblast ***
+							} else if (finalWandCls == WandOfFireblast.class){
+								if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
+									Buff.affect( mob, Burning.class ).reignite( mob );
+								}
+
+							//*** Wand of Corrosion ***
+							} else if (finalWandCls == WandOfCorrosion.class){
+								if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
+									Buff.affect( mob, Corrosion.class ).set(4, Math.round(6*effectMulti));
+									charsHit++;
+								}
+
+							//*** Wand of Blast Wave ***
+							} else if (finalWandCls == WandOfBlastWave.class){
+								if (mob.alignment != Char.Alignment.ALLY) {
+									Ballistica aim1 = new Ballistica(hero.pos, mob.pos, Ballistica.WONT_STOP);
+									int knockback = aoeSize + 1 - (int)Dungeon.level.trueDistance(hero.pos, mob.pos);
+									knockback *= effectMulti;
+									WandOfBlastWave.throwChar(mob,
+											new Ballistica(mob.pos, aim1.collisionPos, Ballistica.MAGIC_BOLT),
+											knockback,
+											true,
+											true,
+											ElementalBlast.this.getClass());
+								}
+
+							//*** Wand of Frost ***
+							} else if (finalWandCls == WandOfFrost.class){
+								if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
+									Buff.affect( mob, Frost.class, effectMulti*Frost.DURATION );
+								}
+
+							//*** Wand of Prismatic Light ***
+							} else if (finalWandCls == WandOfPrismaticLight.class){
+								if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
+									Buff.prolong(mob, Blindness.class, effectMulti*Blindness.DURATION/2);
+									charsHit++;
+								}
+
+							//*** Wand of Warding ***
+							} else if (finalWandCls == WandOfWarding.class){
+								if (mob instanceof WandOfWarding.Ward){
+									((WandOfWarding.Ward) mob).wandHeal(0, effectMulti);
+									charsHit++;
+								}
+
+							//*** Wand of Transfusion ***
+							} else if (finalWandCls == WandOfTransfusion.class){
+								if(mob.alignment == Char.Alignment.ALLY || mob.buff(Charm.class) != null){
+									int healing = Math.round(10*effectMulti);
+									int shielding = (mob.HP + healing) - mob.HT;
+									if (shielding > 0){
+										healing -= shielding;
+										Buff.affect(mob, Barrier.class).setShield(shielding);
+									} else {
+										shielding = 0;
+									}
+									mob.HP += healing;
+
+									mob.sprite.emitter().burst(Speck.factory(Speck.HEALING), 4);
+									mob.sprite.showStatus(CharSprite.POSITIVE, "+%dHP", healing + shielding);
+								} else {
+									if (!mob.properties().contains(Char.Property.UNDEAD)) {
+										Charm charm = Buff.affect(mob, Charm.class, effectMulti*Charm.DURATION/2f);
+										charm.object = hero.id();
+										charm.ignoreHeroAllies = true;
+										mob.sprite.centerEmitter().start(Speck.factory(Speck.HEART), 0.2f, 3);
+									} else {
+										damage = Math.round(Random.NormalIntRange(15, 25) * effectMulti);
+										mob.damage(damage, Reflection.newInstance(finalWandCls));
+										mob.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10);
+									}
+								}
+								charsHit++;
+
+							//*** Wand of Corruption ***
+							} else if (finalWandCls == WandOfCorruption.class){
+								if (mob.isAlive() && mob.alignment != Char.Alignment.ALLY) {
+									Buff.prolong(mob, Amok.class, effectMulti*5f);
+									charsHit++;
+								}
+
+							//*** Wand of Regrowth ***
+							} else if (finalWandCls == WandOfRegrowth.class){
+								if (mob.alignment != Char.Alignment.ALLY) {
+									Buff.prolong( mob, Roots.class, effectMulti*Roots.DURATION );
+									charsHit++;
+								}
+							}
+						}
+
 					}
+
+					//### Self-Effects ###
+					//*** Wand of Magic Missile ***
+					if (finalWandCls == WandOfMagicMissile.class) {
+						Buff.affect(hero, Recharging.class, effectMulti* Recharging.DURATION / 2f);
+						SpellSprite.show( hero, SpellSprite.CHARGE );
+
+					//*** Wand of Living Earth ***
+					} else if (finalWandCls == WandOfLivingEarth.class && charsHit > 0){
+						for (Mob m : Dungeon.level.mobs){
+							if (m instanceof WandOfLivingEarth.EarthGuardian){
+								((WandOfLivingEarth.EarthGuardian) m).setInfo(hero, 0, Math.round(effectMulti*charsHit*5));
+								m.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + charsHit);
+								break;
+							}
+						}
+
+					//*** Wand of Frost ***
+					} else if (finalWandCls == WandOfFrost.class){
+						if ((hero.buff(Burning.class)) != null) {
+							hero.buff(Burning.class).detach();
+						}
+
+					//*** Wand of Prismatic Light ***
+					} else if (finalWandCls == WandOfPrismaticLight.class){
+						Buff.prolong( hero, Light.class, effectMulti*50f);
+
+					}
+
+					charsHit = Math.min(4 + hero.pointsInTalent(Talent.REACTIVE_BARRIER), charsHit);
+					if (charsHit > 0 && hero.hasTalent(Talent.REACTIVE_BARRIER)){
+						int shielding = Math.round(charsHit*2.5f*hero.pointsInTalent(Talent.REACTIVE_BARRIER));
+						Buff.affect(hero, Barrier.class).setShield(shielding);
+					}
+
+					hero.spendAndNext(Actor.TICK);
 				}
 		);
 

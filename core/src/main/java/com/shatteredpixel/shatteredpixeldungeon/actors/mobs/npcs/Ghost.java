@@ -122,28 +122,20 @@ public class Ghost extends NPC {
 		if (Quest.given) {
 			if (Quest.weapon != null) {
 				if (Quest.processed) {
-					Game.runOnRenderThread(new Callback() {
-						@Override
-						public void call() {
-							GameScene.show(new WndSadGhost(Ghost.this, Quest.type));
-						}
-					});
+					Game.runOnRenderThread(() -> GameScene.show(new WndSadGhost(Ghost.this, Quest.type)));
 				} else {
-					Game.runOnRenderThread(new Callback() {
-						@Override
-						public void call() {
-							switch (Quest.type) {
-								case 1:
-								default:
-									GameScene.show(new WndQuest(Ghost.this, Messages.get(Ghost.this, "rat_2")));
-									break;
-								case 2:
-									GameScene.show(new WndQuest(Ghost.this, Messages.get(Ghost.this, "gnoll_2")));
-									break;
-								case 3:
-									GameScene.show(new WndQuest(Ghost.this, Messages.get(Ghost.this, "crab_2")));
-									break;
-							}
+					Game.runOnRenderThread(() -> {
+						switch (Quest.type) {
+							case 1:
+							default:
+								GameScene.show(new WndQuest(Ghost.this, Messages.get(Ghost.this, "rat_2")));
+								break;
+							case 2:
+								GameScene.show(new WndQuest(Ghost.this, Messages.get(Ghost.this, "gnoll_2")));
+								break;
+							case 3:
+								GameScene.show(new WndQuest(Ghost.this, Messages.get(Ghost.this, "crab_2")));
+								break;
 						}
 					});
 
@@ -185,12 +177,7 @@ public class Ghost extends NPC {
 				GameScene.add(questBoss);
 				Quest.given = true;
 				Notes.add( Notes.Landmark.GHOST );
-				Game.runOnRenderThread(new Callback() {
-					@Override
-					public void call() {
-						GameScene.show( new WndQuest( Ghost.this, txt_quest ) );
-					}
-				});
+				Game.runOnRenderThread(() -> GameScene.show( new WndQuest( Ghost.this, txt_quest ) ));
 			}
 
 		}

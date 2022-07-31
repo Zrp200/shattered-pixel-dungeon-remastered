@@ -172,12 +172,7 @@ public class SewerBossLevel extends SewerLevel {
 			GameScene.updateMap( entrance() );
 			GameScene.ripple( entrance() );
 
-			Game.runOnRenderThread(new Callback() {
-				@Override
-				public void call() {
-					Music.INSTANCE.play(Assets.Music.SEWERS_BOSS, true);
-				}
-			});
+			Game.runOnRenderThread(() -> Music.INSTANCE.play(Assets.Music.SEWERS_BOSS, true));
 		}
 	}
 	
@@ -189,12 +184,7 @@ public class SewerBossLevel extends SewerLevel {
 			set( entrance(), Terrain.ENTRANCE );
 			GameScene.updateMap( entrance() );
 
-			Game.runOnRenderThread(new Callback() {
-				@Override
-				public void call() {
-					Music.INSTANCE.end();
-				}
-			});
+			Game.runOnRenderThread(Music.INSTANCE::end);
 		}
 	}
 	

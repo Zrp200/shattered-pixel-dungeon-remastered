@@ -572,12 +572,9 @@ public class Tengu extends Mob {
 				reset(thrower.sprite,
 						finalTargetCell,
 						item,
-						new Callback() {
-							@Override
-							public void call() {
-								item.onThrow(finalTargetCell);
-								thrower.next();
-							}
+						() -> {
+							item.onThrow(finalTargetCell);
+							thrower.next();
 						});
 		return true;
 	}
@@ -929,12 +926,9 @@ public class Tengu extends Mob {
 				reset(thrower.sprite,
 						finalTargetCell,
 						item,
-						new Callback() {
-							@Override
-							public void call() {
-								item.onThrow(finalTargetCell);
-								thrower.next();
-							}
+						() -> {
+							item.onThrow(finalTargetCell);
+							thrower.next();
 						});
 		return true;
 	}

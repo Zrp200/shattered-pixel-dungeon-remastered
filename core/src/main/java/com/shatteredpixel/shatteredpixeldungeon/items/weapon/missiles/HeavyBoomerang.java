@@ -109,31 +109,28 @@ public class HeavyBoomerang extends MissileWeapon {
 					visual.reset( thrownPos,
 									returnPos,
 									boomerang,
-									new Callback() {
-										@Override
-										public void call() {
-											if (returnTarget == target){
-												if (target instanceof Hero && boomerang.doPickUp((Hero) target)) {
-													//grabbing the boomerang takes no time
-													((Hero) target).spend(-TIME_TO_PICK_UP);
-												} else {
-													Dungeon.level.drop(boomerang, returnPos).sprite.drop();
-												}
-												
-											} else if (returnTarget != null){
-												if (((Hero)target).shoot( returnTarget, boomerang )) {
-													boomerang.decrementDurability();
-												}
-												if (boomerang.durability > 0) {
-													Dungeon.level.drop(boomerang, returnPos).sprite.drop();
-												}
-												
-											} else {
-												Dungeon.level.drop(boomerang, returnPos).sprite.drop();
-											}
-											CircleBack.this.next();
-										}
-									});
+							() -> {
+								if (returnTarget == target){
+									if (target instanceof Hero && boomerang.doPickUp((Hero) target)) {
+										//grabbing the boomerang takes no time
+										((Hero) target).spend(-TIME_TO_PICK_UP);
+									} else {
+										Dungeon.level.drop(boomerang, returnPos).sprite.drop();
+									}
+
+								} else if (returnTarget != null){
+									if (((Hero)target).shoot( returnTarget, boomerang )) {
+										boomerang.decrementDurability();
+									}
+									if (boomerang.durability > 0) {
+										Dungeon.level.drop(boomerang, returnPos).sprite.drop();
+									}
+
+								} else {
+									Dungeon.level.drop(boomerang, returnPos).sprite.drop();
+								}
+								CircleBack.this.next();
+							});
 					visual.alpha(0f);
 					float duration = Dungeon.level.trueDistance(thrownPos, returnPos) / 20f;
 					target.sprite.getParent().add(new AlphaTweener(visual, 1f, duration));

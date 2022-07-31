@@ -187,12 +187,9 @@ public class UnstableSpellbook extends Artifact {
 			curUser = Dungeon.hero;
 			curItem = scroll;
 			scroll.anonymize();
-			Game.runOnRenderThread(new Callback() {
-				@Override
-				public void call() {
-					scroll.doRead();
-					Item.updateQuickslot();
-				}
+			Game.runOnRenderThread(() -> {
+				scroll.doRead();
+				Item.updateQuickslot();
 			});
 			detach();
 			return true;

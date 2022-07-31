@@ -582,43 +582,37 @@ public class Item implements Bundlable {
 					reset(user.sprite,
 							enemy.sprite,
 							this,
-							new Callback() {
-						@Override
-						public void call() {
-							curUser = user;
-							Item i = Item.this.detach(user.belongings.backpack);
-							if (i != null) i.onThrow(cell);
-							if (curUser.hasTalent(Talent.IMPROVISED_PROJECTILES)
-									&& !(Item.this instanceof MissileWeapon)
-									&& curUser.buff(Talent.ImprovisedProjectileCooldown.class) == null){
-								if (enemy != null && enemy.alignment != curUser.alignment){
-									Sample.INSTANCE.play(Assets.Sounds.HIT);
-									Buff.affect(enemy, Blindness.class, 1f + curUser.pointsInTalent(Talent.IMPROVISED_PROJECTILES));
-									Buff.affect(curUser, Talent.ImprovisedProjectileCooldown.class, 50f);
+							() -> {
+								curUser = user;
+								Item i = Item.this.detach(user.belongings.backpack);
+								if (i != null) i.onThrow(cell);
+								if (curUser.hasTalent(Talent.IMPROVISED_PROJECTILES)
+										&& !(Item.this instanceof MissileWeapon)
+										&& curUser.buff(Talent.ImprovisedProjectileCooldown.class) == null){
+									if (enemy != null && enemy.alignment != curUser.alignment){
+										Sample.INSTANCE.play(Assets.Sounds.HIT);
+										Buff.affect(enemy, Blindness.class, 1f + curUser.pointsInTalent(Talent.IMPROVISED_PROJECTILES));
+										Buff.affect(curUser, Talent.ImprovisedProjectileCooldown.class, 50f);
+									}
 								}
-							}
-							if (user.buff(Talent.LethalMomentumTracker.class) != null){
-								user.buff(Talent.LethalMomentumTracker.class).detach();
-								user.next();
-							} else {
-								user.spendAndNext(delay);
-							}
-						}
-					});
+								if (user.buff(Talent.LethalMomentumTracker.class) != null){
+									user.buff(Talent.LethalMomentumTracker.class).detach();
+									user.next();
+								} else {
+									user.spendAndNext(delay);
+								}
+							});
 		} else {
 			user.sprite.getParent().recycle(MissileSprite.class).
 					reset(user.sprite,
 							cell,
 							this,
-							new Callback() {
-						@Override
-						public void call() {
-							curUser = user;
-							Item i = Item.this.detach(user.belongings.backpack);
-							if (i != null) i.onThrow(cell);
-							user.spendAndNext(delay);
-						}
-					});
+							() -> {
+								curUser = user;
+								Item i = Item.this.detach(user.belongings.backpack);
+								if (i != null) i.onThrow(cell);
+								user.spendAndNext(delay);
+							});
 		}
 	}
 	

@@ -810,12 +810,7 @@ public class Hero extends Char {
 			
 			Heap heap = Dungeon.level.heaps.get( dst );
 			if (heap != null && heap.type == Type.FOR_SALE && heap.size() == 1) {
-				Game.runOnRenderThread(new Callback() {
-					@Override
-					public void call() {
-						GameScene.show( new WndTradeItem( heap ) );
-					}
-				});
+				Game.runOnRenderThread(() -> GameScene.show( new WndTradeItem( heap ) ));
 			}
 
 			return false;
@@ -1020,12 +1015,7 @@ public class Hero extends Char {
 
 			if (transition.type == LevelTransition.Type.SURFACE){
 				if (belongings.getItem( Amulet.class ) == null) {
-					Game.runOnRenderThread(new Callback() {
-						@Override
-						public void call() {
-							GameScene.show( new WndMessage( Messages.get(Hero.this, "leave") ) );
-						}
-					});
+					Game.runOnRenderThread(() -> GameScene.show( new WndMessage( Messages.get(Hero.this, "leave") ) ));
 					ready();
 				} else {
 					Statistics.ascended = true;
@@ -1042,25 +1032,20 @@ public class Hero extends Char {
 					&& belongings.getItem(Amulet.class) != null
 					&& buff(AscensionChallenge.class) == null) {
 
-				Game.runOnRenderThread(new Callback() {
+				Game.runOnRenderThread(() -> GameScene.show(new WndOptions( new ItemSprite(ItemSpriteSheet.AMULET),
+						Messages.get(Amulet.class, "ascent_title"),
+						Messages.get(Amulet.class, "ascent_desc"),
+						Messages.get(Amulet.class, "ascent_yes"),
+						Messages.get(Amulet.class, "ascent_no")){
 					@Override
-					public void call() {
-						GameScene.show( new WndOptions( new ItemSprite(ItemSpriteSheet.AMULET),
-								Messages.get(Amulet.class, "ascent_title"),
-								Messages.get(Amulet.class, "ascent_desc"),
-								Messages.get(Amulet.class, "ascent_yes"),
-								Messages.get(Amulet.class, "ascent_no")){
-							@Override
-							protected void onSelect(int index) {
-								if (index == 0){
-									Buff.affect(Hero.this, AscensionChallenge.class);
-									Statistics.highestAscent = 25;
-									actTransition(action);
-								}
-							}
-						} );
+					protected void onSelect(int index) {
+						if (index == 0){
+							Buff.affect(Hero.this, AscensionChallenge.class);
+							Statistics.highestAscent = 25;
+							actTransition(action);
+						}
 					}
-				});
+				} ));
 				ready();
 
 			} else {
@@ -1688,12 +1673,7 @@ public class Hero extends Char {
 				//this is needed because the actual creation of the window is delayed here
 				WndResurrect.instance = new Object();
 				Ankh finalAnkh = ankh;
-				Game.runOnRenderThread(new Callback() {
-					@Override
-					public void call() {
-						GameScene.show( new WndResurrect(finalAnkh) );
-					}
-				});
+				Game.runOnRenderThread(() -> GameScene.show( new WndResurrect(finalAnkh) ));
 
 				if (cause instanceof Hero.Doom) {
 					((Hero.Doom)cause).onDeath();
@@ -1768,12 +1748,9 @@ public class Hero extends Char {
 			}
 		}
 
-		Game.runOnRenderThread(new Callback() {
-			@Override
-			public void call() {
-				GameScene.gameOver();
-				Sample.INSTANCE.play( Assets.Sounds.DEATH );
-			}
+		Game.runOnRenderThread(() -> {
+			GameScene.gameOver();
+			Sample.INSTANCE.play( Assets.Sounds.DEATH );
 		});
 		
 		Dungeon.deleteGame( GamesInProgress.curSlot, true );

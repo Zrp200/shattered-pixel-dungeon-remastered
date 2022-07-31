@@ -106,26 +106,20 @@ public class FloatingText extends RenderedTextBlock {
 	/* STATIC METHODS */
 	
 	public static void show( float x, float y, String text, int color ) {
-		Game.runOnRenderThread(new Callback() {
-			@Override
-			public void call() {
-				FloatingText txt = GameScene.status();
-				if (txt != null){
-					txt.reset(x, y, text, color);
-				}
+		Game.runOnRenderThread(() -> {
+			FloatingText txt = GameScene.status();
+			if (txt != null){
+				txt.reset(x, y, text, color);
 			}
 		});
 	}
 	
 	public static void show( float x, float y, int key, String text, int color ) {
-		Game.runOnRenderThread(new Callback() {
-			@Override
-			public void call() {
-				FloatingText txt = GameScene.status();
-				if (txt != null){
-					txt.reset(x, y, text, color);
-					push(txt, key);
-				}
+		Game.runOnRenderThread(() -> {
+			FloatingText txt = GameScene.status();
+			if (txt != null){
+				txt.reset(x, y, text, color);
+				push(txt, key);
 			}
 		});
 	}

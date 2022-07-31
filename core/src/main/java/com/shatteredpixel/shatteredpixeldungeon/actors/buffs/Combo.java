@@ -281,12 +281,9 @@ public class Combo extends Buff implements ActionIndicator.Action {
 		public boolean act() {
 			if (target.buff(Combo.class) != null) {
 				moveBeingUsed = ComboMove.PARRY;
-				target.sprite.attack(enemy.pos, new Callback() {
-					@Override
-					public void call() {
-						target.buff(Combo.class).doAttack(enemy);
-						next();
-					}
+				target.sprite.attack(enemy.pos, () -> {
+					target.buff(Combo.class).doAttack(enemy);
+					next();
 				});
 				detach();
 				return false;
@@ -398,12 +395,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 				//fury attacks as many times as you have combo count
 				if (count > 0 && enemy.isAlive() && hero.canAttack(enemy) &&
 						(wasAlly || enemy.alignment != target.alignment)){
-					target.sprite.attack(enemy.pos, new Callback() {
-						@Override
-						public void call() {
-							doAttack(enemy);
-						}
-					});
+					target.sprite.attack(enemy.pos, () -> doAttack(enemy));
 				} else {
 					detach();
 					Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
@@ -452,20 +444,12 @@ public class Combo extends Buff implements ActionIndicator.Action {
 							GLog.w(Messages.get(Combo.class, "bad_target"));
 						} else {
 							Dungeon.hero.busy();
-							target.sprite.jump(target.pos, leapPos, new Callback() {
-								@Override
-								public void call() {
-									target.move(leapPos);
-									Dungeon.level.occupyCell(target);
-									Dungeon.observe();
-									GameScene.updateFog();
-									target.sprite.attack(cell, new Callback() {
-										@Override
-										public void call() {
-											doAttack(enemy);
-										}
-									});
-								}
+							target.sprite.jump(target.pos, leapPos, () -> {
+								target.move(leapPos);
+								Dungeon.level.occupyCell(target);
+								Dungeon.observe();
+								GameScene.updateFog();
+								target.sprite.attack(cell, () -> doAttack(enemy));
 							});
 						}
 					} else {
@@ -475,12 +459,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 
 			} else {
 				Dungeon.hero.busy();
-				target.sprite.attack(cell, new Callback() {
-					@Override
-					public void call() {
-						doAttack(enemy);
-					}
-				});
+				target.sprite.attack(cell, () -> doAttack(enemy));
 			}
 		}
 

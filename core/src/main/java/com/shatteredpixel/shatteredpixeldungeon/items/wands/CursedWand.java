@@ -88,12 +88,9 @@ public class CursedWand {
 
 	public static void cursedZap(final Item origin, final Char user, final Ballistica bolt, final Callback afterZap){
 
-		cursedFX(user, bolt, new Callback() {
-			@Override
-			public void call() {
-				if (cursedEffect(origin, user, bolt.collisionPos)){
-					if (afterZap != null) afterZap.call();
-				}
+		cursedFX(user, bolt, () -> {
+			if (cursedEffect(origin, user, bolt.collisionPos)){
+				if (afterZap != null) afterZap.call();
 			}
 		});
 	}

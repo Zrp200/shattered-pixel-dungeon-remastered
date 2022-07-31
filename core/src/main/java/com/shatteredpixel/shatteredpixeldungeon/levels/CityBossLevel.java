@@ -321,12 +321,7 @@ public class CityBossLevel extends Level {
 		GameScene.updateMap( bottomDoor );
 		Dungeon.observe();
 
-		Game.runOnRenderThread(new Callback() {
-			@Override
-			public void call() {
-				Music.INSTANCE.play(Assets.Music.CITY_BOSS, true);
-			}
-		});
+		Game.runOnRenderThread(() -> Music.INSTANCE.play(Assets.Music.CITY_BOSS, true));
 	}
 
 	@Override
@@ -344,12 +339,7 @@ public class CityBossLevel extends Level {
 		}
 		Dungeon.observe();
 
-		Game.runOnRenderThread(new Callback() {
-			@Override
-			public void call() {
-				Music.INSTANCE.end();
-			}
-		});
+		Game.runOnRenderThread(() -> Music.INSTANCE.end());
 	}
 
 	private void spawnShop(){

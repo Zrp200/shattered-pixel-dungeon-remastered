@@ -257,12 +257,7 @@ public class HallsBossLevel extends Level {
 
 		Dungeon.observe();
 
-		Game.runOnRenderThread(new Callback() {
-			@Override
-			public void call() {
-				Music.INSTANCE.end();
-			}
-		});
+		Game.runOnRenderThread(Music.INSTANCE::end);
 	}
 
 	@Override

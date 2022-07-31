@@ -74,20 +74,17 @@ public class WornDartTrap extends Trap {
 					protected boolean act() {
 						final Actor toRemove = this;
 						ShatteredPixelDungeon.scene().recycle(MissileSprite.class).
-							reset(pos, finalTarget.sprite, new Dart(), new Callback() {
-								@Override
-								public void call() {
-								int dmg = Random.NormalIntRange(4, 8) - finalTarget.drRoll();
-								finalTarget.damage(dmg, trap);
-								if (finalTarget == Dungeon.hero && !finalTarget.isAlive()){
-									Dungeon.fail( trap.getClass()  );
-								}
-								Sample.INSTANCE.play(Assets.Sounds.HIT, 1, 1, Random.Float(0.8f, 1.25f));
-								finalTarget.sprite.bloodBurstA(finalTarget.sprite.center(), dmg);
-								finalTarget.sprite.flash();
-								Actor.remove(toRemove);
-								next();
-								}
+							reset(pos, finalTarget.sprite, new Dart(), () -> {
+							int dmg = Random.NormalIntRange(4, 8) - finalTarget.drRoll();
+							finalTarget.damage(dmg, trap);
+							if (finalTarget == Dungeon.hero && !finalTarget.isAlive()){
+								Dungeon.fail( trap.getClass()  );
+							}
+							Sample.INSTANCE.play(Assets.Sounds.HIT, 1, 1, Random.Float(0.8f, 1.25f));
+							finalTarget.sprite.bloodBurstA(finalTarget.sprite.center(), dmg);
+							finalTarget.sprite.flash();
+							Actor.remove(toRemove);
+							next();
 							});
 						return false;
 					}

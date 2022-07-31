@@ -18,12 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
+package com.watabou.utils
 
-package com.watabou.utils;
-
-public interface Bundlable {
-
-	void restoreFromBundle( Bundle bundle );
-	void storeInBundle( Bundle bundle );
-	
+interface Callback {
+    fun call()
 }

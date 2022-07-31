@@ -310,26 +310,23 @@ public class PixelScene extends Scene {
 	}
 	
 	public static void showBadge( Badges.Badge badge ) {
-		Game.runOnRenderThread(new Callback() {
-			@Override
-			public void call() {
-				Scene s = Game.scene();
-				if (s != null) {
-					BadgeBanner banner = BadgeBanner.show(badge.image);
-					s.add(banner);
-					float offset = Camera.main.centerOffset.y;
+		Game.runOnRenderThread(() -> {
+			Scene s = Game.scene();
+			if (s != null) {
+				BadgeBanner banner = BadgeBanner.show(badge.image);
+				s.add(banner);
+				float offset = Camera.main.centerOffset.y;
 
-					int left = uiCamera.width/2 - BadgeBanner.SIZE/2;
-					left -= (BadgeBanner.SIZE * BadgeBanner.DEFAULT_SCALE * (BadgeBanner.showing.size()-1))/2;
-					for (int i = 0; i < BadgeBanner.showing.size(); i++){
-						banner = BadgeBanner.showing.get(i);
-						banner.setCamera(uiCamera);
-						banner.x = align(banner.getCamera(), left);
-						banner.y = align(uiCamera, (uiCamera.height - banner.height) / 2 - banner.height / 2 - 16 - offset);
-						left += BadgeBanner.SIZE * BadgeBanner.DEFAULT_SCALE;
-					}
-
+				int left = uiCamera.width/2 - BadgeBanner.SIZE/2;
+				left -= (BadgeBanner.SIZE * BadgeBanner.DEFAULT_SCALE * (BadgeBanner.showing.size()-1))/2;
+				for (int i = 0; i < BadgeBanner.showing.size(); i++){
+					banner = BadgeBanner.showing.get(i);
+					banner.setCamera(uiCamera);
+					banner.x = align(banner.getCamera(), left);
+					banner.y = align(uiCamera, (uiCamera.height - banner.height) / 2 - banner.height / 2 - 16 - offset);
+					left += BadgeBanner.SIZE * BadgeBanner.DEFAULT_SCALE;
 				}
+
 			}
 		});
 	}

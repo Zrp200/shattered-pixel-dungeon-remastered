@@ -153,12 +153,7 @@ public class Blacksmith extends NPC {
 			}
 		} else if (!Quest.reforged) {
 			
-			Game.runOnRenderThread(new Callback() {
-				@Override
-				public void call() {
-					GameScene.show( new WndBlacksmith( Blacksmith.this, Dungeon.hero ) );
-				}
-			});
+			Game.runOnRenderThread(() -> GameScene.show( new WndBlacksmith( Blacksmith.this, Dungeon.hero ) ));
 			
 		} else {
 			
@@ -170,12 +165,7 @@ public class Blacksmith extends NPC {
 	}
 	
 	private void tell( String text ) {
-		Game.runOnRenderThread(new Callback() {
-			@Override
-			public void call() {
-				GameScene.show( new WndQuest( Blacksmith.this, text ) );
-			}
-		});
+		Game.runOnRenderThread(() -> GameScene.show( new WndQuest( Blacksmith.this, text ) ));
 	}
 	
 	public static String verify( Item item1, Item item2 ) {

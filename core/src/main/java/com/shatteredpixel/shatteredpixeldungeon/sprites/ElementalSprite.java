@@ -114,12 +114,7 @@ public abstract class ElementalSprite extends MobSprite {
 				boltType,
 				this,
 				cell,
-				new Callback() {
-					@Override
-					public void call() {
-						((Elemental)ch).onZapComplete();
-					}
-				} );
+				() -> ((Elemental)ch).onZapComplete());
 		Sample.INSTANCE.play( Assets.Sounds.ZAP );
 	}
 	

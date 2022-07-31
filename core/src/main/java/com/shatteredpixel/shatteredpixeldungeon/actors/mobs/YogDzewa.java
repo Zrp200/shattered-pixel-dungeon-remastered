@@ -511,12 +511,7 @@ public class YogDzewa extends Mob {
 					((DriedRose.GhostHero) ch).sayBoss();
 				}
 			}
-			Game.runOnRenderThread(new Callback() {
-				@Override
-				public void call() {
-					Music.INSTANCE.play(Assets.Music.HALLS_BOSS, true);
-				}
-			});
+			Game.runOnRenderThread(() -> Music.INSTANCE.play(Assets.Music.HALLS_BOSS, true));
 			if (phase == 0) {
 				phase = 1;
 				summonCooldown = Random.NormalFloat(MIN_SUMMON_CD, MAX_SUMMON_CD);

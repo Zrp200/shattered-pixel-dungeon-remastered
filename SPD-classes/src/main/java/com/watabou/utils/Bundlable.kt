@@ -18,11 +18,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
+package com.watabou.utils
 
-package com.watabou.utils;
-
-public interface Callback {
-
-	void call();
-	
+interface Bundlable {
+    fun restoreFromBundle(bundle: Bundle)
+    fun storeInBundle(bundle: Bundle)
 }

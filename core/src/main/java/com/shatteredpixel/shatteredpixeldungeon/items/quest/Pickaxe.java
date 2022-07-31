@@ -108,27 +108,23 @@ public class Pickaxe extends Weapon {
 					hero.spend( TIME_TO_MINE );
 					hero.busy();
 					
-					hero.sprite.attack( pos, new Callback() {
-						
-						@Override
-						public void call() {
+					hero.sprite.attack( pos, () -> {
 
-							CellEmitter.center( pos ).burst( Speck.factory( Speck.STAR ), 7 );
-							Sample.INSTANCE.play( Assets.Sounds.EVOKE );
-							
-							Level.set( pos, Terrain.WALL );
-							GameScene.updateMap( pos );
-							
-							DarkGold gold = new DarkGold();
-							if (gold.doPickUp( Dungeon.hero )) {
-								GLog.i( Messages.get(Dungeon.hero, "you_now_have", gold.name()) );
-							} else {
-								Dungeon.level.drop( gold, hero.pos ).sprite.drop();
-							}
-							
-							hero.onOperateComplete();
+						CellEmitter.center( pos ).burst( Speck.factory( Speck.STAR ), 7 );
+						Sample.INSTANCE.play( Assets.Sounds.EVOKE );
+
+						Level.set( pos, Terrain.WALL );
+						GameScene.updateMap( pos );
+
+						DarkGold gold = new DarkGold();
+						if (gold.doPickUp( Dungeon.hero )) {
+							GLog.i( Messages.get(Dungeon.hero, "you_now_have", gold.name()) );
+						} else {
+							Dungeon.level.drop( gold, hero.pos ).sprite.drop();
 						}
-					} );
+
+						hero.onOperateComplete();
+					});
 					
 					return;
 				}

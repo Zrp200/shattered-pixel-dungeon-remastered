@@ -111,12 +111,7 @@ public class GolemSprite extends MobSprite {
 				MagicMissile.ELMO,
 				this,
 				cell,
-				new Callback() {
-					@Override
-					public void call() {
-						((Golem)ch).onZapComplete();
-					}
-				} );
+				() -> ((Golem)ch).onZapComplete());
 		Sample.INSTANCE.play( Assets.Sounds.ZAP );
 	}
 

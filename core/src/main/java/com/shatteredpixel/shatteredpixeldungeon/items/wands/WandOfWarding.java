@@ -398,23 +398,18 @@ public class WandOfWarding extends Wand {
 			if (c != Dungeon.hero){
 				return true;
 			}
-			Game.runOnRenderThread(new Callback() {
+			Game.runOnRenderThread(() -> GameScene.show(new WndOptions( sprite(),
+					Messages.get(Ward.this, "dismiss_title"),
+					Messages.get(Ward.this, "dismiss_body"),
+					Messages.get(Ward.this, "dismiss_confirm"),
+					Messages.get(Ward.this, "dismiss_cancel") ){
 				@Override
-				public void call() {
-					GameScene.show(new WndOptions( sprite(),
-							Messages.get(Ward.this, "dismiss_title"),
-							Messages.get(Ward.this, "dismiss_body"),
-							Messages.get(Ward.this, "dismiss_confirm"),
-							Messages.get(Ward.this, "dismiss_cancel") ){
-						@Override
-						protected void onSelect(int index) {
-							if (index == 0){
-								die(null);
-							}
-						}
-					});
+				protected void onSelect(int index) {
+					if (index == 0){
+						die(null);
+					}
 				}
-			});
+			}));
 			return true;
 		}
 

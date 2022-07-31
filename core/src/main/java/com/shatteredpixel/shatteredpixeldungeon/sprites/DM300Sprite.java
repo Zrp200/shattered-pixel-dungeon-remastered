@@ -91,12 +91,7 @@ public class DM300Sprite extends MobSprite {
 				MagicMissile.TOXIC_VENT,
 				this,
 				cell,
-				new Callback() {
-					@Override
-					public void call() {
-						((DM300)ch).onZapComplete();
-					}
-				} );
+				() -> ((DM300)ch).onZapComplete());
 		Sample.INSTANCE.play( Assets.Sounds.GAS );
 	}
 

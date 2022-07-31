@@ -147,12 +147,7 @@ public class Shopkeeper extends NPC {
 		if (c != Dungeon.hero) {
 			return true;
 		}
-		Game.runOnRenderThread(new Callback() {
-			@Override
-			public void call() {
-				sell();
-			}
-		});
+		Game.runOnRenderThread(Shopkeeper::sell);
 		return true;
 	}
 }

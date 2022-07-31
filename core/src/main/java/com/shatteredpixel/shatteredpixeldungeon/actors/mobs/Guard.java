@@ -95,15 +95,9 @@ public class Guard extends Mob {
 					yell(Messages.get(this, "scorpion"));
 					new Item().throwSound();
 					Sample.INSTANCE.play(Assets.Sounds.CHAINS);
-					sprite.getParent().add(new Chains(sprite.center(), enemy.sprite.destinationCenter(), new Callback() {
-						public void call() {
-							Actor.addDelayed(new Pushing(enemy, enemy.pos, newPosFinal, new Callback() {
-								public void call() {
-									pullEnemy(enemy, newPosFinal);
-								}
-							}), -1);
-							next();
-						}
+					sprite.getParent().add(new Chains(sprite.center(), enemy.sprite.destinationCenter(), () -> {
+						Actor.addDelayed(new Pushing(enemy, enemy.pos, newPosFinal, () -> pullEnemy(enemy, newPosFinal)), -1);
+						next();
 					}));
 				} else {
 					pullEnemy(enemy, newPos);

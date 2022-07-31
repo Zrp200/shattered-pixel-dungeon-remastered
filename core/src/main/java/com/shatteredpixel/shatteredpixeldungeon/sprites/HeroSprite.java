@@ -124,12 +124,9 @@ public class HeroSprite extends CharSprite {
 	}
 
 	public void read() {
-		animCallback = new Callback() {
-			@Override
-			public void call() {
-				idle();
-				ch.onOperateComplete();
-			}
+		animCallback = () -> {
+			idle();
+			ch.onOperateComplete();
 		};
 		play( read );
 	}

@@ -299,12 +299,7 @@ public class CavesBossLevel extends Level {
 		} while (!openSpace[boss.pos] || map[boss.pos] == Terrain.EMPTY_SP || Actor.findChar(boss.pos) != null);
 		GameScene.add( boss );
 
-		Game.runOnRenderThread(new Callback() {
-			@Override
-			public void call() {
-				Music.INSTANCE.play(Assets.Music.CAVES_BOSS, true);
-			}
-		});
+		Game.runOnRenderThread(() -> Music.INSTANCE.play(Assets.Music.CAVES_BOSS, true));
 
 	}
 
@@ -328,12 +323,7 @@ public class CavesBossLevel extends Level {
 
 		Dungeon.observe();
 
-		Game.runOnRenderThread(new Callback() {
-			@Override
-			public void call() {
-				Music.INSTANCE.end();
-			}
-		});
+		Game.runOnRenderThread(Music.INSTANCE::end);
 
 	}
 
