@@ -63,7 +63,7 @@ public class Pushing extends Actor {
 				sprite.setVisible(true);
 			}
 			if (effect == null) {
-				new Effect();
+				effect = new Effect();
 			}
 		}
 

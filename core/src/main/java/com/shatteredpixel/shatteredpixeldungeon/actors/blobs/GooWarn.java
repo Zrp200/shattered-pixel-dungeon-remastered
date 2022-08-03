@@ -37,8 +37,6 @@ public class GooWarn extends Blob {
 		actPriority = MOB_PRIO + 1;
 	}
 
-	protected int pos;
-
 	@Override
 	protected void evolve() {
 

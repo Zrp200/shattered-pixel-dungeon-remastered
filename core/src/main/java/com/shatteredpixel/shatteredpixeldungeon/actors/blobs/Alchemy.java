@@ -30,8 +30,6 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 public class Alchemy extends Blob {
-
-	protected int pos;
 	
 	@Override
 	protected void evolve() {

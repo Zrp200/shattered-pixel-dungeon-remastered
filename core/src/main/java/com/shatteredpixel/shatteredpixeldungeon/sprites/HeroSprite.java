@@ -157,7 +157,7 @@ public class HeroSprite extends CharSprite {
 	public static TextureFilm tiers() {
 		if (tiers == null) {
 			Texture texture = Texture.Companion.get( Assets.Sprites.ROGUE );
-			tiers = new TextureFilm( texture, texture.bitmap.getWidth(), FRAME_HEIGHT );
+			tiers = new TextureFilm( texture, texture.getWidth(), FRAME_HEIGHT );
 		}
 		
 		return tiers;

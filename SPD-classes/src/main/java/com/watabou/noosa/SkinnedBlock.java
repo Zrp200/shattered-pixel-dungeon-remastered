@@ -57,22 +57,22 @@ public class SkinnedBlock extends Image {
 	protected void updateFrame() {
 
 		if (autoAdjust) {
-			while (offsetX > texture.bitmap.getWidth()) {
-				offsetX -= texture.bitmap.getWidth();
+			while (offsetX > texture.getWidth()) {
+				offsetX -= texture.getWidth();
 			}
-			while (offsetX < -texture.bitmap.getWidth()) {
-				offsetX += texture.bitmap.getHeight();
+			while (offsetX < -texture.getWidth()) {
+				offsetX += texture.getHeight();
 			}
-			while (offsetY > texture.bitmap.getHeight()) {
-				offsetY -= texture.bitmap.getHeight();
+			while (offsetY > texture.getHeight()) {
+				offsetY -= texture.getHeight();
 			}
-			while (offsetY < -texture.bitmap.getHeight()) {
-				offsetY += texture.bitmap.getHeight();
+			while (offsetY < -texture.getHeight()) {
+				offsetY += texture.getHeight();
 			}
 		}
 
-		float tw = 1f / texture.bitmap.getWidth();
-		float th = 1f / texture.bitmap.getHeight();
+		float tw = 1f / texture.getWidth();
+		float th = 1f / texture.getHeight();
 		
 		float u0 = offsetX * tw;
 		float v0 = offsetY * th;

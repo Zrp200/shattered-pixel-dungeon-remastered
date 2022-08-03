@@ -88,7 +88,6 @@ public class GitHubUpdates extends UpdateService {
 						AvailableUpdateData update = new AvailableUpdateData();
 
 						update.versionName = latestRelease.getString("name");
-						update.versionCode = latestVersionCode;
 						Matcher m = descPattern.matcher(latestRelease.getString("body"));
 						m.find();
 						update.desc = m.group(1);

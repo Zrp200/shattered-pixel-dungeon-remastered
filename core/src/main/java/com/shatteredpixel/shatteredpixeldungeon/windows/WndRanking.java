@@ -67,9 +67,6 @@ public class WndRanking extends WndTabbed {
 	
 	private static WndRanking INSTANCE;
 	
-	private String gameID;
-	private Rankings.Record record;
-	
 	public WndRanking( final Rankings.Record rec ) {
 		
 		super();
@@ -79,9 +76,6 @@ public class WndRanking extends WndTabbed {
 			INSTANCE.hide();
 		}
 		INSTANCE = this;
-
-		this.gameID = rec.gameID;
-		this.record = rec;
 
 		try {
 			Badges.loadGlobal();

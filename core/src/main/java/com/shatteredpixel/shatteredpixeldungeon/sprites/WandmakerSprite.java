@@ -30,8 +30,6 @@ import com.watabou.noosa.audio.Sample;
 
 public class WandmakerSprite extends MobSprite {
 	
-	private ShieldHalo shield;
-	
 	public WandmakerSprite() {
 		super();
 		

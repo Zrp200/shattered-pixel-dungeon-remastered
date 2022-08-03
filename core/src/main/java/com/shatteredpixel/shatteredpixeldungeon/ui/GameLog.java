@@ -33,10 +33,6 @@ import java.util.regex.Pattern;
 
 public class GameLog extends Component implements Signal.Listener<String> {
 
-	private static final int MAX_LINES = 3;
-
-	private static final Pattern PUNCTUATION = Pattern.compile( ".*[.,;?! ]$" );
-
 	private RenderedTextBlock lastEntry;
 	private int lastColor;
 

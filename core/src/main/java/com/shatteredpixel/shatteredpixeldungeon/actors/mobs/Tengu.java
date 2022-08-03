@@ -372,9 +372,6 @@ public class Tengu extends Mob {
 		if (HP <= HT/2) BossHealthBar.bleed(true);
 	}
 	
-	//don't bother bundling this, as its purely cosmetic
-	private boolean yelledCoward = false;
-	
 	//tengu is always hunting
 	private class Hunting extends Mob.Hunting{
 		

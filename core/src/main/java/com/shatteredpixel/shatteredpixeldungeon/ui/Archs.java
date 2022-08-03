@@ -70,10 +70,10 @@ public class Archs extends Component {
 	@Override
 	protected void layout() {
 		arcsBg.size( width, height );
-		arcsBg.offset( arcsBg.texture.bitmap.getWidth() / 4 - (width % arcsBg.texture.bitmap.getWidth()) / 2, 0 );
+		arcsBg.offset( arcsBg.texture.getWidth() / 4 - (width % arcsBg.texture.getWidth()) / 2, 0 );
 
 		arcsFg.size( width, height );
-		arcsFg.offset( arcsFg.texture.bitmap.getWidth() / 4 - (width % arcsFg.texture.bitmap.getWidth()) / 2, 0 );
+		arcsFg.offset( arcsFg.texture.getWidth() / 4 - (width % arcsFg.texture.getWidth()) / 2, 0 );
 
 		darkness.x = width;
 		darkness.scale.x = height/5f;

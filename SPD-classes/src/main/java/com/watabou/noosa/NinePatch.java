@@ -32,8 +32,7 @@ import java.nio.FloatBuffer;
 public class NinePatch extends Visual {
 	
 	public Texture texture;
-	
-	protected float[] vertices;
+
 	protected FloatBuffer quads;
 	protected VertexDataset buffer;
 	
@@ -44,9 +43,6 @@ public class NinePatch extends Visual {
 	protected int marginRight;
 	protected int marginTop;
 	protected int marginBottom;
-	
-	protected float nWidth;
-	protected float nHeight;
 
 	protected boolean flipHorizontal;
 	protected boolean flipVertical;
@@ -69,13 +65,9 @@ public class NinePatch extends Visual {
 		super( 0, 0, 0, 0 );
 		
 		texture = Texture.Companion.get( tx );
-		w = w == 0 ? texture.bitmap.getWidth() : w;
-		h = h == 0 ? texture.bitmap.getHeight() : h;
-		
-		nWidth = width = w;
-		nHeight = height = h;
-		
-		vertices = new float[16];
+		w = w == 0 ? texture.getWidth() : w;
+		h = h == 0 ? texture.getHeight() : h;
+
 		quads = QuadKt.createSet( 9 );
 
 		marginLeft	= left;

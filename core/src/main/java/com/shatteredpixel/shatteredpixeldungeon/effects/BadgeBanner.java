@@ -157,7 +157,7 @@ public class BadgeBanner extends Image {
 
 			int size = 16;
 
-			int cols = tx.bitmap.getWidth() / size;
+			int cols = tx.getWidth() / size;
 			int row = index / cols;
 			int col = index % cols;
 

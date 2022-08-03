@@ -166,8 +166,6 @@ public class GameScene extends PixelScene {
 	private Group levelVisuals;
 	private Group customWalls;
 	private Group ripples;
-	private Group plants;
-	private Group traps;
 	private Group heaps;
 	private Group mobs;
 	private Group floorEmitters;

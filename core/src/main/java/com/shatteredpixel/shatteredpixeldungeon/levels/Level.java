@@ -148,9 +148,6 @@ public abstract class Level implements Bundlable {
 	public boolean[] openSpace;
 	
 	public Feeling feeling = Feeling.NONE;
-	
-	public int entrance;
-	public int exit;
 
 	public ArrayList<LevelTransition> transitions;
 

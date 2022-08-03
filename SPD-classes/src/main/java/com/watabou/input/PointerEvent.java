@@ -44,7 +44,7 @@ public class PointerEvent {
 	public static final int RIGHT = Input.Buttons.RIGHT;
 	public static final int MIDDLE = Input.Buttons.MIDDLE;
 	public static final int BACK = Input.Buttons.BACK; //currently unused
-	public static final int FORWARD = Input.Buttons.FORWARD;//currently unused
+	public static final int FORWARD = Input.Buttons.FORWARD;
 
 	public PointF start;
 	public PointF current;

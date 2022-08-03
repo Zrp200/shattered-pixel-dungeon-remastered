@@ -66,10 +66,6 @@ public enum Rankings {
 	public int totalNumber;
 	public int wonNumber;
 
-	//The number of runs which are only present locally, not in the cloud
-	public int localTotal;
-	public int localWon;
-
 	public Record latestDaily;
 	public LinkedHashMap<Long, Integer> dailyScoreHistory = new LinkedHashMap<>();
 

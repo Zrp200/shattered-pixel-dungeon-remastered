@@ -201,9 +201,7 @@ public class Hero extends Char {
 	public Belongings belongings;
 	
 	public int STR;
-	
-	public float awareness;
-	
+
 	public int lvl = 1;
 	public int exp = 0;
 	

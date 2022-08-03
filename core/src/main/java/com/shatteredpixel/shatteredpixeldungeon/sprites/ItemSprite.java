@@ -367,7 +367,7 @@ public class ItemSprite extends MovieClip {
 
 	public static int pick( int index, int x, int y ) {
 		Texture tx = Texture.Companion.get( Assets.Sprites.ITEMS );
-		int rows = tx.bitmap.getWidth() / SIZE;
+		int rows = tx.getWidth() / SIZE;
 		int row = index / rows;
 		int col = index % rows;
 		return tx.bitmap.getPixel( col * SIZE + x, row * SIZE + y );

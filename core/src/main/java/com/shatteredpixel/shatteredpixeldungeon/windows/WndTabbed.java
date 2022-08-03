@@ -249,7 +249,7 @@ public class WndTabbed extends Window {
 				//if some of the icon is going into the window, cut it off
 				if (icon.y < y + CUT) {
 					RectF frame = icon.frame();
-					frame.top += (y + CUT - icon.y) / icon.texture.bitmap.getHeight();
+					frame.top += (y + CUT - icon.y) / icon.texture.getHeight();
 					icon.frame( frame );
 					icon.y = y + CUT;
 				}

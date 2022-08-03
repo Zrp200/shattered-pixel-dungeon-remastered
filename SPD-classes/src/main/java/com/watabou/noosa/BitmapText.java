@@ -222,8 +222,6 @@ public class BitmapText extends Visual {
 		public float tracking = 0;
 		public float baseLine;
 		
-		public float lineHeight;
-		
 		protected Font( Texture tx ) {
 			super( tx );
 			
@@ -231,7 +229,7 @@ public class BitmapText extends Visual {
 		}
 		
 		public Font( Texture tx, int width, String chars ) {
-			this( tx, width, tx.bitmap.getHeight(), chars );
+			this( tx, width, tx.getHeight(), chars );
 		}
 		
 		public Font( Texture tx, int width, int height, String chars ) {
@@ -241,8 +239,8 @@ public class BitmapText extends Visual {
 			
 			int length = chars.length();
 			
-			float uw = (float)width / tx.bitmap.getWidth();
-			float vh = (float)height / tx.bitmap.getHeight();
+			float uw = (float)width / tx.getWidth();
+			float vh = (float)height / tx.getHeight();
 			
 			float left = 0;
 			float top = 0;
@@ -257,8 +255,6 @@ public class BitmapText extends Visual {
 					bottom += vh;
 				}
 			}
-			
-			lineHeight = baseLine = height;
 		}
 
 		protected void splitBy( Pixmap bitmap, int height, int color, String chars ) {
@@ -328,8 +324,6 @@ public class BitmapText extends Visual {
 					separator++;
 				}
 			}
-			
-			lineHeight = baseLine = height( frames.get( chars.charAt( 0 ) ) );
 		}
 		
 		private boolean colorNotMatch(Pixmap pixmap, int x, int y, int color) {
@@ -342,7 +336,7 @@ public class BitmapText extends Visual {
 		
 		public static Font colorMarked( Texture tex, int color, String chars ) {
 			Font font = new Font( tex );
-			font.splitBy( tex.bitmap, tex.bitmap.getHeight(), color, chars );
+			font.splitBy( tex.bitmap, tex.getHeight(), color, chars );
 			return font;
 		}
 		 

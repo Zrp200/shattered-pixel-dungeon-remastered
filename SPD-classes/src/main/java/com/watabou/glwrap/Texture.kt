@@ -29,6 +29,11 @@ open class Texture(@JvmField var bitmap: Pixmap, private var filtering: Int, pri
 
     private var id = -1
 
+    val width
+        get() = bitmap.width
+    val height
+        get() = bitmap.height
+
     val generated
         get() = id != -1
 

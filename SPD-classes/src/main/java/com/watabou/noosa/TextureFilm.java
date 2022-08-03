@@ -39,22 +39,22 @@ public class TextureFilm {
 
 		Texture texture = Texture.Companion.get( tx );
 		
-		texWidth = texture.bitmap.getWidth();
-		texHeight = texture.bitmap.getHeight();
+		texWidth = texture.getWidth();
+		texHeight = texture.getHeight();
 		
 		add( null, FULL );
 	}
 	
 	public TextureFilm( Texture texture, int width ) {
-		this( texture, width, texture.bitmap.getHeight() );
+		this( texture, width, texture.getHeight() );
 	}
 	
 	public TextureFilm( Object tx, int width, int height ) {
 
 		Texture texture = Texture.Companion.get( tx );
 		
-		texWidth = texture.bitmap.getWidth();
-		texHeight = texture.bitmap.getHeight();
+		texWidth = texture.getWidth();
+		texHeight = texture.getHeight();
 		
 		float uw = (float)width / texWidth;
 		float vh = (float)height / texHeight;

@@ -710,8 +710,6 @@ public class PrisonBossLevel extends Level {
 			texture = Assets.Environment.TERRAIN_FEATURES;
 		}
 		
-		Rect area;
-		
 		private float fadeDuration = 1f;
 		private float initialAlpha = .4f;
 		private float fadeDelay = 1f;
@@ -721,8 +719,6 @@ public class PrisonBossLevel extends Level {
 			tileY = area.top;
 			tileH = area.bottom - area.top;
 			tileW = area.right - area.left;
-			
-			this.area = area;
 		}
 		
 		@Override

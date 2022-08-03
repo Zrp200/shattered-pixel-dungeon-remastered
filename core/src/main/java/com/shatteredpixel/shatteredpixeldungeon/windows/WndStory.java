@@ -39,10 +39,6 @@ public class WndStory extends Window {
 	private static final int WIDTH_L = 160;
 	private static final int MARGIN = 2;
 	
-	private static final float bgR	= 0.77f;
-	private static final float bgG	= 0.73f;
-	private static final float bgB	= 0.62f;
-	
 	public static final int ID_SEWERS		= 0;
 	public static final int ID_PRISON		= 1;
 	public static final int ID_CAVES		= 2;

@@ -193,7 +193,6 @@ public class CloakOfShadows extends Artifact {
 		return super.upgrade();
 	}
 
-	private static final String STEALTHED = "stealthed";
 	private static final String BUFF = "buff";
 
 	@Override
@@ -372,8 +371,7 @@ public class CloakOfShadows extends Artifact {
 		}
 		
 		private static final String TURNSTOCOST = "turnsToCost";
-		private static final String BARRIER_INC = "barrier_inc";
-		
+
 		@Override
 		public void storeInBundle(Bundle bundle) {
 			super.storeInBundle(bundle);

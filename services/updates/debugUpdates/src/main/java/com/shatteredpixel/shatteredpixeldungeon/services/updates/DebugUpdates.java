@@ -48,7 +48,6 @@ public class DebugUpdates extends UpdateService {
 		}
 
 		debugUpdateInfo = new AvailableUpdateData();
-		debugUpdateInfo.versionCode = Game.versionCode+1;
 		debugUpdateInfo.URL = "http://www.google.com";
 
 		callback.onUpdateAvailable(debugUpdateInfo);
