@@ -67,7 +67,7 @@ public class RenderedTextBlock extends Component {
 
 		if (text != null && !text.equals("")) {
 			
-			tokens = Game.platform.splitforTextBlock(text, multiline);
+			tokens = Game.platform.splitForTextBlock(text, multiline);
 			
 			build();
 		}

@@ -141,7 +141,7 @@ public class DesktopPlatformSupport extends PlatformSupport {
 					"(?<=\\p{InCJK_Symbols_and_Punctuation})|(?=\\p{InCJK_Symbols_and_Punctuation})");
 	
 	@Override
-	public String[] splitforTextBlock(String text, boolean multiline) {
+	public String[] splitForTextBlock(String text, boolean multiline) {
 		if (multiline) {
 			return regularsplitterMultiline.split(text);
 		} else {

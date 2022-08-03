@@ -26,12 +26,8 @@ import com.watabou.noosa.Game;
 import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.Random;
 
-import java.awt.MediaTracker;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public enum Music {
 	
@@ -132,12 +128,7 @@ public enum Music {
 			//we do this in a separate thread to avoid graphics hitching while the music is prepared
 			//FIXME this fixes graphics stutter but there's still some audio stutter, perhaps keep more than 1 player alive?
 			if (!DeviceCompat.isDesktop()) {
-				new Thread() {
-					@Override
-					public void run() {
-						playNextTrack(music);
-					}
-				}.start();
+				new Thread(() -> playNextTrack(music)).start();
 			} else {
 				//don't use a separate thread on desktop, causes errors and makes no performance difference(?)
 				playNextTrack(music);

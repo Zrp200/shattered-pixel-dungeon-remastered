@@ -22,18 +22,14 @@
 package com.shatteredpixel.shatteredpixeldungeon.ios;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.backends.iosrobovm.IOSGraphics;
 import com.badlogic.gdx.backends.iosrobovm.objectal.OALSimpleAudio;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.watabou.noosa.Game;
 import com.watabou.utils.PlatformSupport;
-
 import org.robovm.apple.audiotoolbox.AudioServices;
 import org.robovm.apple.systemconfiguration.SCNetworkReachability;
 import org.robovm.apple.systemconfiguration.SCNetworkReachabilityFlags;
@@ -83,6 +79,7 @@ public class IOSPlatformSupport extends PlatformSupport {
 		return !test.getFlags().contains(SCNetworkReachabilityFlags.IsWWAN);
 	}
 
+	@Override
 	public void vibrate( int millis ){
 		//gives a short vibrate on iPhone 6+, no vibration otherwise
 		AudioServices.playSystemSound(1520);
@@ -139,7 +136,7 @@ public class IOSPlatformSupport extends PlatformSupport {
 	}
 
 	//splits on newlines, underscores, and chinese/japaneses characters
-	private Pattern regularsplitter = Pattern.compile(
+	private final Pattern regularSplitter = Pattern.compile(
 			"(?<=\n)|(?=\n)|(?<=_)|(?=_)|" +
 					"(?<=\\p{InHiragana})|(?=\\p{InHiragana})|" +
 					"(?<=\\p{InKatakana})|(?=\\p{InKatakana})|" +
@@ -147,7 +144,7 @@ public class IOSPlatformSupport extends PlatformSupport {
 					"(?<=\\p{InCJK_Symbols_and_Punctuation})|(?=\\p{InCJK_Symbols_and_Punctuation})");
 
 	//additionally splits on words, so that each word can be arranged individually
-	private Pattern regularsplitterMultiline = Pattern.compile(
+	private final Pattern regularSplitterMultiline = Pattern.compile(
 			"(?<= )|(?= )|(?<=\n)|(?=\n)|(?<=_)|(?=_)|" +
 					"(?<=\\p{InHiragana})|(?=\\p{InHiragana})|" +
 					"(?<=\\p{InKatakana})|(?=\\p{InKatakana})|" +
@@ -155,11 +152,11 @@ public class IOSPlatformSupport extends PlatformSupport {
 					"(?<=\\p{InCJK_Symbols_and_Punctuation})|(?=\\p{InCJK_Symbols_and_Punctuation})");
 
 	@Override
-	public String[] splitforTextBlock(String text, boolean multiline) {
+	public String[] splitForTextBlock(String text, boolean multiline) {
 		if (multiline) {
-			return regularsplitterMultiline.split(text);
+			return regularSplitterMultiline.split(text);
 		} else {
-			return regularsplitter.split(text);
+			return regularSplitter.split(text);
 		}
 	}
 }

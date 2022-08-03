@@ -47,8 +47,8 @@ public abstract class PlatformSupport {
 		//does nothing by default
 	}
 
-	public boolean openURI( String uri ){
-		return Gdx.net.openURI( uri );
+	public void openURI(String uri ){
+		Gdx.net.openURI(uri);
 	}
 
 	//TODO should consider spinning this into its own class, rather than platform support getting ever bigger
@@ -62,11 +62,7 @@ public abstract class PlatformSupport {
 
 	protected abstract FreeTypeFontGenerator getGeneratorForString( String input );
 
-	public abstract String[] splitforTextBlock( String text, boolean multiline );
-
-	public void resetGenerators(){
-		resetGenerators( true );
-	}
+	public abstract String[] splitForTextBlock(String text, boolean multiline );
 
 	public void resetGenerators( boolean setupAfter ){
 		if (fonts != null) {

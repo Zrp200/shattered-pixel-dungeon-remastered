@@ -212,7 +212,7 @@ public class WndSettings extends WndTabbed {
 		ShatteredPixelDungeon.seamlessResetScene(new Game.SceneChangeCallback() {
 			@Override
 			public void beforeCreate() {
-				Game.platform.resetGenerators();
+				Game.platform.resetGenerators(true);
 			}
 			@Override
 			public void afterCreate() {
@@ -1087,7 +1087,7 @@ public class WndSettings extends WndTabbed {
 							public void beforeCreate() {
 								SPDSettings.language(langs.get(langIndex));
 								GameLog.wipe();
-								Game.platform.resetGenerators();
+								Game.platform.resetGenerators(true);
 							}
 							@Override
 							public void afterCreate() {

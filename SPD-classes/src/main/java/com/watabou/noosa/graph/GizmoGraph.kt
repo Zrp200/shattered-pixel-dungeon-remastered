@@ -23,23 +23,22 @@ fun updateGraph(group: Group) {
 
     updateNode(group)
 
-    graph.nodes().forEach { if (it != null && !it.hasAttribute("retain")) graph.removeNode(it) }
-    graph.forEach { it.removeAttribute("retain") }
-
-    for (node in graph) {
-        node.setAttribute("ui.label", node.id.substringAfterLast(".").substringBefore("@"))
+    graph.forEach { if (it != null && !it.hasAttribute("retain")) graph.removeNode(it) }
+    graph.forEach {
+        it.removeAttribute("retain")
+        it.setAttribute("ui.label", it.id.substringAfterLast(".").substringBefore("@"))
     }
 }
 
 private fun updateNode(group: Group) {
     synchronized(group) {
-        val childrenField = Group::class.java.getDeclaredField("children")
-        childrenField.isAccessible = true
-        val children = childrenField.get(group) as ArrayList<*>
-        for (child in children) {
-            graph.addEdge("$group->$child", "$group", "$child")
-            graph.getNode("$child").setAttribute("retain")
-            if (child is Group) updateNode(child)
-        }
+        (Group::class.java.getDeclaredField("children")
+            .apply { isAccessible = true }
+            .get(group) as ArrayList<*>)
+            .forEach { child ->
+                graph.addEdge("$group->$child", "$group", "$child")
+                graph.getNode("$child").setAttribute("retain")
+                if (child is Group) updateNode(child)
+            }
     }
 }
