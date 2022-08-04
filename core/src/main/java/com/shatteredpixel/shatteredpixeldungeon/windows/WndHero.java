@@ -137,8 +137,8 @@ public class WndHero extends WndTabbed {
 
 		public void initialize(){
 
-			for (Gizmo g : getChildren()){
-				if (g != null) g.destroy();
+			while (getChildren().size() > 0) {
+				getChildren().get(0).destroy();
 			}
 			clear();
 			

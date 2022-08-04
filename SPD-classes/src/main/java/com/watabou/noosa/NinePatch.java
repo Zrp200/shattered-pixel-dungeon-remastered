@@ -68,6 +68,9 @@ public class NinePatch extends Visual {
 		w = w == 0 ? texture.getWidth() : w;
 		h = h == 0 ? texture.getHeight() : h;
 
+		width = w;
+		height = h;
+
 		quads = QuadKt.createSet( 9 );
 
 		marginLeft	= left;
