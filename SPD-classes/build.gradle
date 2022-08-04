@@ -17,6 +17,7 @@ dependencies {
     //noinspection GradleDependency, later JSON versions cause crashes on old versions of android
     implementation "org.json:json:20170516"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
 
 buildscript {

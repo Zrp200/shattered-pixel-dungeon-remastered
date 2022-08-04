@@ -25,7 +25,6 @@ import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.particles.Emitter.Factory;
 import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.ColorMathKt;
-import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
 import static com.watabou.utils.MathKt.PI2;

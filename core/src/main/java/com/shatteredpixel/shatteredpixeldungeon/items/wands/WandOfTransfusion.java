@@ -45,7 +45,6 @@ import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
-import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
 import static com.watabou.utils.MathKt.PI2;

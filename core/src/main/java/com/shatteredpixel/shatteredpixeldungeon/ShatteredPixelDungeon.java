@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon;
 
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfMetamorphosis;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.TitleScene;
@@ -29,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.WelcomeScene;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.Bundle;
 import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.PlatformSupport;
 
@@ -44,57 +44,57 @@ public class ShatteredPixelDungeon extends Game {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );
 
 		//pre-v1.3.0
-		com.watabou.utils.Bundle.addAlias(
+		Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Bleeding.class,
 				"com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm$FallBleed" );
-		com.watabou.utils.Bundle.addAlias(
+		Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.plants.Mageroyal.class,
 				"com.shatteredpixel.shatteredpixeldungeon.plants.Dreamfoil" );
-		com.watabou.utils.Bundle.addAlias(
+		Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.plants.Mageroyal.Seed.class,
 				"com.shatteredpixel.shatteredpixeldungeon.plants.Dreamfoil$Seed" );
 
-		com.watabou.utils.Bundle.addAlias(
+		Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Dazzling.class,
 				"com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Exhausting" );
-		com.watabou.utils.Bundle.addAlias(
+		Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Explosive.class,
 				"com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Fragile" );
 
 		//pre-v1.2.0
-		com.watabou.utils.Bundle.addAlias(
+		Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.CleansingDart.class,
 				"com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts.SleepDart" );
 
-		com.watabou.utils.Bundle.addAlias(
+		Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.CrystalVaultRoom.class,
 				"com.shatteredpixel.shatteredpixeldungeon.levels.rooms.special.VaultRoom" );
 
 		//pre-v1.1.0
-		com.watabou.utils.Bundle.addAlias(
+		Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfDread.class,
 				"com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfPetrification" );
-		com.watabou.utils.Bundle.addAlias(
+		Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfSirensSong.class,
 				"com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfAffection" );
-		com.watabou.utils.Bundle.addAlias(
+		Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfChallenge.class,
 				"com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfConfusion" );
-		com.watabou.utils.Bundle.addAlias(
+		Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfDivineInspiration.class,
 				"com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfHolyFuror" );
-		com.watabou.utils.Bundle.addAlias(
+		Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfMastery.class,
 				"com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfAdrenalineSurge" );
-		com.watabou.utils.Bundle.addAlias(
-				ScrollOfMetamorphosis.class,
+		Bundle.addAlias(
+				com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfMetamorphosis.class,
 				"com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfPolymorph" );
 
 		//pre-v1.0.0
-		com.watabou.utils.Bundle.addAlias(
+		Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfFear.class,
 				"com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfAffection" );
-		com.watabou.utils.Bundle.addAlias(
+		Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfDeepSleep.class,
 				"com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfDeepenedSleep" );
 		

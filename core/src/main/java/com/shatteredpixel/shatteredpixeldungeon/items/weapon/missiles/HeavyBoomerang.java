@@ -31,7 +31,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.MissileSprite;
 import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Callback;
 
 public class HeavyBoomerang extends MissileWeapon {
 	

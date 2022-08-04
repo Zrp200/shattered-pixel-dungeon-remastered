@@ -30,7 +30,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BuffIndicator;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.PointF;
 
 import static com.watabou.utils.MathKt.HALF_PI;
 import static com.watabou.utils.MathKt.PI;

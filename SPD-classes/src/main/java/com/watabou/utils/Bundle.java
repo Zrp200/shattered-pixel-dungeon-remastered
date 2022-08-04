@@ -25,7 +25,6 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.watabou.noosa.Game;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

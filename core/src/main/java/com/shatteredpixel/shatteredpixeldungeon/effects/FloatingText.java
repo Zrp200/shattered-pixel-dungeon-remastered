@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.RenderedText;
-import com.watabou.utils.Callback;
 import com.watabou.utils.SparseArray;
 
 import java.util.ArrayList;

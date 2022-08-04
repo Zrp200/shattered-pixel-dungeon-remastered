@@ -26,12 +26,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.DeviceCompat;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.net.ssl.SSLProtocolException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GitHubUpdates extends UpdateService {
 

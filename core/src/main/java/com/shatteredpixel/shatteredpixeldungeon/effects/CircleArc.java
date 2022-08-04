@@ -21,8 +21,8 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.effects;
 
-import com.watabou.glwrap.Texture;
 import com.watabou.glwrap.BlendingKt;
+import com.watabou.glwrap.Texture;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.Script;
@@ -35,7 +35,11 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
-import static com.watabou.utils.MathKt.*;
+import static com.watabou.utils.MathKt.HALF_PI;
+import static com.watabou.utils.MathKt.PI;
+import static com.watabou.utils.MathKt.PI2;
+import static com.watabou.utils.MathKt.cos;
+import static com.watabou.utils.MathKt.sin;
 
 public class CircleArc extends Visual {
 	

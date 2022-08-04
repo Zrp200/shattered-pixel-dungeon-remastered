@@ -27,11 +27,12 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.ColorMathKt;
-import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 import com.watabou.utils.SparseArray;
 
-import static com.watabou.utils.MathKt.*;
+import static com.watabou.utils.MathKt.D2R;
+import static com.watabou.utils.MathKt.PI;
+import static com.watabou.utils.MathKt.PI2;
 
 public class Speck extends Image {
 

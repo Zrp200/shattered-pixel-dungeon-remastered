@@ -38,7 +38,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ShopkeeperSprite;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndBag;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndTradeItem;
 import com.watabou.noosa.Game;
-import com.watabou.utils.Callback;
 
 public class Shopkeeper extends NPC {
 

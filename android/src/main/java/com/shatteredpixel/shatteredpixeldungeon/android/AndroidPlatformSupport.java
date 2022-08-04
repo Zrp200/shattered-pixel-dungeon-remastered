@@ -30,7 +30,6 @@ import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.view.View;
 import android.view.WindowManager;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidGraphics;
 import com.badlogic.gdx.graphics.Pixmap;

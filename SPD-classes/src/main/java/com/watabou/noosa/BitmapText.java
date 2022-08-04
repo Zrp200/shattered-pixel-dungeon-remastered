@@ -22,8 +22,8 @@
 package com.watabou.noosa;
 
 import com.badlogic.gdx.graphics.Pixmap;
-import com.watabou.glwrap.Texture;
 import com.watabou.glwrap.QuadKt;
+import com.watabou.glwrap.Texture;
 import com.watabou.glwrap.VertexDataset;
 import com.watabou.utils.RectF;
 

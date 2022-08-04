@@ -29,7 +29,6 @@ import com.watabou.noosa.ui.Component;
 import com.watabou.utils.Signal;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 public class GameLog extends Component implements Signal.Listener<String> {
 

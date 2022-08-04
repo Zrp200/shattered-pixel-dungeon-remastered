@@ -33,9 +33,9 @@ import java.util.ArrayList;
 
 import static com.watabou.utils.MathKt.HALF_PI;
 import static com.watabou.utils.MathKt.R2D;
+import static com.watabou.utils.MathKt.atan;
 import static com.watabou.utils.MathKt.cos;
 import static com.watabou.utils.MathKt.sin;
-import static com.watabou.utils.MathKt.atan;
 import static java.lang.Math.abs;
 import static java.lang.Math.max;
 

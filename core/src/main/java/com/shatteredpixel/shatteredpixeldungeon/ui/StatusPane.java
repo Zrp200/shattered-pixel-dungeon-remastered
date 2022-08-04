@@ -35,7 +35,6 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.HeroSprite;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndHero;
 import com.shatteredpixel.shatteredpixeldungeon.windows.WndKeyBindings;
 import com.watabou.input.GameAction;
-import com.watabou.input.KeyBindings;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
@@ -44,8 +43,6 @@ import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.ui.Component;
 import com.watabou.utils.ColorMathKt;
-
-import java.util.ArrayList;
 
 import static com.watabou.utils.MathKt.PI;
 import static com.watabou.utils.MathKt.cos;

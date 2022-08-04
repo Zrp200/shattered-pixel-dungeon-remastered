@@ -29,7 +29,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.ViewConfiguration;
-
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -43,8 +42,8 @@ import com.shatteredpixel.shatteredpixeldungeon.services.news.News;
 import com.shatteredpixel.shatteredpixeldungeon.services.news.NewsImpl;
 import com.shatteredpixel.shatteredpixeldungeon.services.updates.UpdateImpl;
 import com.shatteredpixel.shatteredpixeldungeon.services.updates.Updates;
-import com.watabou.noosa.Game;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Button;
+import com.watabou.noosa.Game;
 import com.watabou.utils.FileUtils;
 
 public class AndroidLauncher extends AndroidApplication {

@@ -22,8 +22,8 @@
 package com.shatteredpixel.shatteredpixeldungeon.ui;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.watabou.glwrap.Texture;
 import com.watabou.glwrap.BlendingKt;
+import com.watabou.glwrap.Texture;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.SkinnedBlock;
