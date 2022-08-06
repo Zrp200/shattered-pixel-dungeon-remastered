@@ -24,6 +24,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Pixmap
 import com.watabou.utils.RectF
+import com.watabou.utils.getAsset
 
 open class Texture(@JvmField var bitmap: Pixmap, private var filtering: Int, private var wrapping: Int) {
 
@@ -161,7 +162,7 @@ open class Texture(@JvmField var bitmap: Pixmap, private var filtering: Int, pri
             else Texture(
                 when (key) {
                     is Pixmap -> key
-                    else -> Pixmap(Gdx.files.internal(key.toString()))
+                    else -> Pixmap(getAsset(key.toString()))
                 }
             ).also { all[key] = it }
         }

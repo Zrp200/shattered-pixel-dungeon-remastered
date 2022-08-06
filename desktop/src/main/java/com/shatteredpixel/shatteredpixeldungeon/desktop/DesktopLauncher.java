@@ -35,7 +35,7 @@ import com.shatteredpixel.shatteredpixeldungeon.services.news.NewsImpl;
 import com.shatteredpixel.shatteredpixeldungeon.services.updates.UpdateImpl;
 import com.shatteredpixel.shatteredpixeldungeon.services.updates.Updates;
 import com.watabou.noosa.Game;
-import com.watabou.utils.FileUtils;
+import com.watabou.utils.FileUtilsKt;
 import com.watabou.utils.Point;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
@@ -66,44 +66,41 @@ public class DesktopLauncher {
 			title = DesktopLauncher.class.getPackage().getSpecificationTitle();
 		}
 		
-		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-			@Override
-			public void uncaughtException(Thread thread, Throwable throwable) {
-				Game.reportException(throwable);
-				StringWriter sw = new StringWriter();
-				PrintWriter pw = new PrintWriter(sw);
-				throwable.printStackTrace(pw);
-				pw.flush();
-				String exceptionMsg = sw.toString();
+		Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
+			Game.reportException(throwable);
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			throwable.printStackTrace(pw);
+			pw.flush();
+			String exceptionMsg = sw.toString();
 
-				//shorten/simplify exception message to make it easier to fit into a message box
-				exceptionMsg = exceptionMsg.replaceAll("\\(.*:([0-9]*)\\)", "($1)");
-				exceptionMsg = exceptionMsg.replace("com.shatteredpixel.shatteredpixeldungeon.", "");
-				exceptionMsg = exceptionMsg.replace("com.watabou.", "");
-				exceptionMsg = exceptionMsg.replace("com.badlogic.gdx.", "");
-				exceptionMsg = exceptionMsg.replace("\t", "    ");
-				exceptionMsg = exceptionMsg.replace("'", "");
+			//shorten/simplify exception message to make it easier to fit into a message box
+			exceptionMsg = exceptionMsg.replaceAll("\\(.*:([0-9]*)\\)", "($1)");
+			exceptionMsg = exceptionMsg.replace("com.shatteredpixel.shatteredpixeldungeon.", "");
+			exceptionMsg = exceptionMsg.replace("com.watabou.", "");
+			exceptionMsg = exceptionMsg.replace("com.badlogic.gdx.", "");
+			exceptionMsg = exceptionMsg.replace("\t", "    ");
+			exceptionMsg = exceptionMsg.replace("'", "");
 
-				if (exceptionMsg.length() > 500){
-					exceptionMsg = exceptionMsg.substring(0, 500) + "...";
-				}
-
-				if (exceptionMsg.contains("Couldnt create window")){
-					TinyFileDialogs.tinyfd_messageBox(title + " Has Crashed!",
-							title + " was not able to initialize its graphics display, sorry about that!\n\n" +
-									"This usually happens when your graphics card does not support OpenGL 2.0+, or has misconfigured graphics drivers.\n\n" +
-									"If you are certain the game should be working on your computer, feel free to message the developer (Evan@ShatteredPixel.com)\n\n" +
-									"version: " + Game.version, "ok", "error", false);
-				} else {
-					TinyFileDialogs.tinyfd_messageBox(title + " Has Crashed!",
-							title + " has run into an error it cannot recover from and has crashed, sorry about that!\n\n" +
-									"If you could, please email this error message to the developer (Evan@ShatteredPixel.com):\n\n" +
-									"version: " + Game.version + "\n" +
-									exceptionMsg,
-							"ok", "error", false);
-				}
-				System.exit(1);
+			if (exceptionMsg.length() > 500){
+				exceptionMsg = exceptionMsg.substring(0, 500) + "...";
 			}
+
+			if (exceptionMsg.contains("Couldnt create window")){
+				TinyFileDialogs.tinyfd_messageBox(title + " Has Crashed!",
+						title + " was not able to initialize its graphics display, sorry about that!\n\n" +
+								"This usually happens when your graphics card does not support OpenGL 2.0+, or has misconfigured graphics drivers.\n\n" +
+								"If you are certain the game should be working on your computer, feel free to message the developer (Evan@ShatteredPixel.com)\n\n" +
+								"version: " + Game.version, "ok", "error", false);
+			} else {
+				TinyFileDialogs.tinyfd_messageBox(title + " Has Crashed!",
+						title + " has run into an error it cannot recover from and has crashed, sorry about that!\n\n" +
+								"If you could, please email this error message to the developer (Evan@ShatteredPixel.com):\n\n" +
+								"version: " + Game.version + "\n" +
+								exceptionMsg,
+						"ok", "error", false);
+			}
+			System.exit(1);
 		});
 		
 		Game.version = DesktopLauncher.class.getPackage().getSpecificationVersion();
@@ -129,17 +126,15 @@ public class DesktopLauncher {
 		config.setTitle( title );
 
 		String basePath = "";
-		Files.FileType baseFileType = null;
+		Files.FileType baseFileType = Files.FileType.External;
 		if (SharedLibraryLoader.isWindows) {
 			if (System.getProperties().getProperty("os.name").equals("Windows XP")) {
 				basePath = "Application Data/.shatteredpixel/Shattered Pixel Dungeon/";
 			} else {
 				basePath = "AppData/Roaming/.shatteredpixel/Shattered Pixel Dungeon/";
 			}
-			baseFileType = Files.FileType.External;
 		} else if (SharedLibraryLoader.isMac) {
 			basePath = "Library/Application Support/Shattered Pixel Dungeon/";
-			baseFileType = Files.FileType.External;
 		} else if (SharedLibraryLoader.isLinux) {
 			String XDGHome = System.getenv("XDG_DATA_HOME");
 			if (XDGHome == null) XDGHome = System.getProperty("user.home") + "/.local/share";
@@ -160,7 +155,7 @@ public class DesktopLauncher {
 
 		config.setPreferencesConfig( basePath, baseFileType );
 		SPDSettings.set( new Lwjgl3Preferences( new Lwjgl3FileHandle(basePath + SPDSettings.DEFAULT_PREFS_FILE, baseFileType) ));
-		FileUtils.setDefaultFileProperties( baseFileType, basePath );
+		FileUtilsKt.setDefaultFileProperties( baseFileType, basePath );
 		
 		config.setWindowSizeLimits( 720, 400, -1, -1 );
 		Point p = SPDSettings.windowResolution();

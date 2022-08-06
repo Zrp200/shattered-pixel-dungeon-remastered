@@ -43,8 +43,8 @@ import com.watabou.noosa.Camera;
 import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
-import com.watabou.noosa.audio.Music;
-import com.watabou.utils.FileUtils;
+import com.watabou.noosa.audio.MusicPlayer;
+import com.watabou.utils.FileUtilsKt;
 
 import java.util.Collections;
 
@@ -63,7 +63,7 @@ public class WelcomeScene extends PixelScene {
 
 		final int previousVersion = SPDSettings.version();
 
-		if (FileUtils.cleanTempFiles()){
+		if (FileUtilsKt.cleanTempFiles()){
 			add(new WndHardNotification(Icons.get(Icons.WARNING),
 					Messages.get(WndError.class, "title"),
 					Messages.get(this, "save_warning"),
@@ -83,7 +83,7 @@ public class WelcomeScene extends PixelScene {
 			return;
 		}
 
-		Music.INSTANCE.playTracks(
+		MusicPlayer.INSTANCE.playTracks(
 				new String[]{Assets.Music.THEME_1, Assets.Music.THEME_2},
 				new float[]{1, 1},
 				false);
@@ -225,7 +225,7 @@ public class WelcomeScene extends PixelScene {
 				Rankings.INSTANCE.save();
 			} catch (Exception e) {
 				//if we encounter a fatal error, then just clear the rankings
-				FileUtils.deleteFile( Rankings.RANKINGS_FILE );
+				FileUtilsKt.deleteFile( Rankings.RANKINGS_FILE );
 				ShatteredPixelDungeon.reportException(e);
 			}
 

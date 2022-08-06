@@ -44,7 +44,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.changelist.v0_9_X_Changes;
 import com.shatteredpixel.shatteredpixeldungeon.ui.changelist.v1_X_Changes;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.NinePatch;
-import com.watabou.noosa.audio.Music;
+import com.watabou.noosa.audio.MusicPlayer;
 import com.watabou.noosa.ui.Component;
 
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class ChangesScene extends PixelScene {
 	public void create() {
 		super.create();
 
-		Music.INSTANCE.playTracks(
+		MusicPlayer.INSTANCE.playTracks(
 				new String[]{Assets.Music.THEME_1, Assets.Music.THEME_2},
 				new float[]{1, 1},
 				false);

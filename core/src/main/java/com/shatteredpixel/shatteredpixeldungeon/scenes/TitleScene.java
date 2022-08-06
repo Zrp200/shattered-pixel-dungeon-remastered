@@ -46,7 +46,7 @@ import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
-import com.watabou.noosa.audio.Music;
+import com.watabou.noosa.audio.MusicPlayer;
 import com.watabou.noosa.graph.GizmoGraphKt;
 import com.watabou.utils.ColorMathKt;
 import com.watabou.utils.DeviceCompat;
@@ -65,7 +65,7 @@ public class TitleScene extends PixelScene {
 		
 		super.create();
 
-		Music.INSTANCE.playTracks(
+		MusicPlayer.INSTANCE.playTracks(
 				new String[]{Assets.Music.THEME_1, Assets.Music.THEME_2},
 				new float[]{1, 1},
 				false);
@@ -373,7 +373,7 @@ public class TitleScene extends PixelScene {
 
 		@Override
 		protected boolean onLongClick() {
-			if (DeviceCompat.isDebug()) {
+			if (DeviceCompat.isDebug() && DeviceCompat.isDesktop()) {
 				GizmoGraphKt.initGraph();
 			}
 			return true;

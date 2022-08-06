@@ -35,7 +35,7 @@ import com.shatteredpixel.shatteredpixeldungeon.tiles.CustomTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTileSheet;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.Tilemap;
-import com.watabou.noosa.audio.Music;
+import com.watabou.noosa.audio.MusicPlayer;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
@@ -53,7 +53,7 @@ public class LastLevel extends Level {
 
 	@Override
 	public void playLevelMusic() {
-		Music.INSTANCE.end();
+		MusicPlayer.INSTANCE.end();
 	}
 
 	@Override

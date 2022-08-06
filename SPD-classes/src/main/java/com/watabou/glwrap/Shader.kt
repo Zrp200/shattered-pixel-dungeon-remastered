@@ -23,6 +23,7 @@ package com.watabou.glwrap
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.utils.BufferUtils
+import com.watabou.utils.getAsset
 
 class Shader private constructor(type: Int) {
 
@@ -46,7 +47,7 @@ class Shader private constructor(type: Int) {
         const val FRAGMENT = GL20.GL_FRAGMENT_SHADER
 
         fun get(type: Int, fileName: String): Int = Shader(type).apply {
-            source(Gdx.files.internal("shaders/$fileName").readString())
+            source(getAsset("shaders/$fileName").readString())
             compile()
         }.handle
     }

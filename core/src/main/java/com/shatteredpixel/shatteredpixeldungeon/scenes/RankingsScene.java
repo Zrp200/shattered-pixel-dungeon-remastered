@@ -42,7 +42,7 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndRanking;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Image;
-import com.watabou.noosa.audio.Music;
+import com.watabou.noosa.audio.MusicPlayer;
 
 import static com.watabou.utils.MathKt.clamp;
 import static java.lang.Math.min;
@@ -63,7 +63,7 @@ public class RankingsScene extends PixelScene {
 		
 		super.create();
 
-		Music.INSTANCE.playTracks(
+		MusicPlayer.INSTANCE.playTracks(
 				new String[]{Assets.Music.THEME_1, Assets.Music.THEME_2},
 				new float[]{1, 1},
 				false);

@@ -34,7 +34,7 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.FileUtils;
+import com.watabou.utils.FileUtilsKt;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -277,7 +277,7 @@ public class Badges {
 	public static void loadGlobal() {
 		if (global == null) {
 			try {
-				Bundle bundle = FileUtils.bundleFromFile( BADGES_FILE );
+				Bundle bundle = FileUtilsKt.bundleFromFile( BADGES_FILE );
 				global = restore( bundle );
 
 			} catch (IOException e) {
@@ -293,7 +293,7 @@ public class Badges {
 			store( bundle, global );
 			
 			try {
-				FileUtils.bundleToFile(BADGES_FILE, bundle);
+				FileUtilsKt.bundleToFile(BADGES_FILE, bundle);
 				saveNeeded = false;
 			} catch (IOException e) {
 				ShatteredPixelDungeon.reportException(e);

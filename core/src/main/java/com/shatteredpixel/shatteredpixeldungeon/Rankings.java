@@ -39,7 +39,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.QuickSlotButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Toolbar;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.FileUtils;
+import com.watabou.utils.FileUtilsKt;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -343,7 +343,7 @@ public enum Rankings {
 		bundle.put(DAILY_HISTORY_SCORES, scores);
 
 		try {
-			FileUtils.bundleToFile( RANKINGS_FILE, bundle);
+			FileUtilsKt.bundleToFile( RANKINGS_FILE, bundle);
 		} catch (IOException e) {
 			ShatteredPixelDungeon.reportException(e);
 		}
@@ -359,7 +359,7 @@ public enum Rankings {
 		records = new ArrayList<>();
 		
 		try {
-			Bundle bundle = FileUtils.bundleFromFile( RANKINGS_FILE );
+			Bundle bundle = FileUtilsKt.bundleFromFile( RANKINGS_FILE );
 			
 			for (Bundlable record : bundle.getCollection( RECORDS )) {
 				records.add( (Record)record );

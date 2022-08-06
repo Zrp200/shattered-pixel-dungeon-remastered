@@ -41,7 +41,7 @@ import com.shatteredpixel.shatteredpixeldungeon.tiles.CustomTilemap;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.Tilemap;
-import com.watabou.noosa.audio.Music;
+import com.watabou.noosa.audio.MusicPlayer;
 import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
@@ -86,12 +86,12 @@ public class CityBossLevel extends Level {
 	@Override
 	public void playLevelMusic() {
 		if (locked){
-			Music.INSTANCE.play(Assets.Music.CITY_BOSS, true);
+			MusicPlayer.INSTANCE.play(Assets.Music.CITY_BOSS, true);
 		//if top door isn't unlocked
 		} else if (map[topDoor] == Terrain.LOCKED_DOOR){
-			Music.INSTANCE.end();
+			MusicPlayer.INSTANCE.end();
 		} else {
-			Music.INSTANCE.playTracks(
+			MusicPlayer.INSTANCE.playTracks(
 					new String[]{Assets.Music.CITY_1, Assets.Music.CITY_2, Assets.Music.CITY_2},
 					new float[]{1, 1, 0.5f},
 					false);
@@ -320,7 +320,7 @@ public class CityBossLevel extends Level {
 		GameScene.updateMap( bottomDoor );
 		Dungeon.observe();
 
-		Game.runOnRenderThread(() -> Music.INSTANCE.play(Assets.Music.CITY_BOSS, true));
+		Game.runOnRenderThread(() -> MusicPlayer.INSTANCE.play(Assets.Music.CITY_BOSS, true));
 	}
 
 	@Override
@@ -338,7 +338,7 @@ public class CityBossLevel extends Level {
 		}
 		Dungeon.observe();
 
-		Game.runOnRenderThread(() -> Music.INSTANCE.end());
+		Game.runOnRenderThread(() -> MusicPlayer.INSTANCE.end());
 	}
 
 	private void spawnShop(){

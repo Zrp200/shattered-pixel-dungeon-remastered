@@ -29,7 +29,9 @@ import com.watabou.utils.Random;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public enum Music {
+import static com.watabou.utils.FileUtilsKt.getAsset;
+
+public enum MusicPlayer {
 	
 	INSTANCE;
 	
@@ -141,7 +143,7 @@ public enum Music {
 			return;
 		}
 
-		Music.this.stop();
+		MusicPlayer.this.stop();
 
 		if (trackQueue.isEmpty()) {
 			for (int i = 0; i < trackList.length; i++) {
@@ -161,7 +163,7 @@ public enum Music {
 
 	private synchronized void play(String track, com.badlogic.gdx.audio.Music.OnCompletionListener listener){
 		try {
-			player = Gdx.audio.newMusic(Gdx.files.internal(track));
+			player = Gdx.audio.newMusic(getAsset(track));
 			player.setLooping(looping);
 			player.setVolume(volume);
 			player.play();

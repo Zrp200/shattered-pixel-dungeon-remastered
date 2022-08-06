@@ -34,6 +34,8 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.watabou.utils.FileUtilsKt.getAsset;
+
 public class DesktopPlatformSupport extends PlatformSupport {
 
 	//we recall previous window sizes as a workaround to not save maximized size to settings
@@ -58,17 +60,14 @@ public class DesktopPlatformSupport extends PlatformSupport {
 	
 	@Override
 	public void updateSystemUI() {
-		Gdx.app.postRunnable( new Runnable() {
-			@Override
-			public void run () {
-				if (SPDSettings.fullscreen()){
-					Gdx.graphics.setFullscreenMode( Gdx.graphics.getDisplayMode() );
-				} else {
-					Point p = SPDSettings.windowResolution();
-					Gdx.graphics.setWindowedMode( p.x, p.y );
-				}
+		Gdx.app.postRunnable(() -> {
+			if (SPDSettings.fullscreen()){
+				Gdx.graphics.setFullscreenMode( Gdx.graphics.getDisplayMode() );
+			} else {
+				Point p = SPDSettings.windowResolution();
+				Gdx.graphics.setWindowedMode( p.x, p.y );
 			}
-		} );
+		});
 	}
 	
 	@Override
@@ -96,10 +95,10 @@ public class DesktopPlatformSupport extends PlatformSupport {
 		fonts = new HashMap<>();
 
 		if (systemfont) {
-			basicFontGenerator = asianFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/droid_sans.ttf"));
+			basicFontGenerator = asianFontGenerator = new FreeTypeFontGenerator(getAsset("fonts/droid_sans.ttf"));
 		} else {
-			basicFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel_font.ttf"));
-			asianFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/droid_sans.ttf"));
+			basicFontGenerator = new FreeTypeFontGenerator(getAsset("fonts/pixel_font.ttf"));
+			asianFontGenerator = new FreeTypeFontGenerator(getAsset("fonts/droid_sans.ttf"));
 		}
 		
 		fonts.put(basicFontGenerator, new HashMap<>());

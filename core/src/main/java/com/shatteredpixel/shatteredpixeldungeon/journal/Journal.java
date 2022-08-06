@@ -23,7 +23,7 @@ package com.shatteredpixel.shatteredpixeldungeon.journal;
 
 import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.FileUtils;
+import com.watabou.utils.FileUtilsKt;
 
 import java.io.IOException;
 
@@ -40,7 +40,7 @@ public class Journal {
 		
 		Bundle bundle;
 		try {
-			bundle = FileUtils.bundleFromFile( JOURNAL_FILE );
+			bundle = FileUtilsKt.bundleFromFile( JOURNAL_FILE );
 			
 		} catch (IOException e){
 			bundle = new Bundle();
@@ -66,7 +66,7 @@ public class Journal {
 		Document.store(bundle);
 		
 		try {
-			FileUtils.bundleToFile( JOURNAL_FILE, bundle );
+			FileUtilsKt.bundleToFile( JOURNAL_FILE, bundle );
 			saveNeeded = false;
 		} catch (IOException e) {
 			ShatteredPixelDungeon.reportException(e);

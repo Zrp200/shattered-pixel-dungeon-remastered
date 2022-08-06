@@ -21,7 +21,6 @@
 
 package com.watabou.noosa;
 
-import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -38,8 +37,9 @@ import com.watabou.glwrap.BlendingKt;
 import com.watabou.glwrap.QuadKt;
 import com.watabou.glwrap.Texture;
 import com.watabou.noosa.ui.Component;
-import com.watabou.utils.FileUtils;
 import com.watabou.utils.Point;
+
+import static com.watabou.utils.FileUtilsKt.getAsset;
 
 //essentially contains a libGDX text input field, plus a PD-rendered background
 public class TextInput extends Component {
@@ -69,7 +69,7 @@ public class TextInput extends Component {
 		stage.addActor(container);
 		container.setTransform(true);
 
-		skin = new Skin(FileUtils.getFileHandle(Files.FileType.Internal, "gdx/textfield.json"));
+		skin = new Skin(getAsset("gdx/textfield.json"));
 
 		TextField.TextFieldStyle style = skin.get(TextField.TextFieldStyle.class);
 		style.font = Game.platform.getFont(size, "", false, false);

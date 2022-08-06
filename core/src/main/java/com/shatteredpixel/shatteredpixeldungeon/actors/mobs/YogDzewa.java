@@ -57,7 +57,7 @@ import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.shatteredpixel.shatteredpixeldungeon.ui.BossHealthBar;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.Game;
-import com.watabou.noosa.audio.Music;
+import com.watabou.noosa.audio.MusicPlayer;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
@@ -512,7 +512,7 @@ public class YogDzewa extends Mob {
 					((DriedRose.GhostHero) ch).sayBoss();
 				}
 			}
-			Game.runOnRenderThread(() -> Music.INSTANCE.play(Assets.Music.HALLS_BOSS, true));
+			Game.runOnRenderThread(() -> MusicPlayer.INSTANCE.play(Assets.Music.HALLS_BOSS, true));
 			if (phase == 0) {
 				phase = 1;
 				summonCooldown = Random.NormalFloat(MIN_SUMMON_CD, MAX_SUMMON_CD);

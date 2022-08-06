@@ -28,7 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.FileUtils;
+import com.watabou.utils.FileUtilsKt;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
@@ -63,7 +63,7 @@ public class Bones {
 		bundle.put( ITEM, item );
 
 		try {
-			FileUtils.bundleToFile( BONES_FILE, bundle );
+			FileUtilsKt.bundleToFile( BONES_FILE, bundle );
 		} catch (IOException e) {
 			ShatteredPixelDungeon.reportException(e);
 		}
@@ -127,7 +127,7 @@ public class Bones {
 		if (depth == -1) {
 
 			try {
-				Bundle bundle = FileUtils.bundleFromFile(BONES_FILE);
+				Bundle bundle = FileUtilsKt.bundleFromFile(BONES_FILE);
 
 				depth = bundle.getInt( LEVEL );
 				if (depth > 0) {
@@ -146,7 +146,7 @@ public class Bones {
 				Bundle emptyBones = new Bundle();
 				emptyBones.put(LEVEL, 0);
 				try {
-					FileUtils.bundleToFile( BONES_FILE, emptyBones );
+					FileUtilsKt.bundleToFile( BONES_FILE, emptyBones );
 				} catch (IOException e) {
 					ShatteredPixelDungeon.reportException(e);
 				}

@@ -110,10 +110,10 @@ public class IOSPlatformSupport extends PlatformSupport {
 		fonts = new HashMap<>();
 
 		if (systemfont) {
-			basicFontGenerator = asianFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/droid_sans.ttf"));
+			basicFontGenerator = asianFontGenerator = new FreeTypeFontGenerator(getAsset("fonts/droid_sans.ttf"));
 		} else {
-			basicFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel_font.ttf"));
-			asianFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/droid_sans.ttf"));
+			basicFontGenerator = new FreeTypeFontGenerator(getAsset("fonts/pixel_font.ttf"));
+			asianFontGenerator = new FreeTypeFontGenerator(getAsset("fonts/droid_sans.ttf"));
 		}
 
 		fonts.put(basicFontGenerator, new HashMap<>());

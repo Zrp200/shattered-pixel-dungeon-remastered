@@ -33,7 +33,7 @@ import com.shatteredpixel.shatteredpixeldungeon.services.news.NewsImpl;
 import com.shatteredpixel.shatteredpixeldungeon.services.updates.UpdateImpl;
 import com.shatteredpixel.shatteredpixeldungeon.services.updates.Updates;
 import com.watabou.noosa.Game;
-import com.watabou.utils.FileUtils;
+import com.watabou.utils.FileUtilsKt;
 import org.robovm.apple.coregraphics.CGRect;
 import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.foundation.NSBundle;
@@ -55,11 +55,11 @@ public class IOSLauncher extends IOSApplication.Delegate {
 	protected IOSApplication createApplication() {
 
 		//ensures the app actually crashes if there's an error in the mobiVM runtime
-		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-			public void uncaughtException(Thread thread, Throwable ex) {
-				new NSException(ex.getClass().getName(), ex.getMessage(), new NSDictionary()).raise();
-			}
-		});
+		Thread.setDefaultUncaughtExceptionHandler((thread, ex) -> new NSException(
+				ex.getClass().getName(),
+				ex.getMessage(),
+				new NSDictionary()).raise()
+		);
 
 		try {
 			Game.version = NSBundle.getMainBundle().getInfoDictionaryObject("CFBundleVersionString").toString();
@@ -79,7 +79,7 @@ public class IOSLauncher extends IOSApplication.Delegate {
 			News.service = NewsImpl.getNewsService();
 		}
 
-		FileUtils.setDefaultFileProperties(Files.FileType.Local, "");
+		FileUtilsKt.setDefaultFileProperties(Files.FileType.Local, "");
 
 		//sets up preferences early so they can be read.
 		//this is mostly a copy-paste from IOSApplication.getPreferences

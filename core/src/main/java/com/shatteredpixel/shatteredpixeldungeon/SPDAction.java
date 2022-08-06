@@ -26,7 +26,7 @@ import com.watabou.input.ControllerHandler;
 import com.watabou.input.GameAction;
 import com.watabou.input.KeyBindings;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.FileUtils;
+import com.watabou.utils.FileUtilsKt;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -196,7 +196,7 @@ public class SPDAction extends GameAction {
 		}
 
 		try {
-			Bundle b = FileUtils.bundleFromFile(BINDINGS_FILE);
+			Bundle b = FileUtilsKt.bundleFromFile(BINDINGS_FILE);
 
 			Bundle firstKeys = b.getBundle("first_keys");
 			Bundle secondKeys = b.getBundle("second_keys");
@@ -442,7 +442,7 @@ public class SPDAction extends GameAction {
 		b.put("third_keys_controller", thirdButtons);
 
 		try {
-			FileUtils.bundleToFile(BINDINGS_FILE, b);
+			FileUtilsKt.bundleToFile(BINDINGS_FILE, b);
 		} catch (IOException e) {
 			ShatteredPixelDungeon.reportException(e);
 		}

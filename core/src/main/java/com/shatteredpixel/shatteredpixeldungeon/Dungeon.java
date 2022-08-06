@@ -76,7 +76,7 @@ import com.shatteredpixel.shatteredpixeldungeon.windows.WndResurrect;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.FileUtils;
+import com.watabou.utils.FileUtilsKt;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 import com.watabou.utils.SparseArray;
@@ -591,7 +591,7 @@ public class Dungeon {
 			Badges.saveLocal( badges );
 			bundle.put( BADGES, badges );
 			
-			FileUtils.bundleToFile( GamesInProgress.gameFile(save), bundle);
+			FileUtilsKt.bundleToFile( GamesInProgress.gameFile(save), bundle);
 			
 		} catch (IOException e) {
 			GamesInProgress.setUnknown( save );
@@ -603,7 +603,7 @@ public class Dungeon {
 		Bundle bundle = new Bundle();
 		bundle.put( LEVEL, level );
 		
-		FileUtils.bundleToFile(GamesInProgress.depthFile( save, depth, branch ), bundle);
+		FileUtilsKt.bundleToFile(GamesInProgress.depthFile( save, depth, branch ), bundle);
 	}
 	
 	public static void saveAll() throws IOException {
@@ -625,7 +625,7 @@ public class Dungeon {
 	
 	public static void loadGame( int save, boolean fullLoad ) throws IOException {
 		
-		Bundle bundle = FileUtils.bundleFromFile( GamesInProgress.gameFile( save ) );
+		Bundle bundle = FileUtilsKt.bundleFromFile( GamesInProgress.gameFile( save ) );
 
 		//pre-1.3.0 saves
 		if (bundle.contains(INIT_VER)){
@@ -740,7 +740,7 @@ public class Dungeon {
 		Dungeon.level = null;
 		Actor.clear();
 
-		Bundle bundle = FileUtils.bundleFromFile( GamesInProgress.depthFile( save, depth, branch ));
+		Bundle bundle = FileUtilsKt.bundleFromFile( GamesInProgress.depthFile( save, depth, branch ));
 
 		Level level = (Level)bundle.get( LEVEL );
 
@@ -755,14 +755,14 @@ public class Dungeon {
 
 		if (deleteLevels) {
 			String folder = GamesInProgress.gameFolder(save);
-			for (String file : FileUtils.filesInDir(folder)){
+			for (String file : FileUtilsKt.filesInDir(folder)){
 				if (file.contains("depth")){
-					FileUtils.deleteFile(folder + "/" + file);
+					FileUtilsKt.deleteFile(folder + "/" + file);
 				}
 			}
 		}
 
-		FileUtils.overwriteFile(GamesInProgress.gameFile(save), 1);
+		FileUtilsKt.overwriteFile(GamesInProgress.gameFile(save), 1);
 		
 		GamesInProgress.delete( save );
 	}

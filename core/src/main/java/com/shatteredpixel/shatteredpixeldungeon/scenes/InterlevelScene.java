@@ -247,53 +247,50 @@ public class InterlevelScene extends PixelScene {
 		timeLeft = fadeTime;
 		
 		if (thread == null) {
-			thread = new Thread() {
-				@Override
-				public void run() {
-					
-					try {
+			thread = new Thread(() -> {
 
-						if (Dungeon.hero != null){
-							Dungeon.hero.spendToWhole();
-						}
-						Actor.fixTime();
+				try {
 
-						switch (mode) {
-							case DESCEND:
-								descend();
-								break;
-							case ASCEND:
-								ascend();
-								break;
-							case CONTINUE:
-								restore();
-								break;
-							case RESURRECT:
-								resurrect();
-								break;
-							case RETURN:
-								returnTo();
-								break;
-							case FALL:
-								fall();
-								break;
-							case RESET:
-								reset();
-								break;
-						}
-						
-					} catch (Exception e) {
-						
-						error = e;
-						
+					if (Dungeon.hero != null){
+						Dungeon.hero.spendToWhole();
 					}
-					
-					if (phase == Phase.STATIC && error == null) {
-						phase = Phase.FADE_OUT;
-						timeLeft = fadeTime;
+					Actor.fixTime();
+
+					switch (mode) {
+						case DESCEND:
+							descend();
+							break;
+						case ASCEND:
+							ascend();
+							break;
+						case CONTINUE:
+							restore();
+							break;
+						case RESURRECT:
+							resurrect();
+							break;
+						case RETURN:
+							returnTo();
+							break;
+						case FALL:
+							fall();
+							break;
+						case RESET:
+							reset();
+							break;
 					}
+
+				} catch (Exception e) {
+
+					error = e;
+
 				}
-			};
+
+				if (phase == Phase.STATIC && error == null) {
+					phase = Phase.FADE_OUT;
+					timeLeft = fadeTime;
+				}
+			});
 			thread.start();
 		}
 		waitingTime = 0f;

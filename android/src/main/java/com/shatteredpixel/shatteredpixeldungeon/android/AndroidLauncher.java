@@ -44,15 +44,14 @@ import com.shatteredpixel.shatteredpixeldungeon.services.updates.UpdateImpl;
 import com.shatteredpixel.shatteredpixeldungeon.services.updates.Updates;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Button;
 import com.watabou.noosa.Game;
-import com.watabou.utils.FileUtils;
+import com.watabou.utils.FileUtilsKt;
 
 public class AndroidLauncher extends AndroidApplication {
 	
 	public static AndroidApplication instance;
 	
 	private static AndroidPlatformSupport support;
-	
-	@SuppressLint("SetTextI18n")
+
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -91,7 +90,7 @@ public class AndroidLauncher extends AndroidApplication {
 				News.service = NewsImpl.getNewsService();
 			}
 
-			FileUtils.setDefaultFileProperties(Files.FileType.Local, "");
+			FileUtilsKt.setDefaultFileProperties(Files.FileType.Local, "");
 
 			// grab preferences directly using our instance first
 			// so that we don't need to rely on Gdx.app, which isn't initialized yet.

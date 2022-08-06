@@ -31,7 +31,7 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.ExitButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
 import com.watabou.noosa.Camera;
-import com.watabou.noosa.audio.Music;
+import com.watabou.noosa.audio.MusicPlayer;
 
 public class BadgesScene extends PixelScene {
 
@@ -40,7 +40,7 @@ public class BadgesScene extends PixelScene {
 
 		super.create();
 
-		Music.INSTANCE.playTracks(
+		MusicPlayer.INSTANCE.playTracks(
 				new String[]{Assets.Music.THEME_1, Assets.Music.THEME_2},
 				new float[]{1, 1},
 				false);

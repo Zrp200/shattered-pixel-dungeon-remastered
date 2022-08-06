@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import static com.watabou.utils.FileUtilsKt.getAsset;
 import static java.lang.Math.max;
 
 public enum Sample {
@@ -81,7 +82,7 @@ public enum Sample {
 			@Override
 			public void run() {
 				for (String asset : toLoad) {
-					Sound newSound = Gdx.audio.newSound(Gdx.files.internal(asset));
+					Sound newSound = Gdx.audio.newSound(getAsset(asset));
 					synchronized (INSTANCE) {
 						ids.put(asset, newSound);
 					}

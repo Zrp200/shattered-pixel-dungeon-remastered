@@ -43,7 +43,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.tiles.DungeonTilemap;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
-import com.watabou.noosa.audio.Music;
+import com.watabou.noosa.audio.MusicPlayer;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.ColorMathKt;
@@ -58,7 +58,7 @@ public class SewerLevel extends RegularLevel {
 	}
 
 	public void playLevelMusic(){
-		Music.INSTANCE.playTracks(
+		MusicPlayer.INSTANCE.playTracks(
 				new String[]{Assets.Music.SEWERS_1, Assets.Music.SEWERS_2, Assets.Music.SEWERS_2},
 				new float[]{1, 1, 0.5f},
 				false);

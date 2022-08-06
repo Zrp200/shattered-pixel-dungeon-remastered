@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.messages;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.SPDSettings;
@@ -32,6 +31,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.IllegalFormatException;
 import java.util.Locale;
+
+import static com.watabou.utils.FileUtilsKt.getAsset;
 
 /*
 	Simple wrapper class for libGDX I18NBundles.
@@ -82,7 +83,7 @@ public class Messages {
 		Locale locale = new Locale(lang.code());
 
 		for (String file : prop_files) {
-			bundles.add(I18NBundle.createBundle(Gdx.files.internal(file), locale));
+			bundles.add(I18NBundle.createBundle(getAsset(file), locale));
 		}
 	}
 

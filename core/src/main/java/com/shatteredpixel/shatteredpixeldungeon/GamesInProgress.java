@@ -25,8 +25,9 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.FileUtils;
+import com.watabou.utils.FileUtilsKt;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,9 +52,9 @@ public class GamesInProgress {
 	private static final String DEPTH_FILE	= "depth%d.dat";
 	private static final String DEPTH_BRANCH_FILE	= "depth%d-branch%d.dat";
 	
-	public static boolean gameExists( int slot ){
-		return FileUtils.dirExists(gameFolder(slot))
-				&& FileUtils.fileLength(gameFile(slot)) > 1;
+	public static boolean gameExists( int slot ) {
+		return FileUtilsKt.dirExists(gameFolder(slot))
+				&& FileUtilsKt.fileLength(gameFile(slot)) > 1;
 	}
 	
 	public static String gameFolder( int slot ){
@@ -105,7 +106,7 @@ public class GamesInProgress {
 			Info info;
 			try {
 				
-				Bundle bundle = FileUtils.bundleFromFile(gameFile(slot));
+				Bundle bundle = FileUtilsKt.bundleFromFile(gameFile(slot));
 				info = new Info();
 				info.slot = slot;
 				Dungeon.preview(info, bundle);

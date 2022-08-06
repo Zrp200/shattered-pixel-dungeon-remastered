@@ -55,7 +55,7 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.Tilemap;
-import com.watabou.noosa.audio.Music;
+import com.watabou.noosa.audio.MusicPlayer;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
@@ -76,12 +76,12 @@ public class CavesBossLevel extends Level {
 	@Override
 	public void playLevelMusic() {
 		if (locked){
-			Music.INSTANCE.play(Assets.Music.CAVES_BOSS, true);
+			MusicPlayer.INSTANCE.play(Assets.Music.CAVES_BOSS, true);
 		//if wall isn't broken
 		} else if (map[14 + 13*width()] == Terrain.SIGN){
-			Music.INSTANCE.end();
+			MusicPlayer.INSTANCE.end();
 		} else {
-			Music.INSTANCE.playTracks(
+			MusicPlayer.INSTANCE.playTracks(
 					new String[]{Assets.Music.CAVES_1, Assets.Music.CAVES_2, Assets.Music.CAVES_2},
 					new float[]{1, 1, 0.5f},
 					false);
@@ -298,7 +298,7 @@ public class CavesBossLevel extends Level {
 		} while (!openSpace[boss.pos] || map[boss.pos] == Terrain.EMPTY_SP || Actor.findChar(boss.pos) != null);
 		GameScene.add( boss );
 
-		Game.runOnRenderThread(() -> Music.INSTANCE.play(Assets.Music.CAVES_BOSS, true));
+		Game.runOnRenderThread(() -> MusicPlayer.INSTANCE.play(Assets.Music.CAVES_BOSS, true));
 
 	}
 
@@ -322,7 +322,7 @@ public class CavesBossLevel extends Level {
 
 		Dungeon.observe();
 
-		Game.runOnRenderThread(Music.INSTANCE::end);
+		Game.runOnRenderThread(MusicPlayer.INSTANCE::end);
 
 	}
 

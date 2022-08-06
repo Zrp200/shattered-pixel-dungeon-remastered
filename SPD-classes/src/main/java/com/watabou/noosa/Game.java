@@ -33,7 +33,7 @@ import com.watabou.glwrap.VertexDataset;
 import com.watabou.input.ControllerHandler;
 import com.watabou.input.InputHandler;
 import com.watabou.input.PointerEvent;
-import com.watabou.noosa.audio.Music;
+import com.watabou.noosa.audio.MusicPlayer;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.graph.GizmoGraphKt;
 import com.watabou.utils.Callback;
@@ -202,7 +202,7 @@ public class Game implements ApplicationListener {
 		}
 		
 		sceneClass = null;
-		Music.INSTANCE.stop();
+		MusicPlayer.INSTANCE.stop();
 		Sample.INSTANCE.reset();
 	}
 	
@@ -284,24 +284,16 @@ public class Game implements ApplicationListener {
 	}
 	
 	public static void reportException( Throwable tr ) {
-		if (instance != null && Gdx.app != null) {
-			instance.logException(tr);
-		} else {
-			//fallback if error happened in initialization
-			StringWriter sw = new StringWriter();
-			PrintWriter pw = new PrintWriter(sw);
-			tr.printStackTrace(pw);
-			pw.flush();
-			System.err.println(sw.toString());
-		}
-	}
-	
-	protected void logException( Throwable tr ){
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
 		tr.printStackTrace(pw);
 		pw.flush();
-		Gdx.app.error("GAME", sw.toString());
+		if (instance != null && Gdx.app != null) {
+			Gdx.app.error("GAME", sw.toString());
+		} else {
+			//fallback if error happened in initialization
+			System.err.println(sw);
+		}
 	}
 	
 	public static void runOnRenderThread(Callback c){

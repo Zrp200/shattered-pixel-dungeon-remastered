@@ -26,7 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.TitleScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.WelcomeScene;
 import com.watabou.noosa.Game;
-import com.watabou.noosa.audio.Music;
+import com.watabou.noosa.audio.MusicPlayer;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.DeviceCompat;
@@ -107,8 +107,8 @@ public class ShatteredPixelDungeon extends Game {
 		updateSystemUI();
 		SPDAction.loadBindings();
 		
-		Music.INSTANCE.enable( SPDSettings.music() );
-		Music.INSTANCE.volume( SPDSettings.musicVol()*SPDSettings.musicVol()/100f );
+		MusicPlayer.INSTANCE.enable( SPDSettings.music() );
+		MusicPlayer.INSTANCE.volume( SPDSettings.musicVol()*SPDSettings.musicVol()/100f );
 		Sample.INSTANCE.enable( SPDSettings.soundFx() );
 		Sample.INSTANCE.volume( SPDSettings.SFXVol()*SPDSettings.SFXVol()/100f );
 

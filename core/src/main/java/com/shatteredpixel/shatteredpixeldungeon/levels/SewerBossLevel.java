@@ -42,7 +42,7 @@ import com.shatteredpixel.shatteredpixeldungeon.levels.rooms.standard.StandardRo
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
-import com.watabou.noosa.audio.Music;
+import com.watabou.noosa.audio.MusicPlayer;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -58,7 +58,7 @@ public class SewerBossLevel extends SewerLevel {
 	@Override
 	public void playLevelMusic() {
 		if (locked){
-			Music.INSTANCE.play(Assets.Music.SEWERS_BOSS, true);
+			MusicPlayer.INSTANCE.play(Assets.Music.SEWERS_BOSS, true);
 			return;
 		}
 
@@ -71,9 +71,9 @@ public class SewerBossLevel extends SewerLevel {
 		}
 
 		if (gooAlive){
-			Music.INSTANCE.end();
+			MusicPlayer.INSTANCE.end();
 		} else {
-			Music.INSTANCE.playTracks(
+			MusicPlayer.INSTANCE.playTracks(
 					new String[]{Assets.Music.SEWERS_1, Assets.Music.SEWERS_2, Assets.Music.SEWERS_2},
 					new float[]{1, 1, 0.5f},
 					false);
@@ -171,7 +171,7 @@ public class SewerBossLevel extends SewerLevel {
 			GameScene.updateMap( entrance() );
 			GameScene.ripple( entrance() );
 
-			Game.runOnRenderThread(() -> Music.INSTANCE.play(Assets.Music.SEWERS_BOSS, true));
+			Game.runOnRenderThread(() -> MusicPlayer.INSTANCE.play(Assets.Music.SEWERS_BOSS, true));
 		}
 	}
 	
@@ -183,7 +183,7 @@ public class SewerBossLevel extends SewerLevel {
 			set( entrance(), Terrain.ENTRANCE );
 			GameScene.updateMap( entrance() );
 
-			Game.runOnRenderThread(Music.INSTANCE::end);
+			Game.runOnRenderThread(MusicPlayer.INSTANCE::end);
 		}
 	}
 	

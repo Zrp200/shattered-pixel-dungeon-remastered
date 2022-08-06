@@ -53,7 +53,7 @@ import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.Tilemap;
-import com.watabou.noosa.audio.Music;
+import com.watabou.noosa.audio.MusicPlayer;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.utils.Bundlable;
@@ -89,14 +89,14 @@ public class PrisonBossLevel extends Level {
 	@Override
 	public void playLevelMusic() {
 		if (state == State.START){
-			Music.INSTANCE.end();
+			MusicPlayer.INSTANCE.end();
 		} else if (state == State.WON) {
-			Music.INSTANCE.playTracks(
+			MusicPlayer.INSTANCE.playTracks(
 					new String[]{Assets.Music.PRISON_1, Assets.Music.PRISON_2, Assets.Music.PRISON_2},
 					new float[]{1, 1, 0.5f},
 					false);
 		} else {
-			Music.INSTANCE.play(Assets.Music.PRISON_BOSS, true);
+			MusicPlayer.INSTANCE.play(Assets.Music.PRISON_BOSS, true);
 		}
 	}
 
@@ -428,7 +428,7 @@ public class PrisonBossLevel extends Level {
 				
 				state = State.FIGHT_START;
 
-				Game.runOnRenderThread(() -> Music.INSTANCE.play(Assets.Music.PRISON_BOSS, true));
+				Game.runOnRenderThread(() -> MusicPlayer.INSTANCE.play(Assets.Music.PRISON_BOSS, true));
 				break;
 				
 			case FIGHT_START:
@@ -519,7 +519,7 @@ public class PrisonBossLevel extends Level {
 				Sample.INSTANCE.play(Assets.Sounds.BLAST);
 				
 				state = State.WON;
-				Game.runOnRenderThread(Music.INSTANCE::end);
+				Game.runOnRenderThread(MusicPlayer.INSTANCE::end);
 				break;
 		}
 	}
