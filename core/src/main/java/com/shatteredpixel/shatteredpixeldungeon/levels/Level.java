@@ -418,7 +418,7 @@ public abstract class Level implements Bundlable {
 			viewDistance = round(viewDistance/2f);
 
 		if (bundle.contains( "mobs_to_spawn" )) {
-			for (Class<? extends Mob> mob : bundle.getClassArray("mobs_to_spawn")) {
+			for (Class<? extends Mob> mob : (Class<? extends Mob>[])bundle.getClassArray("mobs_to_spawn")) {
 				if (mob != null) mobsToSpawn.add(mob);
 			}
 		}

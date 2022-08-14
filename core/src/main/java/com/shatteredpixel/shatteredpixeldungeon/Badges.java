@@ -277,7 +277,7 @@ public class Badges {
 	public static void loadGlobal() {
 		if (global == null) {
 			try {
-				Bundle bundle = FileUtilsKt.bundleFromFile( BADGES_FILE );
+				Bundle bundle = FileUtilsKt.toBundle( BADGES_FILE );
 				global = restore( bundle );
 
 			} catch (IOException e) {
@@ -293,7 +293,7 @@ public class Badges {
 			store( bundle, global );
 			
 			try {
-				FileUtilsKt.bundleToFile(BADGES_FILE, bundle);
+				FileUtilsKt.toFile(bundle, BADGES_FILE);
 				saveNeeded = false;
 			} catch (IOException e) {
 				ShatteredPixelDungeon.reportException(e);

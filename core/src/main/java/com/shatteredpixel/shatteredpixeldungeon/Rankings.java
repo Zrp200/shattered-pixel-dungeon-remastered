@@ -343,7 +343,7 @@ public enum Rankings {
 		bundle.put(DAILY_HISTORY_SCORES, scores);
 
 		try {
-			FileUtilsKt.bundleToFile( RANKINGS_FILE, bundle);
+			FileUtilsKt.toFile(bundle, RANKINGS_FILE);
 		} catch (IOException e) {
 			ShatteredPixelDungeon.reportException(e);
 		}
@@ -359,7 +359,7 @@ public enum Rankings {
 		records = new ArrayList<>();
 		
 		try {
-			Bundle bundle = FileUtilsKt.bundleFromFile( RANKINGS_FILE );
+			Bundle bundle = FileUtilsKt.toBundle( RANKINGS_FILE );
 			
 			for (Bundlable record : bundle.getCollection( RECORDS )) {
 				records.add( (Record)record );

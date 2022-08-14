@@ -249,7 +249,7 @@ public class Wandmaker extends NPC {
 
 			Bundle node = bundle.getBundle( NODE );
 			
-			if (!node.isNull() && (spawned = node.getBoolean( SPAWNED ))) {
+			if (node != null && (spawned = node.getBoolean( SPAWNED ))) {
 
 				type = node.getInt(TYPE);
 				

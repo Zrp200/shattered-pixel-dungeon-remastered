@@ -196,7 +196,7 @@ public class SPDAction extends GameAction {
 		}
 
 		try {
-			Bundle b = FileUtilsKt.bundleFromFile(BINDINGS_FILE);
+			Bundle b = FileUtilsKt.toBundle(BINDINGS_FILE);
 
 			Bundle firstKeys = b.getBundle("first_keys");
 			Bundle secondKeys = b.getBundle("second_keys");
@@ -333,7 +333,7 @@ public class SPDAction extends GameAction {
 
 	public static void saveBindings(){
 
-		Bundle b = new Bundle();
+		Bundle bundle = new Bundle();
 
 		Bundle firstKeys = new Bundle();
 		Bundle secondKeys = new Bundle();
@@ -384,9 +384,9 @@ public class SPDAction extends GameAction {
 
 		}
 
-		b.put("first_keys", firstKeys);
-		b.put("second_keys", secondKeys);
-		b.put("third_keys", thirdKeys);
+		bundle.put("first_keys", firstKeys);
+		bundle.put("second_keys", secondKeys);
+		bundle.put("third_keys", thirdKeys);
 
 		Bundle firstButtons = new Bundle();
 		Bundle secondButtons = new Bundle();
@@ -437,12 +437,12 @@ public class SPDAction extends GameAction {
 
 		}
 
-		b.put("first_keys_controller", firstButtons);
-		b.put("second_keys_controller", secondButtons);
-		b.put("third_keys_controller", thirdButtons);
+		bundle.put("first_keys_controller", firstButtons);
+		bundle.put("second_keys_controller", secondButtons);
+		bundle.put("third_keys_controller", thirdButtons);
 
 		try {
-			FileUtilsKt.bundleToFile(BINDINGS_FILE, b);
+			FileUtilsKt.toFile(bundle, BINDINGS_FILE);
 		} catch (IOException e) {
 			ShatteredPixelDungeon.reportException(e);
 		}

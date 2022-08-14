@@ -45,7 +45,7 @@ public class ReclaimTrap extends TargetedSpell {
 		image = ItemSpriteSheet.RECLAIM_TRAP;
 	}
 	
-	private Class<?extends Trap> storedTrap = null;
+	private Class<? extends Trap> storedTrap = null;
 	
 	@Override
 	public ArrayList<String> actions(Hero hero) {
@@ -130,7 +130,7 @@ public class ReclaimTrap extends TargetedSpell {
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
-		if (bundle.contains(STORED_TRAP)) storedTrap = bundle.getClass(STORED_TRAP);
+		if (bundle.contains(STORED_TRAP)) storedTrap = (Class<?extends Trap >)bundle.getClass(STORED_TRAP);
 	}
 	
 	public static class Recipe extends com.shatteredpixel.shatteredpixeldungeon.items.Recipe.SimpleRecipe {

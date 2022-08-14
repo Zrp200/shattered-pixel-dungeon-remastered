@@ -203,7 +203,7 @@ public enum Document {
 				Bundle pagesBundle = docsBundle.getBundle(doc.name());
 
 				//compatibility with pre-1.0.0 saves
-				if (pagesBundle.isNull()) {
+				if (pagesBundle == null) {
 					for (String page : docsBundle.getStringArray(doc.name())){
 						if (doc.pagesStates.containsKey(page)) {
 							doc.pagesStates.put(page, READ);

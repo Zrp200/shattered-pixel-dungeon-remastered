@@ -63,7 +63,7 @@ public class Bones {
 		bundle.put( ITEM, item );
 
 		try {
-			FileUtilsKt.bundleToFile( BONES_FILE, bundle );
+			FileUtilsKt.toFile(bundle, BONES_FILE);
 		} catch (IOException e) {
 			ShatteredPixelDungeon.reportException(e);
 		}
@@ -127,7 +127,7 @@ public class Bones {
 		if (depth == -1) {
 
 			try {
-				Bundle bundle = FileUtilsKt.bundleFromFile(BONES_FILE);
+				Bundle bundle = FileUtilsKt.toBundle(BONES_FILE);
 
 				depth = bundle.getInt( LEVEL );
 				if (depth > 0) {
@@ -146,7 +146,7 @@ public class Bones {
 				Bundle emptyBones = new Bundle();
 				emptyBones.put(LEVEL, 0);
 				try {
-					FileUtilsKt.bundleToFile( BONES_FILE, emptyBones );
+					FileUtilsKt.toFile(emptyBones, BONES_FILE);
 				} catch (IOException e) {
 					ShatteredPixelDungeon.reportException(e);
 				}

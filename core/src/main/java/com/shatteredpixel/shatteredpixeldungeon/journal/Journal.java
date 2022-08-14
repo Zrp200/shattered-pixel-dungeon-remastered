@@ -40,7 +40,7 @@ public class Journal {
 		
 		Bundle bundle;
 		try {
-			bundle = FileUtilsKt.bundleFromFile( JOURNAL_FILE );
+			bundle = FileUtilsKt.toBundle( JOURNAL_FILE );
 			
 		} catch (IOException e){
 			bundle = new Bundle();
@@ -66,7 +66,7 @@ public class Journal {
 		Document.store(bundle);
 		
 		try {
-			FileUtilsKt.bundleToFile( JOURNAL_FILE, bundle );
+			FileUtilsKt.toFile(bundle, JOURNAL_FILE);
 			saveNeeded = false;
 		} catch (IOException e) {
 			ShatteredPixelDungeon.reportException(e);

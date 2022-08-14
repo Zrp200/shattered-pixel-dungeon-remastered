@@ -591,7 +591,7 @@ public class Dungeon {
 			Badges.saveLocal( badges );
 			bundle.put( BADGES, badges );
 			
-			FileUtilsKt.bundleToFile( GamesInProgress.gameFile(save), bundle);
+			FileUtilsKt.toFile(bundle, GamesInProgress.gameFile(save));
 			
 		} catch (IOException e) {
 			GamesInProgress.setUnknown( save );
@@ -603,7 +603,7 @@ public class Dungeon {
 		Bundle bundle = new Bundle();
 		bundle.put( LEVEL, level );
 		
-		FileUtilsKt.bundleToFile(GamesInProgress.depthFile( save, depth, branch ), bundle);
+		FileUtilsKt.toFile(bundle, GamesInProgress.depthFile( save, depth, branch ));
 	}
 	
 	public static void saveAll() throws IOException {
@@ -625,7 +625,7 @@ public class Dungeon {
 	
 	public static void loadGame( int save, boolean fullLoad ) throws IOException {
 		
-		Bundle bundle = FileUtilsKt.bundleFromFile( GamesInProgress.gameFile( save ) );
+		Bundle bundle = FileUtilsKt.toBundle( GamesInProgress.gameFile( save ) );
 
 		//pre-1.3.0 saves
 		if (bundle.contains(INIT_VER)){
@@ -672,7 +672,7 @@ public class Dungeon {
 			}
 			
 			Bundle quests = bundle.getBundle( QUESTS );
-			if (!quests.isNull()) {
+			if (quests != null) {
 				Ghost.Quest.restoreFromBundle( quests );
 				Wandmaker.Quest.restoreFromBundle( quests );
 				Blacksmith.Quest.restoreFromBundle( quests );
@@ -689,7 +689,7 @@ public class Dungeon {
 		}
 		
 		Bundle badges = bundle.getBundle(BADGES);
-		if (!badges.isNull()) {
+		if (badges != null) {
 			Badges.loadLocal( badges );
 		} else {
 			Badges.reset();
@@ -740,7 +740,7 @@ public class Dungeon {
 		Dungeon.level = null;
 		Actor.clear();
 
-		Bundle bundle = FileUtilsKt.bundleFromFile( GamesInProgress.depthFile( save, depth, branch ));
+		Bundle bundle = FileUtilsKt.toBundle( GamesInProgress.depthFile( save, depth, branch ));
 
 		Level level = (Level)bundle.get( LEVEL );
 

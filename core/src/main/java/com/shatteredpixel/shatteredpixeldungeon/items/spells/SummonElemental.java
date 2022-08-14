@@ -158,7 +158,7 @@ public class SummonElemental extends Spell {
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
-		if (bundle.contains(SUMMON_CLASS)) summonClass = bundle.getClass(SUMMON_CLASS);
+		if (bundle.contains(SUMMON_CLASS)) summonClass = (Class<? extends Elemental>)bundle.getClass(SUMMON_CLASS);
 	}
 
 	public WndBag.ItemSelector selector = new WndBag.ItemSelector() {

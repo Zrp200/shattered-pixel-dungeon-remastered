@@ -194,7 +194,7 @@ public abstract class SpecialRoom extends Room {
 	public static void restoreRoomsFromBundle( Bundle bundle ) {
 		runSpecials.clear();
 		if (bundle.contains( ROOMS )) {
-			for (Class<? extends Room> type : bundle.getClassArray(ROOMS)) {
+			for (Class<? extends Room> type : (Class<? extends Room>[])bundle.getClassArray(ROOMS)) {
 				runSpecials.add(type);
 			}
 		} else {

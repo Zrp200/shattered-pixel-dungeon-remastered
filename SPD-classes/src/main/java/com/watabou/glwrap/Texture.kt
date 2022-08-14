@@ -26,7 +26,11 @@ import com.badlogic.gdx.graphics.Pixmap
 import com.watabou.utils.RectF
 import com.watabou.utils.getAsset
 
-open class Texture(@JvmField var bitmap: Pixmap, private var filtering: Int, private var wrapping: Int) {
+open class Texture(
+    @JvmField var bitmap: Pixmap,
+    private var filtering: Int,
+    private var wrapping: Int
+) {
 
     private var id = -1
 

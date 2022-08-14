@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.FileUtilsKt;
 
@@ -106,7 +105,7 @@ public class GamesInProgress {
 			Info info;
 			try {
 				
-				Bundle bundle = FileUtilsKt.bundleFromFile(gameFile(slot));
+				Bundle bundle = FileUtilsKt.toBundle(gameFile(slot));
 				info = new Info();
 				info.slot = slot;
 				Dungeon.preview(info, bundle);
