@@ -33,45 +33,32 @@ open class Group : Gizmo() {
     protected var children: ArrayList<Gizmo> = ArrayList()
 
     /**
+     * does a specified [action] on alive [children], with an optional [predicate] that allows further restriction
+     *
+     * [children] is wrapped after filtering, so there is no risk of concurrent modification.
+     */
+    private inline fun forEachAlive(action: (Gizmo)->Any?, predicate: (Gizmo)->Boolean = {true}) = synchronized(this) {
+        for(child in children.filter { it.alive && predicate(it) }) action(child)
+    }
+
+    /**
      * Updates this group and all of its children.
      */
     @Synchronized
-    override fun update() {
-        for (i in 0 until children.size) {
-            if (i >= children.size) break
-            val child = children[i]
-            if (child.alive && child.active) {
-                child.update()
-            }
-        }
-    }
+    override fun update() = forEachAlive(action = Gizmo::update, predicate = Gizmo::active)
 
     /**
      * Draws this group and all of its children.
      */
     @Synchronized
-    override fun draw() {
-        for (i in 0 until children.size) {
-            if (i >= children.size) break
-            val child = children[i]
-            if (child.alive && child.visible) {
-                child.draw()
-            }
-        }
-    }
+    override fun draw() = forEachAlive(action = Gizmo::draw, predicate = Gizmo::visible)
 
     /**
      * Kills this group and all of its children.
      */
     @Synchronized
     override fun kill() {
-        for (i in 0 until children.size) {
-            if (i >= children.size) break
-            val child = children[i]
-            if (child.alive) {
-                child.kill()
-            }
-        }
+        forEachAlive(Gizmo::kill)
         super.kill()
     }
 
@@ -88,35 +75,39 @@ open class Group : Gizmo() {
     }
 
     /**
-     * Adds a gizmo to the [children] unless it's already there. New children are added to the front.
+     * adds the [g] to the list using the specified [add] function,
+     * unless it already contains the Gizmo, in which case [onContain] is called
+     *
+     * this function is synchronized
      */
-    @Synchronized
-    fun add(g: Gizmo) {
-        if (g.parent === this) return
-        g.parent?.remove(g)
-        children.add(g)
-        g.parent = this
+    private inline fun add(g: Gizmo,
+                           add: (Gizmo)->Any? = children::add,
+                           onContain: (Gizmo)->Unit) = synchronized(this) {
+        if(g.parent == this) onContain(g)
+        else {
+            g.parent?.remove(g)
+            add(g)
+            g.parent = this
+        }
     }
 
     /**
-     * Adds a gizmo to the front of [children].
-     *
-     * Gizmos are updated and drawn from back to front.
+     * Adds [g] to [children] unless it's already there. New children are added to the front.
      */
-    @Synchronized
-    fun addToFront(g: Gizmo) {
-        if (g.parent === this) return bringToFront(g)
-        g.parent?.remove(g)
-        children.add(g)
-        g.parent = this
-    }
+    fun add(g: Gizmo) = add(g) {}
 
     /**
-     * Moves a gizmo to the front of [children] if it is found among them.
+     * Adds [g] to the front of [children].
      *
      * Gizmos are updated and drawn from back to front.
      */
-    @Synchronized
+    fun addToFront(g: Gizmo) = add(g, onContain = ::bringToFront)
+
+    /**
+     * Moves [g] to the front of [children] if it is found among them.
+     *
+     * Gizmos are updated and drawn from back to front.
+     */
     fun bringToFront(g: Gizmo) {
         g.takeIf(children::contains)?.also {
             children.remove(it)
@@ -129,13 +120,7 @@ open class Group : Gizmo() {
      *
      * Gizmos are updated and drawn from back to front.
      */
-    @Synchronized
-    fun addToBack(g: Gizmo) {
-        if (g.parent === this) return sendToBack(g)
-        g.parent?.remove(g)
-        children.add(0, g)
-        g.parent = this
-    }
+    fun addToBack(g: Gizmo) = add(g, onContain=::sendToBack, add={ children.add(0, it)})
 
     /**
      * Moves a gizmo to the back of [children] if it is found among them.
