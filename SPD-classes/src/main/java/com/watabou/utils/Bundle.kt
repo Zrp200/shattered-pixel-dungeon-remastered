@@ -311,12 +311,24 @@ class Bundle private constructor(
          * Adds an alias to the class.
          * This will essentially convert bundled [aliased][alias] object into the specified [class][cl] the first time the bundle is loaded.
          * Aliases can be used to remove items from the game without breaking the existing save files.
-         * @param cl class to convert found aliased objects into
          * @param alias old class name as it was saved into the bundle
+         * @param cl class to convert found aliased objects into
          */
         @JvmStatic
-        fun addAlias(cl: Class<*>, alias: String) {
+        fun addAlias(alias: String, cl: Class<*>) {
             aliases[alias] = cl.name
+        }
+
+        /**
+         * Adds class aliases.
+         * This will essentially convert bundled aliased objects into the specified classes the first time the bundle is loaded.
+         * Aliases can be used to remove items from the game without breaking the existing save files.
+         * @param aliases map of the aliases and their respected classes
+         */
+        fun addAliases(aliases: Map<String, Class<*>>) {
+            aliases.forEach {
+                addAlias(it.key, it.value)
+            }
         }
     }
 }

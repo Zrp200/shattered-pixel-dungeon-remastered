@@ -144,7 +144,7 @@ abstract class Game(c: Class<out Scene>, platform: PlatformSupport) : Applicatio
         if (requestedReset) {
             requestedReset = false
             requestedScene = Reflection.newInstance(sceneClass)
-            requestedScene?.let { switchScene(it) }
+            switchScene(requestedScene)
         }
 
         elapsed = timeScale * Gdx.graphics.deltaTime
@@ -173,7 +173,6 @@ abstract class Game(c: Class<out Scene>, platform: PlatformSupport) : Applicatio
 
     override fun dispose() {
         scene.destroy()
-        sceneClass = null
         MusicPlayer.INSTANCE.stop()
         Sample.INSTANCE.reset()
     }
@@ -186,11 +185,13 @@ abstract class Game(c: Class<out Scene>, platform: PlatformSupport) : Applicatio
         scene.destroy()
         Camera.reset()
         VertexDataset.clear()
+
         scene = newScene
         onChange?.beforeCreate()
         scene.create()
         onChange?.afterCreate()
         onChange = null
+
         elapsed = 0f
         timeScale = 1f
         timeTotal = 0f
@@ -207,7 +208,7 @@ abstract class Game(c: Class<out Scene>, platform: PlatformSupport) : Applicatio
 
         // New scene class
         @JvmField
-        var sceneClass: Class<out Scene>? = null
+        var sceneClass: Class<out Scene> = SceneStub::class.java
 
         //actual size of the display
 		@JvmField
@@ -250,6 +251,7 @@ abstract class Game(c: Class<out Scene>, platform: PlatformSupport) : Applicatio
 		lateinit var inputHandler: InputHandler
 
 		lateinit var platform: PlatformSupport
+
         @JvmStatic
 		fun resetScene() {
             switchScene(sceneClass)
@@ -257,7 +259,7 @@ abstract class Game(c: Class<out Scene>, platform: PlatformSupport) : Applicatio
 
         @JvmStatic
 		@JvmOverloads
-        fun switchScene(c: Class<out Scene>?, callback: SceneChangeCallback? = null) {
+        fun switchScene(c: Class<out Scene>, callback: SceneChangeCallback? = null) {
             sceneClass = c
             instance.requestedReset = true
             instance.onChange = callback
