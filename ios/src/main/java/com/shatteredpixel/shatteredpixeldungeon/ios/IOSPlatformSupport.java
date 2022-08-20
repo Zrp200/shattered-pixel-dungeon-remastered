@@ -39,6 +39,8 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.watabou.utils.FileUtilsKt.getAsset;
+
 public class IOSPlatformSupport extends PlatformSupport {
 	@Override
 	public void updateDisplaySize() {
@@ -52,24 +54,24 @@ public class IOSPlatformSupport extends PlatformSupport {
 		}
 
 		if (!SPDSettings.fullscreen()) {
-			int insetChange = Gdx.graphics.getSafeInsetBottom() - Game.bottomInset;
-			Game.bottomInset = Gdx.graphics.getSafeInsetBottom();
-			Game.height -= insetChange;
-			Game.displayHeight = Game.height;
+			int insetChange = Gdx.graphics.getSafeInsetBottom() - Game.INSTANCE.bottomInset;
+			Game.INSTANCE.bottomInset = Gdx.graphics.getSafeInsetBottom();
+			Game.INSTANCE.height -= insetChange;
+			Game.INSTANCE.displayHeight = Game.INSTANCE.height;
 		} else {
-			Game.height += Game.bottomInset;
-			Game.displayHeight = Game.height;
-			Game.bottomInset = 0;
+			Game.INSTANCE.height += Game.INSTANCE.bottomInset;
+			Game.INSTANCE.displayHeight = Game.INSTANCE.height;
+			Game.INSTANCE.bottomInset = 0;
 		}
-		Gdx.gl.glViewport(0, Game.bottomInset, Game.width, Game.height);
+		Gdx.gl.glViewport(0, Game.INSTANCE.bottomInset, Game.INSTANCE.width, Game.INSTANCE.height);
 	}
 
 	@Override
 	public void updateSystemUI() {
-		int prevInset = Game.bottomInset;
+		int prevInset = Game.INSTANCE.bottomInset;
 		updateDisplaySize();
-		if (prevInset != Game.bottomInset) {
-			ShatteredPixelDungeon.seamlessResetScene();
+		if (prevInset != Game.INSTANCE.bottomInset) {
+			ShatteredPixelDungeon.INSTANCE.resetSceneNoFade();
 		}
 	}
 

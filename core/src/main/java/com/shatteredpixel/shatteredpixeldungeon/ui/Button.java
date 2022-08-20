@@ -135,15 +135,15 @@ public class Button extends Component {
 		hotArea.setActive(getVisible());
 		
 		if (pressed) {
-			if ((pressTime += Game.elapsed) >= longClick) {
+			if ((pressTime += Game.INSTANCE.elapsed) >= longClick) {
 				pressed = false;
 				if (onLongClick()) {
 
 					hotArea.reset();
 					processed = true;
 					onPointerUp();
-					
-					Game.vibrate( 50 );
+
+					Game.INSTANCE.platform.vibrate( 50 );
 				}
 			}
 		}

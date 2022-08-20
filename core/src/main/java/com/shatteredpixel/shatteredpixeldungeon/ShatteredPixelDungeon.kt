@@ -43,12 +43,18 @@ import com.watabou.noosa.audio.MusicPlayer
 import com.watabou.noosa.audio.Sample
 import com.watabou.utils.Bundle.Companion.addAliases
 import com.watabou.utils.DeviceCompat
-import com.watabou.utils.PlatformSupport
 
-class ShatteredPixelDungeon(platform: PlatformSupport)
-    : Game(WelcomeScene::class.java, platform) {
+object ShatteredPixelDungeon : Game() {
+
+    // Constants for specific older versions of shattered used for data conversion.
+    // Versions older than v0.9.3c are no longer supported, and data from them is ignored.
+    const val v0_9_3c = 557 // 557 on iOS, 554 on other platforms
+    const val v1_2_3 = 628
+    const val v1_3_0 = 642
 
     init {
+        INSTANCE = this
+        sceneClass = WelcomeScene::class.java
         addAliases(
             mapOf(
                 //pre-v1.3.0
@@ -91,7 +97,7 @@ class ShatteredPixelDungeon(platform: PlatformSupport)
     override fun finish() {
         if (!DeviceCompat.isiOS()) super.finish()
         else
-            //can't exit on iOS (Apple guidelines), so just go to title screen
+            // Can't exit on iOS (Apple guidelines), so just go to the title screen.
             switchScene(TitleScene::class.java)
     }
 
@@ -100,15 +106,15 @@ class ShatteredPixelDungeon(platform: PlatformSupport)
         (scene as? PixelScene)?.restoreWindows()
     }
 
-    override fun resize(width: Int, height: Int) {
-        if (width == 0 || height == 0) return
-        if (height != Game.height || width != Game.width) {
+    override fun resize(newWidth: Int, newHeight: Int) {
+        if (newWidth == 0 || newHeight == 0) return
+        if (newHeight != height || newWidth != width) {
             (scene as? PixelScene)?.apply {
                 PixelScene.noFade = true
                 saveWindows()
             }
         }
-        super.resize(width, height)
+        super.resize(newWidth, newHeight)
         platform.updateDisplaySize()
     }
 
@@ -117,28 +123,26 @@ class ShatteredPixelDungeon(platform: PlatformSupport)
         GameScene.endActorThread()
     }
 
-    companion object {
+    /**
+     * Requests a scene switch without fade.
+     * @param cl class of the scene to change the current one to
+     * @param callback callback to perform logic during scene change
+     */
+    @JvmOverloads
+    fun switchSceneNoFade(cl: Class<out Scene>, callback: SceneChangeCallback? = null) {
+        PixelScene.noFade = true
+        switchScene(cl, callback)
+    }
 
-        // Constants for specific older versions of shattered used for data conversion.
-        // Versions older than v0.9.3c are no longer supported, and data from them is ignored.
-        const val v0_9_3c = 557 // 557 on iOS, 554 on other platforms
-        const val v1_2_3 = 628
-        const val v1_3_0 = 642
-
-        @JvmStatic
-        @JvmOverloads
-        fun switchNoFade(c: Class<out Scene>, callback: SceneChangeCallback? = null) {
-            PixelScene.noFade = true
-            switchScene(c, callback)
-        }
-
-        @JvmStatic
-		@JvmOverloads
-        fun seamlessResetScene(callback: SceneChangeCallback? = null) {
-            (scene() as? PixelScene)?.apply {
-                saveWindows()
-                switchNoFade(sceneClass, callback)
-            } ?: resetScene()
-        }
+    /**
+     * Requests a scene reset without fade.
+     * @param callback callback to perform logic during scene reset
+     */
+    @JvmOverloads
+    fun resetSceneNoFade(callback: SceneChangeCallback? = null) {
+        (scene as? PixelScene)?.apply {
+            saveWindows()
+            switchSceneNoFade(sceneClass, callback)
+        } ?: resetScene()
     }
 }

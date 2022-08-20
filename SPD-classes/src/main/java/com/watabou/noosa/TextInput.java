@@ -59,11 +59,11 @@ public class TextInput extends Component {
 
 		//use a custom viewport here to ensure stage camera matches game camera
 		Viewport viewport = new Viewport() {};
-		viewport.setWorldSize(Game.width, Game.height);
-		viewport.setScreenBounds(0, Game.bottomInset, Game.width, Game.height);
+		viewport.setWorldSize(Game.INSTANCE.width, Game.INSTANCE.height);
+		viewport.setScreenBounds(0, Game.INSTANCE.bottomInset, Game.INSTANCE.width, Game.INSTANCE.height);
 		viewport.setCamera(new OrthographicCamera());
 		stage = new Stage(viewport);
-		Game.inputHandler.addInputProcessor(stage);
+		Game.INSTANCE.inputHandler.addInputProcessor(stage);
 
 		container = new Container<TextField>();
 		stage.addActor(container);
@@ -72,7 +72,7 @@ public class TextInput extends Component {
 		skin = new Skin(getAsset("gdx/textfield.json"));
 
 		TextField.TextFieldStyle style = skin.get(TextField.TextFieldStyle.class);
-		style.font = Game.platform.getFont(size, "", false, false);
+		style.font = Game.INSTANCE.platform.getFont(size, "", false, false);
 		style.background = null;
 		textField = multiline ? new TextArea("", style) : new TextField("", style);
 		textField.setProgrammaticChangeEvents(true);
@@ -82,7 +82,7 @@ public class TextInput extends Component {
 		textField.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				BitmapFont f = Game.platform.getFont(size, textField.getText(), false, false);
+				BitmapFont f = Game.INSTANCE.platform.getFont(size, textField.getText(), false, false);
 				TextField.TextFieldStyle style = textField.getStyle();
 				if (f != style.font){
 					style.font = f;
@@ -151,14 +151,14 @@ public class TextInput extends Component {
 		}
 
 		container.align(Align.topLeft);
-		container.setPosition(contX*zoom, (Game.height-(contY*zoom)));
+		container.setPosition(contX*zoom, (Game.INSTANCE.height-(contY*zoom)));
 		container.size(contW*zoom, contH*zoom);
 	}
 
 	@Override
 	public void update() {
 		super.update();
-		stage.act(Game.elapsed);
+		stage.act(Game.INSTANCE.elapsed);
 	}
 
 	@Override
@@ -169,7 +169,7 @@ public class TextInput extends Component {
 		Texture.Companion.reset();
 		stage.draw();
 		QuadKt.bindIndices();
-		BlendingKt.useDefault();
+		BlendingKt.useDefaultBlending();
 	}
 
 	@Override
@@ -177,9 +177,9 @@ public class TextInput extends Component {
 		super.destroy();
 		if (stage != null) {
 			skin.dispose();
-			Game.inputHandler.removeInputProcessor(stage);
+			Game.INSTANCE.inputHandler.removeInputProcessor(stage);
 			Gdx.input.setOnscreenKeyboardVisible(false);
-			Game.platform.updateSystemUI();
+			Game.INSTANCE.platform.updateSystemUI();
 		}
 	}
 }

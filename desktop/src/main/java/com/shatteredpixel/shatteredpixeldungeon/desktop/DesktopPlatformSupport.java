@@ -46,10 +46,10 @@ public class DesktopPlatformSupport extends PlatformSupport {
 	public void updateDisplaySize() {
 		if (previousSizes == null){
 			previousSizes = new Point[2];
-			previousSizes[0] = previousSizes[1] = new Point(Game.width, Game.height);
+			previousSizes[0] = previousSizes[1] = new Point(Game.INSTANCE.width, Game.INSTANCE.height);
 		} else {
 			previousSizes[1] = previousSizes[0];
-			previousSizes[0] = new Point(Game.width, Game.height);
+			previousSizes[0] = new Point(Game.INSTANCE.width, Game.INSTANCE.height);
 		}
 		if (!SPDSettings.fullscreen()) {
 			SPDSettings.windowResolution( previousSizes[0] );

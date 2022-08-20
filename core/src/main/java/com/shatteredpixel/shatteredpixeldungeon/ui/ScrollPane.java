@@ -118,7 +118,7 @@ public class ScrollPane extends Component {
 	public synchronized void update() {
 		super.update();
 		if (keyScroll != 0){
-			scrollTo(content.getCamera().scroll.x, content.getCamera().scroll.y + (keyScroll * 150 * Game.elapsed));
+			scrollTo(content.getCamera().scroll.x, content.getCamera().scroll.y + (keyScroll * 150 * Game.INSTANCE.elapsed));
 		}
 	}
 

@@ -44,7 +44,7 @@ public class IceBlock extends Gizmo {
 	public void update() {
 		super.update();
 
-		if ((phase += Game.elapsed * 2) < 1) {
+		if ((phase += Game.INSTANCE.elapsed * 2) < 1) {
 			target.tint( 0.83f, 1.17f, 1.33f, phase * 0.6f );
 		} else {
 			target.tint( 0.83f, 1.17f, 1.33f, 0.6f );

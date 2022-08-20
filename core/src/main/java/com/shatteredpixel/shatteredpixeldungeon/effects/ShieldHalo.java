@@ -51,7 +51,7 @@ public class ShieldHalo extends Halo {
 		super.update();
 		
 		if (phase < 1) {
-			if ((phase -= Game.elapsed) <= 0) {
+			if ((phase -= Game.INSTANCE.elapsed) <= 0) {
 				remove();
 			} else {
 				scale.set( (2 - phase) * radius / RADIUS );

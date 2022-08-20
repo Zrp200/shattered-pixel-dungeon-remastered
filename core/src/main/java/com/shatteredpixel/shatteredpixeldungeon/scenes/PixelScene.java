@@ -119,12 +119,12 @@ public class PixelScene extends Scene {
 			scaleFactor = 2.5f;
 		}
 
-		maxDefaultZoom = (int) min(Game.width/minWidth, Game.height/minHeight);
-		maxScreenZoom = (int) min(Game.displayWidth /minWidth, Game.displayHeight /minHeight);
+		maxDefaultZoom = (int) min(Game.INSTANCE.width/minWidth, Game.INSTANCE.height/minHeight);
+		maxScreenZoom = (int) min(Game.INSTANCE.displayWidth /minWidth, Game.INSTANCE.displayHeight /minHeight);
 		defaultZoom = SPDSettings.scale();
 
-		if (defaultZoom < ceil( Game.density * 2 ) || defaultZoom > maxDefaultZoom){
-			defaultZoom = clamp(2, ceil( Game.density * scaleFactor ), maxDefaultZoom);
+		if (defaultZoom < ceil( Game.INSTANCE.density * 2 ) || defaultZoom > maxDefaultZoom){
+			defaultZoom = clamp(2, ceil( Game.INSTANCE.density * scaleFactor ), maxDefaultZoom);
 
 			if (SPDSettings.interfaceSize() > 0 && defaultZoom < (maxDefaultZoom+1)/2){
 				defaultZoom = (maxDefaultZoom+1)/2;
@@ -171,7 +171,7 @@ public class PixelScene extends Scene {
 				Messages.lang() == Languages.JAPANESE){
 			renderedTextPageSize *= 2;
 		}
-		Game.platform.setupFontGenerators(renderedTextPageSize, SPDSettings.systemFont());
+		Game.INSTANCE.platform.setupFontGenerators(renderedTextPageSize, SPDSettings.systemFont());
 
 		Tooltip.resetLastUsedTime();
 
@@ -201,10 +201,10 @@ public class PixelScene extends Scene {
 				if (ControllerHandler.rightStickPosition.y < 0) yMove = -yMove;
 
 				PointF virtualCursorPos = ControllerHandler.getControllerPointerPos();
-				virtualCursorPos.x += defaultZoom * sensitivity * Game.elapsed * xMove;
-				virtualCursorPos.y += defaultZoom * sensitivity * Game.elapsed * yMove;
-				virtualCursorPos.x = clamp(0, virtualCursorPos.x, Game.width);
-				virtualCursorPos.y = clamp(0, virtualCursorPos.y, Game.height);
+				virtualCursorPos.x += defaultZoom * sensitivity * Game.INSTANCE.elapsed * xMove;
+				virtualCursorPos.y += defaultZoom * sensitivity * Game.INSTANCE.elapsed * yMove;
+				virtualCursorPos.x = clamp(0, virtualCursorPos.x, Game.INSTANCE.width);
+				virtualCursorPos.y = clamp(0, virtualCursorPos.y, Game.INSTANCE.height);
 				ControllerHandler.updateControllerPointer(virtualCursorPos, true);
 			}
 		}
@@ -269,7 +269,7 @@ public class PixelScene extends Scene {
 	}
 
 	public static boolean landscape(){
-		return SPDSettings.interfaceSize() > 0 || Game.width > Game.height;
+		return SPDSettings.interfaceSize() > 0 || Game.INSTANCE.width > Game.INSTANCE.height;
 	}
 
 
@@ -320,7 +320,7 @@ public class PixelScene extends Scene {
 	
 	public static void showBadge( Badges.Badge badge ) {
 		Game.runOnRenderThread(() -> {
-			Scene s = Game.scene();
+			Scene s = Game.INSTANCE.scene;
 			if (s != null) {
 				BadgeBanner banner = BadgeBanner.show(badge.image);
 				s.add(banner);
@@ -371,7 +371,7 @@ public class PixelScene extends Scene {
 			
 			super.update();
 			
-			if ((time -= Game.elapsed) <= 0) {
+			if ((time -= Game.INSTANCE.elapsed) <= 0) {
 				alpha( 0f );
 				remove();
 				destroy();
@@ -399,10 +399,10 @@ public class PixelScene extends Scene {
 		
 		public PixelCamera( float zoom ) {
 			super(
-				(int)(Game.width - ceil( Game.width / zoom ) * zoom) / 2,
-				(int)(Game.height - ceil( Game.height / zoom ) * zoom) / 2,
-				ceil( Game.width / zoom ),
-				ceil( Game.height / zoom ), zoom );
+				(int)(Game.INSTANCE.width - ceil( Game.INSTANCE.width / zoom ) * zoom) / 2,
+				(int)(Game.INSTANCE.height - ceil( Game.INSTANCE.height / zoom ) * zoom) / 2,
+				ceil( Game.INSTANCE.width / zoom ),
+				ceil( Game.INSTANCE.height / zoom ), zoom );
 			fullScreen = true;
 		}
 		

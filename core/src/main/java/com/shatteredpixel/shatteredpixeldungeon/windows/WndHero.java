@@ -158,10 +158,10 @@ public class WndHero extends WndTabbed {
 				@Override
 				protected void onClick() {
 					super.onClick();
-					if (ShatteredPixelDungeon.scene() instanceof GameScene){
+					if (ShatteredPixelDungeon.INSTANCE.scene instanceof GameScene){
 						GameScene.show(new WndHeroInfo(hero.heroClass));
 					} else {
-						ShatteredPixelDungeon.scene().addToFront(new WndHeroInfo(hero.heroClass));
+						ShatteredPixelDungeon.INSTANCE.scene.addToFront(new WndHeroInfo(hero.heroClass));
 					}
 				}
 

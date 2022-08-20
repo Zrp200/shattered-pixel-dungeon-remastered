@@ -61,7 +61,7 @@ public class Surprise extends Image {
 	public void update() {
 		super.update();
 
-		if ((time -= Game.elapsed) <= 0) {
+		if ((time -= Game.INSTANCE.elapsed) <= 0) {
 			kill();
 		} else {
 			float p = time / TIME_TO_FADE;

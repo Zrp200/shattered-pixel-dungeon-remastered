@@ -535,7 +535,7 @@ public class CharSprite extends MovieClip implements MovieClip.Listener {
 		
 		super.update();
 		
-		if (flashTime > 0 && (flashTime -= Game.elapsed) <= 0) {
+		if (flashTime > 0 && (flashTime -= Game.INSTANCE.elapsed) <= 0) {
 			resetColor();
 		}
 		

@@ -105,7 +105,7 @@ public class Pushing extends Actor {
 		public void update() {
 			super.update();
 			
-			if ((delay += Game.elapsed) < DELAY) {
+			if ((delay += Game.INSTANCE.elapsed) < DELAY) {
 				
 				sprite.x = x;
 				sprite.y = y;

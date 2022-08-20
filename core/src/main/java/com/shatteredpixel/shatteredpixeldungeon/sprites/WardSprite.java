@@ -153,8 +153,8 @@ public class WardSprite extends MobSprite {
 		//if tier is greater than 3
 		if (perspectiveRaise >= 6 / 16f && !paused){
 			if (Float.isNaN(baseY)) baseY = y;
-			y = baseY + (float) Math.sin(Game.timeTotal);
-			shadowOffset = 0.25f - 0.8f*(float) Math.sin(Game.timeTotal);
+			y = baseY + (float) Math.sin(Game.INSTANCE.timeTotal);
+			shadowOffset = 0.25f - 0.8f*(float) Math.sin(Game.INSTANCE.timeTotal);
 		}
 	}
 

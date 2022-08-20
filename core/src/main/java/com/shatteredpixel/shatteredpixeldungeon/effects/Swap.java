@@ -111,7 +111,7 @@ public class Swap extends Actor {
 		public void update() {
 			super.update();
 
-			if ((passed += Game.elapsed) < delay) {
+			if ((passed += Game.INSTANCE.elapsed) < delay) {
 				sprite.x = x;
 				sprite.y = y;
 

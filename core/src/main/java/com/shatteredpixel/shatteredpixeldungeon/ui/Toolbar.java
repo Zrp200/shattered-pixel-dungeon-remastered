@@ -436,7 +436,7 @@ public class Toolbar extends Component {
 											QuickSlotButton.useTargeting(idx);
 										}
 									} else {
-										Game.scene().addToFront(new WndUseItem(null, item));
+										Game.INSTANCE.scene.addToFront(new WndUseItem(null, item));
 									}
 								}
 							});
@@ -896,7 +896,7 @@ public class Toolbar extends Component {
 		public void update() {
 			super.update();
 			
-			if ((left -= Game.elapsed) <= 0) {
+			if ((left -= Game.INSTANCE.elapsed) <= 0) {
 
 				setVisible(false);
 				setActive(false);

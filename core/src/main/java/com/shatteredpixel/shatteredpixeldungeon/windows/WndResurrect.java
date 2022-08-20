@@ -109,7 +109,7 @@ public class WndResurrect extends Window {
 				}
 				
 				InterlevelScene.mode = InterlevelScene.Mode.RESURRECT;
-				Game.switchScene( InterlevelScene.class );
+				Game.INSTANCE.switchScene( InterlevelScene.class );
 			}
 		};
 		btnContinue.setRect( 0, btnItem1.bottom() + BTN_GAP, WIDTH, BTN_HEIGHT );

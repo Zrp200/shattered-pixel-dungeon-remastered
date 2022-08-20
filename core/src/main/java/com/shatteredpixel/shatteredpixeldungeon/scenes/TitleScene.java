@@ -97,7 +97,7 @@ public class TitleScene extends PixelScene {
 			@Override
 			public void update() {
 				super.update();
-				am = max(0f, sin( time += Game.elapsed ));
+				am = max(0f, sin( time += Game.INSTANCE.elapsed ));
 				if (time >= 1.5f * PI) time = 0;
 			}
 			@Override
@@ -119,9 +119,9 @@ public class TitleScene extends PixelScene {
 				if (GamesInProgress.checkAll().size() == 0){
 					GamesInProgress.selectedClass = null;
 					GamesInProgress.curSlot = 1;
-					ShatteredPixelDungeon.switchScene(HeroSelectScene.class);
+					ShatteredPixelDungeon.INSTANCE.switchScene(HeroSelectScene.class);
 				} else {
-					ShatteredPixelDungeon.switchNoFade( StartScene.class );
+					ShatteredPixelDungeon.INSTANCE.switchSceneNoFade( StartScene.class );
 				}
 			}
 			
@@ -131,7 +131,7 @@ public class TitleScene extends PixelScene {
 				if (DeviceCompat.isDebug()) {
 					GamesInProgress.selectedClass = null;
 					GamesInProgress.curSlot = 1;
-					ShatteredPixelDungeon.switchScene(HeroSelectScene.class);
+					ShatteredPixelDungeon.INSTANCE.switchScene(HeroSelectScene.class);
 					return true;
 				}
 				return super.onLongClick();
@@ -146,7 +146,7 @@ public class TitleScene extends PixelScene {
 		StyledButton btnRankings = new StyledButton(GREY_TR,Messages.get(this, "rankings")){
 			@Override
 			protected void onClick() {
-				ShatteredPixelDungeon.switchNoFade( RankingsScene.class );
+				ShatteredPixelDungeon.INSTANCE.switchSceneNoFade( RankingsScene.class );
 			}
 		};
 		btnRankings.icon(Icons.get(Icons.RANKINGS));
@@ -155,7 +155,7 @@ public class TitleScene extends PixelScene {
 		StyledButton btnBadges = new StyledButton(GREY_TR, Messages.get(this, "badges")){
 			@Override
 			protected void onClick() {
-				ShatteredPixelDungeon.switchNoFade( BadgesScene.class );
+				ShatteredPixelDungeon.INSTANCE.switchSceneNoFade( BadgesScene.class );
 			}
 
 			@Override
@@ -187,7 +187,7 @@ public class TitleScene extends PixelScene {
 		StyledButton btnAbout = new StyledButton(GREY_TR, Messages.get(this, "about")){
 			@Override
 			protected void onClick() {
-				ShatteredPixelDungeon.switchScene( AboutScene.class );
+				ShatteredPixelDungeon.INSTANCE.switchScene( AboutScene.class );
 			}
 		};
 		btnAbout.icon(Icons.get(Icons.SHPX));
@@ -273,14 +273,14 @@ public class TitleScene extends PixelScene {
 			}
 
 			if (unreadCount > 0){
-				textColor(ColorMathKt.interpolate( 0xFFFFFF, Window.SHPX_COLOR, 0.5f + sin(Game.timeTotal*5)/2f));
+				textColor(ColorMathKt.interpolate( 0xFFFFFF, Window.SHPX_COLOR, 0.5f + sin(Game.INSTANCE.timeTotal*5)/2f));
 			}
 		}
 
 		@Override
 		protected void onClick() {
 			super.onClick();
-			ShatteredPixelDungeon.switchNoFade( NewsScene.class );
+			ShatteredPixelDungeon.INSTANCE.switchSceneNoFade( NewsScene.class );
 		}
 	}
 
@@ -304,7 +304,7 @@ public class TitleScene extends PixelScene {
 			}
 
 			if (updateShown){
-				textColor(ColorMathKt.interpolate( 0xFFFFFF, Window.SHPX_COLOR, 0.5f + sin(Game.timeTotal*5)/2f));
+				textColor(ColorMathKt.interpolate( 0xFFFFFF, Window.SHPX_COLOR, 0.5f + sin(Game.INSTANCE.timeTotal*5)/2f));
 			}
 		}
 
@@ -316,7 +316,7 @@ public class TitleScene extends PixelScene {
 			} else if (Updates.updateAvailable()){
 				AvailableUpdateData update = Updates.updateData();
 
-				ShatteredPixelDungeon.scene().addToFront( new WndOptions(
+				ShatteredPixelDungeon.INSTANCE.scene.addToFront( new WndOptions(
 						Icons.get(Icons.CHANGES),
 						update.versionName == null ? Messages.get(this,"title") : Messages.get(this,"versioned_title", update.versionName),
 						update.desc == null ? Messages.get(this,"desc") : update.desc,
@@ -329,14 +329,14 @@ public class TitleScene extends PixelScene {
 							Updates.launchUpdate(Updates.updateData());
 						} else if (index == 1){
 							ChangesScene.changesSelected = 0;
-							ShatteredPixelDungeon.switchNoFade( ChangesScene.class );
+							ShatteredPixelDungeon.INSTANCE.switchSceneNoFade( ChangesScene.class );
 						}
 					}
 				});
 
 			} else {
 				ChangesScene.changesSelected = 0;
-				ShatteredPixelDungeon.switchNoFade( ChangesScene.class );
+				ShatteredPixelDungeon.INSTANCE.switchSceneNoFade( ChangesScene.class );
 			}
 		}
 
@@ -359,7 +359,7 @@ public class TitleScene extends PixelScene {
 			super.update();
 
 			if (Messages.lang().status() == Languages.Status.INCOMPLETE){
-				textColor(ColorMathKt.interpolate( 0xFFFFFF, CharSprite.NEGATIVE, 0.5f + sin(Game.timeTotal*5)/2f));
+				textColor(ColorMathKt.interpolate( 0xFFFFFF, CharSprite.NEGATIVE, 0.5f + sin(Game.INSTANCE.timeTotal*5)/2f));
 			}
 		}
 
@@ -368,7 +368,7 @@ public class TitleScene extends PixelScene {
 			if (Messages.lang().status() == Languages.Status.INCOMPLETE){
 				WndSettings.last_index = 4;
 			}
-			ShatteredPixelDungeon.scene().add(new WndSettings());
+			ShatteredPixelDungeon.INSTANCE.scene.add(new WndSettings());
 		}
 
 		@Override
@@ -390,7 +390,7 @@ public class TitleScene extends PixelScene {
 
 		@Override
 		protected void onClick() {
-			ShatteredPixelDungeon.switchNoFade(SupporterScene.class);
+			ShatteredPixelDungeon.INSTANCE.switchSceneNoFade(SupporterScene.class);
 		}
 	}
 }

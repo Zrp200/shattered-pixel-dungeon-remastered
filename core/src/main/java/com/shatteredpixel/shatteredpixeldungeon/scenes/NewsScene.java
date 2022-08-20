@@ -150,7 +150,7 @@ public class NewsScene extends PixelScene {
 				link += "?utm_source=shatteredpd";
 				link += "&utm_medium=news_page";
 				link += "&utm_campaign=ingame_link";
-				ShatteredPixelDungeon.platform.openURI(link);
+				ShatteredPixelDungeon.INSTANCE.platform.openURI(link);
 			}
 		};
 		btnSite.icon(Icons.get(Icons.NEWS));
@@ -162,13 +162,13 @@ public class NewsScene extends PixelScene {
 
 	@Override
 	protected void onBackPressed() {
-		ShatteredPixelDungeon.switchNoFade( TitleScene.class );
+		ShatteredPixelDungeon.INSTANCE.switchSceneNoFade( TitleScene.class );
 	}
 
 	@Override
 	public void update() {
 		if (displayingNoArticles && News.articlesAvailable()){
-			ShatteredPixelDungeon.seamlessResetScene();
+			ShatteredPixelDungeon.INSTANCE.resetSceneNoFade();
 		}
 		super.update();
 	}
@@ -192,7 +192,7 @@ public class NewsScene extends PixelScene {
 			
 			if (!News.articlesAvailable()){
 				if (SPDSettings.news()) {
-					if (SPDSettings.WiFi() && !Game.platform.connectedToUnmeteredNetwork()) {
+					if (SPDSettings.WiFi() && !Game.INSTANCE.platform.connectedToUnmeteredNetwork()) {
 						message += "\n\n" + Messages.get(this, "metered_network");
 
 						button = new RedButton(Messages.get(this, "enable_data")) {
@@ -201,7 +201,7 @@ public class NewsScene extends PixelScene {
 								super.onClick();
 								SPDSettings.WiFi(false);
 								News.checkForNews();
-								ShatteredPixelDungeon.seamlessResetScene();
+								ShatteredPixelDungeon.INSTANCE.resetSceneNoFade();
 							}
 						};
 						add(button);
@@ -217,7 +217,7 @@ public class NewsScene extends PixelScene {
 							super.onClick();
 							SPDSettings.news(true);
 							News.checkForNews();
-							ShatteredPixelDungeon.seamlessResetScene();
+							ShatteredPixelDungeon.INSTANCE.resetSceneNoFade();
 						}
 					};
 					add(button);
@@ -304,7 +304,7 @@ public class NewsScene extends PixelScene {
 			if (article.date.getTime() > SPDSettings.newsLastRead()){
 				SPDSettings.newsLastRead(article.date.getTime());
 			}
-			ShatteredPixelDungeon.scene().addToFront(new WndArticle(article));
+			ShatteredPixelDungeon.INSTANCE.scene.addToFront(new WndArticle(article));
 		}
 	}
 
@@ -322,7 +322,7 @@ public class NewsScene extends PixelScene {
 					link += "?utm_source=shatteredpd";
 					link += "&utm_medium=news_page";
 					link += "&utm_campaign=ingame_link";
-					ShatteredPixelDungeon.platform.openURI(link);
+					ShatteredPixelDungeon.INSTANCE.platform.openURI(link);
 				}
 			};
 			link.setRect(0, height + 2, width, BTN_HEIGHT);

@@ -93,7 +93,7 @@ public class AttackIndicator extends Tag {
 		if (!bg.getVisible()){
 			if (sprite != null) sprite.setVisible(false);
 			enable(false);
-			if (delay > 0f) delay -= Game.elapsed;
+			if (delay > 0f) delay -= Game.INSTANCE.elapsed;
 			if (delay <= 0f) setActive(false);
 		} else {
 			delay = 0.75f;

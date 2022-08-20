@@ -35,11 +35,11 @@ abstract class Tweener(
     private var elapsed = 0f
 
     override fun update() {
-        elapsed += Game.elapsed
+        elapsed += Game.INSTANCE.elapsed
 
         // it's better to skip this frame ahead and finish one frame early
         // if doing one more frame would result in lots of overshoot
-        if (interval - elapsed < Game.elapsed / 2f) elapsed = interval
+        if (interval - elapsed < Game.INSTANCE.elapsed / 2f) elapsed = interval
         if (elapsed >= interval) {
             updateValues(1f)
             finish()

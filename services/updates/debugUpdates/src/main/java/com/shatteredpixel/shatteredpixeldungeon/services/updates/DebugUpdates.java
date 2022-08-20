@@ -41,7 +41,7 @@ public class DebugUpdates extends UpdateService {
 	@Override
 	public void checkForUpdate(boolean useMetered, boolean includeBetas, UpdateResultCallback callback) {
 
-		if (!useMetered && !Game.platform.connectedToUnmeteredNetwork()){
+		if (!useMetered && !Game.INSTANCE.platform.connectedToUnmeteredNetwork()){
 			callback.onConnectionFailed();
 			return;
 		}
@@ -55,7 +55,7 @@ public class DebugUpdates extends UpdateService {
 
 	@Override
 	public void initializeUpdate(AvailableUpdateData update) {
-		Game.platform.openURI( update.URL );
+		Game.INSTANCE.platform.openURI( update.URL );
 	}
 
 	@Override
@@ -81,6 +81,6 @@ public class DebugUpdates extends UpdateService {
 
 	@Override
 	public void openReviewURI() {
-		Game.platform.openURI("https://www.google.com/");
+		Game.INSTANCE.platform.openURI("https://www.google.com/");
 	}
 }

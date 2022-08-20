@@ -147,7 +147,7 @@ public class ControllerHandler implements ControllerListener {
 		controllerPointerActive = active;
 		if (active){
 			Gdx.input.setCursorCatched(true);
-			controllerPointerPos = new PointF(Game.width/2, Game.height/2);
+			controllerPointerPos = new PointF(Game.INSTANCE.width/2, Game.INSTANCE.height/2);
 		} else if (!Cursor.isCursorCaptured()) {
 			Gdx.input.setCursorCatched(false);
 		}

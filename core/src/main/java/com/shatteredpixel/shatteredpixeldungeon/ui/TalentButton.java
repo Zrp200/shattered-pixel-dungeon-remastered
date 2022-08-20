@@ -213,10 +213,10 @@ public class TalentButton extends Button {
 			toAdd = new WndInfoTalent(talent, pointsInTalent, null);
 		}
 
-		if (ShatteredPixelDungeon.scene() instanceof GameScene){
+		if (ShatteredPixelDungeon.INSTANCE.scene instanceof GameScene){
 			GameScene.show(toAdd);
 		} else {
-			ShatteredPixelDungeon.scene().addToFront(toAdd);
+			ShatteredPixelDungeon.INSTANCE.scene.addToFront(toAdd);
 		}
 	}
 

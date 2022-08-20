@@ -192,7 +192,7 @@ public class SewerLevel extends RegularLevel {
 				
 				super.update();
 				
-				if (!isFrozen() && (rippleDelay -= Game.elapsed) <= 0) {
+				if (!isFrozen() && (rippleDelay -= Game.INSTANCE.elapsed) <= 0) {
 					Ripple ripple = GameScene.ripple( pos + Dungeon.level.width() );
 					if (ripple != null) {
 						ripple.y -= DungeonTilemap.SIZE / 2;

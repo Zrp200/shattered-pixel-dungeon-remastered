@@ -31,7 +31,7 @@ public class DebugNews extends NewsService {
 	@Override
 	public void checkForArticles(boolean useMetered, boolean forceHTTPS, NewsResultCallback callback) {
 
-		if (!useMetered && !Game.platform.connectedToUnmeteredNetwork()){
+		if (!useMetered && !Game.INSTANCE.platform.connectedToUnmeteredNetwork()){
 			callback.onConnectionFailed();
 			return;
 		}
@@ -45,7 +45,7 @@ public class DebugNews extends NewsService {
 		boolean testUnread = false;
 		//start placing articles either at the current time (if testing unread count)
 		// or 10 days after 1st jan 1970
-		long startTime = testUnread ? Game.realTime : 10*1000*60*60*24;
+		long startTime = testUnread ? Game.INSTANCE.realTime : 10*1000*60*60*24;
 
 		ArrayList<NewsArticle> articles = new ArrayList<>();
 		for (int i = 0; i < 10; i++){

@@ -71,7 +71,7 @@ public class Chasm implements Hero.Doom {
 							@Override
 							public synchronized void update() {
 								super.update();
-								elapsed += Game.elapsed;
+								elapsed += Game.INSTANCE.elapsed;
 							}
 
 							@Override
@@ -116,7 +116,7 @@ public class Chasm implements Hero.Doom {
 			} else {
 				InterlevelScene.fallIntoPit = false;
 			}
-			Game.switchScene( InterlevelScene.class );
+			Game.INSTANCE.switchScene( InterlevelScene.class );
 		} else {
 			Dungeon.hero.sprite.setVisible(false);
 		}

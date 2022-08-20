@@ -312,7 +312,7 @@ public class CursedWand {
 					InterlevelScene.returnDepth = depth;
 					InterlevelScene.returnBranch = 0;
 					InterlevelScene.returnPos = -1;
-					Game.switchScene(InterlevelScene.class);
+					Game.INSTANCE.switchScene(InterlevelScene.class);
 
 				} else {
 					ScrollOfTeleportation.teleportChar(user);
@@ -399,7 +399,7 @@ public class CursedWand {
 									
 									@Override
 									protected void onSelect(int index) {
-										Game.instance.finish();
+										Game.INSTANCE.finish();
 									}
 									
 									@Override

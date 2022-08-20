@@ -112,7 +112,7 @@ public class QuickRecipe extends Component {
 
 				@Override
 				protected void onClick() {
-					ShatteredPixelDungeon.scene().addToFront(new WndInfoItem(in));
+					ShatteredPixelDungeon.INSTANCE.scene.addToFront(new WndInfoItem(in));
 				}
 			};
 			
@@ -140,7 +140,7 @@ public class QuickRecipe extends Component {
 		}
 		if (hasInputs) {
 			arrow.icon.tint(1, 1, 0, 1);
-			if (!(ShatteredPixelDungeon.scene() instanceof AlchemyScene)) {
+			if (!(ShatteredPixelDungeon.INSTANCE.scene instanceof AlchemyScene)) {
 				arrow.enable(false);
 			}
 		} else {
@@ -153,7 +153,7 @@ public class QuickRecipe extends Component {
 		this.output = new ItemSlot(output){
 			@Override
 			protected void onClick() {
-				ShatteredPixelDungeon.scene().addToFront(new WndInfoItem(output));
+				ShatteredPixelDungeon.INSTANCE.scene.addToFront(new WndInfoItem(output));
 			}
 		};
 		if (!hasInputs){
@@ -248,7 +248,7 @@ public class QuickRecipe extends Component {
 				}
 			}
 			
-			((AlchemyScene)ShatteredPixelDungeon.scene()).populate(ingredients, Dungeon.hero.belongings);
+			((AlchemyScene)ShatteredPixelDungeon.INSTANCE.scene).populate(ingredients, Dungeon.hero.belongings);
 		}
 		
 		public void hardlightText(int color ){

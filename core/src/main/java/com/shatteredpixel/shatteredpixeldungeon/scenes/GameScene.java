@@ -197,7 +197,7 @@ public class GameScene extends PixelScene {
 	public void create() {
 		
 		if (Dungeon.hero == null || Dungeon.level == null){
-			ShatteredPixelDungeon.switchNoFade(TitleScene.class);
+			ShatteredPixelDungeon.INSTANCE.switchSceneNoFade(TitleScene.class);
 			return;
 		}
 
@@ -669,9 +669,9 @@ public class GameScene extends PixelScene {
 
 		super.update();
 
-		if (notifyDelay > 0) notifyDelay -= Game.elapsed;
+		if (notifyDelay > 0) notifyDelay -= Game.INSTANCE.elapsed;
 
-		if (!Emitter.freezeEmitters) water.offset( 0, -5 * Game.elapsed );
+		if (!Emitter.freezeEmitters) water.offset( 0, -5 * Game.INSTANCE.elapsed );
 
 		if (!Actor.processing() && Dungeon.hero.isAlive()) {
 			if (actorThread == null || !actorThread.isAlive()) {
@@ -1195,7 +1195,7 @@ public class GameScene extends PixelScene {
 				InterlevelScene.noStory = true;
 				GamesInProgress.selectedClass = Dungeon.hero.heroClass;
 				GamesInProgress.curSlot = GamesInProgress.firstEmpty();
-				ShatteredPixelDungeon.switchScene(HeroSelectScene.class);
+				ShatteredPixelDungeon.INSTANCE.switchScene(HeroSelectScene.class);
 			}
 
 			@Override

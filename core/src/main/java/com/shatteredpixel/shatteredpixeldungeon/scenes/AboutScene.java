@@ -252,7 +252,7 @@ public class AboutScene extends PixelScene {
 	
 	@Override
 	protected void onBackPressed() {
-		ShatteredPixelDungeon.switchScene(TitleScene.class);
+		ShatteredPixelDungeon.INSTANCE.switchScene(TitleScene.class);
 	}
 
 	private void addLine( float y, Group content ){
@@ -314,7 +314,7 @@ public class AboutScene extends PixelScene {
 				linkButton = new PointerArea(0, 0, 0, 0){
 					@Override
 					protected void onClick( PointerEvent event ) {
-						ShatteredPixelDungeon.platform.openURI( linkUrl );
+						ShatteredPixelDungeon.INSTANCE.platform.openURI( linkUrl );
 					}
 				};
 				add(linkButton);

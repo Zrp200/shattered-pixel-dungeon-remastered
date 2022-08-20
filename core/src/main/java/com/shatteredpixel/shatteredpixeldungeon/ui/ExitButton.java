@@ -39,10 +39,10 @@ public class ExitButton extends IconButton {
 
 	@Override
 	protected void onClick() {
-		if (Game.scene() instanceof TitleScene) {
-			Game.instance.finish();
+		if (Game.INSTANCE.scene instanceof TitleScene) {
+			Game.INSTANCE.finish();
 		} else {
-			ShatteredPixelDungeon.switchNoFade( TitleScene.class );
+			ShatteredPixelDungeon.INSTANCE.switchSceneNoFade( TitleScene.class );
 		}
 	}
 

@@ -102,7 +102,7 @@ public class WndDailies extends Window {
 				IconButton latestInfo = new IconButton(Icons.INFO.get()){
 					@Override
 					protected void onClick() {
-						ShatteredPixelDungeon.scene().addToFront(new WndRanking(Rankings.INSTANCE.latestDaily));
+						ShatteredPixelDungeon.INSTANCE.scene.addToFront(new WndRanking(Rankings.INSTANCE.latestDaily));
 					}
 				};
 				latestInfo.setRect(day.right()+2, top - 5, 16, 16);

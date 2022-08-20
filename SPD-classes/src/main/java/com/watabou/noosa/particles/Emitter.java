@@ -106,7 +106,7 @@ public class Emitter extends Group {
 	public static boolean freezeEmitters = false;
 
 	protected boolean isFrozen(){
-		return Game.timeTotal > 1 && freezeEmitters;
+		return Game.INSTANCE.timeTotal > 1 && freezeEmitters;
 	}
 	
 	@Override
@@ -117,7 +117,7 @@ public class Emitter extends Group {
 		}
 		
 		if (on) {
-			time += Game.elapsed;
+			time += Game.INSTANCE.elapsed;
 			while (time > interval) {
 				time -= interval;
 				emit( count++ );

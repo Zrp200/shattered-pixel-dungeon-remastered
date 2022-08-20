@@ -250,11 +250,11 @@ public class StatusPane extends Component {
 		if (!Dungeon.hero.isAlive()) {
 			avatar.tint(0x000000, 0.5f);
 		} else if ((health/(float)max) < 0.3f) {
-			warning += Game.elapsed * 5f *(0.4f - (health/(float)max));
+			warning += Game.INSTANCE.elapsed * 5f *(0.4f - (health/(float)max));
 			warning %= 1f;
 			avatar.tint(ColorMathKt.interpolate(warning, warningColors), 0.5f );
 		} else if (talentBlink > 0.33f){ //stops early so it doesn't end in the middle of a blink
-			talentBlink -= Game.elapsed;
+			talentBlink -= Game.INSTANCE.elapsed;
 			avatar.tint(1, 1, 0, abs(cos(talentBlink*FLASH_RATE))/2f);
 		} else {
 			avatar.resetColor();

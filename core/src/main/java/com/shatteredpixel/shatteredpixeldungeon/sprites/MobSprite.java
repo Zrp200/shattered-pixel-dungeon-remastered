@@ -76,7 +76,7 @@ public class MobSprite extends CharSprite {
 			@Override
 			protected void updateValues( float progress ) {
 				super.updateValues( progress );
-				y += 12 * Game.elapsed;
+				y += 12 * Game.INSTANCE.elapsed;
 				am = 1 - progress;
 			}
 		} );

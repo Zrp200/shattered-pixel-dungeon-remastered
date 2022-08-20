@@ -170,17 +170,17 @@ public class Visual extends Gizmo {
 	protected void updateMotion() {
 
 		if (acc.x != 0)
-			speed.x += acc.x * Game.elapsed;
+			speed.x += acc.x * Game.INSTANCE.elapsed;
 		if (speed.x != 0)
-			x += speed.x * Game.elapsed;
+			x += speed.x * Game.INSTANCE.elapsed;
 
 		if (acc.y != 0)
-			speed.y += acc.y * Game.elapsed;
+			speed.y += acc.y * Game.INSTANCE.elapsed;
 		if (speed.y != 0)
-			y += speed.y * Game.elapsed;
+			y += speed.y * Game.INSTANCE.elapsed;
 
 		if (angularSpeed != 0)
-			angle += angularSpeed * Game.elapsed;
+			angle += angularSpeed * Game.INSTANCE.elapsed;
 	}
 
 	public void alpha( float value ) {

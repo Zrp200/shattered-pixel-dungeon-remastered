@@ -53,7 +53,7 @@ public class ChangeButton extends Component {
 	}
 	
 	protected void onClick() {
-		ShatteredPixelDungeon.scene().add(new ChangesWindow(new Image(icon), title, message));
+		ShatteredPixelDungeon.INSTANCE.scene.add(new ChangesWindow(new Image(icon), title, message));
 	}
 	
 	@Override

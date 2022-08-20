@@ -283,7 +283,7 @@ public class WndBag extends WndTabbed {
 
 				} else {
 
-					Game.scene().addToFront(new WndUseItem( WndBag.this, item ) );
+					Game.INSTANCE.scene.addToFront(new WndUseItem( WndBag.this, item ) );
 
 				}
 			}
@@ -324,7 +324,7 @@ public class WndBag extends WndTabbed {
 					QuickSlotButton.refresh();
 					return true;
 				} else if (selector != null) {
-					Game.scene().addToFront(new WndInfoItem(item));
+					Game.INSTANCE.scene.addToFront(new WndInfoItem(item));
 					return true;
 				} else {
 					return false;
@@ -367,10 +367,10 @@ public class WndBag extends WndTabbed {
 	protected void onClick( Tab tab ) {
 		hide();
 		Window w = new WndBag(((BagTab) tab).bag, selector);
-		if (Game.scene() instanceof GameScene){
+		if (Game.INSTANCE.scene instanceof GameScene){
 			GameScene.show(w);
 		} else {
-			Game.scene().addToFront(w);
+			Game.INSTANCE.scene.addToFront(w);
 		}
 	}
 	

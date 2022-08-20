@@ -842,7 +842,7 @@ public class Hero extends Char {
 			}
 
 			AlchemyScene.clearToolkit();
-			ShatteredPixelDungeon.switchScene(AlchemyScene.class);
+			ShatteredPixelDungeon.INSTANCE.switchScene(AlchemyScene.class);
 			return false;
 
 		} else if (getCloser( dst )) {
@@ -1026,7 +1026,7 @@ public class Hero extends Char {
 					Badges.silentValidateHappyEnd();
 					Dungeon.win( Amulet.class );
 					Dungeon.deleteGame( GamesInProgress.curSlot, true );
-					Game.switchScene( SurfaceScene.class );
+					Game.INSTANCE.switchScene( SurfaceScene.class );
 				}
 
 			} else if (transition.type == LevelTransition.Type.REGULAR_ENTRANCE
@@ -1068,7 +1068,7 @@ public class Hero extends Char {
 				} else {
 					InterlevelScene.mode = InterlevelScene.Mode.ASCEND;
 				}
-				Game.switchScene(InterlevelScene.class);
+				Game.INSTANCE.switchScene(InterlevelScene.class);
 
 			}
 

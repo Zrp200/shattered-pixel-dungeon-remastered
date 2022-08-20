@@ -196,7 +196,7 @@ public class AlchemyScene extends PixelScene {
 		ExitButton btnExit = new ExitButton(){
 			@Override
 			protected void onClick() {
-				Game.switchScene(GameScene.class);
+				Game.INSTANCE.switchScene(GameScene.class);
 			}
 		};
 		btnExit.setPos( Camera.main.width - btnExit.width(), 0 );
@@ -282,12 +282,12 @@ public class AlchemyScene extends PixelScene {
 	@Override
 	public void update() {
 		super.update();
-		water.offset( 0, -5 * Game.elapsed );
+		water.offset( 0, -5 * Game.INSTANCE.elapsed );
 	}
 	
 	@Override
 	protected void onBackPressed() {
-		Game.switchScene(GameScene.class);
+		Game.INSTANCE.switchScene(GameScene.class);
 	}
 	
 	protected WndBag.ItemSelector itemSelector = new WndBag.ItemSelector() {

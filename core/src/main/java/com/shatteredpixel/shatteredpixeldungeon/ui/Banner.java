@@ -67,7 +67,7 @@ public class Banner extends Image {
 	public void update() {
 		super.update();
 		
-		time -= Game.elapsed;
+		time -= Game.INSTANCE.elapsed;
 		if (time >= 0) {
 			
 			float p = time / fadeTime;

@@ -26,7 +26,7 @@ import com.badlogic.gdx.graphics.GL20
 /**
  * Set blending mode to normal.
  */
-fun useDefault() {
+fun useDefaultBlending() {
     enableBlending()
     setNormalMode()
 }

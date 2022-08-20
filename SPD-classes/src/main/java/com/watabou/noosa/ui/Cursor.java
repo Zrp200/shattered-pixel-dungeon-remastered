@@ -99,10 +99,10 @@ public class Cursor {
 		} else {
 			if (ControllerHandler.controllerPointerActive()) {
 				ControllerHandler.setControllerPointer(true);
-				ControllerHandler.updateControllerPointer(new PointF(Game.width/2, Game.height/2), false);
+				ControllerHandler.updateControllerPointer(new PointF(Game.INSTANCE.width/2, Game.INSTANCE.height/2), false);
 			} else {
 				Gdx.input.setCursorCatched(false);
-				Gdx.input.setCursorPosition(Game.width/2, Game.height/2);
+				Gdx.input.setCursorPosition(Game.INSTANCE.width/2, Game.INSTANCE.height/2);
 			}
 		}
 	}

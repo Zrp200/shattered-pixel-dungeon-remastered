@@ -103,7 +103,7 @@ public class Fireball extends Component {
 		
 		super.update();
 		
-		if (Random.Float() < Game.elapsed) {
+		if (Random.Float() < Game.INSTANCE.elapsed) {
 			PixelParticle spark = sparks.recycle( PixelParticle.Shrinking.class );
 			spark.reset( x, y, ColorMathKt.random( COLOR, 0x66FF66 ), 2, Random.Float( 0.5f, 1.0f ) );
 			spark.speed.set(
@@ -161,7 +161,7 @@ public class Fireball extends Component {
 				acc.set(0, 0);
 			}
 			
-			if ((timeLeft -= Game.elapsed) <= 0) {
+			if ((timeLeft -= Game.INSTANCE.elapsed) <= 0) {
 				
 				kill();
 				

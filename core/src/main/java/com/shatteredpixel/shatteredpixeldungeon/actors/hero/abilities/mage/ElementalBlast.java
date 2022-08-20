@@ -413,7 +413,7 @@ public class ElementalBlast extends ArmorAbility {
 	@Override
 	public String desc() {
 		String desc = Messages.get(this, "desc");
-		if (Game.scene() instanceof GameScene){
+		if (Game.INSTANCE.scene instanceof GameScene){
 			MagesStaff staff = Dungeon.hero.belongings.getItem(MagesStaff.class);
 			if (staff != null && staff.wandClass() != null){
 				desc += "\n\n" + Messages.get(staff.wandClass(), "eleblast_desc");

@@ -209,10 +209,10 @@ public class WndSettings extends WndTabbed {
 	public void hide() {
 		super.hide();
 		//resets generators because there's no need to retain chars for languages not selected
-		ShatteredPixelDungeon.seamlessResetScene(new Game.SceneChangeCallback() {
+		ShatteredPixelDungeon.INSTANCE.resetSceneNoFade(new Game.SceneChangeCallback() {
 			@Override
 			public void beforeCreate() {
-				Game.platform.resetGenerators(true);
+				Game.INSTANCE.platform.resetGenerators(true);
 			}
 			@Override
 			public void afterCreate() {
@@ -264,7 +264,7 @@ public class WndSettings extends WndTabbed {
 						super.onClick();
 						if (checked()) {
 							checked(!checked());
-							ShatteredPixelDungeon.scene().add(new WndOptions(Icons.get(Icons.DISPLAY),
+							ShatteredPixelDungeon.INSTANCE.scene.add(new WndOptions(Icons.get(Icons.DISPLAY),
 									Messages.get(DisplayTab.class, "saver"),
 									Messages.get(DisplayTab.class, "saver_desc"),
 									Messages.get(DisplayTab.class, "okay"),
@@ -289,7 +289,7 @@ public class WndSettings extends WndTabbed {
 			if (DeviceCompat.isAndroid()) {
 				Boolean landscape = SPDSettings.landscape();
 				if (landscape == null){
-					landscape = Game.width > Game.height;
+					landscape = Game.INSTANCE.width > Game.INSTANCE.height;
 				}
 				Boolean finalLandscape = landscape;
 				btnOrientation = new RedButton(finalLandscape ?
@@ -404,9 +404,9 @@ public class WndSettings extends WndTabbed {
 			add(sep1);
 
 			//add slider for UI size only if device has enough space to support it
-			float wMin = Game.width / PixelScene.MIN_WIDTH_FULL;
-			float hMin = Game.height / PixelScene.MIN_HEIGHT_FULL;
-			if (Math.min(wMin, hMin) >= 2*Game.density){
+			float wMin = Game.INSTANCE.width / PixelScene.MIN_WIDTH_FULL;
+			float hMin = Game.INSTANCE.height / PixelScene.MIN_HEIGHT_FULL;
+			if (Math.min(wMin, hMin) >= 2*Game.INSTANCE.density){
 				optUIMode = new OptionSlider(
 						Messages.get(this, "ui_mode"),
 						Messages.get(this, "mobile"),
@@ -417,24 +417,24 @@ public class WndSettings extends WndTabbed {
 					@Override
 					protected void onChange() {
 						SPDSettings.interfaceSize(getSelectedValue());
-						ShatteredPixelDungeon.seamlessResetScene();
+						ShatteredPixelDungeon.INSTANCE.resetSceneNoFade();
 					}
 				};
 				optUIMode.setSelectedValue(SPDSettings.interfaceSize());
 				add(optUIMode);
 			}
 
-			if ((int)Math.ceil(2* Game.density) < PixelScene.maxDefaultZoom) {
+			if ((int)Math.ceil(2* Game.INSTANCE.density) < PixelScene.maxDefaultZoom) {
 				optUIScale = new OptionSlider(Messages.get(this, "scale"),
-						(int)Math.ceil(2* Game.density)+ "X",
+						(int)Math.ceil(2* Game.INSTANCE.density)+ "X",
 						PixelScene.maxDefaultZoom + "X",
-						(int)Math.ceil(2* Game.density),
+						(int)Math.ceil(2* Game.INSTANCE.density),
 						PixelScene.maxDefaultZoom ) {
 					@Override
 					protected void onChange() {
 						if (getSelectedValue() != SPDSettings.scale()) {
 							SPDSettings.scale(getSelectedValue());
-							ShatteredPixelDungeon.seamlessResetScene();
+							ShatteredPixelDungeon.INSTANCE.resetSceneNoFade();
 						}
 					}
 				};
@@ -446,7 +446,7 @@ public class WndSettings extends WndTabbed {
 				btnToolbarSettings = new RedButton(Messages.get(this, "toolbar_settings"), 9){
 					@Override
 					protected void onClick() {
-						ShatteredPixelDungeon.scene().addToFront(new Window(){
+						ShatteredPixelDungeon.INSTANCE.scene.addToFront(new Window(){
 
 							RenderedTextBlock barDesc;
 							RedButton btnSplit; RedButton btnGrouped; RedButton btnCentered;
@@ -595,7 +595,7 @@ public class WndSettings extends WndTabbed {
 				@Override
 				protected void onClick() {
 					super.onClick();
-					ShatteredPixelDungeon.seamlessResetScene(new Game.SceneChangeCallback() {
+					ShatteredPixelDungeon.INSTANCE.resetSceneNoFade(new Game.SceneChangeCallback() {
 						@Override
 						public void beforeCreate() {
 							SPDSettings.systemFont(checked());
@@ -698,7 +698,7 @@ public class WndSettings extends WndTabbed {
 					@Override
 					protected void onClick() {
 						super.onClick();
-						ShatteredPixelDungeon.scene().addToFront(new WndKeyBindings(false));
+						ShatteredPixelDungeon.INSTANCE.scene.addToFront(new WndKeyBindings(false));
 					}
 				};
 
@@ -710,7 +710,7 @@ public class WndSettings extends WndTabbed {
 					@Override
 					protected void onClick() {
 						super.onClick();
-						ShatteredPixelDungeon.scene().addToFront(new WndKeyBindings(true));
+						ShatteredPixelDungeon.INSTANCE.scene.addToFront(new WndKeyBindings(true));
 					}
 				};
 
@@ -1082,12 +1082,12 @@ public class WndSettings extends WndTabbed {
 					protected void onClick() {
 						super.onClick();
 						Messages.setup(langs.get(langIndex));
-						ShatteredPixelDungeon.seamlessResetScene(new Game.SceneChangeCallback() {
+						ShatteredPixelDungeon.INSTANCE.resetSceneNoFade(new Game.SceneChangeCallback() {
 							@Override
 							public void beforeCreate() {
 								SPDSettings.language(langs.get(langIndex));
 								GameLog.wipe();
-								Game.platform.resetGenerators(true);
+								Game.INSTANCE.platform.resetGenerators(true);
 							}
 							@Override
 							public void afterCreate() {
@@ -1194,7 +1194,7 @@ public class WndSettings extends WndTabbed {
 						credits.add(text);
 
 						credits.resize(w, (int) text.bottom() + 2);
-						ShatteredPixelDungeon.scene().addToFront(credits);
+						ShatteredPixelDungeon.INSTANCE.scene.addToFront(credits);
 					}
 				};
 				add(btnCredits);

@@ -54,7 +54,7 @@ public class Levitation extends FlavourBuff {
 		target.flying = false;
 		super.detach();
 		//only press tiles if we're current in the game screen
-		if (ShatteredPixelDungeon.scene() instanceof GameScene) {
+		if (ShatteredPixelDungeon.INSTANCE.scene instanceof GameScene) {
 			Dungeon.level.occupyCell(target );
 		}
 	}

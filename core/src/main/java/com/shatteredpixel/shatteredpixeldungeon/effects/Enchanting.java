@@ -80,7 +80,7 @@ public class Enchanting extends ItemSprite {
 				break;
 		}
 
-		if ((passed += Game.elapsed) > duration) {
+		if ((passed += Game.INSTANCE.elapsed) > duration) {
 			switch (phase) {
 				case FADE_IN:
 					phase = Phase.STATIC;

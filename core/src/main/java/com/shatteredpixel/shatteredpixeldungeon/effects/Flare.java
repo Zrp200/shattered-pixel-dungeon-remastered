@@ -143,7 +143,7 @@ public class Flare extends Visual {
 		super.update();
 		
 		if (duration > 0) {
-			if ((lifespan -= Game.elapsed) > 0) {
+			if ((lifespan -= Game.INSTANCE.elapsed) > 0) {
 				
 				float p = 1 - lifespan / duration;	// 0 -> 1
 				p =  p < 0.25f ? p * 4 : (1 - p) * 1.333f;

@@ -90,7 +90,7 @@ public class RenderedText extends Image {
 			setVisible(true);
 		}
 		
-		font = Game.platform.getFont(size, text, true, true);
+		font = Game.INSTANCE.platform.getFont(size, text, true, true);
 		
 		if (font != null){
 			GlyphLayout glyphs = new GlyphLayout( font, text);

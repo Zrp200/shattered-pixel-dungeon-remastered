@@ -80,7 +80,7 @@ public class Beam extends Image {
 		alpha( p );
 		scale.set( scale.x, p );
 		
-		if ((timeLeft -= Game.elapsed) <= 0) {
+		if ((timeLeft -= Game.INSTANCE.elapsed) <= 0) {
 			remove();
 		}
 	}

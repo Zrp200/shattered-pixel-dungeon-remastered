@@ -99,8 +99,8 @@ public class Window extends Group implements Signal.Listener<KeyEvent> {
 				(int) chrome.width,
 				(int) chrome.height,
 				PixelScene.defaultZoom));
-		getCamera().x = (int)(Game.width - getCamera().width * getCamera().zoom) / 2;
-		getCamera().y = (int)(Game.height - getCamera().height * getCamera().zoom) / 2;
+		getCamera().x = (int)(Game.INSTANCE.width - getCamera().width * getCamera().zoom) / 2;
+		getCamera().y = (int)(Game.INSTANCE.height - getCamera().height * getCamera().zoom) / 2;
 		getCamera().y -= yOffset * getCamera().zoom;
 		getCamera().scroll.set( chrome.x, chrome.y );
 		Camera.add(getCamera());
@@ -123,10 +123,10 @@ public class Window extends Group implements Signal.Listener<KeyEvent> {
 		
 		getCamera().resize( (int)chrome.width, (int)chrome.height );
 
-		getCamera().x = (int)(Game.width - getCamera().screenWidth()) / 2;
+		getCamera().x = (int)(Game.INSTANCE.width - getCamera().screenWidth()) / 2;
 		getCamera().x += xOffset * getCamera().zoom;
 
-		getCamera().y = (int)(Game.height - getCamera().screenHeight()) / 2;
+		getCamera().y = (int)(Game.INSTANCE.height - getCamera().screenHeight()) / 2;
 		getCamera().y += yOffset * getCamera().zoom;
 
 		shadow.boxRect( getCamera().x / getCamera().zoom, getCamera().y / getCamera().zoom, chrome.width(), chrome.height );

@@ -100,7 +100,7 @@ public class WndStory extends Window {
 	public void update() {
 		super.update();
 		
-		if (delay > 0 && (delay -= Game.elapsed) <= 0) {
+		if (delay > 0 && (delay -= Game.INSTANCE.elapsed) <= 0) {
 			tf.setVisible(true);
 			chrome.setVisible(tf.getVisible());
 			shadow.setVisible(chrome.getVisible());
@@ -124,7 +124,7 @@ public class WndStory extends Window {
 				if (wnd.ttl != null) wnd.ttl.setVisible(false);
 			}
 			
-			Game.scene().add( wnd );
+			Game.INSTANCE.scene.add( wnd );
 			
 			Dungeon.chapters.add( id );
 		}

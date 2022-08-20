@@ -66,8 +66,8 @@ public class SpawnerSprite extends MobSprite {
 		super.update();
 		if (!paused){
 			if (Float.isNaN(baseY)) baseY = y;
-			y = baseY + (float)(Math.sin(Game.timeTotal)/3f);
-			shadowOffset = 1.25f - 0.6f*(float)(Math.sin(Game.timeTotal)/3f);
+			y = baseY + (float)(Math.sin(Game.INSTANCE.timeTotal)/3f);
+			shadowOffset = 1.25f - 0.6f*(float)(Math.sin(Game.INSTANCE.timeTotal)/3f);
 		}
 	}
 

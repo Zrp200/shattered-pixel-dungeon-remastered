@@ -43,7 +43,7 @@ public class TargetedCell extends Image {
 
 	@Override
 	public void update() {
-		if ((alpha -= Game.elapsed/2f) > 0) {
+		if ((alpha -= Game.INSTANCE.elapsed/2f) > 0) {
 			alpha( alpha );
 			scale.set( alpha );
 		} else {

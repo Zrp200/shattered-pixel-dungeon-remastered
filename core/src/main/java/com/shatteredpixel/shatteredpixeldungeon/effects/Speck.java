@@ -388,7 +388,7 @@ public class Speck extends Image {
 	public void update() {
 		super.update();
 		
-		left -= Game.elapsed;
+		left -= Game.INSTANCE.elapsed;
 		if (left <= 0) {
 			
 			kill();

@@ -71,8 +71,8 @@ public class Camera extends Gizmo {
 	
 	public static synchronized Camera reset( Camera newCamera ) {
 		
-		invW2 = 2f / Game.width;
-		invH2 = 2f / Game.height;
+		invW2 = 2f / Game.INSTANCE.width;
+		invH2 = 2f / Game.INSTANCE.height;
 		
 		int length = all.size();
 		for (int i=0; i < length; i++) {
@@ -104,11 +104,11 @@ public class Camera extends Gizmo {
 	}
 	
 	public static Camera createFullscreen( float zoom ) {
-		int w = ceil( Game.width / zoom );
-		int h = ceil( Game.height / zoom );
+		int w = ceil( Game.INSTANCE.width / zoom );
+		int h = ceil( Game.INSTANCE.height / zoom );
 		Camera c = new Camera(
-				(int)(Game.width - w * zoom) / 2,
-				(int)(Game.height - h * zoom) / 2,
+				(int)(Game.INSTANCE.width - w * zoom) / 2,
+				(int)(Game.INSTANCE.height - h * zoom) / 2,
 				w, h, zoom );
 		c.fullScreen = true;
 		return c;
@@ -180,12 +180,12 @@ public class Camera extends Gizmo {
 			panMove.x = panTarget.x - (scroll.x + width/2f);
 			panMove.y = panTarget.y - (scroll.y + height/2f);
 			
-			panMove.scale(min(1f, Game.elapsed * panIntensity));
+			panMove.scale(min(1f, Game.INSTANCE.elapsed * panIntensity));
 			
 			scroll.offset(panMove);
 		}
 		
-		if ((shakeTime -= Game.elapsed) > 0) {
+		if ((shakeTime -= Game.INSTANCE.elapsed) > 0) {
 			float damping = shakeTime / shakeDuration;
 			shakeX = Random.Float( -shakeMagX, +shakeMagX ) * damping;
 			shakeY = Random.Float( -shakeMagY, +shakeMagY ) * damping;

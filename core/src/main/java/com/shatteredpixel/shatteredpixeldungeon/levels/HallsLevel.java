@@ -214,7 +214,7 @@ public class HallsLevel extends RegularLevel {
 				
 				super.update();
 				
-				if ((delay -= Game.elapsed) <= 0) {
+				if ((delay -= Game.INSTANCE.elapsed) <= 0) {
 					
 					delay = Random.Float( 2 );
 					

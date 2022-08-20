@@ -29,12 +29,10 @@ import com.badlogic.gdx.graphics.glutils.GLVersion
 import com.badlogic.gdx.utils.TimeUtils
 import com.watabou.glwrap.Texture
 import com.watabou.glwrap.VertexDataset
-import com.watabou.glwrap.useDefault
+import com.watabou.glwrap.useDefaultBlending
 import com.watabou.input.ControllerHandler
 import com.watabou.input.InputHandler
 import com.watabou.input.PointerEvent
-import com.watabou.noosa.Script.Companion.get
-import com.watabou.noosa.Script.Companion.reset
 import com.watabou.noosa.audio.MusicPlayer
 import com.watabou.noosa.audio.Sample
 import com.watabou.noosa.graph.graphOn
@@ -46,18 +44,33 @@ import com.watabou.utils.Reflection
 import java.io.PrintWriter
 import java.io.StringWriter
 
-abstract class Game(c: Class<out Scene>, platform: PlatformSupport) : ApplicationAdapter() {
-    // Current scene
-    @JvmField
-    protected var scene: Scene = SceneStub()
+abstract class Game : ApplicationAdapter() {
 
-    // New scene we are going to switch to
+    /**
+     * Current scene.
+     */
+    @JvmField
+    var scene: Scene = SceneStub()
+
+    /**
+     * New scene we are going to switch to.
+     */
     private lateinit var requestedScene: Scene
 
-    // true if scene switch is requested
+    /**
+     * New scene class we are going to switch to.
+     */
+    @JvmField
+    protected var sceneClass: Class<out Scene> = SceneStub::class.java
+
+    /**
+     * Whether the scene switch is requested.
+     */
     private var requestedReset = true
 
-    // callback to perform logic during scene change
+    /**
+     * Callback to perform logic during scene change.
+     */
     private var onChange: SceneChangeCallback? = null
 
     private lateinit var versionContextRef: GLVersion
@@ -67,17 +80,65 @@ abstract class Game(c: Class<out Scene>, platform: PlatformSupport) : Applicatio
     //ultimately once the cause is found it should be fixed and this should no longer be needed
     private var justResumed = true
 
-    init {
-        sceneClass = c
-        instance = this
-        Game.platform = platform
-    }
+    /**
+     * Platform the game is running on.
+     */
+    lateinit var platform: PlatformSupport
+
+    /**
+     * Actual width of the display.
+     */
+    @JvmField
+    var displayWidth = 0
+
+    /**
+     * Actual height of the display.
+     */
+    @JvmField
+    var displayHeight = 0
+
+    /**
+     * Width of the EGL surface view.
+     */
+    @JvmField
+    var width = 0
+
+    /**
+     * Height of the EGL surface view.
+     */
+    @JvmField
+    var height = 0
+
+    /**
+     * Number of pixels from bottom of view before rendering starts.
+     */
+    @JvmField
+    var bottomInset = 0
+
+    /**
+     * Screen density: mdpi=1, hdpi=1.5, xhdpi=2...
+     */
+    @JvmField
+    var density = 1f
+
+    private var timeScale = 1f
+
+    @JvmField
+    var elapsed = 0f // FIXME: make setters private here and for other similar properties
+
+    @JvmField
+    var timeTotal = 0f
+
+    @JvmField
+    var realTime: Long = 0
+
+    lateinit var inputHandler: InputHandler
 
     override fun create() {
+
         density = Gdx.graphics.density
-        if (density == Float.POSITIVE_INFINITY) {
-            density = 100f / 160f //assume 100PPI if density can't be found
-        }
+        if (density == Float.POSITIVE_INFINITY) density = 100f / 160f // Assume 100PPI if density can't be found
+
         displayHeight = Gdx.graphics.displayMode.height
         displayWidth = Gdx.graphics.displayMode.width
         inputHandler = InputHandler(Gdx.input)
@@ -87,35 +148,36 @@ abstract class Game(c: Class<out Scene>, platform: PlatformSupport) : Applicatio
 
         //refreshes texture and vertex data stored on the gpu
         versionContextRef = Gdx.graphics.glVersion
-        useDefault()
+        useDefaultBlending()
         Texture.reload()
         VertexDataset.reload()
     }
 
-    override fun resize(width: Int, height: Int) {
-        val w = width
-        var h = height
+    override fun resize(newWidth: Int, newHeight: Int) {
+
+        val w = newWidth
+        var h = newHeight
         if (w == 0 || h == 0) {
             return
         }
 
         // If the EGL context was destroyed, we need to refresh some data stored on the GPU.
-        // This checks that by seeing if GLVersion has a new object reference
+        // This checks that by seeing if GLVersion has a new object reference.
         if (versionContextRef !== Gdx.graphics.glVersion) {
             versionContextRef = Gdx.graphics.glVersion
-            useDefault()
+            useDefaultBlending()
             Texture.reload()
             VertexDataset.reload()
         }
         h -= bottomInset
-        if (h != Companion.height || w != Companion.width) {
-            Companion.width = w
-            Companion.height = h
+        if (h != height || w != width) {
+            width = w
+            height = h
 
             //TODO might be better to put this in platform support
             if (Gdx.app.type != Application.ApplicationType.Android) {
-                displayWidth = Companion.width
-                displayHeight = Companion.height
+                displayWidth = width
+                displayHeight = height
             }
             resetScene()
         }
@@ -123,18 +185,12 @@ abstract class Game(c: Class<out Scene>, platform: PlatformSupport) : Applicatio
 
     override fun render() {
 
-        // Prevents rare cases where the app is running twice.
-        if (instance !== this) {
-            finish()
-            return
-        }
-
         if (justResumed) {
             justResumed = false
             if (DeviceCompat.isAndroid()) return
         }
 
-        get().resetCamera()
+        Script.get().resetCamera()
 
         Gdx.gl.glDisable(GL20.GL_SCISSOR_TEST)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
@@ -164,7 +220,7 @@ abstract class Game(c: Class<out Scene>, platform: PlatformSupport) : Applicatio
     override fun pause() {
         PointerEvent.clearPointerEvents()
         scene.onPause()
-        reset()
+        Script.reset()
     }
 
     override fun resume() {
@@ -177,6 +233,9 @@ abstract class Game(c: Class<out Scene>, platform: PlatformSupport) : Applicatio
         Sample.INSTANCE.reset()
     }
 
+    /**
+     * Tries to close the game.
+     */
     open fun finish() {
         Gdx.app.exit()
     }
@@ -197,81 +256,67 @@ abstract class Game(c: Class<out Scene>, platform: PlatformSupport) : Applicatio
         timeTotal = 0f
     }
 
+    /**
+     * Requests a scene switch.
+     * @param cl class of the scene to change the current one to
+     * @param callback callback to perform logic during scene change
+     */
+    @JvmOverloads
+    fun switchScene(cl: Class<out Scene>, callback: SceneChangeCallback? = null) {
+        sceneClass = cl
+        requestedReset = true
+        onChange = callback
+    }
+
+    /**
+     * Requests a scene reset.
+     * @param callback callback to perform logic during scene reset
+     */
+    @JvmOverloads
+    fun resetScene(callback: SceneChangeCallback? = null) {
+        switchScene(sceneClass, callback)
+    }
+
+    /**
+     * Callback to perform logic during scene change.
+     */
     interface SceneChangeCallback {
+
+        /**
+         * Logic to perform right before the scene is created.
+         */
         fun beforeCreate()
+
+        /**
+         * Logic to perform right after the scene is created.
+         */
         fun afterCreate()
     }
 
     companion object {
 
-		lateinit var instance: Game
+        /**
+         * Game singleton.
+         */
+        lateinit var INSTANCE: Game
 
-        // New scene class
+        /**
+         * Version of the game in a string form.
+         */
+        lateinit var version: String
+
+        /**
+         * Version code of the game.
+         */
         @JvmField
-        var sceneClass: Class<out Scene> = SceneStub::class.java
+        var versionCode = 0
 
-        //actual size of the display
-		@JvmField
-		var displayWidth = 0
-
-        @JvmField
-		var displayHeight = 0
-
-        // Size of the EGL surface view
-		@JvmField
-		var width = 0
-
-        @JvmField
-		var height = 0
-
-        //number of pixels from bottom of view before rendering starts
-		@JvmField
-		var bottomInset = 0
-
-        // Density: mdpi=1, hdpi=1.5, xhdpi=2...
-		@JvmField
-		var density = 1f
-
-		lateinit var version: String
-
-        @JvmField
-		var versionCode = 0
-
-        var timeScale = 1f
-
-        @JvmField
-		var elapsed = 0f
-
-        @JvmField
-		var timeTotal = 0f
-
-        @JvmField
-		var realTime: Long = 0
-
-		lateinit var inputHandler: InputHandler
-
-		lateinit var platform: PlatformSupport
-
+        /**
+         * Reports exception.
+         * @param th throwable to report
+         */
         @JvmStatic
-		fun resetScene() {
-            switchScene(sceneClass)
-        }
-
-        @JvmStatic
-		@JvmOverloads
-        fun switchScene(c: Class<out Scene>, callback: SceneChangeCallback? = null) {
-            sceneClass = c
-            instance.requestedReset = true
-            instance.onChange = callback
-        }
-
-        @JvmStatic
-		fun scene(): Scene {
-            return instance.scene
-        }
-
-        @JvmStatic
-		fun reportException(tr: Throwable) {
+        fun reportException(tr: Throwable) {
             val sw = StringWriter()
             val pw = PrintWriter(sw)
             tr.printStackTrace(pw)
@@ -279,19 +324,18 @@ abstract class Game(c: Class<out Scene>, platform: PlatformSupport) : Applicatio
             if (Gdx.app != null) {
                 Gdx.app.error("GAME", sw.toString())
             } else {
-                //fallback if error happened in initialization
+                // Fallback if error happened in initialization.
                 System.err.println(sw)
             }
         }
 
+        /**
+         * Runs specified code on the render thread.
+         * Use this to manipulate the UI from actor context.
+         */
         @JvmStatic
-		fun runOnRenderThread(c: Callback) {
+        fun runOnRenderThread(c: Callback) {
             Gdx.app.postRunnable { c.call() }
-        }
-
-        @JvmStatic
-		fun vibrate(milliseconds: Int) {
-            platform.vibrate(milliseconds)
         }
     }
 }

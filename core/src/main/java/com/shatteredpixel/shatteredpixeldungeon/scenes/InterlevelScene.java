@@ -187,7 +187,7 @@ public class InterlevelScene extends PixelScene {
 			@Override
 			public void update() {
 				super.update();
-				offset(0, Game.elapsed * scrollSpeed);
+				offset(0, Game.INSTANCE.elapsed * scrollSpeed);
 			}
 		};
 		bg.scale(4, 4);
@@ -300,7 +300,7 @@ public class InterlevelScene extends PixelScene {
 	public void update() {
 		super.update();
 
-		waitingTime += Game.elapsed;
+		waitingTime += Game.INSTANCE.elapsed;
 		
 		float p = timeLeft / fadeTime;
 		
@@ -308,7 +308,7 @@ public class InterlevelScene extends PixelScene {
 		
 		case FADE_IN:
 			message.alpha( 1 - p );
-			if ((timeLeft -= Game.elapsed) <= 0) {
+			if ((timeLeft -= Game.INSTANCE.elapsed) <= 0) {
 				if (!thread.isAlive() && error == null) {
 					phase = Phase.FADE_OUT;
 					timeLeft = fadeTime;
@@ -321,8 +321,8 @@ public class InterlevelScene extends PixelScene {
 		case FADE_OUT:
 			message.alpha( p );
 			
-			if ((timeLeft -= Game.elapsed) <= 0) {
-				Game.switchScene( GameScene.class );
+			if ((timeLeft -= Game.INSTANCE.elapsed) <= 0) {
+				Game.INSTANCE.switchScene( GameScene.class );
 				thread = null;
 				error = null;
 			}
@@ -342,7 +342,7 @@ public class InterlevelScene extends PixelScene {
 				add( new WndError( errorMsg ) {
 					public void onBackPressed() {
 						super.onBackPressed();
-						Game.switchScene( StartScene.class );
+						Game.INSTANCE.switchScene( StartScene.class );
 					}
 				} );
 				thread = null;

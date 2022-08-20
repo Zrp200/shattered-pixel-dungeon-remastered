@@ -97,7 +97,7 @@ public class Amulet extends Item {
 		try {
 			Dungeon.saveAll();
 			AmuletScene.noText = !showText;
-			Game.switchScene( AmuletScene.class, new Game.SceneChangeCallback() {
+			Game.INSTANCE.switchScene( AmuletScene.class, new Game.SceneChangeCallback() {
 				@Override
 				public void beforeCreate() {
 

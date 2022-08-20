@@ -59,7 +59,7 @@ public class Fadeleaf extends Plant {
 				InterlevelScene.returnDepth = Math.max(1, (Dungeon.depth - 1));
 				InterlevelScene.returnBranch = 0;
 				InterlevelScene.returnPos = -2;
-				Game.switchScene( InterlevelScene.class );
+				Game.INSTANCE.switchScene( InterlevelScene.class );
 				
 			} else {
 				ScrollOfTeleportation.teleportChar((Hero) ch);

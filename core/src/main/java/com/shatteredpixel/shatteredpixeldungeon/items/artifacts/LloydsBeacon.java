@@ -183,7 +183,7 @@ public class LloydsBeacon extends Artifact {
 				InterlevelScene.mode = InterlevelScene.Mode.RETURN;
 				InterlevelScene.returnDepth = returnDepth;
 				InterlevelScene.returnPos = returnPos;
-				Game.switchScene( InterlevelScene.class );
+				Game.INSTANCE.switchScene( InterlevelScene.class );
 			}
 			
 			

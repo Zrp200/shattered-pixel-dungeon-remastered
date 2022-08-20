@@ -102,7 +102,7 @@ public class DesktopLauncher {
 			}
 			System.exit(1);
 		});
-		
+
 		Game.version = DesktopLauncher.class.getPackage().getSpecificationVersion();
 		if (Game.version == null) {
 			Game.version = System.getProperty("Specification-Version");
@@ -175,6 +175,8 @@ public class DesktopLauncher {
 		config.setWindowIcon("icons/icon_16.png", "icons/icon_32.png", "icons/icon_48.png",
 				"icons/icon_64.png", "icons/icon_128.png", "icons/icon_256.png");
 
-		new Lwjgl3Application(new ShatteredPixelDungeon(new DesktopPlatformSupport()), config);
+		ShatteredPixelDungeon.INSTANCE.platform = new DesktopPlatformSupport();
+
+		new Lwjgl3Application(ShatteredPixelDungeon.INSTANCE, config);
 	}
 }

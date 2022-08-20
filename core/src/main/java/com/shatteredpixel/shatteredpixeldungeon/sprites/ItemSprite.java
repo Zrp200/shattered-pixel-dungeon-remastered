@@ -311,9 +311,9 @@ public class ItemSprite extends MovieClip {
 		}
 
 		if (dropInterval > 0){
-			shadowOffset -= speed.y * Game.elapsed * 0.8f;
+			shadowOffset -= speed.y * Game.INSTANCE.elapsed * 0.8f;
 
-			if ((dropInterval -= Game.elapsed) <= 0){
+			if ((dropInterval -= Game.INSTANCE.elapsed) <= 0){
 
 				speed.set(0);
 				acc.set(0);
@@ -344,12 +344,12 @@ public class ItemSprite extends MovieClip {
 		}
 
 		if (getVisible() && glowing != null) {
-			if (glowUp && (phase += Game.elapsed) > glowing.period) {
+			if (glowUp && (phase += Game.INSTANCE.elapsed) > glowing.period) {
 				
 				glowUp = false;
 				phase = glowing.period;
 				
-			} else if (!glowUp && (phase -= Game.elapsed) < 0) {
+			} else if (!glowUp && (phase -= Game.INSTANCE.elapsed) < 0) {
 				
 				glowUp = true;
 				phase = 0;

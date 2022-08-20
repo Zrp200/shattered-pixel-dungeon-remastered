@@ -71,7 +71,7 @@ public class CurrencyIndicator extends Component {
 		
 		if (gold.getVisible()) {
 			
-			goldTime -= Game.elapsed;
+			goldTime -= Game.INSTANCE.elapsed;
 			if (goldTime > 0) {
 				gold.alpha( goldTime > TIME / 2 ? 1f : goldTime * 2 / TIME );
 			} else {
@@ -82,7 +82,7 @@ public class CurrencyIndicator extends Component {
 
 		if (energy.getVisible()) {
 
-			energyTime -= Game.elapsed;
+			energyTime -= Game.INSTANCE.elapsed;
 			if (energyTime > 0) {
 				energy.alpha( energyTime > TIME / 2 ? 1f : energyTime * 2 / TIME );
 			} else {

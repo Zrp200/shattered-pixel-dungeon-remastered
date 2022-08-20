@@ -53,7 +53,7 @@ public class PixelParticle extends PseudoPixel {
 	public void update() {
 		super.update();
 
-		if ((left -= Game.elapsed) <= 0) {
+		if ((left -= Game.INSTANCE.elapsed) <= 0) {
 			kill();
 		}
 	}

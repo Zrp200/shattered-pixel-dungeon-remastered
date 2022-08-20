@@ -88,7 +88,7 @@ public class HeroSelectScene extends PixelScene {
 			@Override
 			public void update() {
 				if (rm > 1f){
-					rm -= Game.elapsed;
+					rm -= Game.INSTANCE.elapsed;
 					gm = bm = rm;
 				} else {
 					rm = gm = bm = 1;
@@ -130,9 +130,9 @@ public class HeroSelectScene extends PixelScene {
 
 				if (SPDSettings.intro()) {
 					SPDSettings.intro( false );
-					Game.switchScene( IntroScene.class );
+					Game.INSTANCE.switchScene( IntroScene.class );
 				} else {
-					Game.switchScene( InterlevelScene.class );
+					Game.INSTANCE.switchScene( InterlevelScene.class );
 				}
 			}
 		};
@@ -146,7 +146,7 @@ public class HeroSelectScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				ShatteredPixelDungeon.scene().addToFront(new WndHeroInfo(GamesInProgress.selectedClass));
+				ShatteredPixelDungeon.INSTANCE.scene.addToFront(new WndHeroInfo(GamesInProgress.selectedClass));
 			}
 
 			@Override
@@ -294,7 +294,7 @@ public class HeroSelectScene extends PixelScene {
 		}
 		if (GamesInProgress.selectedClass != null) {
 			if (uiAlpha > 0f){
-				uiAlpha -= Game.elapsed/4f;
+				uiAlpha -= Game.INSTANCE.elapsed/4f;
 			}
 			float alpha = clamp(0f, uiAlpha, 1f);
 			for (StyledButton b : heroBtns){
@@ -316,7 +316,7 @@ public class HeroSelectScene extends PixelScene {
 	@Override
 	protected void onBackPressed() {
 		if (btnExit.getVisible()){
-			ShatteredPixelDungeon.switchScene(TitleScene.class);
+			ShatteredPixelDungeon.INSTANCE.switchScene(TitleScene.class);
 		} else {
 			super.onBackPressed();
 		}
@@ -357,9 +357,9 @@ public class HeroSelectScene extends PixelScene {
 			super.onClick();
 
 			if( !cl.isUnlocked() ){
-				ShatteredPixelDungeon.scene().addToFront( new WndMessage(cl.unlockMsg()));
+				ShatteredPixelDungeon.INSTANCE.scene.addToFront( new WndMessage(cl.unlockMsg()));
 			} else if (GamesInProgress.selectedClass == cl) {
-				ShatteredPixelDungeon.scene().add(new WndHeroInfo(cl));
+				ShatteredPixelDungeon.INSTANCE.scene.add(new WndHeroInfo(cl));
 			} else {
 				setSelectedHero(cl);
 			}
@@ -386,7 +386,7 @@ public class HeroSelectScene extends PixelScene {
 					@Override
 					protected void onClick() {
 						String existingSeedtext = SPDSettings.customSeed();
-						ShatteredPixelDungeon.scene().addToFront( new WndTextInput(Messages.get(HeroSelectScene.class, "custom_seed_title"),
+						ShatteredPixelDungeon.INSTANCE.scene.addToFront( new WndTextInput(Messages.get(HeroSelectScene.class, "custom_seed_title"),
 								Messages.get(HeroSelectScene.class, "custom_seed_desc"),
 								existingSeedtext,
 								20,
@@ -404,7 +404,7 @@ public class HeroSelectScene extends PixelScene {
 										if (info.customSeed.isEmpty() && info.seed == seed){
 											SPDSettings.customSeed("");
 											icon.resetColor();
-											ShatteredPixelDungeon.scene().addToFront(new WndMessage(Messages.get(HeroSelectScene.class, "custom_seed_duplicate")));
+											ShatteredPixelDungeon.INSTANCE.scene.addToFront(new WndMessage(Messages.get(HeroSelectScene.class, "custom_seed_duplicate")));
 											return;
 										}
 									}
@@ -437,26 +437,26 @@ public class HeroSelectScene extends PixelScene {
 					protected void onClick() {
 						super.onClick();
 
-						long diff = (SPDSettings.lastDaily() + DAY) - Game.realTime;
+						long diff = (SPDSettings.lastDaily() + DAY) - Game.INSTANCE.realTime;
 						if (diff > 0){
 							if (diff > 30*HOUR){
-								ShatteredPixelDungeon.scene().addToFront(new WndMessage(Messages.get(HeroSelectScene.class, "daily_unavailable_long", (diff / DAY)+1)));
+								ShatteredPixelDungeon.INSTANCE.scene.addToFront(new WndMessage(Messages.get(HeroSelectScene.class, "daily_unavailable_long", (diff / DAY)+1)));
 							} else {
-								ShatteredPixelDungeon.scene().addToFront(new WndMessage(Messages.get(HeroSelectScene.class, "daily_unavailable")));
+								ShatteredPixelDungeon.INSTANCE.scene.addToFront(new WndMessage(Messages.get(HeroSelectScene.class, "daily_unavailable")));
 							}
 							return;
 						}
 
 						for (GamesInProgress.Info game : GamesInProgress.checkAll()){
 							if (game.daily){
-								ShatteredPixelDungeon.scene().addToFront(new WndMessage(Messages.get(HeroSelectScene.class, "daily_existing")));
+								ShatteredPixelDungeon.INSTANCE.scene.addToFront(new WndMessage(Messages.get(HeroSelectScene.class, "daily_existing")));
 								return;
 							}
 						}
 
 						Image icon = Icons.get(Icons.CALENDAR);
 						icon.hardlight(0.5f, 1f, 2f);
-						ShatteredPixelDungeon.scene().addToFront(new WndOptions(
+						ShatteredPixelDungeon.INSTANCE.scene.addToFront(new WndOptions(
 								icon,
 								Messages.get(HeroSelectScene.class, "daily"),
 								Messages.get(HeroSelectScene.class, "daily_desc"),
@@ -465,7 +465,7 @@ public class HeroSelectScene extends PixelScene {
 							@Override
 							protected void onSelect(int index) {
 								if (index == 0){
-									long time = Game.realTime - (Game.realTime % DAY);
+									long time = Game.INSTANCE.realTime - (Game.INSTANCE.realTime % DAY);
 
 									//earliest possible daily for v1.3.0 is June 20 2022
 									//which is 19,163 days after Jan 1 1970
@@ -478,7 +478,7 @@ public class HeroSelectScene extends PixelScene {
 									ActionIndicator.action = null;
 									InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
 
-									Game.switchScene( InterlevelScene.class );
+									Game.INSTANCE.switchScene( InterlevelScene.class );
 								}
 							}
 						});
@@ -490,25 +490,25 @@ public class HeroSelectScene extends PixelScene {
 					public void update() {
 						super.update();
 
-						if (Game.realTime > timeToUpdate){
-							long diff = (SPDSettings.lastDaily() + DAY) - Game.realTime;
+						if (Game.INSTANCE.realTime > timeToUpdate){
+							long diff = (SPDSettings.lastDaily() + DAY) - Game.INSTANCE.realTime;
 							if (diff > 0){
 								//<1 minute
 								if (diff < MINUTE){
 									text(Messages.get(HeroSelectScene.class, "daily_seconds", (diff / SECOND)+1));
-									timeToUpdate = Game.realTime + SECOND;
+									timeToUpdate = Game.INSTANCE.realTime + SECOND;
 								//<1 hour
 								} else if (diff < HOUR){
 									text(Messages.get(HeroSelectScene.class, "daily_minutes", (diff / MINUTE)+1));
-									timeToUpdate = Game.realTime + 5*SECOND;
+									timeToUpdate = Game.INSTANCE.realTime + 5*SECOND;
 								//<30 hours (a few extra in case of timezone shenanigans)
 								} else if (diff < (DAY + 6*HOUR)) {
 									text(Messages.get(HeroSelectScene.class, "daily_hours", (diff / HOUR)+1));
-									timeToUpdate = Game.realTime + 5*MINUTE;
+									timeToUpdate = Game.INSTANCE.realTime + 5*MINUTE;
 								//>30 hours, probably a cheater!
 								} else {
 									text(Messages.get(HeroSelectScene.class, "daily_30_hours"));
-									timeToUpdate = Game.realTime + 20*MINUTE;
+									timeToUpdate = Game.INSTANCE.realTime + 20*MINUTE;
 								}
 								textColor(0x888888);
 							} else {
@@ -528,7 +528,7 @@ public class HeroSelectScene extends PixelScene {
 				StyledButton challengeButton = new StyledButton(Chrome.Type.BLANK, Messages.get(WndChallenges.class, "title"), 6){
 					@Override
 					protected void onClick() {
-						ShatteredPixelDungeon.scene().addToFront(new WndChallenges(SPDSettings.challenges(), true) {
+						ShatteredPixelDungeon.INSTANCE.scene.addToFront(new WndChallenges(SPDSettings.challenges(), true) {
 							public void onBackPressed() {
 								super.onBackPressed();
 								icon(Icons.get(SPDSettings.challenges() > 0 ? Icons.CHALLENGE_ON : Icons.CHALLENGE_OFF));

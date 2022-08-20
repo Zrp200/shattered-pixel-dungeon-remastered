@@ -32,7 +32,7 @@ public class Scene extends Group {
 	
 	public void create() {
 		KeyEvent.addKeyListener( keyListener = event -> {
-			if (Game.instance != null && event.pressed) {
+			if (Game.INSTANCE != null && event.pressed) {
 				if (KeyBindings.getActionForKey( event ) == GameAction.BACK){
 					onBackPressed();
 				}
@@ -57,7 +57,7 @@ public class Scene extends Group {
 	}
 	
 	protected void onBackPressed() {
-		Game.instance.finish();
+		Game.INSTANCE.finish();
 	}
 
 }

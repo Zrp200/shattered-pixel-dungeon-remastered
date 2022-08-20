@@ -53,13 +53,13 @@ public class FloatingText extends RenderedTextBlock {
 		super.update();
 		
 		if (timeLeft > 0) {
-			if ((timeLeft -= Game.elapsed) <= 0) {
+			if ((timeLeft -= Game.INSTANCE.elapsed) <= 0) {
 				kill();
 			} else {
 				float p = timeLeft / LIFESPAN;
 				alpha( p > 0.5f ? 1 : p * 2 );
 				
-				float yMove = (DISTANCE / LIFESPAN) * Game.elapsed;
+				float yMove = (DISTANCE / LIFESPAN) * Game.INSTANCE.elapsed;
 				y -= yMove;
 				for (RenderedText t : words){
 					t.y -= yMove;

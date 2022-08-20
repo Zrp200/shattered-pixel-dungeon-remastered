@@ -163,7 +163,7 @@ public class CircleArc extends Visual {
 		super.update();
 		
 		if (duration > 0) {
-			if ((lifespan -= Game.elapsed) > 0) {
+			if ((lifespan -= Game.INSTANCE.elapsed) > 0) {
 				sweep = lifespan/duration;
 				dirty = true;
 			

@@ -420,8 +420,8 @@ public class SentryRoom extends SpecialRoom {
 
 			if (!paused){
 				if (Float.isNaN(baseY)) baseY = y;
-				y = baseY + (float) Math.sin(Game.timeTotal);
-				shadowOffset = 0.25f - 0.8f*(float) Math.sin(Game.timeTotal);
+				y = baseY + (float) Math.sin(Game.INSTANCE.timeTotal);
+				shadowOffset = 0.25f - 0.8f*(float) Math.sin(Game.INSTANCE.timeTotal);
 			}
 		}
 

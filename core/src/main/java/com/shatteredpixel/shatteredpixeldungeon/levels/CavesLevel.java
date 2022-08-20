@@ -189,7 +189,7 @@ public class CavesLevel extends RegularLevel {
 				
 				super.update();
 
-				if ((delay -= Game.elapsed) <= 0) {
+				if ((delay -= Game.INSTANCE.elapsed) <= 0) {
 
 					//pickaxe can remove the ore, should remove the sparkling too.
 					if (Dungeon.level.map[pos] != Terrain.WALL_DECO){

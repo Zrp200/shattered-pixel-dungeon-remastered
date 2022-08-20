@@ -23,7 +23,14 @@ package com.watabou.noosa
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.utils.BufferUtils
-import com.watabou.glwrap.*
+import com.watabou.glwrap.Attribute
+import com.watabou.glwrap.Shader
+import com.watabou.glwrap.Uniform
+import com.watabou.glwrap.VALUES_SIZE
+import com.watabou.glwrap.VertexDataset
+import com.watabou.glwrap.bindIndices
+import com.watabou.glwrap.releaseIndices
+import com.watabou.glwrap.setupIndices
 import java.nio.FloatBuffer
 import java.nio.ShortBuffer
 import kotlin.math.roundToInt
@@ -143,11 +150,11 @@ open class Script {
                 // This fixes pixel scaling issues on some hidpi displays (mainly on macOS)
                 // because for some reason all other openGL operations work on virtual pixels
                 // but glScissor operations work on real pixels
-                val xScale = Gdx.graphics.backBufferWidth / Game.width.toFloat()
-                val yScale = (Gdx.graphics.backBufferHeight - Game.bottomInset) / Game.height.toFloat()
+                val xScale = Gdx.graphics.backBufferWidth / Game.INSTANCE.width.toFloat()
+                val yScale = (Gdx.graphics.backBufferHeight - Game.INSTANCE.bottomInset) / Game.INSTANCE.height.toFloat()
                 Gdx.gl20.glScissor(
                     (cam.x * xScale).roundToInt(),
-                    ((Game.height - cam.screenHeight - cam.y) * yScale).roundToInt() + Game.bottomInset,
+                    ((Game.INSTANCE.height - cam.screenHeight - cam.y) * yScale).roundToInt() + Game.INSTANCE.bottomInset,
                     (cam.screenWidth * xScale).roundToInt(),
                     (cam.screenHeight * yScale).roundToInt()
                 )

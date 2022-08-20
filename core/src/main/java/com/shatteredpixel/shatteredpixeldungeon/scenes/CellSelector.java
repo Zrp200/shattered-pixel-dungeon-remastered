@@ -377,7 +377,7 @@ public class CellSelector extends ScrollArea {
 		}
 
 		if (heldDelay > 0){
-			heldDelay -= Game.elapsed;
+			heldDelay -= Game.INSTANCE.elapsed;
 		}
 
 		if ((heldAction1 != SPDAction.NONE || leftStickAction != SPDAction.NONE) && Dungeon.hero.ready){

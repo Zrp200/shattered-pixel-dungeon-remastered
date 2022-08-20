@@ -57,16 +57,16 @@ public class Tooltip extends Component {
 		this.parent = parent;
 		parentDims = new RectF(parent.left(), parent.top(), parent.right(), parent.bottom());
 
-		if (lastUsedTime == -1 || lastUsedTime > Game.timeTotal){
+		if (lastUsedTime == -1 || lastUsedTime > Game.INSTANCE.timeTotal){
 			tooltipAlpha = -5f;
 
 		} else {
-			float elapsed = Game.timeTotal - lastUsedTime;
+			float elapsed = Game.INSTANCE.timeTotal - lastUsedTime;
 			if (elapsed >= 0.25f || tooltipAlpha < 1f){
 				tooltipAlpha = -5f;
 			}
 		}
-		lastUsedTime = Game.timeTotal;
+		lastUsedTime = Game.INSTANCE.timeTotal;
 		bg.alpha(clamp(0, tooltipAlpha, 1));
 		text.alpha(clamp(0, tooltipAlpha, 1));
 	}
@@ -97,8 +97,8 @@ public class Tooltip extends Component {
 		}
 
 		super.update();
-		tooltipAlpha = min(1f, tooltipAlpha + 10f*Game.elapsed);
-		lastUsedTime = Game.timeTotal;
+		tooltipAlpha = min(1f, tooltipAlpha + 10f*Game.INSTANCE.elapsed);
+		lastUsedTime = Game.INSTANCE.timeTotal;
 
 		bg.alpha(clamp(0, tooltipAlpha, 1));
 		text.alpha(clamp(0, tooltipAlpha, 1));

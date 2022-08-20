@@ -88,7 +88,7 @@ public class PoisonDartTrap extends Trap {
 					@Override
 					protected boolean act() {
 						final Actor toRemove = this;
-						ShatteredPixelDungeon.scene().recycle(MissileSprite.class).
+						ShatteredPixelDungeon.INSTANCE.scene.recycle(MissileSprite.class).
 							reset(pos, finalTarget.sprite, new PoisonDart(), () -> {
 								int dmg = Random.NormalIntRange(4, 8) - finalTarget.drRoll();
 								finalTarget.damage(dmg, trap);

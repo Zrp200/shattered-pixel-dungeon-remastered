@@ -762,7 +762,7 @@ public class DriedRose extends Artifact {
 					yell( Messages.get( this, "dialogue_halls_" + variant ));
 					break;
 			}
-			if (ShatteredPixelDungeon.scene() instanceof GameScene) {
+			if (ShatteredPixelDungeon.INSTANCE.scene instanceof GameScene) {
 				Sample.INSTANCE.play( Assets.Sounds.GHOST );
 			}
 		}

@@ -127,8 +127,10 @@ public class AndroidLauncher extends AndroidApplication {
 		support.updateSystemUI();
 
 		Button.longClick = ViewConfiguration.getLongPressTimeout()/1000f;
-		
-		initialize(new ShatteredPixelDungeon(support), config);
+
+		ShatteredPixelDungeon.INSTANCE.platform = support;
+
+		initialize(ShatteredPixelDungeon.INSTANCE, config);
 		
 	}
 

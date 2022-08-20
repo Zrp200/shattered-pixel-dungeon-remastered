@@ -59,8 +59,8 @@ public class PointerEvent {
 
 	public PointerEvent( int x, int y, int id, Type type, int button){
 		if (Cursor.isCursorCaptured()){
-			x = Game.width/2;
-			y = Game.width/2;
+			x = Game.INSTANCE.width/2;
+			y = Game.INSTANCE.width/2;
 		}
 		start = current = new PointF(x, y);
 		this.id = id;
@@ -113,8 +113,8 @@ public class PointerEvent {
 
 	public static PointF currentHoverPos(){
 		if (lastHoverPos.x == 0 && lastHoverPos.y == 0){
-			lastHoverPos.x = Game.width/2;
-			lastHoverPos.y = Game.height/2;
+			lastHoverPos.x = Game.INSTANCE.width/2;
+			lastHoverPos.y = Game.INSTANCE.height/2;
 		}
 		return lastHoverPos.clone();
 	}

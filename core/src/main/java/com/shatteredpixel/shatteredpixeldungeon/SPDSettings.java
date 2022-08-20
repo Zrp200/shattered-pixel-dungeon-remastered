@@ -61,7 +61,7 @@ public class SPDSettings extends GameSettings {
 	public static void fullscreen( boolean value ) {
 		put( KEY_FULLSCREEN, value );
 		
-		ShatteredPixelDungeon.platform.updateSystemUI();
+		ShatteredPixelDungeon.INSTANCE.platform.updateSystemUI();
 	}
 	
 	public static boolean fullscreen() {
@@ -70,7 +70,7 @@ public class SPDSettings extends GameSettings {
 	
 	public static void landscape( boolean value ){
 		put( KEY_LANDSCAPE, value );
-		ShatteredPixelDungeon.platform.updateDisplaySize();
+		ShatteredPixelDungeon.INSTANCE.platform.updateDisplaySize();
 	}
 	
 	//can return null because we need to directly handle the case of landscape not being set
@@ -85,7 +85,7 @@ public class SPDSettings extends GameSettings {
 	
 	public static void powerSaver( boolean value ){
 		put( KEY_POWER_SAVER, value );
-		ShatteredPixelDungeon.platform.updateDisplaySize();
+		ShatteredPixelDungeon.INSTANCE.platform.updateDisplaySize();
 	}
 	
 	public static boolean powerSaver(){
@@ -136,9 +136,9 @@ public class SPDSettings extends GameSettings {
 		int size = getInt( KEY_UI_SIZE, DeviceCompat.isDesktop() ? 2 : 0 );
 		if (size > 0){
 			//force mobile UI if there is not enough space for full UI
-			float wMin = Game.width / PixelScene.MIN_WIDTH_FULL;
-			float hMin = Game.height / PixelScene.MIN_HEIGHT_FULL;
-			if (min(wMin, hMin) < 2*Game.density){
+			float wMin = Game.INSTANCE.width / PixelScene.MIN_WIDTH_FULL;
+			float hMin = Game.INSTANCE.height / PixelScene.MIN_HEIGHT_FULL;
+			if (min(wMin, hMin) < 2*Game.INSTANCE.density){
 				size = 0;
 			}
 		}
@@ -302,7 +302,7 @@ public class SPDSettings extends GameSettings {
 
 	public static void ignoreSilentMode( boolean value ){
 		put( KEY_IGNORE_SILENT, value);
-		Game.platform.setHonorSilentSwitch(!value);
+		Game.INSTANCE.platform.setHonorSilentSwitch(!value);
 	}
 
 	public static boolean ignoreSilentMode(){

@@ -52,7 +52,7 @@ public class IntroScene extends PixelScene {
 			@Override
 			public void hide() {
 				super.hide();
-				Game.switchScene( InterlevelScene.class );
+				Game.INSTANCE.switchScene( InterlevelScene.class );
 			}
 		} );
 		

@@ -251,7 +251,7 @@ public class SurfaceScene extends PixelScene {
 
 		RedButton gameOver = new RedButton( Messages.get(this, "exit") ) {
 			protected void onClick() {
-				Game.switchScene( RankingsScene.class );
+				Game.INSTANCE.switchScene( RankingsScene.class );
 			}
 		};
 		gameOver.setSize( SKY_WIDTH - FRAME_MARGIN_X * 2, BUTTON_HEIGHT );
@@ -267,7 +267,7 @@ public class SurfaceScene extends PixelScene {
 	@Override
 	public void update() {
 		if (rats != null) {
-			ratJumpTimer -= Game.elapsed;
+			ratJumpTimer -= Game.INSTANCE.elapsed;
 			while (ratJumpTimer <= 0f) {
 				ratJumpTimer += 0.02f;
 				Random.element(rats).jump();
@@ -457,7 +457,7 @@ public class SurfaceScene extends PixelScene {
 		@Override
 		public void update() {
 			super.update();
-			a += Random.Float( Game.elapsed * 5 );
+			a += Random.Float( Game.INSTANCE.elapsed * 5 );
 			angle = (2 + cos( a )) * (forward ? +0.2f : -0.2f);
 			
 			scale.y = cos( angle );

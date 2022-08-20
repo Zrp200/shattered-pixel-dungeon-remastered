@@ -80,7 +80,7 @@ public class Chains extends Group {
 
 	@Override
 	public void update() {
-		if ((spent += Game.elapsed) > duration) {
+		if ((spent += Game.INSTANCE.elapsed) > duration) {
 
 			remove();
 			if (callback != null) {

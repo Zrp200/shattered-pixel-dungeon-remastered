@@ -152,7 +152,7 @@ public class HighGrass {
 		
 		freezeTrample = false;
 		
-		if (ShatteredPixelDungeon.scene() instanceof GameScene) {
+		if (ShatteredPixelDungeon.INSTANCE.scene instanceof GameScene) {
 			GameScene.updateMap(pos);
 			
 			CellEmitter.get(pos).burst(LeafParticle.LEVEL_SPECIFIC, 4);

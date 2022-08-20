@@ -72,14 +72,14 @@ public class WelcomeScene extends PixelScene {
 				@Override
 				public void hide() {
 					super.hide();
-					ShatteredPixelDungeon.resetScene();
+					ShatteredPixelDungeon.INSTANCE.resetScene();
 				}
 			});
 			return;
 		}
 
 		if (ShatteredPixelDungeon.versionCode == previousVersion && !SPDSettings.intro()) {
-			ShatteredPixelDungeon.switchNoFade(TitleScene.class);
+			ShatteredPixelDungeon.INSTANCE.switchSceneNoFade(TitleScene.class);
 			return;
 		}
 
@@ -118,7 +118,7 @@ public class WelcomeScene extends PixelScene {
 			@Override
 			public void update() {
 				super.update();
-				am = max(0f, sin( time += Game.elapsed ));
+				am = max(0f, sin( time += Game.INSTANCE.elapsed ));
 				if (time >= 1.5f * PI) time = 0;
 			}
 			@Override
@@ -140,10 +140,10 @@ public class WelcomeScene extends PixelScene {
 					SPDSettings.version(ShatteredPixelDungeon.versionCode);
 					GamesInProgress.selectedClass = null;
 					GamesInProgress.curSlot = 1;
-					ShatteredPixelDungeon.switchScene(HeroSelectScene.class);
+					ShatteredPixelDungeon.INSTANCE.switchScene(HeroSelectScene.class);
 				} else {
 					updateVersion(previousVersion);
-					ShatteredPixelDungeon.switchScene(TitleScene.class);
+					ShatteredPixelDungeon.INSTANCE.switchScene(TitleScene.class);
 				}
 			}
 		};
@@ -156,7 +156,7 @@ public class WelcomeScene extends PixelScene {
 				protected void onClick() {
 					super.onClick();
 					updateVersion(previousVersion);
-					ShatteredPixelDungeon.switchScene(ChangesScene.class);
+					ShatteredPixelDungeon.INSTANCE.switchScene(ChangesScene.class);
 				}
 			};
 			okay.setRect(title.x, buttonY, (title.width()/2)-2, 20);

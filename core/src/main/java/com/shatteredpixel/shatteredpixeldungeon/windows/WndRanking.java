@@ -87,7 +87,7 @@ public class WndRanking extends WndTabbed {
 			}
 		} catch ( Exception e ) {
 			hide();
-			Game.scene().addToFront( new WndError( Messages.get(WndRanking.class, "error" )));
+			Game.INSTANCE.scene.addToFront( new WndError( Messages.get(WndRanking.class, "error" )));
 		}
 	}
 	
@@ -169,7 +169,7 @@ public class WndRanking extends WndTabbed {
 				@Override
 				protected void onClick() {
 					super.onClick();
-					ShatteredPixelDungeon.scene().addToFront(new WndScoreBreakdown());
+					ShatteredPixelDungeon.INSTANCE.scene.addToFront(new WndScoreBreakdown());
 				}
 			};
 			scoreInfo.setSize(16, 16);
@@ -215,7 +215,7 @@ public class WndRanking extends WndTabbed {
 					@Override
 					protected void onClick() {
 						super.onClick();
-						ShatteredPixelDungeon.scene().addToFront(new WndOptions(new Image(icon),
+						ShatteredPixelDungeon.INSTANCE.scene.addToFront(new WndOptions(new Image(icon),
 								Messages.get(WndRanking.StatsTab.this, "copy_seed"),
 								Messages.get(WndRanking.StatsTab.this, "copy_seed_desc"),
 								Messages.get(WndRanking.StatsTab.this, "copy_seed_copy"),
@@ -386,7 +386,7 @@ public class WndRanking extends WndTabbed {
 					@Override
 					protected void onClick() {
 						super.onClick();
-						ShatteredPixelDungeon.scene().add(
+						ShatteredPixelDungeon.INSTANCE.scene.add(
 								new WndMessage(Messages.get(Challenges.class, challenge+"_desc"))
 						);
 					}
@@ -472,7 +472,7 @@ public class WndRanking extends WndTabbed {
 		
 		@Override
 		protected void onClick() {
-			Game.scene().add( new WndInfoItem( item ) );
+			Game.INSTANCE.scene.add( new WndInfoItem( item ) );
 		}
 	}
 
@@ -524,7 +524,7 @@ public class WndRanking extends WndTabbed {
 
 		@Override
 		protected void onClick() {
-			Game.scene().add(new WndInfoItem(item));
+			Game.INSTANCE.scene.add(new WndInfoItem(item));
 		}
 	}
 }

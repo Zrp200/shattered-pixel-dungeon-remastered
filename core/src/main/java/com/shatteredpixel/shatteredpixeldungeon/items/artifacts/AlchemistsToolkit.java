@@ -79,7 +79,7 @@ public class AlchemistsToolkit extends Artifact {
 			else if (warmUpDelay > 0)           GLog.w( Messages.get(this, "not_ready") );
 			else {
 				AlchemyScene.assignToolkit(this);
-				Game.switchScene(AlchemyScene.class);
+				Game.INSTANCE.switchScene(AlchemyScene.class);
 			}
 			
 		} else if (action.equals(AC_ENERGIZE)){

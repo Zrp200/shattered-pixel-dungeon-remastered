@@ -110,7 +110,7 @@ public class Transmuting extends Component {
 				break;
 		}
 
-		if ((passed += Game.elapsed) > duration) {
+		if ((passed += Game.INSTANCE.elapsed) > duration) {
 			switch (phase) {
 				case FADE_IN:
 					phase = Phase.TRANSMUTING;

@@ -149,7 +149,7 @@ public class RankingsScene extends PixelScene {
 			IconButton btnDailies = new IconButton(Icons.CALENDAR.get()) {
 				@Override
 				protected void onClick() {
-					ShatteredPixelDungeon.scene().addToFront(new WndDailies());
+					ShatteredPixelDungeon.INSTANCE.scene.addToFront(new WndDailies());
 				}
 
 				@Override
@@ -168,7 +168,7 @@ public class RankingsScene extends PixelScene {
 	
 	@Override
 	protected void onBackPressed() {
-		ShatteredPixelDungeon.switchNoFade(TitleScene.class);
+		ShatteredPixelDungeon.INSTANCE.switchSceneNoFade(TitleScene.class);
 	}
 	
 	public static class Record extends Button {

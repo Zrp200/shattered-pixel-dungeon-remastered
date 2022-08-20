@@ -173,7 +173,7 @@ public class WarpBeacon extends ArmorAbility {
 							InterlevelScene.returnDepth = tracker.depth;
 							InterlevelScene.returnBranch = tracker.branch;
 							InterlevelScene.returnPos = tracker.pos;
-							Game.switchScene( InterlevelScene.class );
+							Game.INSTANCE.switchScene( InterlevelScene.class );
 						}
 
 					} else if (index == 1){

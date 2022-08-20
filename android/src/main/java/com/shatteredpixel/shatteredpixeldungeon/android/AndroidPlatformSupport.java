@@ -59,31 +59,31 @@ public class AndroidPlatformSupport extends PlatformSupport {
 		if (view.getMeasuredWidth() == 0 || view.getMeasuredHeight() == 0)
 			return;
 		
-		Game.displayWidth = view.getMeasuredWidth();
-		Game.displayHeight = view.getMeasuredHeight();
+		Game.INSTANCE.displayWidth = view.getMeasuredWidth();
+		Game.INSTANCE.displayHeight = view.getMeasuredHeight();
 
 		boolean fullscreen = Build.VERSION.SDK_INT < Build.VERSION_CODES.N
 				|| !AndroidLauncher.instance.isInMultiWindowMode();
 
 		if (fullscreen && SPDSettings.landscape() != null
-				&& (Game.displayWidth >= Game.displayHeight) != SPDSettings.landscape()){
-			int tmp = Game.displayWidth;
-			Game.displayWidth = Game.displayHeight;
-			Game.displayHeight = tmp;
+				&& (Game.INSTANCE.displayWidth >= Game.INSTANCE.displayHeight) != SPDSettings.landscape()){
+			int tmp = Game.INSTANCE.displayWidth;
+			Game.INSTANCE.displayWidth = Game.INSTANCE.displayHeight;
+			Game.INSTANCE.displayHeight = tmp;
 		}
 		
-		float dispRatio = Game.displayWidth / (float)Game.displayHeight;
+		float dispRatio = Game.INSTANCE.displayWidth / (float)Game.INSTANCE.displayHeight;
 		
 		float renderWidth = dispRatio > 1 ? PixelScene.MIN_WIDTH_L : PixelScene.MIN_WIDTH_P;
 		float renderHeight = dispRatio > 1 ? PixelScene.MIN_HEIGHT_L : PixelScene.MIN_HEIGHT_P;
 		
 		//force power saver in this case as all devices must run at at least 2x scale.
-		if (Game.displayWidth < renderWidth*2 || Game.displayHeight < renderHeight*2)
+		if (Game.INSTANCE.displayWidth < renderWidth*2 || Game.INSTANCE.displayHeight < renderHeight*2)
 			SPDSettings.put( SPDSettings.KEY_POWER_SAVER, true );
 		
 		if (SPDSettings.powerSaver() && fullscreen){
 			
-			int maxZoom = (int)Math.min(Game.displayWidth /renderWidth, Game.displayHeight /renderHeight);
+			int maxZoom = (int)Math.min(Game.INSTANCE.displayWidth /renderWidth, Game.INSTANCE.displayHeight /renderHeight);
 			
 			renderWidth *= Math.max( 2, Math.round(1f + maxZoom*0.4f));
 			renderHeight *= Math.max( 2, Math.round(1f + maxZoom*0.4f));
@@ -96,7 +96,7 @@ public class AndroidPlatformSupport extends PlatformSupport {
 			
 			final int finalW = Math.round(renderWidth);
 			final int finalH = Math.round(renderHeight);
-			if (finalW != Game.width || finalH != Game.height){
+			if (finalW != Game.INSTANCE.width || finalH != Game.INSTANCE.height){
 				
 				AndroidLauncher.instance.runOnUiThread(() -> view.getHolder().setFixedSize(finalW, finalH));
 				

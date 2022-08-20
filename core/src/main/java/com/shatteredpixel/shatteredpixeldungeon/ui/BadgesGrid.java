@@ -143,7 +143,7 @@ public class BadgesGrid extends Component {
 		public void update() {
 			super.update();
 
-			if (unlocked && Random.Float() < Game.elapsed * 0.1) {
+			if (unlocked && Random.Float() < Game.INSTANCE.elapsed * 0.1) {
 				BadgeBanner.highlight( icon, badge.image );
 			}
 		}
@@ -151,7 +151,7 @@ public class BadgesGrid extends Component {
 		@Override
 		protected void onClick() {
 			Sample.INSTANCE.play( Assets.Sounds.CLICK, 0.7f, 0.7f, 1.2f );
-			Game.scene().add( new WndBadge( badge, unlocked ) );
+			Game.INSTANCE.scene.add( new WndBadge( badge, unlocked ) );
 		}
 
 		@Override

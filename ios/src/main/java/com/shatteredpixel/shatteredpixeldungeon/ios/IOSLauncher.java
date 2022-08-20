@@ -145,7 +145,9 @@ public class IOSLauncher extends IOSApplication.Delegate {
 		config.addIosDevice("IPAD_PRO_12.8_5G", "iPad13,10", 264);
 		config.addIosDevice("IPAD_PRO_12.8_5G", "iPad13,11", 264);
 
-		return new IOSApplication(new ShatteredPixelDungeon(new IOSPlatformSupport()), config);
+		ShatteredPixelDungeon.INSTANCE.platform = new IOSPlatformSupport();
+
+		return new IOSApplication(ShatteredPixelDungeon.INSTANCE, config);
 	}
 
 	public static void main(String[] argv) {

@@ -37,29 +37,29 @@ public class InputHandler extends InputAdapter {
 		multiplexer = new InputMultiplexer(){
 			@Override
 			public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-				screenX /= (Game.displayWidth / (float)Game.width);
-				screenY /= (Game.displayHeight / (float)Game.height);
+				screenX /= (Game.INSTANCE.displayWidth / (float)Game.INSTANCE.width);
+				screenY /= (Game.INSTANCE.displayHeight / (float)Game.INSTANCE.height);
 				return super.touchDown(screenX, screenY, pointer, button);
 			}
 
 			@Override
 			public boolean touchDragged(int screenX, int screenY, int pointer) {
-				screenX /= (Game.displayWidth / (float)Game.width);
-				screenY /= (Game.displayHeight / (float)Game.height);
+				screenX /= (Game.INSTANCE.displayWidth / (float)Game.INSTANCE.width);
+				screenY /= (Game.INSTANCE.displayHeight / (float)Game.INSTANCE.height);
 				return super.touchDragged(screenX, screenY, pointer);
 			}
 
 			@Override
 			public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-				screenX /= (Game.displayWidth / (float)Game.width);
-				screenY /= (Game.displayHeight / (float)Game.height);
+				screenX /= (Game.INSTANCE.displayWidth / (float)Game.INSTANCE.width);
+				screenY /= (Game.INSTANCE.displayHeight / (float)Game.INSTANCE.height);
 				return super.touchUp(screenX, screenY, pointer, button);
 			}
 
 			@Override
 			public boolean mouseMoved(int screenX, int screenY) {
-				screenX /= (Game.displayWidth / (float)Game.width);
-				screenY /= (Game.displayHeight / (float)Game.height);
+				screenX /= (Game.INSTANCE.displayWidth / (float)Game.INSTANCE.width);
+				screenY /= (Game.INSTANCE.displayHeight / (float)Game.INSTANCE.height);
 				return super.mouseMoved(screenX, screenY);
 			}
 		};

@@ -94,7 +94,7 @@ public class WndGame extends Window {
 					InterlevelScene.noStory = true;
 					GamesInProgress.selectedClass = Dungeon.hero.heroClass;
 					GamesInProgress.curSlot = GamesInProgress.firstEmpty();
-					ShatteredPixelDungeon.switchScene(HeroSelectScene.class);
+					ShatteredPixelDungeon.INSTANCE.switchScene(HeroSelectScene.class);
 				}
 			} );
 			curBtn.icon(Icons.get(Icons.ENTER));
@@ -104,7 +104,7 @@ public class WndGame extends Window {
 				@Override
 				protected void onClick() {
 					InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
-					Game.switchScene( RankingsScene.class );
+					Game.INSTANCE.switchScene( RankingsScene.class );
 				}
 			} );
 			curBtn.icon(Icons.get(Icons.RANKINGS));
@@ -119,7 +119,7 @@ public class WndGame extends Window {
 				} catch (IOException e) {
 					ShatteredPixelDungeon.reportException(e);
 				}
-				Game.switchScene(TitleScene.class);
+				Game.INSTANCE.switchScene(TitleScene.class);
 			}
 		} );
 		curBtn.icon(Icons.get(Icons.DISPLAY));

@@ -84,11 +84,11 @@ public class AmuletScene extends PixelScene {
 							AmuletScene.this.add(new Delayer(3f){
 								@Override
 								protected void onComplete() {
-									Game.switchScene( RankingsScene.class );
+									Game.INSTANCE.switchScene( RankingsScene.class );
 								}
 							});
 						} else {
-							Game.switchScene( RankingsScene.class );
+							Game.INSTANCE.switchScene( RankingsScene.class );
 						}
 					}
 				});
@@ -142,7 +142,7 @@ public class AmuletScene extends PixelScene {
 	protected void onBackPressed() {
 		if (btnExit.getActive()) {
 			InterlevelScene.mode = InterlevelScene.Mode.CONTINUE;
-			Game.switchScene(InterlevelScene.class);
+			Game.INSTANCE.switchScene(InterlevelScene.class);
 		}
 	}
 	
@@ -152,7 +152,7 @@ public class AmuletScene extends PixelScene {
 	public void update() {
 		super.update();
 		
-		if ((timer -= Game.elapsed) < 0) {
+		if ((timer -= Game.INSTANCE.elapsed) < 0) {
 			timer = Random.Float( 0.5f, 5f );
 			
 			Speck star = recycle( Speck.class );

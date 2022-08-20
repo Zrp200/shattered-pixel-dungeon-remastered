@@ -270,7 +270,7 @@ public class MenuPane extends Component {
 			super.update();
 
 			if (flashingPage != null){
-				journalIcon.am = abs(cos( StatusPane.FLASH_RATE * (time += Game.elapsed) ));
+				journalIcon.am = abs(cos( StatusPane.FLASH_RATE * (time += Game.INSTANCE.elapsed) ));
 				keyIcon.am = journalIcon.am;
 				bg.brightness(0.5f + journalIcon.am);
 				if (time >= PI / StatusPane.FLASH_RATE) {

@@ -54,7 +54,7 @@ public class Guidebook extends Item {
 
 					@Override
 					public void update() {
-						elapsed += Game.elapsed;
+						elapsed += Game.INSTANCE.elapsed;
 						super.update();
 					}
 

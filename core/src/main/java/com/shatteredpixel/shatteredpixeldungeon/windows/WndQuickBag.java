@@ -97,7 +97,7 @@ public class WndQuickBag extends Window {
 				@Override
 				protected void onClick() {
 					if (Dungeon.hero == null || !Dungeon.hero.isAlive() || !Dungeon.hero.belongings.contains(item)){
-						Game.scene().addToFront(new WndUseItem(WndQuickBag.this, item));
+						Game.INSTANCE.scene.addToFront(new WndUseItem(WndQuickBag.this, item));
 						return;
 					}
 
@@ -113,7 +113,7 @@ public class WndQuickBag extends Window {
 
 				@Override
 				protected boolean onLongClick() {
-					Game.scene().addToFront(new WndUseItem(WndQuickBag.this, item));
+					Game.INSTANCE.scene.addToFront(new WndUseItem(WndQuickBag.this, item));
 					return true;
 				}
 

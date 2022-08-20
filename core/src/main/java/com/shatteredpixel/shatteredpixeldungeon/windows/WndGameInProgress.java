@@ -75,7 +75,7 @@ public class WndGameInProgress extends Window {
 			RedButton btnChallenges = new RedButton( Messages.get(this, "challenges") ) {
 				@Override
 				protected void onClick() {
-					Game.scene().add( new WndChallenges( info.challenges, false ) );
+					Game.INSTANCE.scene.add( new WndChallenges( info.challenges, false ) );
 				}
 			};
 			btnChallenges.icon(Icons.get(Icons.CHALLENGE_ON));
@@ -120,7 +120,7 @@ public class WndGameInProgress extends Window {
 				Dungeon.daily = false;
 				ActionIndicator.action = null;
 				InterlevelScene.mode = InterlevelScene.Mode.CONTINUE;
-				ShatteredPixelDungeon.switchScene(InterlevelScene.class);
+				ShatteredPixelDungeon.INSTANCE.switchScene(InterlevelScene.class);
 			}
 		};
 		
@@ -129,7 +129,7 @@ public class WndGameInProgress extends Window {
 			protected void onClick() {
 				super.onClick();
 				
-				ShatteredPixelDungeon.scene().add(new WndOptions(Icons.get(Icons.WARNING),
+				ShatteredPixelDungeon.INSTANCE.scene.add(new WndOptions(Icons.get(Icons.WARNING),
 						Messages.get(WndGameInProgress.class, "erase_warn_title"),
 						Messages.get(WndGameInProgress.class, "erase_warn_body"),
 						Messages.get(WndGameInProgress.class, "erase_warn_yes"),
@@ -138,7 +138,7 @@ public class WndGameInProgress extends Window {
 					protected void onSelect( int index ) {
 						if (index == 0) {
 							Dungeon.deleteGame(slot, true);
-							ShatteredPixelDungeon.switchNoFade(StartScene.class);
+							ShatteredPixelDungeon.INSTANCE.switchSceneNoFade(StartScene.class);
 						}
 					}
 				} );
