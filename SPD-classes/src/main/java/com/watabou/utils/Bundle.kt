@@ -87,9 +87,11 @@ class Bundle private constructor(
     fun getBundle(key: String): Bundle? = data.optJSONObject(key)?.let { Bundle(it) }
 
     private fun get(): Bundlable? {
-        return (Reflection.newInstance(
-            Reflection.forName(getString(CLASS_NAME).let { cls -> aliases[cls] ?: cls }) ?: return null
-        ) as Bundlable).also { it.restoreFromBundle(this) }
+        return (Reflection.newInstance(Reflection.forName(getString(CLASS_NAME).let { cls ->
+            aliases[cls] ?: cls
+        }) ?: return null) as Bundlable).also {
+            it.restoreFromBundle(this)
+        }
     }
 
     fun <E : Enum<E>> getEnum(key: String, enumClass: Class<E>): E = valueOf(enumClass, data.getString(key))
@@ -115,7 +117,9 @@ class Bundle private constructor(
     }.toTypedArray()
 
     fun getClassArray(key: String): Array<Class<*>> = data.getJSONArray(key).let {
-        it.mapIndexed { index, _ -> Reflection.forName(it.getString(index).replace("class ", "").let { cls -> aliases[cls] ?: cls }) }
+        it.mapIndexed { index, _ ->
+            Reflection.forName(it.getString(index).replace("class ", "").let { cls -> aliases[cls] ?: cls })
+        }
     }.toTypedArray()
 
     @JvmOverloads
@@ -168,31 +172,45 @@ class Bundle private constructor(
     }
 
     fun put(key: String, array: IntArray?) {
-        data.put(key, JSONArray().also { array?.indices?.forEach { i -> it.put(i, array[i]) } })
+        data.put(key, JSONArray().also {
+            array?.indices?.forEach { i -> it.put(i, array[i]) }
+        })
     }
 
     fun put(key: String, array: LongArray?) {
-        data.put(key, JSONArray().also { array?.indices?.forEach { i -> it.put(i, array[i]) } })
+        data.put(key, JSONArray().also {
+            array?.indices?.forEach { i -> it.put(i, array[i]) }
+        })
     }
 
     fun put(key: String, array: FloatArray?) {
-        data.put(key, JSONArray().also { array?.indices?.forEach { i -> it.put(i, array[i].toDouble()) } })
+        data.put(key, JSONArray().also {
+            array?.indices?.forEach { i -> it.put(i, array[i].toDouble()) }
+        })
     }
 
     fun put(key: String, array: BooleanArray?) {
-        data.put(key, JSONArray().also { array?.indices?.forEach { i -> it.put(i, array[i]) } })
+        data.put(key, JSONArray().also {
+            array?.indices?.forEach { i -> it.put(i, array[i]) }
+        })
     }
 
     fun put(key: String, array: Array<String>?) {
-        data.put(key, JSONArray().also { array?.indices?.forEach { i -> it.put(i, array[i]) } })
+        data.put(key, JSONArray().also {
+            array?.indices?.forEach { i -> it.put(i, array[i]) }
+        })
     }
 
     fun put(key: String, array: Array<Class<*>>?) {
-        data.put(key, JSONArray().also { array?.indices?.forEach { i -> it.put(i, array[i].name) } })
+        data.put(key, JSONArray().also {
+            array?.indices?.forEach { i -> it.put(i, array[i].name) }
+        })
     }
 
     fun put(key: String, collection: Collection<Bundlable?>?) {
-        data.put(key, collection?.let { col -> JSONArray(col.mapNotNull { storeObject(it) }) } ?: JSONArray())
+        data.put(key, collection?.let { col ->
+            JSONArray(col.mapNotNull { storeObject(it) })
+        } ?: JSONArray())
     }
 
     // endregion
@@ -239,9 +257,7 @@ class Bundle private constructor(
             reader.close()
 
             // If the data is an array, put it in a fresh object with the default key.
-            if (json is JSONArray) {
-                json = JSONObject().put(DEFAULT_KEY, json)
-            }
+            if (json is JSONArray) json = JSONObject().put(DEFAULT_KEY, json)
 
             return Bundle(json as JSONObject)
         }
@@ -258,20 +274,21 @@ class Bundle private constructor(
             str.reset()
 
             // GZIP header is 0x1f8b.
-            return if (header[0] == 0x1f.toByte() && header[1] == 0x8b.toByte()) GZIPInputStream(str, GZIP_BUFFER) else str
+            return if (header[0] == 0x1f.toByte() && header[1] == 0x8b.toByte())
+                GZIPInputStream(str, GZIP_BUFFER)
+            else
+                str
         }
 
         private fun storeObject(obj: Bundlable?): JSONObject? = obj?.let {
             val cl: Class<*> = it.javaClass
             // Skip none-static inner classes as they can't be instantiated through bundle restoring.
             // Classes which make use of none-static inner classes must manage instantiation manually.
-            if (!Reflection.isMemberClass(cl) || Reflection.isStatic(cl)) {
-                val bundle = Bundle()
-                bundle.put(CLASS_NAME, cl.name)
-                it.storeInBundle(bundle)
-                return bundle.data
-            }
-            null
+            if (Reflection.isMemberClass(cl) && !Reflection.isStatic(cl)) return null
+            val bundle = Bundle()
+            bundle.put(CLASS_NAME, cl.name)
+            it.storeInBundle(bundle)
+            bundle.data
         }
 
         /**

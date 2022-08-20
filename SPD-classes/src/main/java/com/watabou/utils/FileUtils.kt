@@ -70,7 +70,9 @@ private fun getFileHandle(basePath: String, path: String): FileHandle = when (de
  * @param path path to the file in question
  * @returns length of the file in bytes, or 0 if the file doesn't exist
  */
-fun fileLength(path: String): Long = with(getFileHandle(path)) { if (!exists()) 0 else length() }
+fun fileLength(path: String): Long = with(getFileHandle(path)) {
+    if (!exists()) 0 else length()
+}
 
 /**
  * Deletes the file.

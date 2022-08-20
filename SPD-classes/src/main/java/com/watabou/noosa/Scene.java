@@ -31,17 +31,14 @@ public class Scene extends Group {
 	private Signal.Listener<KeyEvent> keyListener;
 	
 	public void create() {
-		KeyEvent.addKeyListener( keyListener = new Signal.Listener<KeyEvent>() {
-			@Override
-			public boolean onSignal( KeyEvent event ) {
-				if (Game.instance != null && event.pressed) {
-					if (KeyBindings.getActionForKey( event ) == GameAction.BACK){
-						onBackPressed();
-					}
+		KeyEvent.addKeyListener( keyListener = event -> {
+			if (Game.instance != null && event.pressed) {
+				if (KeyBindings.getActionForKey( event ) == GameAction.BACK){
+					onBackPressed();
 				}
-				return false;
 			}
-		} );
+			return false;
+		});
 	}
 	
 	@Override
@@ -52,10 +49,6 @@ public class Scene extends Group {
 	
 	public void onPause() {
 		
-	}
-	
-	public void onResume(){
-	
 	}
 	
 	@Override

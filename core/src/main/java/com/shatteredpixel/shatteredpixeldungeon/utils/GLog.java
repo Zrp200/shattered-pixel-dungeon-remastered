@@ -36,7 +36,7 @@ public class GLog {
 
 	public static final String NEW_LINE	    = "\n";
 	
-	public static Signal<String> update = new Signal<>();
+	public static Signal<String> update = new Signal<>(false);
 
 	public static void newLine(){
 		update.dispatch( NEW_LINE );

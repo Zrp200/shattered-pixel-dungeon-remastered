@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.android;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
@@ -60,31 +59,31 @@ public class AndroidPlatformSupport extends PlatformSupport {
 		if (view.getMeasuredWidth() == 0 || view.getMeasuredHeight() == 0)
 			return;
 		
-		Game.dispWidth = view.getMeasuredWidth();
-		Game.dispHeight = view.getMeasuredHeight();
+		Game.displayWidth = view.getMeasuredWidth();
+		Game.displayHeight = view.getMeasuredHeight();
 
 		boolean fullscreen = Build.VERSION.SDK_INT < Build.VERSION_CODES.N
 				|| !AndroidLauncher.instance.isInMultiWindowMode();
 
 		if (fullscreen && SPDSettings.landscape() != null
-				&& (Game.dispWidth >= Game.dispHeight) != SPDSettings.landscape()){
-			int tmp = Game.dispWidth;
-			Game.dispWidth = Game.dispHeight;
-			Game.dispHeight = tmp;
+				&& (Game.displayWidth >= Game.displayHeight) != SPDSettings.landscape()){
+			int tmp = Game.displayWidth;
+			Game.displayWidth = Game.displayHeight;
+			Game.displayHeight = tmp;
 		}
 		
-		float dispRatio = Game.dispWidth / (float)Game.dispHeight;
+		float dispRatio = Game.displayWidth / (float)Game.displayHeight;
 		
 		float renderWidth = dispRatio > 1 ? PixelScene.MIN_WIDTH_L : PixelScene.MIN_WIDTH_P;
 		float renderHeight = dispRatio > 1 ? PixelScene.MIN_HEIGHT_L : PixelScene.MIN_HEIGHT_P;
 		
 		//force power saver in this case as all devices must run at at least 2x scale.
-		if (Game.dispWidth < renderWidth*2 || Game.dispHeight < renderHeight*2)
+		if (Game.displayWidth < renderWidth*2 || Game.displayHeight < renderHeight*2)
 			SPDSettings.put( SPDSettings.KEY_POWER_SAVER, true );
 		
 		if (SPDSettings.powerSaver() && fullscreen){
 			
-			int maxZoom = (int)Math.min(Game.dispWidth/renderWidth, Game.dispHeight/renderHeight);
+			int maxZoom = (int)Math.min(Game.displayWidth /renderWidth, Game.displayHeight /renderHeight);
 			
 			renderWidth *= Math.max( 2, Math.round(1f + maxZoom*0.4f));
 			renderHeight *= Math.max( 2, Math.round(1f + maxZoom*0.4f));

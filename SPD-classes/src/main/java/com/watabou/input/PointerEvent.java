@@ -91,7 +91,7 @@ public class PointerEvent {
 	// *** Static members ***
 	// **********************
 	
-	private static Signal<PointerEvent> pointerSignal = new Signal<>( true );
+	private static Signal<PointerEvent> pointerSignal = new Signal<>();
 	
 	public static void addPointerListener( Signal.Listener<PointerEvent> listener ){
 		pointerSignal.add(listener);
@@ -102,7 +102,7 @@ public class PointerEvent {
 	}
 	
 	public static void clearListeners(){
-		pointerSignal.removeAll();
+		pointerSignal.clear();
 	}
 	
 	// Accumulated pointer events

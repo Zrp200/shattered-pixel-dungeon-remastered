@@ -78,17 +78,14 @@ public enum Sample {
 		if (toLoad.isEmpty()) return;
 
 		//load in a separate thread to prevent this blocking the UI
-		new Thread(){
-			@Override
-			public void run() {
-				for (String asset : toLoad) {
-					Sound newSound = Gdx.audio.newSound(getAsset(asset));
-					synchronized (INSTANCE) {
-						ids.put(asset, newSound);
-					}
+		new Thread(() -> {
+			for (String asset : toLoad) {
+				Sound newSound = Gdx.audio.newSound(getAsset(asset));
+				synchronized (INSTANCE) {
+					ids.put(asset, newSound);
 				}
 			}
-		}.start();
+		}).start();
 		
 	}
 

@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.TitleScene;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.WelcomeScene;
 import com.watabou.noosa.Game;
+import com.watabou.noosa.Scene;
 import com.watabou.noosa.audio.MusicPlayer;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
@@ -149,8 +150,8 @@ public class ShatteredPixelDungeon extends Game {
 	}
 	
 	@Override
-	protected void switchScene() {
-		super.switchScene();
+	protected void switchScene(Scene newScene) {
+		super.switchScene(newScene);
 		if (scene instanceof PixelScene){
 			((PixelScene) scene).restoreWindows();
 		}
@@ -175,8 +176,8 @@ public class ShatteredPixelDungeon extends Game {
 	}
 	
 	@Override
-	public void destroy(){
-		super.destroy();
+	public void dispose(){
+		super.dispose();
 		GameScene.endActorThread();
 	}
 	

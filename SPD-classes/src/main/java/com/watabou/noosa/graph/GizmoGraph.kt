@@ -6,7 +6,7 @@ import org.graphstream.graph.implementations.SingleGraph
 
 private val graph: Graph = SingleGraph("GizmoGraph")
 
-var on = false
+var graphOn = false
     private set
 
 fun initGraph() {
@@ -14,19 +14,21 @@ fun initGraph() {
     graph.isStrict = false
     graph.setAutoCreate(true)
     graph.display()
-    on = true
+    graphOn = true
 }
 
 @Suppress("NewApi")
 fun updateGraph(group: Group) {
-    graph.addNode("$group").setAttribute("retain", true)
+    with (graph) {
+        addNode("$group").setAttribute("retain", true)
 
-    updateNode(group)
+        updateNode(group)
 
-    graph.forEach { if (it != null && !it.hasAttribute("retain")) graph.removeNode(it) }
-    graph.forEach {
-        it.removeAttribute("retain")
-        it.setAttribute("ui.label", it.id.substringAfterLast(".").substringBefore("@"))
+        forEach { if (it != null && !it.hasAttribute("retain")) graph.removeNode(it) }
+        forEach {
+            it.removeAttribute("retain")
+            it.setAttribute("ui.label", it.id.substringAfterLast(".").substringBefore("@"))
+        }
     }
 }
 

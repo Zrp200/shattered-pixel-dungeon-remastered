@@ -39,7 +39,7 @@ public class KeyEvent {
 	// *** Static members ***
 	// **********************
 	
-	private static Signal<KeyEvent> keySignal = new Signal<>( true );
+	private static Signal<KeyEvent> keySignal = new Signal<>();
 	
 	public static void addKeyListener( Signal.Listener<KeyEvent> listener ){
 		keySignal.add(listener);
@@ -50,7 +50,7 @@ public class KeyEvent {
 	}
 	
 	public static void clearListeners(){
-		keySignal.removeAll();
+		keySignal.clear();
 	}
 	
 	//Accumulated key events

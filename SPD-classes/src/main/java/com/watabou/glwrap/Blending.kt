@@ -32,14 +32,14 @@ fun useDefault() {
 }
 
 // TODO: integrate this (requires rewriting use-cases in kotlin)
-fun inLightMode(function: () -> Any) {
+inline fun inLightMode(function: () -> Any) {
     setLightMode()
     function()
     setNormalMode()
 }
 
 // TODO: integrate this (requires rewriting use-cases in kotlin)
-fun withoutBlending(function: () -> Any) {
+inline fun withoutBlending(function: () -> Any) {
     disableBlending()
     function()
     enableBlending()
