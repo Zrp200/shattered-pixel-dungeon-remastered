@@ -97,38 +97,54 @@ class Bundle private constructor(
     fun <E : Enum<E>> getEnum(key: String, enumClass: Class<E>): E = valueOf(enumClass, data.getString(key))
 
     fun getIntArray(key: String): IntArray = data.getJSONArray(key).let {
-        it.mapIndexed { index, _ -> it.getInt(index) }
+        (0 until it.length()).map { index ->
+            it.getInt(index)
+        }
     }.toIntArray()
 
     fun getLongArray(key: String): LongArray = data.getJSONArray(key).let {
-        it.mapIndexed { index, _ -> it.getLong(index) }
+        (0 until it.length()).map { index ->
+            it.getLong(index)
+        }
     }.toLongArray()
 
     fun getFloatArray(key: String): FloatArray = data.getJSONArray(key).let {
-        it.mapIndexed { index, _ -> it.optDouble(index, 0.0).toFloat() }
+        (0 until it.length()).map { index ->
+            it.optDouble(index, 0.0).toFloat()
+        }
     }.toFloatArray()
 
     fun getBooleanArray(key: String): BooleanArray = data.getJSONArray(key).let {
-        it.mapIndexed { index, _ -> it.getBoolean(index) }
+        (0 until it.length()).map { index ->
+            it.getBoolean(index)
+        }
     }.toBooleanArray()
 
     fun getStringArray(key: String): Array<String> = data.getJSONArray(key).let {
-        it.mapIndexed { index, _ -> it.getString(index) }
+        (0 until it.length()).map { index ->
+            it.getString(index)
+        }
     }.toTypedArray()
 
     fun getClassArray(key: String): Array<Class<*>> = data.getJSONArray(key).let {
-        it.mapIndexed { index, _ ->
-            Reflection.forName(it.getString(index).replace("class ", "").let { cls -> aliases[cls] ?: cls })
+        (0 until it.length()).map { index ->
+            Reflection.forName(it.getString(index)
+                .replace("class ", "")
+                .let { cls -> aliases[cls] ?: cls })
         }
     }.toTypedArray()
 
     @JvmOverloads
     fun getBundleArray(key: String = DEFAULT_KEY): Array<Bundle> = data.getJSONArray(key).let {
-        it.mapIndexed { index, _ -> Bundle(it.getJSONObject(index)) }
+        (0 until it.length()).map { index ->
+            Bundle(it.getJSONObject(index))
+        }
     }.toTypedArray()
 
     fun getCollection(key: String): Collection<Bundlable> = data.getJSONArray(key).let {
-        it.mapIndexed { index, _ -> Bundle(it.getJSONObject(index)).get() }.filterNotNull()
+        (0 until it.length()).mapNotNull { index ->
+            Bundle(it.getJSONObject(index)).get()
+        }
     }
 
     // endregion
