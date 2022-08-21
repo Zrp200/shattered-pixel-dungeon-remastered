@@ -38,8 +38,8 @@ class VertexDataset(private var vertexBuffer: FloatBuffer) {
     @JvmOverloads // TODO: remove this after moving use cases to kotlin
     fun markForUpdate(vertexBuffer: FloatBuffer = this.vertexBuffer, start: Int = 0, end: Int = vertexBuffer.limit()) {
         this.vertexBuffer = vertexBuffer
-        updateStart = start.coerceAtMost(updateStart)
-        updateEnd = end.coerceAtLeast(updateEnd)
+        updateStart = start.coerceAtLeast(updateStart)
+        updateEnd = end.coerceAtMost(updateEnd)
         update = true
     }
 
