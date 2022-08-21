@@ -18,50 +18,56 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
+package com.shatteredpixel.shatteredpixeldungeon.ui.changelist
 
-package com.shatteredpixel.shatteredpixeldungeon.ui.changelist;
-
-import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
-import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
-import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
-import com.watabou.noosa.Image;
-import com.watabou.noosa.ui.Component;
+import com.shatteredpixel.shatteredpixeldungeon.ShatteredPixelDungeon
+import com.shatteredpixel.shatteredpixeldungeon.items.Item
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages
+import com.shatteredpixel.shatteredpixeldungeon.scenes.PixelScene
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite
+import com.watabou.noosa.Image
+import com.watabou.noosa.ui.Component
 
 //not actually a button, but functions as one.
-public class ChangeButton extends Component {
-	
-	protected Image icon;
-	protected String title;
-	protected String message;
-	
-	public ChangeButton( Image icon, String title, String message){
-		super();
-		
-		this.icon = icon;
-		add(this.icon);
-		
-		this.title = Messages.titleCase(title);
-		this.message = message;
-		
-		layout();
-	}
-	
-	public ChangeButton(Item item, String message ){
-		this( new ItemSprite(item), item.name(), message);
-	}
-	
-	protected void onClick() {
-		ShatteredPixelDungeon.INSTANCE.scene.add(new ChangesWindow(new Image(icon), title, message));
-	}
-	
-	@Override
-	protected void layout() {
-		super.layout();
-		
-		icon.x = x + (width - icon.width()) / 2f;
-		icon.y = y + (height - icon.height()) / 2f;
-		PixelScene.align(icon);
-	}
+class ChangeButton(
+    protected var icon: Image,
+    title: String? = null,
+    protected var message: String? = ""
+) : Component() {
+
+    init {
+        add(icon)
+    }
+
+    protected val title: String = Messages.titleCase(title?:"")
+
+    init {
+        layout()
+    }
+
+    @JvmOverloads
+    constructor(item: Item, message: String? = "", title: String = item.name()) : this(ItemSprite(item), title, message)
+    fun onClick() = ShatteredPixelDungeon.scene.add(
+        ChangesWindow(Image(icon),
+            title,
+            message?.trimIndent()?.trim()
+        ))
+
+    public override fun layout() {
+        super.layout()
+        icon.x = x + (width - icon.width()) / 2f
+        icon.y = y + (height - icon.height()) / 2f
+        PixelScene.align(icon)
+    }
+
+    operator fun String.unaryPlus() {
+        message += "$this\n"
+        layout()
+    }
+    operator fun Iterable<String>.unaryPlus() = forEach { +"_-_ $it" }
+
+    inline operator fun invoke( builder: ChangeButton.()->Unit ) = apply {
+        builder()
+        layout()
+    }
 }
