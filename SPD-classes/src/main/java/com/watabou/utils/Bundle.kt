@@ -79,12 +79,15 @@ class Bundle private constructor(
 
     fun getString(key: String): String = data.optString(key)
 
-    fun getClass(key: String): Class<*>? = Reflection.forName(getString(key).replace("class ", "").let { cls ->
-        if (cls == "") return null
-        aliases[cls] ?: cls
-    })
+    fun getClass(key: String): Class<*>? =
+        Reflection.forName(
+            getString(key)
+                .replace("class ", "")
+                .takeUnless(""::equals)
+                ?.let { cls -> aliases[cls] ?: cls }
+        )
 
-    fun getBundle(key: String): Bundle? = data.optJSONObject(key)?.let { Bundle(it) }
+    fun getBundle(key: String): Bundle? = data.optJSONObject(key)?.let(::Bundle)
 
     private fun get(): Bundlable? {
         return (Reflection.newInstance(Reflection.forName(getString(CLASS_NAME).let { cls ->
@@ -94,140 +97,167 @@ class Bundle private constructor(
         }
     }
 
-    fun <E : Enum<E>> getEnum(key: String, enumClass: Class<E>): E = valueOf(enumClass, data.getString(key))
+    fun <E : Enum<E>> getEnum(key: String, enumClass: Class<E>): E =
+        valueOf(enumClass, data.getString(key))
 
-    fun getIntArray(key: String): IntArray = data.getJSONArray(key).let {
-        (0 until it.length()).map { index ->
-            it.getInt(index)
-        }
-    }.toIntArray()
+    fun getIntArray(key: String) = getArray(key, ::IntArray, JSONArray::getInt)
 
-    fun getLongArray(key: String): LongArray = data.getJSONArray(key).let {
-        (0 until it.length()).map { index ->
-            it.getLong(index)
-        }
-    }.toLongArray()
+    fun getLongArray(key: String) = getArray(key, ::LongArray, JSONArray::getLong)
 
-    fun getFloatArray(key: String): FloatArray = data.getJSONArray(key).let {
-        (0 until it.length()).map { index ->
-            it.optDouble(index, 0.0).toFloat()
-        }
-    }.toFloatArray()
+    fun getFloatArray(key: String) = getArray(key, ::FloatArray) {
+        optDouble(it, 0.0).toFloat()
+    }
 
-    fun getBooleanArray(key: String): BooleanArray = data.getJSONArray(key).let {
-        (0 until it.length()).map { index ->
-            it.getBoolean(index)
-        }
-    }.toBooleanArray()
+    fun getBooleanArray(key: String) = getArray(key, ::BooleanArray, JSONArray::getBoolean)
 
-    fun getStringArray(key: String): Array<String> = data.getJSONArray(key).let {
-        (0 until it.length()).map { index ->
-            it.getString(index)
-        }
-    }.toTypedArray()
+    fun getStringArray(key: String) = getArray(key, ::Array, JSONArray::getString)
 
-    fun getClassArray(key: String): Array<Class<*>> = data.getJSONArray(key).let {
-        (0 until it.length()).map { index ->
-            Reflection.forName(it.getString(index)
-                .replace("class ", "")
-                .let { cls -> aliases[cls] ?: cls })
-        }
-    }.toTypedArray()
+    fun getClassArray(key: String): Array<Class<*>> = getArray(key, ::Array) { index ->
+        Reflection.forName(
+            getString(index).replace("class ", "")
+                .let { cls -> aliases[cls] ?: cls }
+        )
+    }
 
     @JvmOverloads
-    fun getBundleArray(key: String = DEFAULT_KEY): Array<Bundle> = data.getJSONArray(key).let {
-        (0 until it.length()).map { index ->
-            Bundle(it.getJSONObject(index))
-        }
-    }.toTypedArray()
+    fun getBundleArray(key: String = DEFAULT_KEY) = getArray(key, ::Array) {
+        Bundle(getJSONObject(it))
+    }
 
-    fun getCollection(key: String): Collection<Bundlable> = data.getJSONArray(key).let {
-        (0 until it.length()).mapNotNull { index ->
-            Bundle(it.getJSONObject(index)).get()
-        }
+    fun getCollection(key: String): Collection<Bundlable> = getArray(
+        key,
+        // this exploits the fact that filterNotNull returns a collection
+        initArray = { size, init -> Array(size, init).filterNotNull() },
+        getValue = { Bundle(getJSONObject(it)).get() }
+    )
+
+    /**
+     * Gets an array from [data] corresponding to [key].
+     * @param initArray The constructor for the array. Determines the return type of the function
+     * @param getValue The method to be used to extract each value from the retrieved [JSONArray].
+     */
+    private inline fun <R, RArray> getArray(
+        key: String,
+        initArray: (size: Int, ((index: Int) -> R)) -> RArray,
+        crossinline getValue: JSONArray.(index: Int) -> R,
+    ) = data.getJSONArray(key).run {
+        initArray(length()) { getValue(it) }
     }
 
     // endregion
 
     // region put...
 
-    fun put(key: String, value: Boolean?) {
+    @JvmName("put")
+    operator fun set(key: String, value: Boolean?) {
         data.put(key, value)
     }
 
-    fun put(key: String, value: Int?) {
+    @JvmName("put")
+    operator fun set(key: String, value: Int?) {
         data.put(key, value)
     }
 
-    fun put(key: String, value: Long?) {
+    @JvmName("put")
+    operator fun set(key: String, value: Long?) {
         data.put(key, value)
     }
 
-    fun put(key: String, value: Float?) {
+    @JvmName("put")
+    operator fun set(key: String, value: Float?) {
         data.put(key, value?.toDouble())
     }
 
-    fun put(key: String, value: String?) {
+    @JvmName("put")
+    operator fun set(key: String, value: String?) {
         data.put(key, value)
     }
 
-    fun put(key: String, value: Class<*>?) {
+    @JvmName("put")
+    operator fun set(key: String, value: Class<*>?) {
         data.put(key, value)
     }
 
-    fun put(key: String, bundle: Bundle?) {
+    @JvmName("put")
+    operator fun set(key: String, bundle: Bundle?) {
         data.put(key, bundle?.data)
     }
 
-    fun put(key: String, obj: Bundlable?) {
+    @JvmName("put")
+    operator fun set(key: String, obj: Bundlable?) {
         data.put(key, storeObject(obj))
     }
 
-    fun put(key: String, value: Enum<*>?) {
+    @JvmName("put")
+    operator fun set(key: String, value: Enum<*>?) {
         data.put(key, value?.name)
     }
 
-    fun put(key: String, array: IntArray?) {
-        data.put(key, JSONArray().also {
-            array?.indices?.forEach { i -> it.put(i, array[i]) }
-        })
+    @JvmName("put")
+    operator fun set(key: String, array: IntArray?) {
+        put(key, array, IntArray::forEachIndexed, JSONArray::put)
     }
 
-    fun put(key: String, array: LongArray?) {
-        data.put(key, JSONArray().also {
-            array?.indices?.forEach { i -> it.put(i, array[i]) }
-        })
+    @JvmName("put")
+    operator fun set(key: String, array: LongArray?) {
+        put(key, array, LongArray::forEachIndexed, JSONArray::put)
     }
 
-    fun put(key: String, array: FloatArray?) {
-        data.put(key, JSONArray().also {
-            array?.indices?.forEach { i -> it.put(i, array[i].toDouble()) }
-        })
+    @JvmName("put")
+    operator fun set(key: String, array: FloatArray?) {
+        put(key, array, FloatArray::forEachIndexed) { index, float ->
+            put(index, float.toDouble())
+        }
     }
 
-    fun put(key: String, array: BooleanArray?) {
-        data.put(key, JSONArray().also {
-            array?.indices?.forEach { i -> it.put(i, array[i]) }
-        })
+    @JvmName("put")
+    operator fun set(key: String, array: BooleanArray?) {
+        put(key, array, BooleanArray::forEachIndexed, JSONArray::put)
     }
 
-    fun put(key: String, array: Array<String>?) {
-        data.put(key, JSONArray().also {
-            array?.indices?.forEach { i -> it.put(i, array[i]) }
-        })
+    @JvmName("put")
+    operator fun set(key: String, array: Array<String>?) {
+        put(key, array, JSONArray::put)
     }
 
-    fun put(key: String, array: Array<Class<*>>?) {
-        data.put(key, JSONArray().also {
-            array?.indices?.forEach { i -> it.put(i, array[i].name) }
-        })
+    @JvmName("put")
+    operator fun set(key: String, array: Array<Class<*>>?) {
+        put(key, array) { i, c -> put(i, c.name) }
     }
 
-    fun put(key: String, collection: Collection<Bundlable?>?) {
+    @JvmName("put")
+    operator fun set(key: String, collection: Collection<Bundlable?>?) {
         data.put(key, collection?.let { col ->
             JSONArray(col.mapNotNull { storeObject(it) })
         } ?: JSONArray())
     }
+
+    /**
+     * Wrapper method for the various set methods that handle arrays.
+     * Because primitive arrays have different forEachIndexed signatures, the [forEachIndexed] param takes it so it can be used anyway.
+     * @param key the key to store the array to
+     * @param array the array to store
+     * @param forEachIndexed the primitive array method corresponding to [Array.forEachIndexed]
+     * @param putValue the corresponding put method from [JSONArray]
+     */
+    private inline fun <T, TArray> put(
+        key: String, array: TArray?,
+        forEachIndexed: TArray.(action: (index: Int, value: T) -> Unit) -> Unit,
+        crossinline putValue: JSONArray.(Int, T) -> Unit
+    ) {
+        data.put(key, JSONArray().apply {
+            array?.forEachIndexed { index, value -> putValue(index, value) }
+        })
+    }
+
+    /**
+     * A shortcut method variant of [put] for [Array] objects using [Array.forEachIndexed]
+     * @param putValue the corresponding put method from [JSONArray]
+     **/
+    private inline fun <T> put(
+        key: String, array: Array<T>?,
+        crossinline putValue: JSONArray.(Int, T) -> Unit,
+    ) = put(key, array, Array<T>::forEachIndexed, putValue)
 
     // endregion
 
@@ -238,7 +268,9 @@ class Bundle private constructor(
      */
     fun toStream(stream: OutputStream, compressed: Boolean = COMPRESSION) {
         val writer =
-            if (compressed) BufferedWriter(OutputStreamWriter(GZIPOutputStream(stream, GZIP_BUFFER)))
+            if (compressed) BufferedWriter(
+                OutputStreamWriter(GZIPOutputStream(stream, GZIP_BUFFER))
+            )
             else BufferedWriter(OutputStreamWriter(stream))
         writer.write(data.toString()) // JSONObject.write doesn't exist on Android/iOS
         writer.close()
@@ -265,12 +297,10 @@ class Bundle private constructor(
         fun read(stream: InputStream): Bundle {
 
             // JSONTokenizer only has a string-based constructor on Android/iOS.
-            val reader = BufferedReader(InputStreamReader(checkCompression(stream)))
-            val jsonBuilder = StringBuilder()
-            var line: String?
-            while (reader.readLine().also { line = it } != null) jsonBuilder.append(line + "\n")
-            var json = JSONTokener(jsonBuilder.toString()).nextValue()
-            reader.close()
+            var json = JSONTokener(buildString {
+                BufferedReader(InputStreamReader(stream.checkCompression()))
+                    .forEachLine { append("$it\n") }
+            }).nextValue()
 
             // If the data is an array, put it in a fresh object with the default key.
             if (json is JSONArray) json = JSONObject().put(DEFAULT_KEY, json)
@@ -278,34 +308,32 @@ class Bundle private constructor(
             return Bundle(json as JSONObject)
         }
 
-        private fun checkCompression(stream: InputStream): InputStream {
+        private fun InputStream.checkCompression(): InputStream {
 
-            var str = stream
-            if (!str.markSupported()) str = BufferedInputStream(str, 2)
+            if (!markSupported()) return BufferedInputStream(this, 2).checkCompression()
 
             // Determine if it's a regular or compressed file.
-            str.mark(2)
-            val header = ByteArray(2)
-            str.read(header)
-            str.reset()
+            mark(2)
+            val header = ByteArray(2).also(::read)
+            reset()
 
             // GZIP header is 0x1f8b.
             return if (header[0] == 0x1f.toByte() && header[1] == 0x8b.toByte())
-                GZIPInputStream(str, GZIP_BUFFER)
+                GZIPInputStream(this, GZIP_BUFFER)
             else
-                str
+                this
         }
 
-        private fun storeObject(obj: Bundlable?): JSONObject? = obj?.let {
-            val cl: Class<*> = it.javaClass
+        private fun storeObject(obj: Bundlable?): JSONObject? = obj?.javaClass
             // Skip none-static inner classes as they can't be instantiated through bundle restoring.
             // Classes which make use of none-static inner classes must manage instantiation manually.
-            if (Reflection.isMemberClass(cl) && !Reflection.isStatic(cl)) return null
-            val bundle = Bundle()
-            bundle.put(CLASS_NAME, cl.name)
-            it.storeInBundle(bundle)
-            bundle.data
-        }
+            ?.takeUnless { Reflection.isMemberClass(it) && !Reflection.isStatic(it) }
+            ?.let { cl ->
+                Bundle().also {
+                    it[CLASS_NAME] = cl.name
+                    obj.storeInBundle(it)
+                }.data
+            }
 
         /**
          * Adds an alias to the class.
