@@ -23,21 +23,17 @@ class ChangeListBuilder @PublishedApi internal constructor(
 
     operator fun ChangeInfo.unaryPlus() = also(changeInfos::add)
 
-    inline fun version(title: String, text: String="", builder: ChangeInfoBuilder) = ChangeInfo(title, true, text)
-        .apply {
-            +this
-            hardlight(TITLE_COLOR)
-            builder()
-        }
+    inline fun version(title: String, text: String = "", build: InfoBuilder.() -> Unit) =
+        section(title, text, major = true, build = build)
 
     inline fun section(
         title: String? = null,
-        color: Int = TITLE_COLOR,
         text: String? = null,
+        color: Int = TITLE_COLOR,
+        major: Boolean = false,
         build: InfoBuilder.()->Unit
-    ) = ChangeInfo(title,false,text)
+    ) = ChangeInfo(title, major, text)
         .apply {
-            +this
             hardlight(color)
             InfoBuilder(this).build()
         }
