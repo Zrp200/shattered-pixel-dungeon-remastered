@@ -28,7 +28,6 @@ import com.shatteredpixel.shatteredpixeldungeon.items.food.Blandfruit
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons
-import com.shatteredpixel.shatteredpixeldungeon.ui.Window.TITLE_COLOR
 
 fun addAllChanges(changeInfos: ChangeList) = changeInfos {
     version("v0.1.X") {
