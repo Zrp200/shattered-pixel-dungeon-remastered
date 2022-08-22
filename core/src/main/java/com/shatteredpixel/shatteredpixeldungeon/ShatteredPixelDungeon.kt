@@ -87,11 +87,11 @@ object ShatteredPixelDungeon : Game() {
         super.create()
         platform.updateSystemUI()
         SPDAction.loadBindings()
-        MusicPlayer.INSTANCE.enable(SPDSettings.music())
-        MusicPlayer.INSTANCE.volume(SPDSettings.musicVol() * SPDSettings.musicVol() / 100f)
-        Sample.INSTANCE.enable(SPDSettings.soundFx())
-        Sample.INSTANCE.volume(SPDSettings.SFXVol() * SPDSettings.SFXVol() / 100f)
-        Sample.INSTANCE.load(*Assets.Sounds.all)
+        MusicPlayer.isEnabled = SPDSettings.music()
+        MusicPlayer.volume = SPDSettings.musicVol() * SPDSettings.musicVol() / 100f
+        Sample.isEnabled = SPDSettings.soundFx()
+        Sample.globalVolume = SPDSettings.SFXVol() * SPDSettings.SFXVol() / 100f
+        Sample.load(*Assets.Sounds.all)
     }
 
     override fun finish() {

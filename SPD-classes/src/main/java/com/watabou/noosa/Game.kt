@@ -209,7 +209,7 @@ abstract class Game : ApplicationAdapter() {
 
         inputHandler.processAllEvents()
 
-        Sample.INSTANCE.update()
+        Sample.update()
 
         scene.update()
         Camera.updateAll()
@@ -229,8 +229,8 @@ abstract class Game : ApplicationAdapter() {
 
     override fun dispose() {
         scene.destroy()
-        MusicPlayer.INSTANCE.stop()
-        Sample.INSTANCE.reset()
+        MusicPlayer.stop()
+        Sample.reset()
     }
 
     /**
