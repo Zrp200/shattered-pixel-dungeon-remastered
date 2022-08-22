@@ -25,7 +25,6 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.RenderedTextBlock
 import com.watabou.noosa.ColorBlock
 import com.watabou.noosa.ui.Component
 
-@InfoDSL
 class ChangeInfo(
     title: String? = null,
     @JvmField var major: Boolean = true,
@@ -119,7 +118,7 @@ class ChangeInfo(
 
     }
 
-    inline operator fun invoke(@InfoDSL builder: ChangeInfo.() -> Unit) = apply {
+    inline operator fun invoke(builder: ChangeInfo.() -> Unit) = apply {
         builder()
         layout()
     }
