@@ -31,11 +31,8 @@ fun BooleanArray.setFalse() {
 }
 
 infix fun BooleanArray.and(b: BooleanArray) = and(b, null)
-fun BooleanArray.and(b: BooleanArray, result: BooleanArray?): BooleanArray {
-    result ?: return BooleanArray(size) { get(it) && b[it] }
-    repeat(size) { result[it] = get(it) && b[it] }
-    return result
-}
+fun BooleanArray.and(b: BooleanArray, result: BooleanArray?) =
+    result.populate(size) { this[it] && b[it] }
 
 infix fun BooleanArray.or(b: BooleanArray) = or(b, result = null)
 
@@ -45,11 +42,10 @@ fun BooleanArray.or(
     offset: Int = 0,
     length: Int = size - offset,
     result: BooleanArray?
-) = (result ?: BooleanArray(offset + length))
-    .also { for (i in offset until offset + length) it[i] = get(i) || b[i] }
+) = result.populate(length, offset) { get(it) || b[it] }
 
 operator fun BooleanArray.not() = not(null)
-fun BooleanArray.not(result: BooleanArray?) = mapInto(result, Boolean::not)
+fun BooleanArray.not(result: BooleanArray?) = result.populate(size) { !this[it] }
 
 @JvmName("is")
 infix fun IntArray.where(v1: Int) = where(null, v1)
@@ -63,22 +59,24 @@ fun IntArray.isNot(result: BooleanArray?, v1: Int) = mapInto(result) { it != v1 
 
 fun IntArray.isNotOneOf(result: BooleanArray?, vararg v: Int) = mapInto(result) { it !in v }
 
-// functions for mapping because I don't want to do an extra conversion from list
+// functions for mapping used in the above. They're public because they're probably useful.
 
-private inline fun IntArray.mapInto(
-    result: BooleanArray?,
-    predicate: (Int) -> Boolean
-): BooleanArray {
-    result ?: return BooleanArray(size) { predicate(get(it)) }
-    repeat(size) { result[it] = predicate(get(it)) }
-    return result
-}
+/**
+ * [IntArray.mapTo], but the result is a [BooleanArray] and the existing array is overwritten by the results of [predicate]
+ **/
+inline fun IntArray.mapInto(result: BooleanArray?, predicate: (value: Int) -> Boolean) =
+    result.populate(size) { predicate(this[it]) }
 
-private inline fun BooleanArray.mapInto(
-    result: BooleanArray?,
-    predicate: (Boolean) -> Boolean
-): BooleanArray {
-    result ?: return BooleanArray(size) { predicate(get(it)) }
-    repeat(size) { result[it] = predicate(get(it)) }
-    return result
+/**
+ * overwrites a section of the BooleanArray using [mapFunction].
+ * If there is no boolean array, one is created.
+ *
+ * An [offset] can be optionally specified to only look at a portion of the arrays.
+ */
+inline fun BooleanArray?.populate(
+    length: Int,
+    offset: Int = 0,
+    predicate: (index: Int) -> Boolean,
+) = (this ?: BooleanArray(length + offset)).apply {
+    for (i in offset until offset + length) set(i, predicate(i))
 }
