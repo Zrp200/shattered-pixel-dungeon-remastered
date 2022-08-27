@@ -22,11 +22,11 @@
 
 package com.shatteredpixel.shatteredpixeldungeon.utils
 
-private lateinit var falseArray: BooleanArray
+private var falseArray = booleanArrayOf()
 
 //This is MUCH faster than making a new boolean[] or using Arrays.fill;
 fun BooleanArray.setFalse() {
-    if (!::falseArray.isInitialized || falseArray.size < size) falseArray = BooleanArray(size)
+    if (falseArray.size < size) falseArray = BooleanArray(size)
     falseArray.copyInto(this, endIndex = size)
 }
 
