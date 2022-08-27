@@ -31,6 +31,7 @@ fun BooleanArray.setFalse() {
 }
 
 infix fun BooleanArray.and(b: BooleanArray) = and(b, null)
+
 fun BooleanArray.and(b: BooleanArray, result: BooleanArray?) =
     result.populate(size) { this[it] && b[it] }
 
@@ -68,7 +69,7 @@ inline fun IntArray.mapInto(result: BooleanArray?, predicate: (value: Int) -> Bo
     result.populate(size) { predicate(this[it]) }
 
 /**
- * overwrites a section of the BooleanArray using [mapFunction].
+ * overwrites a section of the BooleanArray using [predicate].
  * If there is no boolean array, one is created.
  *
  * An [offset] can be optionally specified to only look at a portion of the arrays.
