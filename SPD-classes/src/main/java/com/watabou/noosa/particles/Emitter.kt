@@ -18,168 +18,157 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
+package com.watabou.noosa.particles
 
-package com.watabou.noosa.particles;
+import com.watabou.glwrap.inLightMode
+import com.watabou.noosa.Game
+import com.watabou.noosa.Group
+import com.watabou.noosa.Visual
+import com.watabou.utils.PointF
+import com.watabou.utils.Random
 
-import com.watabou.glwrap.BlendingKt;
-import com.watabou.noosa.Game;
-import com.watabou.noosa.Group;
-import com.watabou.noosa.Visual;
-import com.watabou.utils.PointF;
-import com.watabou.utils.Random;
+open class Emitter : Group() {
+    @JvmField
+    protected var lightMode = false
 
-public class Emitter extends Group {
+    @JvmField
+    var x = 0f
 
-	protected boolean lightMode = false;
-	
-	public float x;
-	public float y;
-	public float width;
-	public float height;
-	
-	protected Visual target;
-	public boolean fillTarget = true;
-	
-	protected float interval;
-	protected int quantity;
-	
-	public boolean on = false;
+    @JvmField
+    var y = 0f
 
-	private boolean started = false;
-	public boolean autoKill = true;
-	
-	protected int count;
-	protected float time;
-	
-	protected Factory factory;
-	
-	public void pos( float x, float y ) {
-		pos( x, y, 0, 0 );
-	}
-	
-	public void pos( PointF p ) {
-		pos( p.x, p.y, 0, 0 );
-	}
-	
-	public void pos( float x, float y, float width, float height ) {
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
-		
-		target = null;
-	}
+    @JvmField
+    var width = 0f
 
-	public void pos( Visual target ) {
-		this.target = target;
-	}
+    @JvmField
+    var height = 0f
 
-	public void pos( Visual target, float x, float y, float width, float height ) {
-		pos(x, y, width, height);
-		pos(target);
-	}
-	
-	public void burst( Factory factory, int quantity ) {
-		start( factory, 0, quantity );
-	}
-	
-	public void pour( Factory factory, float interval ) {
-		start( factory, interval, 0 );
-	}
+    protected var target: Visual? = null
 
-	public void start( Factory factory, float interval, int quantity ) {
+    @JvmField
+    var fillTarget = true
 
-		started = true;
+    @JvmField
+    protected var interval = 0f
 
-		this.factory = factory;
-		this.lightMode = factory.lightMode();
-		
-		this.interval = interval;
-		this.quantity = quantity;
-		
-		count = 0;
-		time = Random.Float( interval );
-		
-		on = true;
-	}
+    @JvmField
+    protected var quantity = 0
 
-	public static boolean freezeEmitters = false;
+    @JvmField
+    var on = false
 
-	protected boolean isFrozen(){
-		return Game.INSTANCE.timeTotal > 1 && freezeEmitters;
-	}
-	
-	@Override
-	public void update() {
+    private var started = false
 
-		if (isFrozen()){
-			return;
-		}
-		
-		if (on) {
-			time += Game.INSTANCE.elapsed;
-			while (time > interval) {
-				time -= interval;
-				emit( count++ );
-				if (quantity > 0 && count >= quantity) {
-					on = false;
-					break;
-				}
-			}
-		} else if (started && autoKill && getChildren().isEmpty()) {
-			kill();
-		}
-		
-		super.update();
-	}
+    @JvmField
+    var autoKill = true
 
-	@Override
-	public void revive() {
-		started = false;
-		super.revive();
-	}
+    @JvmField
+    protected var count = 0
 
-	protected void emit( int index ) {
-		if (target == null) {
-			factory.emit(
-				this,
-				index,
-				x + Random.Float( width ),
-				y + Random.Float( height ) );
-		} else {
-			if (fillTarget) {
-				factory.emit(
-						this,
-						index,
-						target.x + Random.Float( target.width ),
-						target.y + Random.Float( target.height ) );
-			} else {
-				factory.emit(
-						this,
-						index,
-						target.x + x + Random.Float( width ),
-						target.y + y + Random.Float( height ) );
-			}
-		}
-	}
-	
-	@Override
-	public void draw() {
-		if (lightMode) {
-			BlendingKt.setLightMode();
-			super.draw();
-			BlendingKt.setNormalMode();
-		} else {
-			super.draw();
-		}
-	}
-	
-	abstract public static class Factory {
-		
-		abstract public void emit( Emitter emitter, int index, float x, float y );
-		
-		public boolean lightMode() {
-			return false;
-		}
-	}
+    @JvmField
+    protected var time = 0f
+
+    protected lateinit var factory: Factory
+
+
+    fun pos(p: PointF) {
+        pos(p.x, p.y, 0f, 0f)
+    }
+
+    @JvmOverloads
+    fun pos(x: Float, y: Float, width: Float = 0f, height: Float = 0f) {
+        this.x = x
+        this.y = y
+        this.width = width
+        this.height = height
+        target = null
+    }
+
+    fun pos(target: Visual?) {
+        this.target = target
+    }
+
+    fun pos(target: Visual?, x: Float, y: Float, width: Float, height: Float) {
+        pos(x, y, width, height)
+        pos(target)
+    }
+
+    fun burst(factory: Factory, quantity: Int) {
+        start(factory, 0f, quantity)
+    }
+
+    fun pour(factory: Factory, interval: Float) {
+        start(factory, interval, 0)
+    }
+
+    fun start(factory: Factory, interval: Float, quantity: Int) {
+        started = true
+        this.factory = factory
+        lightMode = factory.lightMode()
+        this.interval = interval
+        this.quantity = quantity
+        count = 0
+        time = Random.Float(interval)
+        on = true
+    }
+
+    protected open val isFrozen: Boolean
+        get() = Game.INSTANCE.timeTotal > 1 && freezeEmitters
+
+    override fun update() {
+        if (isFrozen) return
+
+        if (on) {
+            time += Game.INSTANCE.elapsed
+            while (time > interval) {
+                time -= interval
+                emit(count++)
+                if (quantity in 1..count) {
+                    on = false
+                    break
+                }
+            }
+        } else if (started && autoKill && children.isEmpty()) {
+            kill()
+        }
+        super.update()
+    }
+
+    override fun revive() {
+        started = false
+        super.revive()
+    }
+
+    protected open fun emit(index: Int) = with(factory) {
+        target?.let {
+            val (width, height) = if (fillTarget) it.width to it.height else width to height
+            emit(
+                index,
+                it.x + Random.Float(width),
+                it.y + Random.Float(height)
+            )
+        } ?: emit(
+            index,
+            x + Random.Float(width),
+            y + Random.Float(height)
+        )
+    }
+
+    override fun draw() {
+        if (lightMode) {
+            inLightMode { super.draw() }
+        } else {
+            super.draw()
+        }
+    }
+
+    abstract class Factory {
+        abstract fun Emitter.emit(index: Int, x: Float, y: Float)
+        open fun lightMode() = false
+    }
+
+    companion object {
+        @JvmField
+        var freezeEmitters = false
+    }
 }
