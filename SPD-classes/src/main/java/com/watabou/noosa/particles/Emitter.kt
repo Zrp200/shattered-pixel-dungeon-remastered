@@ -43,15 +43,13 @@ open class Emitter : Group() {
     @JvmField
     var height = 0f
 
-    protected var target: Visual? = null
+    @set:JvmName("pos")
+    var target: Visual? = null
 
     @JvmField
     var fillTarget = true
 
-    @JvmField
     protected var interval = 0f
-
-    @JvmField
     protected var quantity = 0
 
     @JvmField
@@ -84,13 +82,9 @@ open class Emitter : Group() {
         target = null
     }
 
-    fun pos(target: Visual?) {
-        this.target = target
-    }
-
     fun pos(target: Visual?, x: Float, y: Float, width: Float, height: Float) {
         pos(x, y, width, height)
-        pos(target)
+        this.target = target
     }
 
     fun burst(factory: Factory, quantity: Int) {
