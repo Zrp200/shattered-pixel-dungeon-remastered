@@ -48,11 +48,9 @@ fun BooleanArray.or(
 operator fun BooleanArray.not() = not(null)
 fun BooleanArray.not(result: BooleanArray?) = result.populate(size) { !this[it] }
 
-@JvmName("is")
-infix fun IntArray.where(v1: Int) = where(null, v1)
+infix fun IntArray.`is`(v1: Int) = `is`(null, v1)
 
-@JvmName("is")
-fun IntArray.where(result: BooleanArray?, v1: Int) = mapInto(result, v1::equals)
+fun IntArray.`is`(result: BooleanArray?, v1: Int) = mapInto(result, v1::equals)
 
 fun IntArray.isOneOf(result: BooleanArray?, vararg v: Int) = mapInto(result, v::contains)
 
