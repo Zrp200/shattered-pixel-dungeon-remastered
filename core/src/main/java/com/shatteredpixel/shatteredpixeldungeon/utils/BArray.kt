@@ -58,12 +58,12 @@ fun IntArray.isNot(result: BooleanArray?, v1: Int) = mapInto(result) { it != v1 
 
 fun IntArray.isNotOneOf(result: BooleanArray?, vararg v: Int) = mapInto(result) { it !in v }
 
-// functions for mapping used in the above. They're public because they're probably useful.
+// functions for mapping used in the above.
 
 /**
  * [IntArray.mapTo], but the result is a [BooleanArray] and the existing array is overwritten by the results of [predicate]
  **/
-inline fun IntArray.mapInto(result: BooleanArray?, predicate: (value: Int) -> Boolean) =
+private inline fun IntArray.mapInto(result: BooleanArray?, predicate: (value: Int) -> Boolean) =
     result.populate(size) { predicate(this[it]) }
 
 /**
@@ -72,7 +72,7 @@ inline fun IntArray.mapInto(result: BooleanArray?, predicate: (value: Int) -> Bo
  *
  * An [offset] can be optionally specified to only look at a portion of the arrays.
  */
-inline fun BooleanArray?.populate(
+private inline fun BooleanArray?.populate(
     length: Int,
     offset: Int = 0,
     predicate: (index: Int) -> Boolean,
