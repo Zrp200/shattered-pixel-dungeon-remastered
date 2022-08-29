@@ -35,10 +35,10 @@ open class AlphaTweener(
     interval: Float
 ) : Tweener(interval) {
 
-    var start: Float = visual.alpha()
+    var start: Float = visual.alpha
     var delta: Float = alpha - start
 
     override fun updateValues(progress: Float) {
-        visual.alpha(start + delta * progress)
+        visual.alpha = start + delta * progress
     }
 }

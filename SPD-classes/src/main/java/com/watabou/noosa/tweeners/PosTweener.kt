@@ -36,8 +36,8 @@ open class PosTweener(
     interval: Float
 ) : Tweener(interval) {
 
-    var start: PointF = visual.point()
-	var end: PointF = pos
+    var start: PointF = visual.point
+    var end: PointF = pos
 
     override fun updateValues(progress: Float) {
         visual.point(PointF.inter(start, end, progress))
