@@ -157,7 +157,8 @@ open class Group : Gizmo() {
      * @return obtained gizmo
      */
     @Synchronized
-    fun <T : Gizmo> recycle(c: Class<T>): T = firstAvailableOrNull(c) ?: Reflection.newInstance(c).also { add(it) }
+    fun <T : Gizmo> recycle(c: Class<T>): T =
+        firstAvailableOrNull(c) ?: Reflection.newInstance(c).also { add(it) }
 
     /**
      * Finds a [dead][alive] gizmo of specified class among [children].
@@ -166,7 +167,23 @@ open class Group : Gizmo() {
      * @return found gizmo or null if none are found
      */
     @Synchronized
-    fun <T : Gizmo> firstAvailableOrNull(c: Class<T>): T? = children.filterIsInstance(c).firstOrNull { !it.alive }
+    fun <T : Gizmo> firstAvailableOrNull(c: Class<T>): T? =
+        children.filterIsInstance(c).firstOrNull { !it.alive }
+
+    /**
+     * Gets an [available][firstAvailableOrNull] [child][children] for reuse or creates a new one if none are found.
+     *
+     * @return obtained [gizmo][T]
+     */
+
+    inline fun <reified T : Gizmo> recycle() = recycle(T::class.java)
+
+    /**
+     * Finds a [dead][alive] [gizmo][T] of specified class among [children].
+     *
+     * @return found gizmo or null if none are found
+     **/
+    inline fun <reified T : Gizmo> firstAvailableOrNull() = firstAvailableOrNull(T::class.java)
 
     /**
      * Detaches a [child][children] from this group.
