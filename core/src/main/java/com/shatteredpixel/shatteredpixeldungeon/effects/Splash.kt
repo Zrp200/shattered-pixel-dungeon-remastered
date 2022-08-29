@@ -65,7 +65,7 @@ fun splash(p: PointF, dir: Float, cone: Float, color: Int, n: Int) = splash(p, c
 fun splash(p: PointF, dir: Float, cone: Float, color: Int, n: Int, interval: Float) =
     splash(p, color, n, dir, cone) { start(SplashFactory, interval, n) }
 
-private object SplashFactory : Emitter.Factory() {
+private object SplashFactory : Emitter.Factory {
     var color = 0
     var dir = 0f
     var cone = 0f

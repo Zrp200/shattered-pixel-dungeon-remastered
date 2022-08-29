@@ -156,9 +156,9 @@ open class Emitter : Group() {
         }
     }
 
-    abstract class Factory {
-        abstract fun Emitter.emit(index: Int, x: Float, y: Float)
-        open fun lightMode() = false
+    fun interface Factory {
+        fun Emitter.emit(index: Int, x: Float, y: Float)
+        fun lightMode() = false
     }
 
     companion object {
