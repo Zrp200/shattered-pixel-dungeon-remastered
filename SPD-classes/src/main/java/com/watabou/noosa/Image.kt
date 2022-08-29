@@ -18,173 +18,159 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
+package com.watabou.noosa
 
-package com.watabou.noosa;
+import com.watabou.glwrap.Texture
+import com.watabou.glwrap.VertexDataset
+import com.watabou.glwrap.create
+import com.watabou.utils.RectF
+import java.nio.Buffer
+import java.nio.FloatBuffer
 
-import com.watabou.glwrap.QuadKt;
-import com.watabou.glwrap.Texture;
-import com.watabou.glwrap.VertexDataset;
-import com.watabou.utils.RectF;
+open class Image() : Visual() {
+    @JvmField
+    var texture: Texture? = null
 
-import java.nio.Buffer;
-import java.nio.FloatBuffer;
+    // this can't be made directly open until all usages of this and are ported.
+    var frame: RectF
+        @JvmName("frame")
+        get() = RectF(frame_field)
+        @JvmSynthetic // see #frame(RectF)
+        set(frame) = frame(frame)
 
-public class Image extends Visual {
+    @Suppress("PrivatePropertyName")
+    // backing property for frame
+    private lateinit var frame_field: RectF
 
-	public Texture texture;
-	protected RectF frame;
-	
-	public boolean flipHorizontal;
-	public boolean flipVertical;
-	
-	protected float[] vertices;
-	protected FloatBuffer vertexBuffer;
-	protected VertexDataset vertexDataset;
-	
-	protected boolean dirty;
-	
-	public Image() {
-		super( 0, 0, 0, 0 );
-		
-		vertices = new float[16];
-		vertexBuffer = QuadKt.create();
-	}
-	
-	public Image( Image src ) {
-		this();
-		copy( src );
-	}
-	
-	public Image( Object tx ) {
-		this();
-		texture( tx );
-	}
-	
-	public Image( Object tx, int left, int top, int width, int height ) {
-		this( tx );
-		frame( texture.uvRect( left,  top,  left + width, top + height ) );
-	}
-	
-	public void texture( Object tx ) {
-		texture = tx instanceof Texture ? (Texture)tx : Texture.Companion.get( tx );
-		frame( new RectF( 0, 0, 1, 1 ) );
-	}
-	
-	public void frame( RectF frame ) {
-		this.frame = frame;
-		
-		width = frame.width() * texture.getWidth();
-		height = frame.height() * texture.getHeight();
-		
-		updateFrame();
-		updateVertices();
-	}
-	
-	public void frame( int left, int top, int width, int height ) {
-		frame( texture.uvRect( left, top, left + width, top + height ) );
-	}
-	
-	public RectF frame() {
-		return new RectF( frame );
-	}
+    open fun frame(frame: RectF) {
+        frame_field = frame
+        width = frame.width() * texture!!.width
+        height = frame.height() * texture!!.height
+        updateFrame()
+        updateVertices()
+    }
 
-	public void copy( Image other ) {
-		texture = other.texture;
-		frame = new RectF( other.frame );
-		
-		width = other.width;
-		height = other.height;
+    fun frame(left: Int, top: Int, width: Int, height: Int) {
+        frame = texture!!.uvRect(
+            left.toFloat(),
+            top.toFloat(),
+            (left + width).toFloat(),
+            (top + height).toFloat()
+        )
+    }
 
-		scale = other.scale;
-		
-		updateFrame();
-		updateVertices();
-	}
-	
-	protected void updateFrame() {
-		
-		if (flipHorizontal) {
-			vertices[2]		= frame.right;
-			vertices[6]		= frame.left;
-			vertices[10]	= frame.left;
-			vertices[14]	= frame.right;
-		} else {
-			vertices[2]		= frame.left;
-			vertices[6]		= frame.right;
-			vertices[10]	= frame.right;
-			vertices[14]	= frame.left;
-		}
-		
-		if (flipVertical) {
-			vertices[3]		= frame.bottom;
-			vertices[7]		= frame.bottom;
-			vertices[11]	= frame.top;
-			vertices[15]	= frame.top;
-		} else {
-			vertices[3]		= frame.top;
-			vertices[7]		= frame.top;
-			vertices[11]	= frame.bottom;
-			vertices[15]	= frame.bottom;
-		}
-		
-		dirty = true;
-	}
-	
-	protected void updateVertices() {
-		
-		vertices[0] 	= 0;
-		vertices[1] 	= 0;
-		
-		vertices[4] 	= width;
-		vertices[5] 	= 0;
-		
-		vertices[8] 	= width;
-		vertices[9] 	= height;
-		
-		vertices[12]	= 0;
-		vertices[13]	= height;
-		
-		dirty = true;
-	}
-	
-	@Override
-	public void draw() {
+    @JvmField
+    var flipHorizontal = false
+    var flipVertical = false
 
-		if (texture == null || (!dirty && vertexDataset == null))
-			return;
-		
-		super.draw();
+    @JvmField
+    protected var vertices: FloatArray = FloatArray(16)
 
-		if (dirty) {
-			((Buffer) vertexBuffer).position( 0 );
-			vertexBuffer.put( vertices );
-			if (vertexDataset == null)
-				vertexDataset = new VertexDataset(vertexBuffer);
-			else
-				vertexDataset.markForUpdate(vertexBuffer);
-			dirty = false;
-		}
+    @JvmField
+    protected var vertexBuffer: FloatBuffer = create()
 
-		Script script = Script.get();
-		
-		texture.bind();
-		
-		script.setCamera( getCamera() );
-		
-		script.getUModel().set( matrix );
-		script.lighting(
-			rm, gm, bm, am,
-			ra, ga, ba, aa );
+    @JvmField
+    protected var vertexDataset: VertexDataset? = null
 
-		script.drawQuad(vertexDataset);
-		
-	}
+    @JvmField
+    protected var dirty = false
 
-	@Override
-	public void destroy() {
-		super.destroy();
-		if (vertexDataset != null) {
-			vertexDataset.delete();
-		}
-	}
+    constructor(src: Image) : this() {
+        copy(src)
+    }
+
+    constructor(tx: Any) : this() {
+        texture(tx)
+    }
+
+    constructor(tx: Any, left: Int, top: Int, width: Int, height: Int) : this(tx) {
+        @Suppress("LeakingThis") // none of the usages call any methods
+        frame(
+            texture!!.uvRect(
+                left.toFloat(),
+                top.toFloat(),
+                (left + width).toFloat(),
+                (top + height).toFloat()
+            )
+        )
+    }
+
+    fun texture(tx: Any) {
+        texture = if (tx is Texture) tx else Texture[tx]
+        frame(RectF(0f, 0f, 1f, 1f))
+    }
+
+    fun copy(other: Image) {
+        texture = other.texture
+        frame = RectF(other.frame)
+        width = other.width
+        height = other.height
+        scale = other.scale
+        updateFrame()
+        updateVertices()
+    }
+
+    protected open fun updateFrame() = with(frame) {
+        vertices.let {
+            if (flipHorizontal) {
+                it[2] = right
+                it[6] = left
+            } else {
+                it[2] = left
+                it[6] = right
+            }
+            it[10] = it[6]
+            it[14] = it[2]
+            if (flipVertical) {
+                it[3] = bottom
+                it[11] = top
+            } else {
+                it[3] = top
+                it[11] = bottom
+            }
+            it[7] = it[3]
+            it[15] = it[11]
+        }
+        dirty = true
+    }
+
+    protected fun updateVertices() {
+        operator fun FloatArray.set(vararg indices: Int, value: Float) =
+            indices.forEach { this[it] = value }
+        vertices.let {
+            it[0, 1, 5, 12] = 0f
+            it[4, 8] = width
+            it[9, 13] = height
+        }
+        dirty = true
+    }
+
+    override fun draw() {
+        if (!dirty && vertexDataset == null) return
+        val texture = texture ?: return
+        super.draw()
+        if (dirty) {
+            (vertexBuffer as Buffer).position(0)
+            vertexBuffer.put(vertices)
+            if (vertexDataset?.run { markForUpdate(vertexBuffer) } == null)
+                vertexDataset = VertexDataset(vertexBuffer)
+            dirty = false
+        }
+        Script.get().run {
+            texture.bind()
+            setCamera(camera)
+            uModel.set(matrix)
+            lighting(
+                rm, gm, bm, am,
+                ra, ga, ba, aa
+            )
+            drawQuad(vertexDataset!!)
+        }
+
+    }
+
+    override fun destroy() {
+        super.destroy()
+        vertexDataset?.delete()
+    }
 }
